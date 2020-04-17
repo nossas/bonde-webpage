@@ -1,0 +1,76 @@
+workspace:
+  base: /code
+
+pipeline:
+  build:
+    image: node:12-alpine
+    commands:
+      - yarn
+    when:
+      event: [push, tag]
+
+  tests:
+    image: node:12-alpine
+    commands:
+      - yarn run lint
+      - yarn run test
+    group: build
+    when:
+      status: success
+      branch: [hotfix/*, release/*, feature/*, support/*, develop]
+
+  build-storybook:
+    image: node:12-alpine
+    commands:
+      - yarn build-storybook
+    when:
+      event: [push, tag]
+
+  publish-storybook:
+    image: plugins/docker
+    repo: nossas/bonde-components
+    group: publishing
+    secrets: [docker_username, docker_password]
+    tags:
+      - ${DRONE_BRANCH/\//-}
+    when:
+      status: success
+      branch: [hotfix/*, release/*, feature/*, develop]
+
+  deploy-storybook:
+    image: peloton/drone-rancher
+    url: http://cluster.bonde.org
+    service: webservers/storybook
+    group: deploying
+    docker_image: nossas/bonde-components:${DRONE_BRANCH/\//-}
+    timeout: 360
+    confirm: true
+    secrets: [rancher_access_key, rancher_secret_key]
+    when:
+      status: success
+      branch: [hotfix/*, release/*, feature/*, develop]
+
+  publish-npm:
+    image: plugins/npm
+    secrets: [npm_auth_token, npm_username, npm_email, npm_password]
+    settings:
+      username:
+        from_secret: npm_username
+      token:
+        from_secret: npm_auth_token
+      email:
+        from_secret: npm_email
+      password:
+        from_secret: npm_password
+    group: publish
+    when:
+      status: success
+      branch: [release/*]
+  # notify:
+  #   image: plugins/slack
+  #   channel: bonde_bots
+  #   username: CI - ${DRONE_REPO_NAME}
+  #   secrets: [ slack_webhook ]
+  #   when:
+  #     event: [ push, tag, build, publish, deployment, pull_request ]
+  #     status: [ success, failure ]
