@@ -7,3 +7,4 @@ export { default as PluggableWidget } from './components/ux/PluggableWidget';
 export { default as FormPlugin } from './plugins/Form/Plugin';
 export { default as selectors } from './redux/Selectors';
 export { default as asyncFormEntryCreate } from './redux/action-creators/FormEntryCreate';
+export { default as Thing } from './Thing';

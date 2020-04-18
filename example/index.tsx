@@ -12,7 +12,19 @@ const plugins = [
   },
   {
     kind: 'form',
-    component: () => <p>Olá</p>,
+    component: props => (
+      // <FormPlugin
+      //   {...props}
+      //   analyticsEvents={FormAnalytics}
+      //   overrides={{
+      //     FinishCustomMessage: { component: FinishMessageCustom },
+      //     FinishDefaultMessage: {
+      //       component: FormTellAFriend,
+      //       props: { imageUrl, href: getSharedPath(props.mobilization) },
+      //     },
+      //   }}
+      // />
+    ),
   },
   {
     kind: 'donation',

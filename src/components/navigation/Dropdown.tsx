@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { array, object, string } from 'prop-types';
-import { BarsIcon } from 'icons';
+import { BarsIcon } from '../../icons';
 
 const DropdownMenu = (props: any) => {
   const [open, setOpen] = useState(false);
