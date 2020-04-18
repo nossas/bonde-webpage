@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 /** @jsx jsx */
 // eslint-disable-next-line react/react-in-jsx-scope
+// @ts-ignore
 import { css, jsx } from '@emotion/core';
 
 const renderFieldKind = ({ field, name, onChange, onBlur }: any) => {
