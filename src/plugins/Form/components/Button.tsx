@@ -6,7 +6,7 @@ const Button = ({
   buttonText,
   loading,
   mobilization: { body_font: bodyFont },
-}) => (
+}: any) => (
   <div style={{ fontFamily: bodyFont }}>
     <button
       type="submit"
