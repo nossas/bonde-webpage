@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Section, Footer, Navigation } from './..';
+import Section from './Section';
+import Footer from './Footer';
+import Navigation from './navigation';
 
 /**
  * A mobilization has two modes, in editing ({ editable: true })
@@ -155,7 +157,7 @@ Mobilization.propTypes = {
   widgets: PropTypes.array.isRequired,
   /* Component responsible to render a widget logic,
    * receive { widget } props */
-  // widgetComponent: PropTypes.any.isRequired,
+  widgetComponent: PropTypes.any.isRequired,
   // TODO: Documentation
   extraWidgetProps: PropTypes.object,
   /* Function used to link widgets with block, receives (block, widgets)

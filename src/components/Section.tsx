@@ -1,6 +1,6 @@
 import React from 'react';
 import { any, array, bool, object, string } from 'prop-types';
-import { WidgetArea } from './..';
+import WidgetArea from './WidgetArea';
 
 const getBackgroundStyle = (block: any) => {
   if (block.bg_image)

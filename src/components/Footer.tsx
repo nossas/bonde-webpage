@@ -1,5 +1,5 @@
 import React from 'react';
-import { BondeIcon } from './icons';
+import { BondeIcon } from '../icons';
 // TODO: Remover dependencia dos componentes de tradução
 // import { FormattedMessage } from 'react-intl';
 
