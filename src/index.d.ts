@@ -16,3 +16,4 @@ export { default as selectors } from './redux/Selectors';
 export { default as Thing } from './Thing';
 export { default as ContentEditor } from './plugins/Content';
 export { default as ContentProps } from './mocks/plugin/content';
+export { default as DraftPlugin } from './plugins/Draft';

@@ -1,46 +1,73 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Mobilization, PluggableWidget } from '../.';
+import { Mobilization, PluggableWidget, DraftPlugin, Money } from '../.';
 import props from './data';
 
 const plugins = [
   {
     kind: 'draft',
-    component: () => <p>Olá</p>,
+    component: DraftPlugin,
     options: { noOverlay: true },
   },
   {
     kind: 'form',
-    component: props => (
-      // <FormPlugin
-      //   {...props}
-      //   analyticsEvents={FormAnalytics}
-      //   overrides={{
-      //     FinishCustomMessage: { component: FinishMessageCustom },
-      //     FinishDefaultMessage: {
-      //       component: FormTellAFriend,
-      //       props: { imageUrl, href: getSharedPath(props.mobilization) },
-      //     },
-      //   }}
-      // />
-    ),
+    component: () => <div>Formulário</div>,
+    options: DraftPlugin.setOptions({
+      label: 'Formulário',
+      icon: () => <i className="fa fa-list block white" />,
+      action: widget => {
+        console.log(`update widget ${widget.id}`);
+      },
+    }),
   },
   {
     kind: 'donation',
-    component: () => <p>Olá</p>,
+    component: () => <div>Doação</div>,
+    options: DraftPlugin.setOptions({
+      label: 'Doação',
+      icon: () => <Money />,
+      action: widget => {
+        console.log(`update widget ${widget.id}`);
+      },
+    }),
   },
   {
     kind: 'pressure',
-    component: () => <p>Olá</p>,
+    component: () => <div>Pressão</div>,
+    options: DraftPlugin.setOptions({
+      label: 'Pressão por e-mail',
+      icon: <i className="fa fa-money block white" />,
+      action: widget => {
+        console.log(`update widget ${widget.id}`);
+      },
+    }),
   },
   {
     kind: 'pressure-phone',
-    component: () => <p>Olá</p>,
+    component: () => <div>Pressão por telefone</div>,
+    options: DraftPlugin.setOptions({
+      label: 'Pressão por telefone',
+      icon: <i className="fa fa-money block white" />,
+      action: widget => {
+        console.log(`update widget ${widget.id}`);
+      },
+    }),
   },
   {
     kind: 'content',
-    component: () => <p>Olá</p>,
+    component: () => <div>Conteúdo</div>,
+    options: Object.assign(
+      {},
+      DraftPlugin.setOptions({
+        label: 'Texto',
+        icon: () => <i className="fa fa-font block white" />,
+        action: widget => {
+          console.log(`update widget ${widget.id}`);
+        },
+      }),
+      { noOverlay: true }
+    ),
   },
 ];
 

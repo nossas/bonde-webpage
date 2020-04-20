@@ -7,7 +7,7 @@
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./",
+    "rootDir": "./src",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -22,7 +22,7 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "@": ["./src"],
+      "@": ["./"],
       "*": ["src/*", "node_modules/*"]
     },
     "jsx": "react",
