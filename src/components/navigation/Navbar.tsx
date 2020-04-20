@@ -1,10 +1,34 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
+import styled from '@emotion/styled';
 import Menu from './Menu';
 
-const Navbar = (props: any) => {
-  const { blocks, editable } = props;
+const NavbarStyled = styled.div`
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+
+  .bg-darken-4 {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .center {
+    text-align: center;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+`;
+
+interface NavbarProps {
+  editable?: boolean;
+  blocks?: any[];
+  linkTo: Function;
+}
+
+const Navbar: React.FC<NavbarProps> = props => {
+  const { blocks = [], editable } = props;
 
   const visibleMenuBlocks = !editable
     ? blocks.filter((b: any) => !b.menu_hidden)
@@ -12,17 +36,10 @@ const Navbar = (props: any) => {
   const menuProps = { ...props, blocks: visibleMenuBlocks };
 
   return (
-    <div className="absolute col-12 z3 fixed">
+    <NavbarStyled>
       <Menu {...menuProps} />
-      <Menu {...menuProps} mobile />
-    </div>
+    </NavbarStyled>
   );
-};
-
-Navbar.propTypes = {
-  editable: PropTypes.bool.isRequired,
-  blocks: PropTypes.array,
-  linkTo: PropTypes.func.isRequired,
 };
 
 Navbar.defaultProps = {

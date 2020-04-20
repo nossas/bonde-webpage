@@ -1,7 +1,11 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Mobilization, PluggableWidget } from '../.';
+import {
+  Mobilization,
+  PluggableWidget
+  Styles
+} from '../.';
 import props from './data';
 
 const plugins = [
@@ -12,35 +16,23 @@ const plugins = [
   },
   {
     kind: 'form',
-    component: props => (
-      // <FormPlugin
-      //   {...props}
-      //   analyticsEvents={FormAnalytics}
-      //   overrides={{
-      //     FinishCustomMessage: { component: FinishMessageCustom },
-      //     FinishDefaultMessage: {
-      //       component: FormTellAFriend,
-      //       props: { imageUrl, href: getSharedPath(props.mobilization) },
-      //     },
-      //   }}
-      // />
-    ),
+    component: () => <p>Form</p>,
   },
   {
     kind: 'donation',
-    component: () => <p>Olá</p>,
+    component: () => <p>Donation</p>,
   },
   {
     kind: 'pressure',
-    component: () => <p>Olá</p>,
+    component: () => <p>Pressure</p>,
   },
   {
     kind: 'pressure-phone',
-    component: () => <p>Olá</p>,
+    component: () => <p>Pressure Phone</p>,
   },
   {
     kind: 'content',
-    component: () => <p>Olá</p>,
+    component: () => <p>Content</p>,
   },
 ];
 
@@ -55,9 +47,9 @@ const newProps = {
 
 const App = () => {
   return (
-    <div>
+    <Styles>
       <Mobilization {...newProps} widgetComponent={PluggableWidget} />
-    </div>
+    </Styles>
   );
 };
 
