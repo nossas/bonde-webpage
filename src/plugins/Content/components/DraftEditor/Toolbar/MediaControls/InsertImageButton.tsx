@@ -1,15 +1,14 @@
 import React, { useState, useRef } from 'react';
 import ReactS3Uploader from 'react-s3-uploader';
-import { JsxElement } from 'typescript';
 
 type Props = {
   buttonClassName?: string;
   popoverClassName?: string;
-  handleUploadFinish: (param) => void;
+  handleUploadFinish: (param: any) => void;
 };
 
 const InsertImageButton = ({ handleUploadFinish, buttonClassName }: Props) => {
-  const [isLoading, toggleIsLoading] = useState(false);
+  const [, toggleIsLoading] = useState(false);
 
   const inputFile = useRef(null);
 

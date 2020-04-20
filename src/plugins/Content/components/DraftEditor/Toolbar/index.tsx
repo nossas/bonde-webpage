@@ -11,10 +11,10 @@ import AlignmentControls from './AlignmentControls';
 import MediaControls from './MediaControls';
 import EditorUtils from './EditorUtils';
 
-import './styles.scss';
+import { Wrapper } from './styles';
 
 type Props = {
-  editorState: Record<any, any>;
+  editorState: any;
   setEditorState: (param: any) => void;
   focusEditor: () => void;
   buttonClassName?: string;
@@ -32,24 +32,24 @@ const Toolbar = ({
   theme,
   style,
 }: Props) => {
-  const toggleInlineStyle = style => {
+  const toggleInlineStyle = (style: any) => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, style));
     return focusEditor();
   };
 
-  const toggleBlockType = blockType => {
+  const toggleBlockType = (blockType: any) => {
     setEditorState(RichUtils.toggleBlockType(editorState, blockType));
     return focusEditor();
   };
 
-  const hasInlineStyle = inlineStyle => {
+  const hasInlineStyle = (inlineStyle: any) => {
     const hasStyle = editorState
       .getCurrentInlineStyle()
-      .filter(style => style === inlineStyle);
+      .filter((style: any) => style === inlineStyle);
     return hasStyle.size > 0 ? 'active' : null;
   };
 
-  const hasBlockType = blockType => {
+  const hasBlockType = (blockType: any) => {
     const selectionState = editorState.getSelection();
     const block = editorState
       .getCurrentContent()
@@ -60,7 +60,7 @@ const Toolbar = ({
   const controlsProps = { editorState, setEditorState, focusEditor };
 
   return (
-    <div
+    <Wrapper
       className="toolbar absolute full-width top-0 left-0 bg-darken-4 flex flex-wrap"
       style={style}
     >
@@ -126,13 +126,13 @@ const Toolbar = ({
         popoverClassName={popoverClassName}
         {...controlsProps}
       />
-    </div>
+    </Wrapper>
   );
 };
 
 export const toolbarEditorProps = {
-  blockRendererFn: block => EditorUtils.blockRendererFn(block, Media),
-  customStyleFn: style => {
+  blockRendererFn: (block: any) => EditorUtils.blockRendererFn(block, Media),
+  customStyleFn: (style: any) => {
     return {
       ...EditorUtils.customSizeAndFamily(style),
       ...EditorUtils.customColor(style),

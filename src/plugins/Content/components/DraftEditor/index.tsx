@@ -1,14 +1,14 @@
 import React from 'react';
-import Editor from './EditableModel';
+import Editor from './EditableMode';
 import { checkToParse } from '../../../../utils';
-import './styles.scss';
+import { Wrapper } from './styles';
 
 type Props = {
   mobilization: Record<any, any>;
-  widget: Record<any, any>;
+  settings: Record<any, any>;
 };
 
-const DraftEditor = ({ mobilization, widget: { settings } }: Props) => {
+const DraftEditor = ({ mobilization, settings }: Props) => {
   const { body_font: bodyFont } = mobilization;
 
   const theme =
@@ -19,12 +19,12 @@ const DraftEditor = ({ mobilization, widget: { settings } }: Props) => {
   let value = checkToParse(settings.content);
 
   return (
-    <div
+    <Wrapper
       className="widgets--content-plugin widget editor-new"
       style={{ fontFamily: bodyFont }}
     >
       <Editor readOnly value={value} theme={theme} />
-    </div>
+    </Wrapper>
   );
 };
 

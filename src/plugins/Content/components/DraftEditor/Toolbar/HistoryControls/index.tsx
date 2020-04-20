@@ -2,7 +2,7 @@ import React from 'react';
 import { EditorState } from 'draft-js';
 
 type Props = {
-  editorState: Record<any, any>;
+  editorState: any;
   setEditorState: (param: any) => any;
   focusEditor: () => any;
   buttonClassName?: string;

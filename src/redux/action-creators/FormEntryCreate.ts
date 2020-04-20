@@ -1,5 +1,5 @@
 /* eslint-disable prefer-promise-reject-errors */
-import { FormAnalytics } from '../../plugins/Form';
+import FormAnalytics from '../../plugins/Form/Analytics';
 import MobSelectors from '../Selectors';
 import * as t from '../ActionTypes';
 import { createAction } from './CreateAction';

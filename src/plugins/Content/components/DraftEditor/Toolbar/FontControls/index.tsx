@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import EditorUtils from '../EditorUtils';
 import SelectFontFamily from './SelectFontFamily';
-import './styles.scss';
+import { Wrapper } from './styles';
 
 type Props = {
   editorState: Record<any, any>;
-  setEditorState: (param: boolean) => void;
+  setEditorState: (param: any) => void;
   focusEditor: () => void;
-  initialValue?: {
+  initialValue: {
     fontSize: number;
     fontFamily: string;
   };
@@ -19,7 +19,7 @@ const FontControls = ({
   setEditorState,
   ...props
 }: Props) => {
-  const [initialValues, setState] = useState({ ...props.initialValue });
+  const [initialValues, setState] = useState(props.initialValue);
 
   const changeStyles = () => {
     const hasChangeInlineStyle =
@@ -61,7 +61,7 @@ const FontControls = ({
     );
     setEditorState(editorStateWithFontFamily);
     setState({
-      ...initialValues,
+      fontSize: initialValues.fontSize,
       fontFamily,
     });
   };
@@ -69,7 +69,7 @@ const FontControls = ({
   const handleMouseOut = () => focusEditor();
 
   return (
-    <div className="font-controls">
+    <Wrapper className="font-controls">
       <input
         type="number"
         value={initialValues.fontSize}
@@ -82,7 +82,7 @@ const FontControls = ({
         value={initialValues.fontFamily}
         onMouseOut={handleMouseOut}
       />
-    </div>
+    </Wrapper>
   );
 };
 

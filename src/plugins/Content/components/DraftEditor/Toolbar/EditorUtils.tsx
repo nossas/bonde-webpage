@@ -12,9 +12,9 @@ import linkStrategy from './LinkControls/linkStrategy';
 import getSelectionEntities from './getSelectionEntities';
 
 export const getEntitySelectionState = (
-  editorState,
-  selectionState,
-  entityType
+  editorState: any,
+  selectionState: any,
+  entityType: any
 ) => {
   // Selection cursor
   const currentContent = editorState.getCurrentContent();
@@ -25,11 +25,11 @@ export const getEntitySelectionState = (
   let entitySelectionState;
 
   block.findEntityRanges(
-    character => {
+    (character: any) => {
       const entityKey = character.getEntity();
       return entityKey && Entity.get(entityKey).getType() === entityType;
     },
-    (start, end) => {
+    (start: any, end: any) => {
       const isSelected = end >= endOffset && start <= endOffset;
 
       if (isSelected) {
@@ -47,7 +47,7 @@ export const getEntitySelectionState = (
 /*
  * getSelectedBlocks
  */
-export const getSelectedBlocks = (contentState, selectionState) => {
+export const getSelectedBlocks = (contentState: any, selectionState: any) => {
   const anchorKey = selectionState.getStartKey();
   const focusKey = selectionState.getEndKey();
 
@@ -77,7 +77,7 @@ export const getSelectedBlocks = (contentState, selectionState) => {
   return selectedBlocks;
 };
 
-const getBlockSelectionState = (contentBlock, selectionState) => {
+const getBlockSelectionState = (contentBlock: any, selectionState: any) => {
   const anchorKey = selectionState.getStartKey();
   const focusKey = selectionState.getEndKey();
 
@@ -102,7 +102,7 @@ const getBlockSelectionState = (contentBlock, selectionState) => {
  * - toggleLink(editorState: EditorState, data: object)
  */
 export default {
-  toggleInlineStyle: (editorState, inlineStyle) => {
+  toggleInlineStyle: (editorState: any, inlineStyle: any) => {
     if (inlineStyle.indexOf(':') > 0) {
       // remove and add new custom inline style
       let contentWithoutStyle = editorState.getCurrentContent();
@@ -110,9 +110,9 @@ export default {
       const prefix = inlineStyle.split(':')[0];
       const styles = editorState
         .getCurrentInlineStyle()
-        .filter(style => style.startsWith(prefix));
+        .filter((style: any) => style.startsWith(prefix));
       if (styles.size > 0) {
-        styles.forEach(style => {
+        styles.forEach((style: any) => {
           contentWithoutStyle = Modifier.removeInlineStyle(
             contentWithoutStyle,
             editorState.getSelection(),
@@ -134,7 +134,7 @@ export default {
     return RichUtils.toggleInlineStyle(editorState, inlineStyle);
   },
 
-  toggleLink: (editorState, data) => {
+  toggleLink: (editorState: any, data: any) => {
     /* This code need refactor */
     // Save editorState then apply link in loop
     let editorStateMutable = editorState;
@@ -147,7 +147,7 @@ export default {
 
       // Should create entity when text select
       // and merge entity data when block type selected is atomic
-      let entityKey;
+      let entityKey: any;
 
       arrayBlocks.forEach(block => {
         const entity = block.getEntityAt(0);
@@ -213,8 +213,12 @@ export default {
     }
   },
 
-  getEntityInstance: (editorState, selectionState, entityType) => {
-    const entitySelectionState = getEntitySelectionState(
+  getEntityInstance: (
+    editorState: any,
+    selectionState: any,
+    entityType: any
+  ) => {
+    const entitySelectionState: any = getEntitySelectionState(
       editorState,
       selectionState,
       entityType
@@ -232,9 +236,11 @@ export default {
     }
   },
 
-  customColor: style => {
+  customColor: (style: any) => {
     const output = { color: '' };
-    const color = style.filter(value => value.startsWith('color')).last();
+    const color = style
+      .filter((value: any) => value.startsWith('color'))
+      .last();
     if (color) {
       output.color = color
         .replace('color:', '')
@@ -244,10 +250,10 @@ export default {
     return output;
   },
 
-  customSizeAndFamily: style => {
+  customSizeAndFamily: (style: any) => {
     let output = { fontSize: 0, fontFamily: '' };
     const fontSize = style
-      .filter(value => value.startsWith('font-size'))
+      .filter((value: any) => value.startsWith('font-size'))
       .last();
     if (fontSize) {
       output = {
@@ -261,7 +267,7 @@ export default {
       };
     }
     const fontFamily = style
-      .filter(value => value.startsWith('font-family'))
+      .filter((value: any) => value.startsWith('font-family'))
       .last();
     if (fontFamily) {
       output = {
@@ -275,12 +281,13 @@ export default {
     return output;
   },
 
-  blockRendererFn: (block, Media) => {
+  blockRendererFn: (block: any, Media: React.ReactNode) => {
     if (block.getType() === 'atomic') {
       return {
         component: Media,
       };
     }
+    return false;
   },
 
   decorator: new CompositeDecorator([

@@ -1,10 +1,9 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
 type Props = {
   buttonClassName?: string;
   popoverClassName?: string;
-  handleInsertScript: (param1, param2) => void;
+  handleInsertScript: (param1: any, param2: any) => void;
 };
 
 const InsertScriptButton = ({
@@ -15,7 +14,7 @@ const InsertScriptButton = ({
   const [showInputDialog, toggleInputDialog] = useState(false);
   const [script, setScript] = useState('');
 
-  const getTagName = script => {
+  const getTagName = (script: any) => {
     if (script.startsWith('<iframe')) {
       return 'iframe';
     } else if (script.startsWith('<script')) {
