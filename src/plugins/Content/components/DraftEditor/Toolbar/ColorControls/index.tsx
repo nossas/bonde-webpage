@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import EditorUtils from '../EditorUtils';
 import ColorPickerButton from './ColorPickerButton';
-import './styles.scss';
+import { Wrapper } from './styles';
 
-const onChangeColor = ({ color, editorState, setEditorState }) => {
+const onChangeColor = ({ color, editorState, setEditorState }: any) => {
   const targetSelection = editorState.getSelection();
   if (!targetSelection.isCollapsed()) {
     const editorStateWithColor = EditorUtils.toggleInlineStyle(
@@ -14,10 +14,10 @@ const onChangeColor = ({ color, editorState, setEditorState }) => {
   }
 };
 
-const hasColorStyle = editorState => {
+const hasColorStyle = (editorState: any) => {
   const hasStyle = editorState
     .getCurrentInlineStyle()
-    .filter(style => style.startsWith('color'));
+    .filter((style: any) => style.startsWith('color'));
   return hasStyle.size > 0 ? 'active' : null;
 };
 
@@ -38,10 +38,10 @@ const ColorControls = ({
 }: Props) => {
   const [color, setColor] = useState({ rgb: {} });
 
-  const changeColor = editorState => {
+  const changeColor = (editorState: any) => {
     const currentStyle = editorState.getCurrentInlineStyle();
     const color = currentStyle
-      .filter(value => value.startsWith('color'))
+      .filter((value: any) => value.startsWith('color'))
       .last();
     if (color) {
       setColor(
@@ -58,7 +58,7 @@ const ColorControls = ({
   }, [editorState]);
 
   return (
-    <div className="colorControls">
+    <Wrapper className="colorControls">
       <ColorPickerButton
         theme={theme}
         className={`${buttonClassName} ${hasColorStyle(editorState)}`}
@@ -69,7 +69,7 @@ const ColorControls = ({
         }
         focusEditor={focusEditor}
       />
-    </div>
+    </Wrapper>
   );
 };
 

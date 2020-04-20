@@ -7,27 +7,27 @@ type Props = {
   editorState: Record<string, any>;
   setEditorState: (param: any[]) => void;
   focusEditor: () => void;
-  buttonClassName: string;
+  buttonClassName?: string;
 };
 
 const AlignmentControls = ({
   focusEditor,
   editorState,
-  buttonClassName,
+  buttonClassName = '',
   setEditorState,
 }: Props) => {
-  const handleToggleAlign = alignment => {
+  const handleToggleAlign = (alignment: any) => {
     const editorStateWithAlignment = styleWholeSelectedBlocksModifier(
       editorState,
       alignment,
-      alignments.filter(align => alignment !== align)
+      alignments.filter((align: any) => alignment !== align)
     );
     setEditorState(editorStateWithAlignment);
 
     focusEditor();
   };
 
-  const hasAlignmentStyle = alignment => {
+  const hasAlignmentStyle = (alignment: any) => {
     const selectionState = editorState.getSelection();
 
     const block = editorState
@@ -35,7 +35,7 @@ const AlignmentControls = ({
       .getBlockForKey(selectionState.getStartKey());
 
     let alignmentStyle = 'left';
-    block.findStyleRanges(e => {
+    block.findStyleRanges((e: any) => {
       if (e.hasStyle('center')) alignmentStyle = 'center';
       if (e.hasStyle('right')) alignmentStyle = 'right';
     });

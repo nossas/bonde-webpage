@@ -1,7 +1,7 @@
 import React from 'react';
 // import { injectIntl, intlShape } from 'react-intl';
 // TODO: should remove EditorOld??
-import { DraftEditor, SlateEditor } from '.';
+import { DraftEditor, SlateEditor } from './components';
 import { checkToParse } from '../../utils';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
   };
 };
 
-const Content = ({ widget: { settings } }: Props) => {
+const Content = ({ widget: { settings }, ...props }: Props) => {
   const content = checkToParse(settings.content);
   if (typeof content === 'string')
     return (
@@ -21,9 +21,9 @@ const Content = ({ widget: { settings } }: Props) => {
     );
 
   return content.entityMap ? (
-    <DraftEditor {...this.props} />
+    <DraftEditor {...props} settings={settings} />
   ) : (
-    <SlateEditor {...this.props} content={settings.content} readOnly />
+    <SlateEditor {...props} content={settings.content} readOnly />
   );
 };
 

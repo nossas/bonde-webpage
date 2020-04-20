@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import { injectIntl, intlShape } from 'react-intl'
 import { SlateEditor, SlateContent } from 'slate-editor';
 import { BoldPlugin } from '@slate-editor/bold-plugin';
@@ -14,7 +14,8 @@ import { ImagePlugin } from '@slate-editor/image-plugin';
 import { ColorPlugin } from '@slate-editor/color-plugin';
 import { GridPlugin } from '@slate-editor/grid-plugin';
 import { EmbedPlugin } from '@slate-editor/embed-plugin';
-import './styles.scss';
+import { Wrapper } from './styles';
+import { checkToParse } from '../../../../utils';
 
 const fontSizePluginOptions = { initialFontSize: 16 };
 
@@ -34,10 +35,10 @@ const plugins = [
   UnderlinePlugin(),
 ];
 
-const EditorSlate = ({ content, readOnly, contentStyles }: any) => {
-  const [initialState] = useState(JSON.parse(content));
+const EditorSlate = ({ content, readOnly }: any) => {
+  const initialState = checkToParse(content);
   return (
-    <div className="widgets--content-plugin">
+    <Wrapper className="widgets--content-plugin">
       <SlateEditor
         plugins={plugins}
         initialState={initialState}
@@ -45,11 +46,11 @@ const EditorSlate = ({ content, readOnly, contentStyles }: any) => {
       >
         <SlateContent
           wrapperStyle={{ position: 'relative', zIndex: 'inherit' }}
-          style={{ minHeight: 150, ...contentStyles }}
+          style={{ minHeight: 150 }}
           readOnly={readOnly}
         />
       </SlateEditor>
-    </div>
+    </Wrapper>
   );
 };
 

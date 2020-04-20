@@ -5,7 +5,7 @@ import { Entity, AtomicBlockUtils } from 'draft-js';
 import InsertImageButton from './InsertImageButton';
 import InsertScriptButton from './InsertScriptButton';
 
-import './styles.scss';
+import { Wrapper } from './styles';
 
 type Props = {
   editorState: Record<any, any>;
@@ -35,7 +35,7 @@ const MediaControls = ({
   };
 
   return (
-    <div className="mediaControls">
+    <Wrapper className="mediaControls">
       <InsertImageButton
         buttonClassName={buttonClassName}
         popoverClassName={popoverClassName}
@@ -46,7 +46,7 @@ const MediaControls = ({
         popoverClassName={popoverClassName}
         handleInsertScript={handleInsertMedia}
       />
-    </div>
+    </Wrapper>
   );
 };
 

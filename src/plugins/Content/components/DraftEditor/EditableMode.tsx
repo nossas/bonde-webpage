@@ -15,7 +15,7 @@ import {
 import EditorUtils from './Toolbar/EditorUtils';
 import Toolbar, { toolbarEditorProps } from './Toolbar';
 import getBlockAlignment from './Toolbar/AlignmentControls/getBlockAlignment';
-import './styles.scss';
+import './styles.ts';
 
 const newEditor = (value: string | Record<any, any>) => {
   let editorState = EditorState.createEmpty(EditorUtils.decorator);
