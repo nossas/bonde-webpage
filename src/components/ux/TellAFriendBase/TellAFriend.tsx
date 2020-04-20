@@ -1,21 +1,34 @@
 import React from 'react';
-import { any, shape, string } from 'prop-types';
 import FacebookShareButton from './ShareButtons/Facebook';
 import TwitterShareButton from './ShareButtons/Twitter';
 import WhatsAppShareButton from './ShareButtons/Whatsapp';
-
 // import checkMarkImage from './'
 
+type Props = {
+  preview?: boolean;
+  mobilization: {
+    twitter_share_text: string;
+  };
+  widget: {
+    settings: {
+      whatsapp_text: string;
+    };
+  };
+  message: any;
+  href: string;
+  imageUrl: string;
+  imageWidth: string;
+};
+
 const TellAFriend = ({
-  // preview,
   href,
   message,
   mobilization: { twitter_share_text: twitterShareText },
   imageUrl,
   imageWidth,
-  widget,
-}: any) => {
-  const settings = widget.settings || {};
+  widget: { settings },
+}: Props) => {
+  const { whatsapp_text = '' } = settings;
   return (
     <div className="center p3 bg-white darkengray rounded">
       <div className="m0 h3 bold">{message}</div>
@@ -34,26 +47,12 @@ const TellAFriend = ({
         <TwitterShareButton href={href} text={twitterShareText} />
       </p>
       <p>
-        <WhatsAppShareButton whatsappText={settings.whatsapp_text || href} />
+        <WhatsAppShareButton whatsappText={whatsapp_text || href} />
       </p>
     </div>
   );
 };
 
-TellAFriend.propTypes = {
-  // preview: bool,
-  mobilization: shape({
-    twitter_share_text: string,
-  }).isRequired,
-  widget: shape({
-    settings: shape({
-      whatsapp_text: string,
-    }),
-  }).isRequired,
-  message: any.isRequired,
-  href: string.isRequired,
-  imageUrl: string,
-  imageWidth: string,
-};
+TellAFriend.propTypes = {};
 
 export default TellAFriend;
