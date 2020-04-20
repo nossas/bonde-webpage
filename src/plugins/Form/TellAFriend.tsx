@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TellAFriendBase from '../../../components/ux/TellAFriendBase';
+import TellAFriendBase from '../../components/ux/TellAFriendBase';
 
 const FormTellAFriend = ({ preview, mobilization, widget, ...props }: any) => (
   <TellAFriendBase
