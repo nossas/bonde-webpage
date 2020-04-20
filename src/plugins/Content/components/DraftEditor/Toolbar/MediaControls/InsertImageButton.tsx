@@ -16,7 +16,7 @@ const InsertImageButton = ({ handleUploadFinish, buttonClassName }: Props) => {
 
   const handleUploadError = () => toggleIsLoading(false);
 
-  const onUploadFinish = e => {
+  const onUploadFinish = (e: any) => {
     const imgUrl = e.signedUrl.substring(0, e.signedUrl.indexOf('?'));
     toggleIsLoading(false);
     return handleUploadFinish(imgUrl);

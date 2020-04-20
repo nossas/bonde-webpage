@@ -7,10 +7,10 @@ type Props = {
     rgb: {};
   };
   onRemoveColor: () => void;
-  onChangeColor: (color) => void;
+  onChangeColor: (color: any) => void;
   focusEditor: () => void;
   className?: string;
-  theme?: string;
+  theme?: any;
 };
 
 const ColorPickerButton = ({
@@ -23,17 +23,17 @@ const ColorPickerButton = ({
 
   const toggleColorPicker = () => setColorPicker(!showColorPicker);
 
-  const handleChangeColor = focusEditor => {
+  const handleChangeColor = (focusEditor: any) => {
     setColorPicker(false);
     focusEditor();
   };
 
-  const presetColors = theme ? themes[theme] : [];
+  const presetColors = theme ? (themes as any)[theme] : [];
 
   const colorPickerProps = {
-    color,
+    color: (color as any).rgb,
     presetColors,
-    onChangeComplete: () => onChangeColor(color.rgb),
+    onChangeComplete: () => onChangeColor((color as any).rgb),
   };
 
   return (

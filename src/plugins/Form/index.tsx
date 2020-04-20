@@ -124,6 +124,7 @@ type Props = {
       fields: Array<any>;
       count_text?: string;
     };
+    id: number;
   };
   analyticsEvents: Record<any, any>;
   overrides: {

@@ -1,4 +1,4 @@
-import { EditorState, Modifier } from 'draft-js';
+import { Modifier } from 'draft-js';
 
 //
 // USAGE
@@ -6,7 +6,7 @@ import { EditorState, Modifier } from 'draft-js';
 // removeStyles = alignments to remove (["center", "right"])
 //
 
-const EditorState = (editorState, style, removeStyles = []) => {
+const EditorState = (editorState: any, style: any, removeStyles = []) => {
   let currentContent = editorState.getCurrentContent();
   let selection = editorState.getSelection();
   let focusBlock = currentContent.getBlockForKey(selection.getFocusKey());

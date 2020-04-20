@@ -1,7 +1,7 @@
 import React from 'react';
 import styleWholeSelectedBlocksModifier from './styleWholeSelectedBlocksModifier';
 
-const alignments = ['left', 'center', 'right'];
+// const alignments = ['left', 'center', 'right'];
 
 type Props = {
   editorState: Record<string, any>;
@@ -19,8 +19,8 @@ const AlignmentControls = ({
   const handleToggleAlign = (alignment: any) => {
     const editorStateWithAlignment = styleWholeSelectedBlocksModifier(
       editorState,
-      alignment,
-      alignments.filter((align: any) => alignment !== align)
+      alignment
+      // alignments.filter((align: any) => alignment !== align)
     );
     setEditorState(editorStateWithAlignment);
 

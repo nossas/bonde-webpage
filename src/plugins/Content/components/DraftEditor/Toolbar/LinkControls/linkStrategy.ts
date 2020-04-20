@@ -1,7 +1,7 @@
 import { Entity } from 'draft-js';
 
-export default (contentBlock, callback) => {
-  contentBlock.findEntityRanges(character => {
+export default (contentBlock: any, callback: any) => {
+  contentBlock.findEntityRanges((character: any) => {
     const entityKey = character.getEntity();
     if (entityKey) {
       const entityInstance = Entity.get(entityKey);

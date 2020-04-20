@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  & .editor--content > div {
-    min-height: 370px;
+  && {
+    .editor--content > div {
+      min-height: 370px;
+    }
   }
 
   & .editor--toolbar {

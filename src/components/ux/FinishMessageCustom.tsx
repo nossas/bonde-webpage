@@ -1,11 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import DraftEditor from '../../plugins/Content/components/DraftEditor';
-import SlateEditor from '../../plugins/Content/components/SlateEditor';
+import { DraftEditor, SlateEditor } from '../../plugins/Content/components';
 
 import { checkToParse } from '../../utils';
 
-const FinishMessageCustom = ({ readOnly, widget: { settings } }: any) => {
+type Props = {
+  widget: {
+    settings: {
+      finish_message: string;
+      finish_message_background: string;
+    };
+  };
+  readOnly: boolean;
+  mobilization: Record<any, any>;
+};
+
+const FinishMessageCustom = ({
+  readOnly,
+  widget: { settings },
+  mobilization,
+}: Props) => {
   const {
     finish_message: finishMessage,
     finish_message_background: finishMessageBackground,
@@ -15,6 +28,10 @@ const FinishMessageCustom = ({ readOnly, widget: { settings } }: any) => {
 
   return content.entityMap ? (
     <DraftEditor
+      handleSave={() => console.log('salvando')}
+      handleDelete={() => console.log('deletando')}
+      mobilization={mobilization}
+      settings={settings}
       readOnly={readOnly}
       value={content}
       editorStyle={{
@@ -29,19 +46,6 @@ const FinishMessageCustom = ({ readOnly, widget: { settings } }: any) => {
       contentStyles={{ backgroundColor: '#fff', color: '#666', padding: 10 }}
     />
   );
-};
-
-//
-// PropTypes
-//
-FinishMessageCustom.propTypes = {
-  widget: PropTypes.shape({
-    settings: PropTypes.shape({
-      finish_message: PropTypes.string.isRequired,
-      finish_message_background: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-  readOnly: PropTypes.bool,
 };
 
 FinishMessageCustom.defaultProps = {

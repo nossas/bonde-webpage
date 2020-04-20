@@ -11,6 +11,9 @@ type Props = {
       content: string | Record<any, any>;
     };
   };
+  readOnly: boolean;
+  handleSave: Function;
+  handleDelete: (event: any) => void;
 };
 
 const Content = ({ widget: { settings }, ...props }: Props) => {
@@ -23,7 +26,7 @@ const Content = ({ widget: { settings }, ...props }: Props) => {
   return content.entityMap ? (
     <DraftEditor {...props} settings={settings} />
   ) : (
-    <SlateEditor {...props} content={settings.content} readOnly />
+    <SlateEditor {...props} content={settings.content} />
   );
 };
 

@@ -4,7 +4,7 @@ import { Entity } from 'draft-js';
 import EditorUtils from '../EditorUtils';
 import getSelectionEntities from '../getSelectionEntities';
 
-const getSelectionLink = editorState => {
+const getSelectionLink = (editorState: any) => {
   // Return entity when one and only one selected
   return getSelectionEntities(editorState, 'LINK').last();
 };
@@ -33,7 +33,7 @@ const LinkControls = ({
     const entityLink = getSelectionLink(editorState);
     const nextEntityLink = getSelectionLink(editorState);
     if (nextEntityLink && nextEntityLink !== entityLink) {
-      const entityInstance = Entity.get(nextEntityLink.entityKey);
+      const entityInstance = Entity.get((nextEntityLink as any).entityKey);
       const { href, target } = entityInstance.getData();
       setTarget(target);
       setHref(href);
@@ -64,7 +64,7 @@ const LinkControls = ({
     return focusEditor();
   };
 
-  const handleChangeTarget = e =>
+  const handleChangeTarget = (e: any) =>
     setTarget(e.target.checked ? '_blank' : '_self');
 
   return (

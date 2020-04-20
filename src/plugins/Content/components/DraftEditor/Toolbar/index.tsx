@@ -20,7 +20,7 @@ type Props = {
   buttonClassName?: string;
   popoverClassName?: string;
   theme?: string;
-  style: Record<string, string>;
+  style?: Record<string, string | number>;
 };
 
 const Toolbar = ({
@@ -30,7 +30,7 @@ const Toolbar = ({
   buttonClassName,
   popoverClassName,
   theme,
-  style,
+  style = {},
 }: Props) => {
   const toggleInlineStyle = (style: any) => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, style));

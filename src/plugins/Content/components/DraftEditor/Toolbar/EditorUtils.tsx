@@ -77,7 +77,10 @@ export const getSelectedBlocks = (contentState: any, selectionState: any) => {
   return selectedBlocks;
 };
 
-const getBlockSelectionState = (contentBlock: any, selectionState: any) => {
+export const getBlockSelectionState = (
+  contentBlock: any,
+  selectionState: any
+) => {
   const anchorKey = selectionState.getStartKey();
   const focusKey = selectionState.getEndKey();
 
@@ -147,7 +150,7 @@ export default {
 
       // Should create entity when text select
       // and merge entity data when block type selected is atomic
-      let entityKey: any;
+      // let entityKey: any;
 
       arrayBlocks.forEach(block => {
         const entity = block.getEntityAt(0);
@@ -161,47 +164,49 @@ export default {
               // Update
               Entity.mergeData(entity, data);
             }
-          } else {
-            const blockSelectionState = getBlockSelectionState(
-              block,
-              selection
-            );
-            const entitySelectionState = getEntitySelectionState(
-              editorState,
-              blockSelectionState,
-              'LINK'
-            );
-
-            if (entitySelectionState && data) {
-              editorStateMutable = RichUtils.toggleLink(
-                editorStateMutable,
-                blockSelectionState,
-                Entity.create('LINK', 'MUTABLE', data)
-              );
-            } else {
-              editorStateMutable = RichUtils.toggleLink(
-                editorStateMutable,
-                blockSelectionState,
-                null
-              );
-            }
           }
-        } else if (block.getText().length > 0) {
-          if (!entityKey) {
-            // Ensure only a entity been created
-            entityKey = data ? Entity.create('LINK', 'MUTABLE', data) : null;
-          }
+          // else {
+          //   const blockSelectionState = getBlockSelectionState(
+          //     block,
+          //     selection
+          //   );
+          //   const entitySelectionState = getEntitySelectionState(
+          //     editorState,
+          //     blockSelectionState,
+          //     'LINK'
+          //   );
 
-          // Toggle link
-          const blockSelectionState = getBlockSelectionState(block, selection);
-          editorStateMutable = RichUtils.toggleLink(
-            // Apply entity in content mutable to ensure
-            // that link before loop has been applied
-            editorStateMutable,
-            blockSelectionState,
-            entityKey
-          );
+          //   if (entitySelectionState && data) {
+          //     editorStateMutable = RichUtils.toggleLink(
+          //       editorStateMutable,
+          //       blockSelectionState,
+          //       Entity.create('LINK', 'MUTABLE', data)
+          //     );
+          //   } else {
+          //     editorStateMutable = RichUtils.toggleLink(
+          //       editorStateMutable,
+          //       blockSelectionState,
+          //       null
+          //     );
+          //   }
+          // }
         }
+        // else if (block.getText().length > 0) {
+        //   if (!entityKey) {
+        //     // Ensure only a entity been created
+        //     entityKey = data ? Entity.create('LINK', 'MUTABLE', data) : null;
+        //   }
+
+        //   // Toggle link
+        //   const blockSelectionState = getBlockSelectionState(block, selection);
+        //   editorStateMutable = RichUtils.toggleLink(
+        //     // Apply entity in content mutable to ensure
+        //     // that link before loop has been applied
+        //     editorStateMutable,
+        //     blockSelectionState,
+        //     entityKey
+        //   );
+        // }
       });
       return editorStateMutable;
     } else {
@@ -234,6 +239,7 @@ export default {
       );
       return entityKey ? Entity.get(entityKey) : undefined;
     }
+    return false;
   },
 
   customColor: (style: any) => {

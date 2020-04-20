@@ -8,7 +8,7 @@ import InsertScriptButton from './InsertScriptButton';
 import { Wrapper } from './styles';
 
 type Props = {
-  editorState: Record<any, any>;
+  editorState: any;
   setEditorState: (param: any) => void;
   focusEditor: () => void;
   buttonClassName?: string;
@@ -22,7 +22,7 @@ const MediaControls = ({
   buttonClassName,
   popoverClassName,
 }: Props) => {
-  const handleInsertMedia = (mediaType, source) => {
+  const handleInsertMedia = (mediaType: any, source: any) => {
     const entityKey = Entity.create(mediaType, 'IMMUTABLE', { src: source });
     const editorStateWithMedia = AtomicBlockUtils.insertAtomicBlock(
       editorState,

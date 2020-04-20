@@ -6,9 +6,22 @@ import { Wrapper } from './styles';
 type Props = {
   mobilization: Record<any, any>;
   settings: Record<any, any>;
+  readOnly: boolean;
+  value?: any;
+  editorStyle?: {
+    backgroundColor: string;
+    borderRadius: string | number;
+  };
+  handleSave: Function;
+  containerStyle?: Record<string, string | number>;
+  toolbarStyle?: Record<string, string | number>;
+  toolbarContainerStyle?: Record<string, string | number>;
+  focusStyle?: Record<string, string | number>;
+  theme?: string;
+  handleDelete: (event: any) => void;
 };
 
-const DraftEditor = ({ mobilization, settings }: Props) => {
+const DraftEditor = ({ mobilization, settings, ...props }: Props) => {
   const { body_font: bodyFont } = mobilization;
 
   const theme =
@@ -23,7 +36,7 @@ const DraftEditor = ({ mobilization, settings }: Props) => {
       className="widgets--content-plugin widget editor-new"
       style={{ fontFamily: bodyFont }}
     >
-      <Editor readOnly value={value} theme={theme} />
+      <Editor {...props} value={value} theme={theme} />
     </Wrapper>
   );
 };

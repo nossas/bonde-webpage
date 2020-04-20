@@ -44,11 +44,11 @@ type Props = {
   readOnly: boolean;
   value?: any;
   theme?: string;
-  containerStyle: Record<string, string>;
-  toolbarStyle: Record<string, string>;
-  toolbarContainerStyle: Record<string, string>;
-  editorStyle: Record<string, string>;
-  focusStyle: Record<string, string>;
+  containerStyle?: Record<string, string | number>;
+  toolbarStyle?: Record<string, string | number>;
+  toolbarContainerStyle?: Record<string, string | number>;
+  focusStyle?: Record<string, string | number>;
+  editorStyle?: Record<string, string | number>;
   handleDelete: (event: any) => void;
 };
 

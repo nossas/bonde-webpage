@@ -36,7 +36,7 @@ const FontControls = ({
     changeStyles();
   }, [editorState]);
 
-  const handleChangeSize = e => {
+  const handleChangeSize = (e: any) => {
     const fontSize = e.target.value;
 
     if (fontSize) {
@@ -52,7 +52,7 @@ const FontControls = ({
     }
   };
 
-  const handleChangeFont = e => {
+  const handleChangeFont = (e: any) => {
     const fontFamily = e.target.value;
 
     const editorStateWithFontFamily = EditorUtils.toggleInlineStyle(
