@@ -11,5 +11,5 @@ export const Content = () => (
 );
 
 export default {
-  title: 'Content',
+  title: 'ContentPlugin',
 };

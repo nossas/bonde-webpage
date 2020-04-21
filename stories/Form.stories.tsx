@@ -30,5 +30,5 @@ export const Form = () => {
 };
 
 export default {
-  title: 'Form',
+  title: 'FormPlugin',
 };
