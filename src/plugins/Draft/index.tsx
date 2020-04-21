@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from './Button';
 import { DraftWidget, DraftWidgetPublic } from './styles';
+
 const DraftPlugin_PREFIX = '_draftPlugin';
 
 type Props = {

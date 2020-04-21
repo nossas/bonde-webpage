@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper, StyledButton, Content } from './styles';
+import { StyledButton, Content } from './styles';
 
 const Button = ({
   children,
@@ -12,11 +12,9 @@ const Button = ({
 }) => {
   // TODO: Renderizar icone quando coluna estiver reduzida
   return (
-    <Wrapper className="draft-widget-button col col-4 p1">
-      <StyledButton title={label} className="col-12" onClick={onClick}>
-        <Content>{children}</Content>
-      </StyledButton>
-    </Wrapper>
+    <StyledButton title={label} className="col-12" onClick={onClick}>
+      <Content>{children}</Content>
+    </StyledButton>
   );
 };
 
