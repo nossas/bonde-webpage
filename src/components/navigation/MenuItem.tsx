@@ -21,6 +21,8 @@ export const Link = styled.a`
 
   vertical-align: middle;
   -webkit-appearance: none;
+
+  line-height: 1.125rem;
 `;
 
 interface MenuItemProps {

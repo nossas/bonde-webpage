@@ -8,9 +8,15 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "bonde-components": "^0.0.2-alpha.17",
     "react-app-polyfill": "^1.0.0",
+    "react-intl": "^2.4.0",
+    "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
+    "redux": "^4.0.5",
+    "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^5.1.0"
   },
   "alias": {

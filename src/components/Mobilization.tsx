@@ -1,8 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Section from './Section';
 import Footer from './Footer';
 import Navigation from './navigation';
+
+interface MobilizationProps {
+  /* Define when the mobilization is in edit mode. */
+  editable: boolean;
+  colorScheme?: string;
+  headerFont?: string;
+  bodyFont?: string;
+  /* Function used to link navigation bar with block,
+   * receives block as parameter and should return a string like id. */
+  linkTo: Function;
+  /* This component is rendered just below the list of blocks,
+   * and should lead to the addition of a new block when it is clicked
+   *
+   * TODO: Review button should external to the mobilization component.
+   */
+  // newBlockButton: PropTypes.any,
+  /* Sections of your mobilization, you will receive an item from this
+   * list when you are rendering block customization. */
+  blocks: any[];
+  /* This component renders wrapped to the block, in it you can
+   * customize the rendering of your block, get block and editable
+   * as property. */
+  // blockWrapper: PropTypes.any,
+  /* Array of widgets object used on render. */
+  widgets: any[];
+  /* Component responsible to render a widget logic,
+   * receive { widget } props */
+  widgetComponent: any;
+  // TODO: Documentation
+  extraWidgetProps: any;
+  /* Function used to link widgets with block, receives (block, widgets)
+   * as param.
+   * Default function use the attrs widget.block_id to relationship. */
+  blockWidgetsRef: Function;
+}
 
 /**
  * A mobilization has two modes, in editing ({ editable: true })
@@ -14,7 +48,7 @@ import Navigation from './navigation';
 const getVisibleBlocks = (blocks: any, editable: any) =>
   !editable ? blocks.filter((b: any) => !b.hidden) : blocks;
 
-const Mobilization = (props: any) => {
+const Mobilization: React.FC<MobilizationProps> = props => {
   const [blocks, setBlocks] = useState(
     getVisibleBlocks(props.blocks, props.editable)
   );
@@ -77,10 +111,9 @@ const Mobilization = (props: any) => {
   // }
 
   // Props used on editable mode
-  const { editable, newBlockButton: NewBlockButton } = props;
   // Props to customize layout themes
   // TODO: Rever funcionamento da customização de layouts
-  const { colorScheme, headerFont, bodyFont } = props;
+  const { editable, colorScheme, headerFont, bodyFont } = props;
 
   const themeClassName = `${colorScheme} ${headerFont}-header ${bodyFont}-body`;
   const layoutClassName = editable ? 'flex-auto relative' : 'absolute';
@@ -89,7 +122,6 @@ const Mobilization = (props: any) => {
     : undefined;
   // Props to render blocos
   const {
-    blockWrapper,
     linkTo,
     blockWidgetsRef,
     widgets,
@@ -114,13 +146,11 @@ const Mobilization = (props: any) => {
             anchor={linkTo(b)}
             block={b}
             editable={editable}
-            wrapper={blockWrapper}
             widgets={blockWidgetsRef(b, widgets)}
             widgetComponent={widgetComponent}
             extraWidgetProps={extraWidgetProps}
           />
         ))}
-        {editable && NewBlockButton && <NewBlockButton />}
         <Footer />
       </div>
     </div>
@@ -134,38 +164,6 @@ Mobilization.defaultProps = {
   extraWidgetProps: {},
   blockWidgetsRef: (b: any, ws: any) =>
     ws.filter((w: any) => w.block_id === b.id),
-};
-
-Mobilization.propTypes = {
-  /* Define when the mobilization is in edit mode. */
-  editable: PropTypes.bool,
-  /* Function used to link navigation bar with block,
-   * receives block as parameter and should return a string like id. */
-  linkTo: PropTypes.func.isRequired,
-  /* This component is rendered just below the list of blocks,
-   * and should lead to the addition of a new block when it is clicked
-   *
-   * TODO: Review button should external to the mobilization component.
-   */
-  // newBlockButton: PropTypes.any,
-  /* Sections of your mobilization, you will receive an item from this
-   * list when you are rendering block customization. */
-  blocks: PropTypes.array,
-  /* This component renders wrapped to the block, in it you can
-   * customize the rendering of your block, get block and editable
-   * as property. */
-  // blockWrapper: PropTypes.any,
-  /* Array of widgets object used on render. */
-  widgets: PropTypes.array.isRequired,
-  /* Component responsible to render a widget logic,
-   * receive { widget } props */
-  widgetComponent: PropTypes.any.isRequired,
-  // TODO: Documentation
-  extraWidgetProps: PropTypes.object,
-  /* Function used to link widgets with block, receives (block, widgets)
-   * as param.
-   * Default function use the attrs widget.block_id to relationship. */
-  blockWidgetsRef: PropTypes.func.isRequired,
 };
 
 export default Mobilization;
