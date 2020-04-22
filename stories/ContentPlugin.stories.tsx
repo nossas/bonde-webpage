@@ -1,9 +1,10 @@
 import React from 'react';
 // import { action } from '@storybook/addon-actions';
-import { ContentEditor, ContentProps } from '../src';
+import { ContentPlugin } from '../src';
+import ContentProps from './mocks/plugin/content';
 
 export const Content = () => (
-  <ContentEditor
+  <ContentPlugin
     {...ContentProps}
     handleSave={() => console.log('save')}
     handleDelete={() => console.log('delete')}

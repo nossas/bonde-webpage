@@ -2,14 +2,12 @@ import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { Main, Body } from 'bonde-components';
 import {
-  Mobilization,
-  PluggableWidget,
-  DraftPlugin,
-  PressureForm,
-  PressureProps,
-} from '../.';
+  Main,
+  Body,
+  // Validators
+} from 'bonde-components';
+import { Mobilization, PluggableWidget, DraftPlugin } from '../.';
 import props from './data';
 
 const plugins = [
@@ -93,15 +91,11 @@ const Routing = () => {
     <Main>
       <Body>
         <Link to="/">Navigate to page mobilization</Link>
-        <Link to="/form">Navigate to page with form</Link>
         <Switch>
           <Route exact path="/">
             <div>
               <Mobilization {...newProps} widgetComponent={PluggableWidget} />
             </div>
-          </Route>
-          <Route exact path="/form">
-            <PressureForm {...PressureProps} />
           </Route>
         </Switch>
       </Body>

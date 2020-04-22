@@ -5,9 +5,9 @@ import {
   FinishMessageCustom,
   FormTellAFriend,
   FormAnalytics,
-  FormProps,
   asyncFormEntryCreate,
 } from '../src';
+import FormProps from './mocks/plugin/form';
 
 export const Form = () => {
   return (
