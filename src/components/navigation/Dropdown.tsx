@@ -1,8 +1,47 @@
 import React, { useState } from 'react';
-import { array, object, string } from 'prop-types';
+import styled from '@emotion/styled';
 import { BarsIcon } from '../../icons';
 
-const DropdownMenu = (props: any) => {
+const DropdownStyled = styled.div`
+  position: relative;
+
+  button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 3px;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 1em;
+  }
+`;
+
+interface WrapperStyledProps {
+  open?: boolean;
+}
+
+const WrapperStyled = styled.div<WrapperStyledProps>`
+  ${props => !props.open && `display: none;`}
+  background-color: rgba(0,0,0,.5);
+  border-radius: 3px;
+  z-index: 2;
+  white-space: nowrap;
+
+  position: absolute;
+  right: 0;
+  top: 37px;
+  margin: calc(1em - 2px);
+`;
+
+interface DropdownMenuProps {
+  text?: string;
+  icon: string;
+}
+
+const DropdownMenu: React.FC<DropdownMenuProps> = (props: any) => {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => setOpen(!open);
@@ -23,7 +62,7 @@ const DropdownMenu = (props: any) => {
   const renderChildren = () => {
     return props.children.map((child: any, index: any) => {
       const props =
-        child.type !== 'div' ? { onItemClick: handleOverlayClick } : {};
+        child.type !== 'div' ? { onCloseDropdown: handleOverlayClick } : {};
       return React.cloneElement(child, {
         key: 'item-' + index,
         ...props,
@@ -31,45 +70,19 @@ const DropdownMenu = (props: any) => {
     });
   };
 
-  const {
-    wrapperClassName,
-    buttonClassName,
-    menuClassName,
-    menuStyle,
-    text,
-    children,
-  } = props;
+  const { text, children } = props;
 
   return (
-    <div
-      style={{ marginTop: '5px' }}
-      className={`relative ${wrapperClassName}`}
-    >
-      <button type="button" className={buttonClassName} onClick={handleClick}>
+    <DropdownStyled>
+      <button type="button" onClick={handleClick}>
         {renderIcon()} {text}
       </button>
-      <div
-        className={`absolute nowrap z2' ${menuClassName} ${
-          open ? '' : 'display-none'
-        }`}
-        style={menuStyle}
-      >
+      <WrapperStyled open={open}>
         {children.length > 0 && renderChildren()}
-      </div>
+      </WrapperStyled>
       {renderOverlay()}
-    </div>
+    </DropdownStyled>
   );
-};
-
-DropdownMenu.propTypes = {
-  className: string,
-  menuClassName: string,
-  menuStyle: object,
-  wrapperClassName: string,
-  buttonClassName: string,
-  text: string,
-  children: array,
-  icon: string,
 };
 
 export default DropdownMenu;

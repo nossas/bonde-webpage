@@ -1,3 +1,4 @@
+export { default as Styles } from './Styles';
 export { default as Mobilization } from './components/Mobilization';
 export { default as Footer } from './components/Footer';
 export { default as Section } from './components/Section';
@@ -13,7 +14,6 @@ export { default as FormProps } from './mocks/plugin/form';
 export { default as asyncFormEntryCreate } from './redux/action-creators/FormEntryCreate';
 
 export { default as selectors } from './redux/Selectors';
-export { default as Thing } from './Thing';
 export { default as ContentEditor } from './plugins/Content';
 export { default as ContentProps } from './mocks/plugin/content';
 
