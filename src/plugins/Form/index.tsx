@@ -235,3 +235,6 @@ FormPlugin.defaultProps = {
 };
 
 export default FormPlugin;
+
+export { default as FormAnalytics } from './Analytics';
+export { default as FormTellAFriend } from './TellAFriend';
