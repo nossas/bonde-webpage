@@ -19,3 +19,6 @@ export { default as ContentProps } from './mocks/plugin/content';
 
 export { default as DraftPlugin } from './plugins/Draft';
 export { default as DraftProps } from './mocks/plugin/draft';
+
+export { default as PressureForm } from './plugins/Pressure/components/Form';
+export { default as PressureProps } from './mocks/plugin/pressure';

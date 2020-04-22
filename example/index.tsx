@@ -1,7 +1,15 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Mobilization, PluggableWidget, DraftPlugin, Money } from '../.';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Main, Body } from 'bonde-components';
+import {
+  Mobilization,
+  PluggableWidget,
+  DraftPlugin,
+  PressureForm,
+  PressureProps,
+} from '../.';
 import props from './data';
 
 const plugins = [
@@ -26,7 +34,7 @@ const plugins = [
     component: () => <div>Doação</div>,
     options: DraftPlugin.setOptions({
       label: 'Doação',
-      icon: () => <Money />,
+      icon: () => <div>Doação ícone</div>,
       action: widget => {
         console.log(`update widget ${widget.id}`);
       },
@@ -80,11 +88,32 @@ const newProps = {
   },
 };
 
+const Routing = () => {
+  return (
+    <Main>
+      <Body>
+        <Link to="/">Navigate to page mobilization</Link>
+        <Link to="/form">Navigate to page with form</Link>
+        <Switch>
+          <Route exact path="/">
+            <div>
+              <Mobilization {...newProps} widgetComponent={PluggableWidget} />
+            </div>
+          </Route>
+          <Route exact path="/form">
+            <PressureForm {...PressureProps} />
+          </Route>
+        </Switch>
+      </Body>
+    </Main>
+  );
+};
+
 const App = () => {
   return (
-    <div>
-      <Mobilization {...newProps} widgetComponent={PluggableWidget} />
-    </div>
+    <Router>
+      <Routing />
+    </Router>
   );
 };
 
