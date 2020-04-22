@@ -10,8 +10,6 @@ import { Wrapper, ButtonWrapper } from './styles';
 
 type Props = {
   onSubmit: any;
-  subject: string;
-  body: string;
   mobilization?: Record<any, any>;
   widget: {
     settings: {
@@ -85,10 +83,10 @@ const PressureForm = ({
 };
 
 PressureForm.defaultProps = {
-  subject: '',
-  body: '',
   widget: {
-    button_text: 'Enviar e-mail',
+    settings: {
+      button_text: 'Enviar e-mail',
+    },
   },
   changeParentState: () => {},
 };

@@ -59,11 +59,41 @@ export const pressureUtils = {
 // # validateUtils
 // eslint-disable-next-line
 const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const isValidEmail = email => regexEmail.test(email);
+const isValidEmail = (email: string) => regexEmail.test(email);
 
 // Regex to validate phone numver in E.164 format
 // Validating only BRA phone numbers for now
 const regexPhoneE164 = /^\+\d{12,13}$/;
-const isValidPhoneE164 = phone => regexPhoneE164.test(phone);
 
-export const validateUtils = { isValidEmail, isValidPhoneE164 };
+const isValidPhoneE164 = ({
+  code,
+  invalid,
+}: {
+  code: string;
+  invalid: string;
+}) => (value: string) => {
+  const phoneE164 = /^\+/.test(value) ? value : `+${value}`;
+  const message = [11, 12].includes(phoneE164.length) ? code : invalid;
+  return regexPhoneE164.test(phoneE164) ? undefined : message;
+};
+
+const checkEmailTargetsList = (message: string, targetList: Array<any>) => (
+  value: string
+) =>
+  targetList.some(target => target.match(`<${value}>`)) ? message : undefined;
+
+const checkPhoneTargetsList = (message: string, targetList: Array<any>) => (
+  value: string
+) =>
+  targetList.some(target =>
+    target.replace(/\D/g, '').match(`${value.replace(/\D/g, '')}`)
+  )
+    ? message
+    : undefined;
+
+export const validateUtils = {
+  isValidEmail,
+  isValidPhoneE164,
+  checkEmailTargetsList,
+  checkPhoneTargetsList,
+};

@@ -8,34 +8,39 @@ type Props = {
     placeholder: string;
     type?: string;
     validate?: any;
+    onBlur?: any;
   }>;
 };
 
 const Fields = ({ fields }: Props) => {
   return (
     <Fragment>
-      {fields.map(({ name, label, type, placeholder, ...configs }, i: any) => {
-        if (type !== 'textarea')
+      {fields.map(
+        ({ name, label, type, placeholder, onBlur, ...configs }, i: number) => {
+          if (type !== 'textarea')
+            return (
+              <InputField
+                name={name}
+                label={label}
+                type={type}
+                placeholder={placeholder}
+                key={`input-id-${i}`}
+                onBlur={onBlur}
+                {...configs}
+              />
+            );
           return (
-            <InputField
-              name={name}
+            <TextareaField
               label={label}
-              type={type}
+              name={name}
               placeholder={placeholder}
-              key={`input-id-${i}`}
+              key={`textarea-id-${i}`}
+              onBlur={onBlur}
               {...configs}
             />
           );
-        return (
-          <TextareaField
-            label={label}
-            name={name}
-            placeholder={placeholder}
-            key={`textarea-id-${i}`}
-            {...configs}
-          />
-        );
-      })}
+        }
+      )}
     </Fragment>
   );
 };
