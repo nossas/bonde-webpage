@@ -5,10 +5,11 @@ import {
   Validators,
   Button,
 } from 'bonde-components';
+// import BeforeStandardFields from '../Form/BeforeStandardFields';
 import { Wrapper, ButtonWrapper } from './styles';
 
 type Props = {
-  onSubmit: () => Promise<any>;
+  onSubmit: any;
   subject: string;
   body: string;
   mobilization?: Record<any, any>;
@@ -21,8 +22,8 @@ type Props = {
   };
   changeParentState?: Function;
   analyticsEvents?: any;
-  beforeStandardForm: () => React.ReactNode;
-  afterStandardForm: () => React.ReactNode;
+  BeforeStandardFields: any;
+  AfterStandardFields: any;
 };
 
 const PressureForm = ({
@@ -33,8 +34,8 @@ const PressureForm = ({
       button_text: buttonText,
     },
   },
-  beforeStandardForm,
-  afterStandardForm,
+  BeforeStandardFields,
+  AfterStandardFields,
   onSubmit,
 }: Props) => {
   const { required } = Validators;
@@ -48,7 +49,7 @@ const PressureForm = ({
         return (
           <>
             <Wrapper>
-              {beforeStandardForm()}
+              <BeforeStandardFields />
               <InputField
                 label="Nome"
                 name="name"
@@ -69,7 +70,7 @@ const PressureForm = ({
                   validate={required('Preenchimento obrigatório')}
                 />
               )}
-              {afterStandardForm()}
+              <AfterStandardFields />
             </Wrapper>
             <ButtonWrapper color={buttonColor}>
               <Button type="submit" disabled={submitting}>
@@ -90,8 +91,6 @@ PressureForm.defaultProps = {
     button_text: 'Enviar e-mail',
   },
   changeParentState: () => {},
-  beforeStandardForm: () => <div>Antes</div>,
-  afterStandardForm: () => <div>Depois</div>,
 };
 
 export default PressureForm;

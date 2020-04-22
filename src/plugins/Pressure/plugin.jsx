@@ -186,16 +186,16 @@ class Pressure extends React.Component {
           callTransition={this.props.callTransition}
           addTwilioCallMutation={this.props.twilioCall}
           changeParentState={this.changeState.bind(this)}
-        >
-          {countText && (
+        />
+        {/* {countText && (
             <Count
               value={this.state.phonePressureCount || widget.count || 0}
               color={mainColor}
               text={countText}
               startCounting={block.scrollTopReached}
             />
-          )}
-        </Form>
+          )} */}
+        {/* </Form> */}
       </div>
     );
   }

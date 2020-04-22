@@ -15,6 +15,7 @@ export const Wrapper = styled.div`
       letter-spacing: 0;
     }
 
+    textarea,
     input {
       border: none;
       padding: 0px;
@@ -50,6 +51,10 @@ export const Wrapper = styled.div`
         margin-left: 0.5rem;
         font-weight: 700;
       }
+    }
+
+    textarea {
+      height: 7rem;
     }
   }
 `;

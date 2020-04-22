@@ -18,5 +18,6 @@ export { default as ContentPlugin } from './plugins/Content';
 export { default as DraftPlugin } from './plugins/Draft';
 
 export { default as PressureForm } from './plugins/Pressure/components/Form';
-export { default as BeforeStandardFields } from './plugins/Pressure/components/BeforeStandardFields';
 export { default as Fields } from './plugins/Pressure/components/Fields';
+export { default as EmailFields } from './plugins/Pressure/Email';
+// export { default as PhoneFields } from './plugins/Pressure/Email';
