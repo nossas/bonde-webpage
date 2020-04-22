@@ -1,4 +1,4 @@
-export default (state: any, props: any) => ({
+export default (state: any, props: any = {}) => ({
   getMobilizationLink: () => {
     const {
       sourceRequest: { protocol, host },

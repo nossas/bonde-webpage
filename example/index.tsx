@@ -1,119 +1,103 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { Main, Body } from 'bonde-components';
 import {
-  Mobilization,
-  PluggableWidget,
-  DraftPlugin,
-  PressureForm,
-  PressureProps,
+  Styles,
+  // Mobilization,
+  // PluggableWidget,
+  // DraftPlugin,
+  // ContentEditor
 } from '../.';
-import props from './data';
+// import props from './data';
+import BondePublic from './bonde-public';
+import FetchMobilization from './FetchMobilization';
+import MobilizationConnected from './components/MobilizationConnected';
 
-const plugins = [
-  {
-    kind: 'draft',
-    component: DraftPlugin,
-    options: { noOverlay: true },
-  },
-  {
-    kind: 'form',
-    component: () => <div>Formulário</div>,
-    options: DraftPlugin.setOptions({
-      label: 'Formulário',
-      icon: () => <i className="fa fa-list block white" />,
-      action: widget => {
-        console.log(`update widget ${widget.id}`);
-      },
-    }),
-  },
-  {
-    kind: 'donation',
-    component: () => <div>Doação</div>,
-    options: DraftPlugin.setOptions({
-      label: 'Doação',
-      icon: () => <div>Doação ícone</div>,
-      action: widget => {
-        console.log(`update widget ${widget.id}`);
-      },
-    }),
-  },
-  {
-    kind: 'pressure',
-    component: () => <div>Pressão</div>,
-    options: DraftPlugin.setOptions({
-      label: 'Pressão por e-mail',
-      icon: <i className="fa fa-money block white" />,
-      action: widget => {
-        console.log(`update widget ${widget.id}`);
-      },
-    }),
-  },
-  {
-    kind: 'pressure-phone',
-    component: () => <div>Pressão por telefone</div>,
-    options: DraftPlugin.setOptions({
-      label: 'Pressão por telefone',
-      icon: <i className="fa fa-money block white" />,
-      action: widget => {
-        console.log(`update widget ${widget.id}`);
-      },
-    }),
-  },
-  {
-    kind: 'content',
-    component: () => <div>Conteúdo</div>,
-    options: Object.assign(
-      {},
-      DraftPlugin.setOptions({
-        label: 'Texto',
-        icon: () => <i className="fa fa-font block white" />,
-        action: widget => {
-          console.log(`update widget ${widget.id}`);
-        },
-      }),
-      { noOverlay: true }
-    ),
-  },
-];
+// const plugins = [
+//   {
+//     kind: 'draft',
+//     component: DraftPlugin,
+//     options: { noOverlay: true },
+//   },
+//   {
+//     kind: 'form',
+//     component: () => <div>Formulário</div>,
+//     options: DraftPlugin.setOptions({
+//       label: 'Formulário',
+//       icon: () => <i className="fa fa-list block white" />,
+//       action: widget => {
+//         console.log(`update widget ${widget.id}`);
+//       },
+//     }),
+//   },
+//   {
+//     kind: 'donation',
+//     component: () => <div>Doação</div>,
+//     options: DraftPlugin.setOptions({
+//       label: 'Doação',
+//       icon: () => <div>Doação ícone</div>,
+//       action: widget => {
+//         console.log(`update widget ${widget.id}`);
+//       },
+//     }),
+//   },
+//   {
+//     kind: 'pressure',
+//     component: () => <div>Pressão</div>,
+//     options: DraftPlugin.setOptions({
+//       label: 'Pressão por e-mail',
+//       icon: <i className="fa fa-money block white" />,
+//       action: widget => {
+//         console.log(`update widget ${widget.id}`);
+//       },
+//     }),
+//   },
+//   {
+//     kind: 'pressure-phone',
+//     component: () => <div>Pressão por telefone</div>,
+//     options: DraftPlugin.setOptions({
+//       label: 'Pressão por telefone',
+//       icon: <i className="fa fa-money block white" />,
+//       action: widget => {
+//         console.log(`update widget ${widget.id}`);
+//       },
+//     }),
+//   },
+//   {
+//     kind: 'content',
+//     component: ContentEditor,
+//     options: Object.assign(
+//       {},
+//       DraftPlugin.setOptions({
+//         label: 'Texto',
+//         icon: () => <i className="fa fa-font block white" />,
+//         action: widget => {
+//           console.log(`update widget ${widget.id}`);
+//         },
+//       }),
+//       { noOverlay: true }
+//     ),
+//   },
+// ];
 
-const newProps = {
-  ...props,
-  plugins: [...plugins],
-  extraWidgetProps: {
-    ...props.extraWidgetProps,
-    plugins: [...plugins],
-  },
-};
-
-const Routing = () => {
-  return (
-    <Main>
-      <Body>
-        <Link to="/">Navigate to page mobilization</Link>
-        <Link to="/form">Navigate to page with form</Link>
-        <Switch>
-          <Route exact path="/">
-            <div>
-              <Mobilization {...newProps} widgetComponent={PluggableWidget} />
-            </div>
-          </Route>
-          <Route exact path="/form">
-            <PressureForm {...PressureProps} />
-          </Route>
-        </Switch>
-      </Body>
-    </Main>
-  );
-};
+// const newProps = {
+//   ...props,
+//   plugins: [...plugins],
+//   extraWidgetProps: {
+//     ...props.extraWidgetProps,
+//     plugins: [...plugins],
+//   },
+// };
 
 const App = () => {
   return (
-    <Router>
-      <Routing />
-    </Router>
+    <BondePublic>
+      <FetchMobilization customDomain='www.meurio.org.br'>
+        <Styles>
+          <MobilizationConnected />
+        </Styles>
+      </FetchMobilization>
+    </BondePublic>
   );
 };
 
