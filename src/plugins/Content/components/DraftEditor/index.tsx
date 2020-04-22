@@ -12,13 +12,13 @@ type Props = {
     backgroundColor: string;
     borderRadius: string | number;
   };
-  handleSave: Function;
+  handleSave: any;
   containerStyle?: Record<string, string | number>;
   toolbarStyle?: Record<string, string | number>;
   toolbarContainerStyle?: Record<string, string | number>;
   focusStyle?: Record<string, string | number>;
   theme?: string;
-  handleDelete: (event: any) => void;
+  handleDelete: any;
 };
 
 const DraftEditor = ({ mobilization, settings, ...props }: Props) => {
@@ -36,7 +36,7 @@ const DraftEditor = ({ mobilization, settings, ...props }: Props) => {
       className="widgets--content-plugin widget editor-new"
       style={{ fontFamily: bodyFont }}
     >
-      <Editor {...props} value={value} theme={theme} />
+      <Editor {...props} readOnly value={value} theme={theme} />
     </Wrapper>
   );
 };

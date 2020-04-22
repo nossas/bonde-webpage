@@ -5,15 +5,15 @@ import styleWholeSelectedBlocksModifier from './styleWholeSelectedBlocksModifier
 
 type Props = {
   editorState: Record<string, any>;
-  setEditorState: (param: any[]) => void;
-  focusEditor: () => void;
+  setEditorState: any;
+  focusEditor: any;
   buttonClassName?: string;
 };
 
 const AlignmentControls = ({
   focusEditor,
   editorState,
-  buttonClassName = '',
+  buttonClassName,
   setEditorState,
 }: Props) => {
   const handleToggleAlign = (alignment: any) => {
@@ -65,6 +65,10 @@ const AlignmentControls = ({
       </button>
     </div>
   );
+};
+
+AlignmentControls.defaultProps = {
+  buttonClassName: '',
 };
 
 export default AlignmentControls;

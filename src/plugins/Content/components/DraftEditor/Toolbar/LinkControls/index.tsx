@@ -25,28 +25,27 @@ const LinkControls = ({
   popoverClassName,
 }: Props) => {
   const [showInput, toggleShowInput] = useState(false);
-  const [href, setHref] = useState('false');
+  const [href, setHref] = useState('');
   const [target, setTarget] = useState('_self');
   const [hasLink, toggleLink] = useState(false);
 
-  const changeState = () => {
+  const changeState = (editorState: any) => {
     const entityLink = getSelectionLink(editorState);
-    const nextEntityLink = getSelectionLink(editorState);
-    if (nextEntityLink && nextEntityLink !== entityLink) {
-      const entityInstance = Entity.get((nextEntityLink as any).entityKey);
-      const { href, target } = entityInstance.getData();
-      setTarget(target);
-      setHref(href);
-      toggleLink(true);
-    } else {
-      setTarget('_self');
-      setHref('href');
-      toggleLink(false);
-    }
+    const entityInstance = Entity.get((entityLink as any).entityKey);
+    const { href, target } = entityInstance.getData();
+    setTarget(target);
+    setHref(href);
+    toggleLink(true);
+    // State initial values already does this:
+    // else {
+    //   setTarget('_self');
+    //   setHref('');
+    //   toggleLink(false);
+    // }
   };
 
   useEffect(() => {
-    return changeState();
+    return changeState(editorState);
   }, [editorState]);
 
   const confirmLink = () => {

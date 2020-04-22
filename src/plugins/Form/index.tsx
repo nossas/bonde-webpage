@@ -4,6 +4,40 @@ import CountUp from 'react-countup';
 import { Button, Input, Raise } from './components';
 import { getFieldName, validate, fields } from './utils';
 
+type Props = {
+  mobilization:
+    | {
+        body_font: string;
+        header_font: string;
+      }
+    | Record<any, any>;
+  widget: {
+    settings: {
+      finish_message_type?: string;
+      fields: Array<any>;
+      count_text?: string;
+      button_text: string;
+    };
+    id: number;
+    form_entries_count: any;
+  };
+  analyticsEvents: Record<any, any>;
+  overrides: {
+    FinishCustomMessage: {
+      component: React.ReactNode;
+      props: any;
+    };
+    FinishDefaultMessage: {
+      component: React.ReactNode;
+      props: any;
+    };
+  };
+  asyncFormEntryCreate: any;
+  block: {
+    scrollTopReached: any;
+  };
+};
+
 const renderCallToAction = (widget: any, { header_font: headerFont }: any) => {
   const callToAction = (widget.settings && widget.settings.call_to_action
     ? widget.settings.call_to_action
@@ -18,33 +52,33 @@ const renderCallToAction = (widget: any, { header_font: headerFont }: any) => {
 };
 
 const renderFields = (
-  { analyticsEvents, widget: { settings }, ...props }: any,
+  { analyticsEvents, widget: { settings }, mobilization }: any,
   handleChange: any
 ) => {
   return fields(settings).map((field: any, index: any) => {
     return (
       <Input
-        {...props}
         key={field.uid}
         name={getFieldName(field)}
         onChange={handleChange}
         onBlur={Number(index) === 0 ? analyticsEvents.formIsFilled() : () => {}}
         field={field}
+        bodyFont={mobilization && mobilization.body_font}
       />
     );
   });
 };
 
 const renderButton = (
-  { widget, ...props }: any,
+  { widget, mobilization }: any,
   success: any,
   loading: any
 ) => (
   <Button
-    {...props}
     buttonText={(widget.settings && widget.settings.button_text) || 'Enviar'}
     loading={loading}
     success={success}
+    bodyFont={mobilization && mobilization.body_font}
   />
 );
 
@@ -66,7 +100,7 @@ const renderCount = ({
   );
 };
 
-const renderErrors = (errors: any) => {
+const renderErrors = (errors: Array<any>) => {
   return (
     <React.Fragment>
       {errors.map((error: any, i: number) => (
@@ -116,30 +150,6 @@ const renderShareButtons = ({ widget, overrides, mobilization }: any) => {
   return <p className="center p2 bg-darken-3">{message[0]}</p>;
 };
 
-type Props = {
-  mobilization: Record<any, any>;
-  widget: {
-    settings: {
-      finish_message_type?: string;
-      fields: Array<any>;
-      count_text?: string;
-    };
-    id: number;
-  };
-  analyticsEvents: Record<any, any>;
-  overrides: {
-    FinishCustomMessage: {
-      component: React.ReactNode;
-      props: any;
-    };
-    FinishDefaultMessage: {
-      component: React.ReactNode;
-      props: any;
-    };
-  };
-  asyncFormEntryCreate: any;
-};
-
 const FormPlugin = (props: Props) => {
   const { asyncFormEntryCreate, mobilization, widget } = props;
   const [loading, setLoader] = useState(false);
@@ -184,7 +194,7 @@ const FormPlugin = (props: Props) => {
       [e.target.name]: e.target.value,
     });
 
-  const renderForm = ({ widget, mobilization }: any, errors: any) => {
+  const renderForm = ({ widget, mobilization }: any, errors: Array<any>) => {
     const bgcolor =
       widget.settings && widget.settings.main_color
         ? widget.settings.main_color

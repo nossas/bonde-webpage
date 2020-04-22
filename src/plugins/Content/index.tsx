@@ -12,8 +12,8 @@ type Props = {
     };
   };
   readOnly: boolean;
-  handleSave: Function;
-  handleDelete: (event: any) => void;
+  handleSave: any;
+  handleDelete: any;
 };
 
 const Content = ({ widget: { settings }, ...props }: Props) => {

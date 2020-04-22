@@ -23,8 +23,8 @@ const hasColorStyle = (editorState: any) => {
 
 type Props = {
   editorState: Record<any, any>;
-  setEditorState: (param: any) => void;
-  focusEditor: () => void;
+  setEditorState: any;
+  focusEditor: any;
   buttonClassName?: string;
   theme?: string;
 };
@@ -71,6 +71,10 @@ const ColorControls = ({
       />
     </Wrapper>
   );
+};
+
+ColorControls.defaultProps = {
+  buttonClassName: '',
 };
 
 export default ColorControls;

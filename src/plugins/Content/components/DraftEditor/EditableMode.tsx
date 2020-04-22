@@ -17,6 +17,19 @@ import Toolbar, { toolbarEditorProps } from './Toolbar';
 import getBlockAlignment from './Toolbar/AlignmentControls/getBlockAlignment';
 import './styles.ts';
 
+type Props = {
+  handleSave: Function;
+  readOnly: boolean;
+  value: string | Record<any, any>;
+  theme?: string;
+  containerStyle?: Record<string, string | number>;
+  toolbarStyle?: Record<string, string | number>;
+  toolbarContainerStyle?: Record<string, string | number>;
+  focusStyle?: Record<string, string | number>;
+  editorStyle?: Record<string, string | number>;
+  handleDelete: any;
+};
+
 const newEditor = (value: string | Record<any, any>) => {
   let editorState = EditorState.createEmpty(EditorUtils.decorator);
   let contentState;
@@ -37,19 +50,6 @@ const newEditor = (value: string | Record<any, any>) => {
   );
 
   return editorState;
-};
-
-type Props = {
-  handleSave: Function;
-  readOnly: boolean;
-  value?: any;
-  theme?: string;
-  containerStyle?: Record<string, string | number>;
-  toolbarStyle?: Record<string, string | number>;
-  toolbarContainerStyle?: Record<string, string | number>;
-  focusStyle?: Record<string, string | number>;
-  editorStyle?: Record<string, string | number>;
-  handleDelete: (event: any) => void;
 };
 
 const RebooEditor = ({
@@ -250,7 +250,7 @@ const RebooEditor = ({
 };
 
 RebooEditor.defaultProps = {
-  readOnly: false,
+  readOnly: true,
 };
 
 export default RebooEditor;

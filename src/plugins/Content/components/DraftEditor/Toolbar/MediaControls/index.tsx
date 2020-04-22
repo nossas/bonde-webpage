@@ -10,7 +10,7 @@ import { Wrapper } from './styles';
 type Props = {
   editorState: any;
   setEditorState: (param: any) => void;
-  focusEditor: () => void;
+  focusEditor: any;
   buttonClassName?: string;
   popoverClassName?: string;
 };
@@ -38,7 +38,6 @@ const MediaControls = ({
     <Wrapper className="mediaControls">
       <InsertImageButton
         buttonClassName={buttonClassName}
-        popoverClassName={popoverClassName}
         handleUploadFinish={source => handleInsertMedia('image', source)}
       />
       <InsertScriptButton

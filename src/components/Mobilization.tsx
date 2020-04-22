@@ -11,11 +11,13 @@ import Navigation from './navigation';
  * properties that will be used for block and widgets editing.
  */
 
-const getVisibleBlocks = ({ blocks, editable }: any) =>
+const getVisibleBlocks = (blocks: any, editable: any) =>
   !editable ? blocks.filter((b: any) => !b.hidden) : blocks;
 
 const Mobilization = (props: any) => {
-  const [blocks, setBlocks] = useState(getVisibleBlocks(props));
+  const [blocks, setBlocks] = useState(
+    getVisibleBlocks(props.blocks, props.editable)
+  );
   // const scroll = () => {
   //   let blocksTotalHeight = 0
 
@@ -60,8 +62,8 @@ const Mobilization = (props: any) => {
   //   }
   // }
   useEffect(() => {
-    setBlocks(getVisibleBlocks(props));
-  }, [props.blocks]);
+    setBlocks(getVisibleBlocks(props.blocks, props.editable));
+  }, [props.blocks, props.editable]);
 
   // const updateBlock = (block: any, newProps: any) => {
   //   const index = blocks.findIndex((currentBlock: any) => currentBlock.id === block.id)

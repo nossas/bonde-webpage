@@ -20,21 +20,15 @@ const FontControls = ({
   ...props
 }: Props) => {
   const [initialValues, setState] = useState(props.initialValue);
-
-  const changeStyles = () => {
-    const hasChangeInlineStyle =
-      editorState.getCurrentInlineStyle() !==
-      editorState.getCurrentInlineStyle();
-
-    if (hasChangeInlineStyle) {
-      const currentStyle = editorState.getCurrentInlineStyle();
-      setState({ ...EditorUtils.customSizeAndFamily(currentStyle) });
-    }
+  const inlineStyle = editorState.getCurrentInlineStyle();
+  const changeStyles = (editorState: any) => {
+    const currentStyle = editorState.getCurrentInlineStyle();
+    setState({ ...EditorUtils.customSizeAndFamily(currentStyle) });
   };
 
   useEffect(() => {
-    changeStyles();
-  }, [editorState]);
+    changeStyles(editorState);
+  }, [inlineStyle, editorState]);
 
   const handleChangeSize = (e: any) => {
     const fontSize = e.target.value;

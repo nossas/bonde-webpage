@@ -1,12 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Button = ({
-  success,
-  buttonText,
-  loading,
-  mobilization: { body_font: bodyFont },
-}: any) => (
+type Props = {
+  success: boolean;
+  buttonText: string;
+  loading: boolean;
+  bodyFont: string;
+};
+
+const Button = ({ success, buttonText, loading, bodyFont }: Props) => (
   <div style={{ fontFamily: bodyFont }}>
     <button
       type="submit"
@@ -20,12 +21,5 @@ const Button = ({
     )}
   </div>
 );
-
-Button.propTypes = {
-  success: PropTypes.bool.isRequired,
-  buttonText: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
-  mobilization: PropTypes.object.isRequired,
-};
 
 export default Button;

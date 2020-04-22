@@ -1,7 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Raise = ({ message, classes, styles }: any) => (
+type Props = {
+  message: string;
+  classes: Array<any>;
+  styles: Record<any, any>;
+};
+
+const Raise = ({ message, classes, styles }: Props) => (
   <div
     className={`p1 border-left border-red mb1 rounded-right red bold ${classes}`}
     style={{ ...styles }}
@@ -9,12 +14,6 @@ const Raise = ({ message, classes, styles }: any) => (
     {message}
   </div>
 );
-
-Raise.propTypes = {
-  message: PropTypes.string.isRequired,
-  classes: PropTypes.array,
-  styles: PropTypes.object,
-};
 
 Raise.defaultProps = {
   classes: [],

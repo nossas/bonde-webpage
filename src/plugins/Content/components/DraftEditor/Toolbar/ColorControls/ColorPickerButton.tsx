@@ -6,9 +6,9 @@ type Props = {
   color?: {
     rgb: {};
   };
-  onRemoveColor: () => void;
+  onRemoveColor: any;
   onChangeColor: (color: any) => void;
-  focusEditor: () => void;
+  focusEditor: any;
   className?: string;
   theme?: any;
 };
