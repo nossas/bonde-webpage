@@ -20,4 +20,5 @@ export { default as DraftPlugin } from './plugins/Draft';
 export { default as PressureForm } from './plugins/Pressure/components/Form';
 export { default as EmailFields } from './plugins/Pressure/Email';
 export { default as Fields } from './plugins/Pressure/components/Fields';
-export { default as PhoneFields } from './plugins/Pressure/Phone';
+export { default as CallingTargets } from './plugins/Pressure/Phone/CallingTargets';
+export { default as PhoneBeforeStandardFields } from './plugins/Pressure/Phone/BeforeStandardFields';

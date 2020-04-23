@@ -20,7 +20,7 @@ export default {
     widgetId: 25596,
     __typename: 'WatchTwilioCallTransitionRecordSet',
   },
-  changeParentState: () => console.log('changeParentState'),
+  toggleFinishMessage: () => console.log('changeParentState'),
   children: undefined,
   disabled: false,
   mobilization: {

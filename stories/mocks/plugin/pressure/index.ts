@@ -28,4 +28,8 @@ export default {
     sm_size: 12,
     updated_at: '2020-04-21T19:59:39.923-03:00',
   },
+  targetList: [
+    'Viviane <vivipirolad@gmail.com>',
+    'Camila <caamila.cardoso.l@gmail.com>',
+  ],
 };

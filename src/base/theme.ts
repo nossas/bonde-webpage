@@ -9,7 +9,7 @@ const theme = {
     main: '#aaa',
     light: '#eee',
   },
-  fontFamily: "'Source Sans Pro','Proxima Nova',sans-serif",
+  fontFamily: "'Source Sans Pro', 'Proxima Nova', sans-serif",
   default: {
     color: {
       main: '#fff',

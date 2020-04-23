@@ -1,44 +1,79 @@
 import React from 'react';
-import { PressureForm, EmailFields, PhoneFields } from '../src';
+import {
+  PressureForm,
+  EmailFields,
+  PhoneBeforeStandardFields,
+  CallingTargets,
+} from '../src';
 import PressureProps from './mocks/plugin/pressure';
+import PhoneProps from './mocks/plugin/pressure/phone';
 
-const renderFields = (type: string, { Email, Phone }) => {
-  if (type === 'email') return Email;
-  if (type === 'phone') return Phone;
+const renderFields = (
+  pressureType: string,
+  {
+    Email,
+    Phone,
+  }: { Email?: React.ReactNode | null; Phone?: React.ReactNode | null }
+) => {
+  if (pressureType === 'email') return Email;
+  if (pressureType === 'phone') return Phone;
   return <div>Invalid pressure type</div>;
 };
 
-export const EmailPressure = (pressureType: string) => {
+export const EmailPressure = ({
+  pressureType = 'email',
+  targetList = PressureProps.targetList,
+  disableSubjectAndBody = true,
+}) => {
   return (
     <PressureForm
       {...PressureProps}
       BeforeStandardFields={() =>
         renderFields(pressureType, {
-          Email: EmailFields.before([]),
+          Email: EmailFields.before(targetList),
           Phone: <div>Phone</div>,
         })
       }
       AfterStandardFields={() =>
-        renderFields('email', {
-          Email: EmailFields.after(),
-          Phone: undefined,
+        renderFields(pressureType, {
+          Email: EmailFields.after(disableSubjectAndBody),
+          Phone: null,
         })
       }
     />
   );
 };
 
-export const PhonePressure = () => {
+// Phone: PhoneFields.after({
+//   buttonColor,
+//   callManagement,
+//   addTwilioCallMutation,
+//   toggleFinishMessage,
+// }),
+// buttonColor = '',
+// callManagement = [],
+// addTwilioCallMutation = PhoneProps.addTwilioCallMutation,
+// toggleFinishMessage = PhoneProps.toggleFinishMessage,
+
+export const PhonePressure = ({
+  targetList = PhoneProps.targetList,
+  pressureType = 'phone',
+}) => {
   return (
     <PressureForm
       {...PressureProps}
       BeforeStandardFields={() =>
-        renderFields('phone', {
+        renderFields(pressureType, {
           Email: <div>Antes e-mail</div>,
-          Phone: PhoneFields.before([]),
+          Phone: <PhoneBeforeStandardFields targetList={targetList} />,
         })
       }
-      AfterStandardFields={() => <div>Depois telefone</div>}
+      AfterStandardFields={() =>
+        renderFields(pressureType, {
+          Email: <div>Depois e-mail</div>,
+          Phone: null,
+        })
+      }
     />
   );
 };
