@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import theme from '../../../../base/theme';
 
 export const WrapInputs = styled.div<{ disabled?: boolean }>`
-  padding: 0.25rem 2rem;
+  padding: 1rem 2rem 0.5rem;
   border-bottom: 1px solid #eee;
   & > div {
     padding: 0;
@@ -110,5 +110,18 @@ export const ButtonWrapper = styled.div<ButtonProps>`
 `;
 
 ButtonWrapper.defaultProps = {
+  theme,
+};
+
+export const Error = styled.span`
+  color: red;
+  font-weight: 700;
+  padding: 1rem 2rem 0.5rem;
+  font-size: 13px;
+  text-align: center;
+  font-family: ${props => props.theme.fontFamily};
+`;
+
+Error.defaultProps = {
   theme,
 };

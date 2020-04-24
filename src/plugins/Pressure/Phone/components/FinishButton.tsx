@@ -26,7 +26,7 @@ const FinishButton = ({
         backgroundColor={buttonColor}
         onClick={(e: any) => {
           e.preventDefault();
-          toggleFinishMessage(true);
+          return toggleFinishMessage(true);
         }}
       >
         Encerrar e compartilhar

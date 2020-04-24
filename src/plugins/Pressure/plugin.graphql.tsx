@@ -58,6 +58,8 @@ const PressureGraphQL = ({ graphqlClient, ...props }: Props) => {
       });
   };
 
+  console.log({ graphqlClient, props }, 'graphql');
+
   return (
     <PressurePlugin
       {...props}

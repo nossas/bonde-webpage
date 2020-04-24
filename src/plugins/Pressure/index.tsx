@@ -73,7 +73,7 @@ const renderFields = (
 ) => {
   if (pressureType === 'email') return Email;
   if (pressureType === 'phone') return Phone;
-  return <div>Invalid pressure type</div>;
+  return null;
 };
 
 const parseTarget = (target: string) => {
@@ -119,6 +119,22 @@ const Pressure = ({
     },
   } = overrides;
 
+  console.log(
+    {
+      widget,
+      asyncFillWidget,
+      twilioCall,
+      mobilization,
+      block,
+      saving,
+      filledPressureWidgets,
+      overrides,
+      callTransition,
+      countTwilioCallsByWidget,
+    },
+    'plugin'
+  );
+
   const getTargetList = (targets: string): Array<string> =>
     targets.split(';').filter((target: string) => !!target.trim());
 
@@ -144,7 +160,8 @@ const Pressure = ({
         )
         .catch((err: any) => console.error(err));
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pressureType, widget.settings.count_text]);
 
   useEffect(() => {
     if (!callTransition && targetList && targetList.length) {
@@ -170,7 +187,8 @@ const Pressure = ({
       });
       setCalls(value);
     }
-  }, [callTransition]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [callTransition, targetList, callManagement]);
 
   const getEmailTarget = (target: string) => {
     const targetSplit = target.split('<');
@@ -215,7 +233,9 @@ const Pressure = ({
         true
       );
     }
-    throw new Error('Invalid pressure type');
+    return setTargetsError(
+      'Ops, você precisa selecionar pelo menos um alvo para poder pressionar'
+    );
   };
 
   const finishPressure =
@@ -274,6 +294,7 @@ const Pressure = ({
                 Phone: null,
               })
             }
+            noTargetsError={targetsError}
             // analyticsEvents={analyticsEvents}
           />
           {countText && (

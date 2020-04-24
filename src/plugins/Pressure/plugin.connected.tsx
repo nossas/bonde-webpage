@@ -38,6 +38,8 @@ const Connected = ({ fillWidget, ...props }: Props) => {
     );
   };
 
+  console.log({ fillWidget, props }, 'connected');
+
   return (
     <PressureGraphQL
       {...props}

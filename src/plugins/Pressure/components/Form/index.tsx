@@ -6,7 +6,7 @@ import {
   Button,
 } from 'bonde-components';
 // import BeforeStandardFields from '../Form/BeforeStandardFields';
-import { Wrapper, ButtonWrapper, WrapInputs } from './styles';
+import { Wrapper, ButtonWrapper, WrapInputs, Error } from './styles';
 
 type Props = {
   onSubmit: any;
@@ -24,6 +24,7 @@ type Props = {
     subject: string;
     body: string;
   };
+  noTargetsError?: string;
 };
 
 const PressureForm = ({
@@ -39,9 +40,10 @@ const PressureForm = ({
   onSubmit,
   saving,
   initialValues,
+  noTargetsError,
 }: Props) => {
   const { required } = Validators;
-
+  console.log({ noTargetsError });
   return (
     <ConnectedForm onSubmit={onSubmit} initialValues={initialValues}>
       {({ submitting }) => {
@@ -77,6 +79,7 @@ const PressureForm = ({
               )}
               <AfterStandardFields />
             </Wrapper>
+            {noTargetsError && <Error>{noTargetsError}</Error>}
             <ButtonWrapper color={buttonColor}>
               <Button type="submit" disabled={submitting}>
                 {submitting || saving ? 'Enviando...' : buttonText}

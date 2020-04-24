@@ -12,7 +12,8 @@ const RealtimeCallDuration = () => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [applyInterval]);
 
   return <span>{`${duration}s`}</span>;
 };

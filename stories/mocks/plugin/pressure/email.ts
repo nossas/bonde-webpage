@@ -68,7 +68,7 @@ export default {
       pressure_body: 'Corpo da mensagem',
       pressure_subject: 'Assunto',
       show_city: 'city-false',
-      targets: 'Viviane <vivipirolad@gmail.com>',
+      targets: '',
       title_text: 'Send an email to anyone who can make this decision',
     },
     sm_size: 12,

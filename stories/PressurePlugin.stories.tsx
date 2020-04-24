@@ -20,7 +20,7 @@ const renderFields = (
 ) => {
   if (pressureType === 'email') return Email;
   if (pressureType === 'phone') return Phone;
-  return <div>Invalid pressure type</div>;
+  return null;
 };
 
 export const EmailPressureForm = ({
