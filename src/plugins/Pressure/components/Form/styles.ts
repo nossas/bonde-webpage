@@ -1,12 +1,33 @@
 import styled from 'styled-components';
+import theme from '../../../../base/theme';
+
+export const WrapInputs = styled.div<{ disabled?: boolean }>`
+  padding: 0.25rem 2rem;
+  border-bottom: 1px solid #eee;
+  & > div {
+    padding: 0;
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+  ${props =>
+    props.disabled &&
+    `
+      && {
+        input, textarea {
+          color: rgb(84, 84, 84);
+          cursor: default;
+          background-color: rgb(235, 235, 228);
+        }
+      }
+    `}
+`;
 
 export const Wrapper = styled.div`
+  font-family: ${props => props.theme.fontFamily};
   && {
     label {
-      font-family: ${props => props.theme.fontFamily};
       line-height: 1.5;
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
       margin-bottom: 0;
       font-size: 0.75rem;
       font-weight: 600;
@@ -18,7 +39,6 @@ export const Wrapper = styled.div`
     textarea,
     input {
       border: none;
-      padding: 0px;
       height: 2rem;
       outline: none;
       font-size: 0.9rem;
@@ -45,7 +65,6 @@ export const Wrapper = styled.div`
       }
 
       span {
-        font-family: ${props => props.theme.fontFamily};
         font-size: 0.75rem;
         line-height: 1.5;
         margin-left: 0.5rem;
@@ -64,6 +83,7 @@ type ButtonProps = {
 };
 
 export const ButtonWrapper = styled.div<ButtonProps>`
+  padding: 0.5rem 2rem 2rem;
   && {
     button {
       letter-spacing: 0;
@@ -73,7 +93,7 @@ export const ButtonWrapper = styled.div<ButtonProps>`
       text-decoration: none;
       width: 100%;
 
-      font-family: inherit;
+      font-family: ${props => props.theme.fontFamily};
       font-size: inherit;
       font-weight: 700;
       cursor: pointer;
@@ -88,3 +108,7 @@ export const ButtonWrapper = styled.div<ButtonProps>`
     }
   }
 `;
+
+ButtonWrapper.defaultProps = {
+  theme,
+};
