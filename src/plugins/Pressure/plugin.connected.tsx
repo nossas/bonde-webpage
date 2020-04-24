@@ -2,8 +2,23 @@ import React, { useState } from 'react';
 import PressureGraphQL from './plugin.graphql';
 
 type Props = {
-  graphqlClient: any;
+  /* Below props are passed from root parent */
   fillWidget: (param: any) => Promise<any>;
+  graphqlClient: any;
+  mobilization: Record<any, any>;
+  block: Record<any, any>;
+  analyticsEvents: any;
+  editable: boolean;
+  overrides: {
+    FinishCustomMessage: {
+      component: any;
+      props: any;
+    };
+    FinishDefaultMessage: {
+      component: any;
+      props: any;
+    };
+  };
 };
 
 const Connected = ({ fillWidget, ...props }: Props) => {

@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from '../../../../base/theme';
 
+// padding: 0 1.5rem;
 const Wrapper = styled.div`
   font-family: ${props => props.theme.fontFamily};
-  padding: 0 1.5rem;
   font-size: 0.8rem;
   text-transform: uppercase;
   color: #333333;
+  padding: 0 1.5rem;
 `;
 
 Wrapper.defaultProps = {

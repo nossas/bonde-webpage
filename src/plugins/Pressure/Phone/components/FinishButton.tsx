@@ -11,7 +11,6 @@ const Button = styled(Btn)`
 `;
 const Wrapper = styled.div`
   margin: 1rem 0;
-  padding: 0 1rem;
 `;
 const FinishButton = ({
   buttonColor,

@@ -1,15 +1,11 @@
 import React from 'react';
-import Fields from '../components/Fields';
+import Fields from '../components/Form/Fields';
 import { Validators } from 'bonde-components';
 import { validateUtils } from '../utils';
 
 const { required, composeValidators } = Validators;
 
-const PhoneBeforeStandardFields = ({
-  targetList,
-}: {
-  targetList: Array<any>;
-}) => (
+const before = (targetList: Array<any>) => (
   <Fields
     fields={[
       {
@@ -17,6 +13,7 @@ const PhoneBeforeStandardFields = ({
         label: 'Telefone',
         type: 'text',
         placeholder: 'Insira seu telefone. Ex: +5511987654321',
+        disabled: false,
         validate: composeValidators(
           required('Preenchimento obrigatório'),
           validateUtils.isValidPhoneE164({
@@ -34,4 +31,4 @@ const PhoneBeforeStandardFields = ({
   />
 );
 
-export default PhoneBeforeStandardFields;
+export default { before };

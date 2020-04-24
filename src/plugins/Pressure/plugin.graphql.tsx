@@ -1,10 +1,27 @@
 import React, { useState } from 'react';
 import * as graphqlMutations from './graphql/mutations';
 import * as graphqlQueries from './graphql/queries';
-import PressurePlugin from './plugin';
+import PressurePlugin from '.';
 
 type Props = {
+  /* Below props are from root parent */
+  mobilization: any;
+  block: any;
+  analyticsEvents: any;
+  editable: boolean;
   graphqlClient: any;
+  overrides: {
+    FinishCustomMessage: {
+      component: any;
+      props: any;
+    };
+    FinishDefaultMessage: {
+      component: any;
+      props: any;
+    };
+  };
+
+  /* Below props are created in direct parent */
   asyncFillWidget: Function;
   saving: boolean;
   filledPressureWidgets: Array<any>;
