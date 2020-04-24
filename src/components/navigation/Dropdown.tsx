@@ -37,6 +37,7 @@ const WrapperStyled = styled.div<WrapperStyledProps>`
 `;
 
 interface DropdownMenuProps {
+  className?: string;
   text?: string;
   icon: string;
 }
@@ -70,10 +71,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props: any) => {
     });
   };
 
-  const { text, children } = props;
+  const { text, children, className } = props;
 
   return (
-    <DropdownStyled>
+    <DropdownStyled className={className}>
       <button type="button" onClick={handleClick}>
         {renderIcon()} {text}
       </button>
