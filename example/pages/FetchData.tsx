@@ -4,7 +4,7 @@ import {
   asyncFilterMobilization,
   asyncFilterBlock,
   asyncFilterWidget
-} from '../src/redux/action-creators'
+} from 'bonde-webpages';
 
 
 interface FetchMobilizationProps {
@@ -20,7 +20,7 @@ const FetchMobilization: React.FC<FetchMobilizationProps> = ({ children, customD
 
   const fetchData = async (customDomain: string) => {
     const query = { custom_domain: customDomain }
-    
+
     await dispatch(asyncFilterMobilization(query))
     await dispatch(asyncFilterBlock(query))
     await dispatch(asyncFilterWidget(query))

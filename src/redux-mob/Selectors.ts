@@ -33,7 +33,7 @@ export default (state: any, props: any = {}) => ({
 
   getMobilizationMenuActive: () => state.mobilizations.list.menuActiveIndex,
 
-  getMobilizations: (f: any) => {
+  getMobilizations: (f?: any) => {
     const {
       list: { data },
     } = state.mobilizations;

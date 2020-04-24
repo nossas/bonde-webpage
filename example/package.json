@@ -1,33 +1,40 @@
 {
-  "name": "example",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "name": "bonde-public",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html"
-  },
-  "dependencies": {
-    "axios": "^0.19.2",
-    "bonde-components": "^0.0.2-alpha.17",
-    "react-app-polyfill": "^1.0.0",
-    "react-intl": "^2.4.0",
-    "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
-    "redux": "^4.0.5",
-    "redux-promise": "^0.6.0",
-    "redux-thunk": "^2.3.0",
-    "styled-components": "^5.1.0"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "alias": {
     "react": "../node_modules/react",
     "react-dom": "../node_modules/react-dom/profiling",
     "scheduler/tracing": "../node_modules/scheduler/tracing-profiling"
   },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "next": "latest",
+    "react-app-polyfill": "^1.0.0",
+    "react-intl": "2.4.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.5",
+    "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.3.0"
+  },
   "devDependencies": {
-    "@types/react": "^16.9.11",
-    "@types/react-dom": "^16.8.4",
-    "parcel": "^1.12.3",
+    "@types/node": "^12.0.12",
+    "@types/react": "^16.8.17",
+    "@types/react-dom": "16.8.4",
+    "@types/react-intl": "^3.0.0",
+    "@types/react-redux": "^7.1.7",
+    "@types/redux-promise": "^0.5.28",
+    "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
+    "babel-plugin-inline-import": "^3.0.0",
+    "babel-plugin-react-intl": "^7.5.2",
+    "ts-node": "^8.1.0",
     "typescript": "^3.4.5"
   }
 }

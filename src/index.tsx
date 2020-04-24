@@ -10,9 +10,17 @@ export { default as FormPlugin } from './plugins/Form';
 export { default as FormAnalytics } from './plugins/Form/Analytics';
 export { default as FinishMessageCustom } from './components/ux/FinishMessageCustom';
 export { default as FormTellAFriend } from './plugins/Form/TellAFriend';
-export { default as asyncFormEntryCreate } from './redux/action-creators/FormEntryCreate';
+export { default as asyncFormEntryCreate } from './redux-mob/action-creators/FormEntryCreate';
 
-export { default as selectors } from './redux/Selectors';
+export {
+  asyncFilterMobilization,
+  asyncFilterBlock,
+  asyncFilterWidget,
+} from './redux-mob/action-creators';
+
+export { default as reducer } from './redux-mob/reducers';
+export { default as selectors } from './redux-mob/Selectors';
+
 export { default as ContentPlugin } from './plugins/Content';
 
 export { default as DraftPlugin } from './plugins/Draft';
