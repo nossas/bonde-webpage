@@ -128,6 +128,7 @@ const plugins = [
 // }
 
 const MobilizationConnected = ({ mobilization, blocks, widgets, blocksIsLoaded }: any) => {
+  console.log('props', { mobilization, blocks, widgets, blocksIsLoaded })
   if (mobilization && blocksIsLoaded) {
     // Properties received by HOC
     const {
