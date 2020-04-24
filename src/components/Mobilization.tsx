@@ -5,7 +5,7 @@ import Navigation from './navigation';
 
 interface MobilizationProps {
   /* Define when the mobilization is in edit mode. */
-  editable: boolean;
+  editable?: boolean;
   colorScheme?: string;
   headerFont?: string;
   bodyFont?: string;
@@ -35,7 +35,7 @@ interface MobilizationProps {
   /* Function used to link widgets with block, receives (block, widgets)
    * as param.
    * Default function use the attrs widget.block_id to relationship. */
-  blockWidgetsRef: Function;
+  blockWidgetsRef?: Function;
 }
 
 /**
@@ -145,8 +145,8 @@ const Mobilization: React.FC<MobilizationProps> = props => {
             key={`section-${i}`}
             anchor={linkTo(b)}
             block={b}
-            editable={editable}
-            widgets={blockWidgetsRef(b, widgets)}
+            editable={!!editable}
+            widgets={blockWidgetsRef ? blockWidgetsRef(b, widgets) : []}
             widgetComponent={widgetComponent}
             extraWidgetProps={extraWidgetProps}
           />

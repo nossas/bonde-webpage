@@ -2,7 +2,7 @@
 import * as t from '../ActionTypes';
 import { createAction } from './CreateAction';
 
-export default (query: any) => (dispatch: any, getState: any, { api }: any) => {
+export default (query: any) => (dispatch: any, _: any, { api }: any) => {
   const endpoint = '/mobilizations';
   const config = { params: query };
 

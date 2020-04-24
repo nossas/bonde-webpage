@@ -2,7 +2,7 @@
 import { createAction } from './CreateAction';
 import * as t from '../ActionTypes';
 
-export default (where: any) => (dispatch: any, getState: any, { api }: any) => {
+export default (where: any) => (dispatch: any, _: any, { api }: any) => {
   const endpoint = '/blocks';
   const config = { params: where };
 

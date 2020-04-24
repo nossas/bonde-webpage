@@ -2,7 +2,7 @@
 import * as t from '../ActionTypes';
 import { createAction } from './CreateAction';
 
-export default (where: any) => (dispatch: any, getState: any, { api }: any) => {
+export default (where: any) => (dispatch: any, _: any, { api }: any) => {
   const endpoint = '/widgets';
   const config = { params: where };
 

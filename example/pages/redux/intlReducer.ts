@@ -39,7 +39,12 @@ const initialState = {
 
 export const setCurrentLocale = (payload: any) => ({ type: SET_CURRENT_LOCALE, payload })
 
-export const reducer = (state: any = initialState, action: any = {}) => {
+interface Action {
+  type?: string;
+  payload: 'pt-BR' | 'en' | 'es'
+}
+
+export const reducer = (state: any = initialState, action: Action) => {
   switch (action.type) {
     case SET_CURRENT_LOCALE:
       return {

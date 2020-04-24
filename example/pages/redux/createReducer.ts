@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 // Thirdy apps
-import { reducer as mobilizationReducer } from '../../src/redux'
+import { reducer as mobilizationReducer } from 'bonde-webpages'
 import { reducer as intlReducer } from './intlReducer'
 
 // Source Request reducer

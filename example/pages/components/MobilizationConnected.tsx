@@ -1,13 +1,26 @@
 import * as React from 'react'
 // MOBILIZATION and external dependencies
-import { Mobilization, PluggableWidget, FinishMessageCustom } from '../../src'
+// import { Mobilization, PluggableWidget, FinishMessageCustom } from '../../../src'
 // DRAFT PLUGIN and external dependencies
-import DraftPlugin from '../../src/plugins/Draft'
+// import DraftPlugin from '../../../src/plugins/Draft'
 // FORM PLUGIN and external dependencies
-import FormPlugin from './FormConnected'
-import { FormAnalytics, FormTellAFriend } from '../../src/plugins/Form'
+// import FormPlugin from './FormConnected'
+// import { FormAnalytics, FormTellAFriend } from '../../../src/plugins/Form'
 // CONTENT PLUGIN and external dependencies
-import ContentPlugin from '../../src/plugins/Content'
+import { connect } from 'react-redux'
+import {
+  // Plugins
+  ContentPlugin,
+  DraftPlugin,
+  FormPlugin,
+  FormAnalytics,
+  FormTellAFriend,
+  // Mobilization
+  Mobilization,
+  PluggableWidget,
+  FinishMessageCustom,
+  selectors as MobilizationSelectors
+} from 'bonde-webpages'
 // PRESSURE PLUGIN and external dependencies
 // import PressurePlugin from './plugin-pressure.connected'
 // import { PressureAnalytics, PressureTellAFriend } from 'bonde-webpage/lib/plugins/pressure'
@@ -18,11 +31,10 @@ import ContentPlugin from '../../src/plugins/Content'
 // TODO: Icons should be inside plugin reference.
 /*import { PressureEmailIcon, PressurePhoneIcon } from '@/pages/playground-mobs/icons'*/
 
-import { connect } from 'react-redux'
-import { selectors as MobilizationSelectors } from '../../src/redux'
+// import { selectors as MobilizationSelectors } from '../../../src/redux'
 // import { FinishPostDonation } from 'bonde-webpage/lib/plugins/donation/components'
 
-export const getSharedPath = (mobilization) => {
+export const getSharedPath = (mobilization: any) => {
   const domain = 'staging.bonde.org'
 
   return mobilization.custom_domain
@@ -30,7 +42,7 @@ export const getSharedPath = (mobilization) => {
     : `http://${mobilization.slug}.${domain}`
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state: any, props: any) => {
   const query = MobilizationSelectors(state, props)
   return {
     mobilization: query.getMobilization() || query.getMobilizations()[0],
@@ -97,25 +109,25 @@ const plugins = [
   }
 ]
 
-  // componentDidMount() {
-  //   const isTest = false
-  //   if (!isTest && this.props.mobilization) {
-  //     const { mobilization } = this.props
+// componentDidMount() {
+//   const isTest = false
+//   if (!isTest && this.props.mobilization) {
+//     const { mobilization } = this.props
 
-  //     ReactGA.initialize('UA-26278513-30')
-  //     ReactGA.pageview('/' + mobilization.slug)
+//     ReactGA.initialize('UA-26278513-30')
+//     ReactGA.pageview('/' + mobilization.slug)
 
-  //     if (mobilization.google_analytics_code) {
-  //       ReactGA.initialize(
-  //         mobilization.google_analytics_code,
-  //         { gaOptions: { name: 'MobilizationTracker' } }
-  //       )
-  //       ReactGA.ga('MobilizationTracker.send', 'pageview', '/')
-  //     }
-  //   }
-  // }
+//     if (mobilization.google_analytics_code) {
+//       ReactGA.initialize(
+//         mobilization.google_analytics_code,
+//         { gaOptions: { name: 'MobilizationTracker' } }
+//       )
+//       ReactGA.ga('MobilizationTracker.send', 'pageview', '/')
+//     }
+//   }
+// }
 
-const MobilizationConnected = ({ mobilization, blocks, widgets, blocksIsLoaded }) => {
+const MobilizationConnected = ({ mobilization, blocks, widgets, blocksIsLoaded }: any) => {
   if (mobilization && blocksIsLoaded) {
     // Properties received by HOC
     const {
@@ -123,10 +135,10 @@ const MobilizationConnected = ({ mobilization, blocks, widgets, blocksIsLoaded }
       header_font: headerFont,
       body_font: bodyFont
     } = mobilization
-  
+
     return (
       <Mobilization
-        linkTo={b => `block-${b.id}`}
+        linkTo={(b: any) => `block-${b.id}`}
         blocks={blocks}
         widgets={widgets}
         widgetComponent={PluggableWidget}
