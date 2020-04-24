@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "next": "latest",
+    "next-redux-wrapper": "^6.0.0-rc.7",
     "react-app-polyfill": "^1.0.0",
     "react-intl": "2.4.0",
     "react-redux": "^7.2.0",

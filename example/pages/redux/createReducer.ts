@@ -20,9 +20,11 @@ export const sourceReqCreateReducer = (initialState: any) =>
   }
 
 // createReducer
-export default (initialState: any = {}) => combineReducers({
+const createReducer = (initialState = {}) => combineReducers({
   intl: intlReducer,
   sourceRequest: sourceReqCreateReducer(sourceReqInitialState),
   mobilizations: mobilizationReducer,
   ...initialState
 })
+
+export default createReducer;

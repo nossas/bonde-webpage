@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
+import { MakeStore } from 'next-redux-wrapper'
 import thunk from 'redux-thunk'
 import promise from 'redux-promise'
 import axios from 'axios'
@@ -15,7 +16,7 @@ const middlewares = [
   })
 ]
 
-export default (initialState: any = {}, options?: any) => {
+const configureStore: MakeStore = (initialState = {}, options?: any) => {
   const request = {
     host: '',
     protocol: 'http'
@@ -37,3 +38,5 @@ export default (initialState: any = {}, options?: any) => {
     )
   )
 }
+
+export default configureStore;
