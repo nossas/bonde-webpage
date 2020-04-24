@@ -10,15 +10,20 @@ const parseTarget = (target: string) => {
     : null;
 };
 
-const TargetList = ({ targets }: { targets: string[] }) => {
-  const pressureType = pressureUtils.getType(targets);
+const Targets = ({
+  targets,
+  pressureType,
+}: {
+  targets: string[];
+  pressureType: string;
+}) => {
   const isPressurePhone = pressureType === pressureUtils.PRESSURE_TYPE_PHONE;
   const targetsCount = targets.length;
   return (
     <Wrapper className="target-list px2 py1">
       <Label className="target-list-label bold">
-        Quem você vai pressionar {targetsCount}{' '}
-        {targetsCount > 1 ? 'alvos' : 'alvo'}
+        Quem você vai pressionar? ({targetsCount}{' '}
+        {targetsCount > 1 ? 'alvos' : 'alvo'})
       </Label>
       <Container className="target-list-container clearfix">
         <ListWrapper className="target-list-wrapper clearfix">
@@ -45,8 +50,8 @@ const TargetList = ({ targets }: { targets: string[] }) => {
   );
 };
 
-TargetList.defaultProps = {
+Targets.defaultProps = {
   targets: [],
 };
 
-export default TargetList;
+export default Targets;

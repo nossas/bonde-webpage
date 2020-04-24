@@ -1,15 +1,22 @@
 import styled from 'styled-components';
+import theme from '../../../../base/theme';
 
 export const Wrapper = styled.div`
   background-color: #eeeeee;
+  padding: 0.5rem 1rem;
+  font-family: ${props => props.theme.fontFamily};
 `;
 
 export const Label = styled.div`
   color: #4c4c4c;
   font-size: 0.8em;
-  margin-top: 5px;
-  margin-bottom: 12px;
+  margin: 5px 0 12px 0;
+  font-weight: 700;
 `;
+
+Wrapper.defaultProps = {
+  theme,
+};
 
 export const Container = styled.div`
   overflow-x: auto;
@@ -17,11 +24,14 @@ export const Container = styled.div`
 
 export const ListWrapper = styled.div`
   display: flex;
+  margin-bottom: 10px;
 `;
 
 export const Item = styled.label`
-  display: flex;
-  align-items: flex-start;
+  background-color: #fff;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border-radius: 3px;
 
   input[type='checkbox'] {
     margin: 0.25rem 0.8rem;
@@ -30,9 +40,15 @@ export const Item = styled.label`
 
   & > p {
     font-size: 0.8rem;
+    font-weight: 600;
+    color: #222;
+    margin: 0;
+    display: grid;
+    grid-template-rows: auto;
   }
 `;
 
 export const Span = styled.span`
   white-space: nowrap;
+  font-weight: 700;
 `;
