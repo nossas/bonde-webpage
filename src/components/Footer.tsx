@@ -12,7 +12,9 @@ const Footer = () => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        <strong>Feito pra causar. Feito com BONDE.</strong>
+        <span>
+          Feito pra causar. Feito com <strong>BONDE</strong>.
+        </span>
       </a>
     </div>
     <div className="col col-2">
