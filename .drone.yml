@@ -65,7 +65,7 @@ pipeline:
     group: publish
     when:
       status: success
-      branch: [release/*]
+      event: tag
   # notify:
   #   image: plugins/slack
   #   channel: bonde_bots
