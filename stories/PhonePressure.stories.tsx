@@ -25,7 +25,7 @@ const UnordedList = styled.ul`
   }
 `;
 
-export const CallingTargetsComponents = () => {
+export const CallingTargets = () => {
   return (
     <>
       <UnordedList>

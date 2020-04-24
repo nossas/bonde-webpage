@@ -4,7 +4,7 @@ export default {
     action_community: false,
     action_opportunity: false,
     block_id: 13564,
-    count: 0,
+    count: 6,
     created_at: '2019-09-05T14:15:02.778-03:00',
     donations_count: 0,
     exported_at: null,
@@ -29,7 +29,10 @@ export default {
     updated_at: '2020-04-21T19:59:39.923-03:00',
   },
   targetList: [
-    'Viviane <vivipirolad@gmail.com>',
-    'Camila <caamila.cardoso.l@gmail.com>',
+    'Viviane <viviane@gmail.com>',
+    'Camila <caamila@gmail.com>',
+    'Lucas <lucas@gmail.com>',
+    'Meire <teste@gmail.com',
+    'Teste <testes2@gmail.com',
   ],
 };
