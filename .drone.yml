@@ -65,7 +65,8 @@ pipeline:
     group: publish
     when:
       status: success
-      event: tag
+      event: push
+      branch: [feature/migrate-tsdx]
   # notify:
   #   image: plugins/slack
   #   channel: bonde_bots
