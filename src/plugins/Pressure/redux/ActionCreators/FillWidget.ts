@@ -1,6 +1,6 @@
 /* eslint-disable prefer-promise-reject-errors */
-import MobSelectors from '../../../../redux/Selectors';
-import * as MobActionTypes from '../../../../redux/ActionTypes';
+import MobSelectors from '../../../../redux-mob/Selectors';
+import * as MobActionTypes from '../../../../redux-mob/ActionTypes';
 
 //
 // The name of this action needs to be refactored to make more sense.
