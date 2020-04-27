@@ -4,7 +4,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import App, { AppContext } from "next/app";
 import withRedux, { ReduxWrapperAppProps } from "next-redux-wrapper";
-import configureStore from './redux/configureStore'
+import configureStore from '../redux-app/configureStore'
 
 class MyApp extends App<ReduxWrapperAppProps<any>> {
   static async getInitialProps({ Component, ctx }: AppContext) {

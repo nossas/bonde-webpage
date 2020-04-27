@@ -5,7 +5,8 @@ pipeline:
   build:
     image: node:12-alpine
     commands:
-      - yarn
+      - yarn && yarn link
+      - cd example && yarn && yarn link bonde-webpages && yarn build
     when:
       event: [push, tag]
 
@@ -19,23 +20,49 @@ pipeline:
       status: success
       branch: [hotfix/*, release/*, feature/*, support/*, develop]
 
-  build-storybook:
-    image: node:12-alpine
-    commands:
-      - yarn build-storybook
-    when:
-      event: [push, tag]
-
-  publish-storybook:
+  publish-public-ts:
     image: plugins/docker
-    repo: nossas/bonde-components
-    group: publishing
-    secrets: [docker_username, docker_password]
+    repo: nossas/bonde-public-ts
+    secrets: [ docker_username, docker_password ]
+    dockerfile: example/Dockerfile
+    context: ./
+    group: publish
     tags:
       - ${DRONE_BRANCH/\//-}
     when:
       status: success
-      branch: [hotfix/*, release/*, feature/*, develop]
+      event: [push]
+  
+  staging-deploy-public-ts:
+    image: peloton/drone-rancher
+    url: http://cluster.bonde.org
+    service: webservers/public-ts
+    docker_image: nossas/bonde-public-ts:${DRONE_BRANCH/\//-}
+    timeout: 360
+    confirm: true
+    group: deploy
+    secrets: [ rancher_access_key, rancher_secret_key ]
+    when:
+      status: success
+      event: [push]
+
+  # build-storybook:
+  #   image: node:12-alpine
+  #   commands:
+  #     - yarn build-storybook
+  #   when:
+  #     event: [push, tag]
+
+  # publish-storybook:
+  #   image: plugins/docker
+  #   repo: nossas/bonde-components
+  #   group: publishing
+  #   secrets: [docker_username, docker_password]
+  #   tags:
+  #     - ${DRONE_BRANCH/\//-}
+  #   when:
+  #     status: success
+  #     branch: [hotfix/*, release/*, feature/*, develop]
 
   # deploy-storybook:
   #   image: peloton/drone-rancher
@@ -50,23 +77,23 @@ pipeline:
   #     status: success
   #     branch: [hotfix/*, release/*, feature/*, develop]
 
-  publish-npm:
-    image: plugins/npm
-    secrets: [npm_auth_token, npm_username, npm_email, npm_password]
-    settings:
-      username:
-        from_secret: npm_username
-      token:
-        from_secret: npm_auth_token
-      email:
-        from_secret: npm_email
-      password:
-        from_secret: npm_password
-    group: publish
-    when:
-      status: success
-      event: push
-      branch: [feature/migrate-tsdx]
+  # publish-npm:
+  #   image: plugins/npm
+  #   secrets: [npm_auth_token, npm_username, npm_email, npm_password]
+  #   settings:
+  #     username:
+  #       from_secret: npm_username
+  #     token:
+  #       from_secret: npm_auth_token
+  #     email:
+  #       from_secret: npm_email
+  #     password:
+  #       from_secret: npm_password
+  #   group: publish
+  #   when:
+  #     status: success
+  #     event: push
+  #     branch: [feature/migrate-tsdx]
   # notify:
   #   image: plugins/slack
   #   channel: bonde_bots
