@@ -35,4 +35,5 @@ export { default as PhoneFields } from './plugins/Pressure/Phone';
 export { default as Targets } from './plugins/Pressure/components/Targets';
 export { default as Count } from './plugins/Pressure/components/Count';
 export { default as PressurePlugin } from './plugins/Pressure';
+export { default as PressureAnalytics } from './plugins/Pressure/Analytics';
 export { default as asyncPressureCreate } from './plugins/Pressure/redux/ActionCreators/FillWidget';

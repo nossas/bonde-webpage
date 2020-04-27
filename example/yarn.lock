@@ -1939,10 +1939,10 @@ bonde-components@^0.0.2-alpha.17:
     react-final-form "^6.3.5"
     styled-components "^5.0.1"
 
-bonde-webpages@0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/bonde-webpages/-/bonde-webpages-0.1.3.tgz#555a49aca3fcaf88a587e187d90ec6c37783f159"
-  integrity sha512-ZP7XDYhu5+FkAA2A2HNx+Z8KHSBjiLHTLR8uT5zjwDXfYcx3XDWi+EPpjOqfHxfPC+Lk34TiSAvjUmEvK7SWzA==
+bonde-webpages@0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/bonde-webpages/-/bonde-webpages-0.1.4.tgz#aca7fb3d6b5b955ffd873fd144268ba754a3577d"
+  integrity sha512-R5/7ZjSIMhHHS+pcpK8OmA7E0oT4SL72qQQtvla1IXpSwZk3iwNJ8Qyi6JuHGBw1sbsyEzvrq65r5dtgTSvjNw==
   dependencies:
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"

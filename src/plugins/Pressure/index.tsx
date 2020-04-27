@@ -42,15 +42,15 @@ type Props = {
   };
   overrides: {
     FinishCustomMessage: {
-      component: any;
+      component?: any;
       props: any;
     };
     FinishDefaultMessage: {
-      component: any;
+      component?: any;
       props: any;
     };
   };
-  analyticsEvents: any;
+  analyticsEvents?: any;
 
   /* */
 
