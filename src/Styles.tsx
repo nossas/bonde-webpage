@@ -91,7 +91,6 @@ const layoutStyles = css`
     font-size: inherit;
     display: block;
     width: 100%;
-    margin-bottom: 1rem;
     border-radius: 2px;
     padding: 1rem;
   }
@@ -100,7 +99,6 @@ const layoutStyles = css`
     font-size: inherit;
     display: block;
     width: 100%;
-    margin-bottom: 1rem;
     border-radius: 2px;
     padding: 1rem;
     background-color: #fff;

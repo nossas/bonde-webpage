@@ -18,7 +18,8 @@ export const validate = (fieldsWithValue: any) => {
     }
     return false;
   });
-  return errors;
+
+  return errors.filter((error: string | boolean) => !!error);
 };
 
 export const fields = (settings: any) => {

@@ -22,13 +22,13 @@ type Props = {
     form_entries_count: any;
   };
   analyticsEvents: Record<any, any>;
-  overrides: {
-    FinishCustomMessage: {
-      component: React.ReactNode;
+  overrides?: {
+    FinishCustomMessage?: {
+      component?: React.ReactNode;
       props: any;
     };
-    FinishDefaultMessage: {
-      component: React.ReactNode;
+    FinishDefaultMessage?: {
+      component?: React.ReactNode;
       props: any;
     };
   };
@@ -59,7 +59,7 @@ const renderFields = (
     return (
       <Input
         key={field.uid}
-        name={getFieldName(field)}
+        name={getFieldName(field.uid)}
         onChange={handleChange}
         onBlur={Number(index) === 0 ? analyticsEvents.formIsFilled() : () => {}}
         field={field}
@@ -201,18 +201,13 @@ const FormPlugin = (props: Props) => {
         : 'rgba(0,0,0,0.25)';
 
     return (
-      <div>
-        <div
-          className="rounded p3 relative"
-          style={{ backgroundColor: bgcolor }}
-        >
-          <form onSubmit={submit}>
-            {renderCallToAction(widget, mobilization)}
-            {renderFields(props, handleChange)}
-            {errors.length > 0 && renderErrors(errors)}
-            {widget.settings.fields && renderButton(props, success, loading)}
-          </form>
-        </div>
+      <div className="rounded p3 relative" style={{ backgroundColor: bgcolor }}>
+        <form onSubmit={submit}>
+          {renderCallToAction(widget, mobilization)}
+          {renderFields(props, handleChange)}
+          {errors.length > 0 && renderErrors(errors)}
+          {widget.settings.fields && renderButton(props, success, loading)}
+        </form>
       </div>
     );
   };

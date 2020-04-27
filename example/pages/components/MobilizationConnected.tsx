@@ -12,7 +12,6 @@ import {
   // Plugins
   ContentPlugin,
   DraftPlugin,
-  FormPlugin,
   FormAnalytics,
   FormTellAFriend,
   // Mobilization
@@ -21,6 +20,8 @@ import {
   FinishMessageCustom,
   selectors as MobilizationSelectors
 } from 'bonde-webpages'
+
+import FormPlugin from './FormConnected';
 // PRESSURE PLUGIN and external dependencies
 // import PressurePlugin from './plugin-pressure.connected'
 // import { PressureAnalytics, PressureTellAFriend } from 'bonde-webpage/lib/plugins/pressure'
