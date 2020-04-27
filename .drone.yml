@@ -2,14 +2,13 @@ workspace:
   base: /code
 
 pipeline:
-  build:
+  build-package:
     image: node:12-alpine
     commands:
-      - yarn && yarn link
-      - cd example && yarn && yarn link bonde-webpages && yarn build
+      - yarn
     when:
       event: [push, tag]
-
+      
   tests:
     image: node:12-alpine
     commands:
@@ -19,13 +18,40 @@ pipeline:
     when:
       status: success
       branch: [hotfix/*, release/*, feature/*, support/*, develop]
+            
+  publish-package-npm:
+    image: plugins/npm
+    secrets: [npm_auth_token, npm_username, npm_email, npm_password]
+    settings:
+      username:
+        from_secret: npm_username
+      token:
+        from_secret: npm_auth_token
+      email:
+        from_secret: npm_email
+      password:
+        from_secret: npm_password
+    group: publish
+    when:
+      status: success
+      event: push
+      branch: [feature/migrate-tsdx]
+
+  build-public-ts:
+    image: node:12-alpine
+    commands:
+      - cd example
+      - yarn
+      - yarn build
+    when:
+      event: [push, tag]
 
   publish-public-ts:
     image: plugins/docker
     repo: nossas/bonde-public-ts
     secrets: [ docker_username, docker_password ]
     dockerfile: example/Dockerfile
-    context: ./
+    context: example/
     group: publish
     tags:
       - ${DRONE_BRANCH/\//-}
