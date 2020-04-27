@@ -16,19 +16,36 @@ interface PageProps {
 
 class Page extends React.Component<PageProps> {
 
-  static async getInitialProps ({ store }: any = {}) {
-    const { dispatch } = store
-    
-    const fetchData = async (customDomain: string) => {
-      const query = { custom_domain: customDomain }
+  static async getInitialProps ({ store, res }: any = {}) {
+    const { dispatch, getState } = store;
+    const host = getState().sourceRequest.host;
+    const protocol = getState().sourceRequest.protocol;
+    const appDomain = 'staging.bonde.org'
 
-      await dispatch(asyncFilterMobilization(query))
-      await dispatch(asyncFilterBlock(query))
-      await dispatch(asyncFilterWidget(query))
+    if (host) {
+      if (res) {
+        if (!host.startsWith('www', 0)) {
+          res.writeHead(302, {
+            Location: `${protocol}://www.${host}`
+          })
+          res.end()
+        }
+      }
+    }
+    
+    const fetchData = async () => {
+      const regex = host.match(`(.+)\.${appDomain}`)
+      const where = regex
+        ? { slug: regex[1].replace(/^www\./, '') }
+        : { custom_domain: host }
+
+      await dispatch(asyncFilterMobilization(where))
+      await dispatch(asyncFilterBlock(where))
+      await dispatch(asyncFilterWidget(where))
     }
 
     // await fetchData('www.meurio.org.br')
-    await fetchData('www.queroseracolhida.mapadoacolhimento.org')
+    await fetchData()
   }
 
   render () {
