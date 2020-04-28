@@ -11,10 +11,22 @@ import { Wrapper, ButtonWrapper, WrapInputs, Error } from './styles';
 type Props = {
   onSubmit: any;
   widget: {
+    id?: number | string;
+    count?: number;
     settings: {
-      show_city: boolean | string;
-      button_text: string;
       main_color?: string;
+      call_to_action?: string;
+      title_text?: string;
+      button_text?: string;
+      pressure_subject?: string;
+      pressure_body?: string;
+      disable_edit_field?: any;
+      finish_message_type?: string;
+      finish_message?: Record<any, any>;
+      finish_message_background?: string;
+      targets?: string;
+      count_text?: string;
+      show_city: boolean | string;
     };
   };
   BeforeStandardFields: any;
