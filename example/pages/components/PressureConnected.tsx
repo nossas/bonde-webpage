@@ -1,6 +1,12 @@
 import { connect } from 'react-redux'
-import { PressurePlugin, asyncPressureCreate } from 'bonde-webpages'
+import {
+  asyncPressureCreate,
+  PressurePlugin,
+  selectors as MobSelectors
+} from 'bonde-webpages'
 
 const mapDispatchToProps = { asyncFillWidget: asyncPressureCreate }
 
-export default connect(undefined, mapDispatchToProps)(PressurePlugin)
+const mapStateToProps = (state: any) => MobSelectors(state).getMobilizationLink()
+
+export default connect(mapStateToProps, mapDispatchToProps)(PressurePlugin)
