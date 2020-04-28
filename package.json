@@ -14,7 +14,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
-    "test:watch": "jest --watch --runInBand --detectOpenHandles",
+    "test:watch": "tsdx test --watch --runInBand --detectOpenHandles",
     "lint": "tsdx lint --fix",
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
