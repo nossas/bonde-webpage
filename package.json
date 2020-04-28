@@ -14,6 +14,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
+    "test:watch": "jest --watch --runInBand --detectOpenHandles",
     "lint": "tsdx lint --fix",
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
@@ -39,6 +40,11 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/src/setupTests.ts"
+    ]
+  },
   "name": "bonde-webpages",
   "author": "Viviane",
   "module": "dist/bonde-webpages.esm.js",
@@ -51,11 +57,15 @@
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "@types/draft-js": "^0.10.40",
+    "@types/enzyme": "^3.10.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/react": "^16.9.34",
     "@types/react-color": "^3.0.1",
     "@types/react-dom": "^16.9.6",
     "@types/styled-components": "^5.1.0",
     "babel-loader": "^8.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "husky": "^4.2.5",
     "lint-staged": "^10.1.5",
     "react": "^16.13.1",
@@ -68,8 +78,6 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^10.0.27",
     "@slate-editor/alignment-plugin": "5.1.0",
     "@slate-editor/bold-plugin": "5.1.0",
     "@slate-editor/color-plugin": "5.1.0",
