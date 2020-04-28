@@ -16,10 +16,10 @@ type Props = {
     settings: {
       main_color?: string;
       call_to_action?: string;
-      title_text?: string;
-      button_text?: string;
-      pressure_subject?: string;
-      pressure_body?: string;
+      title_text: string;
+      button_text: string;
+      pressure_subject: string;
+      pressure_body: string;
       disable_edit_field?: any;
       finish_message_type?: string;
       finish_message?: Record<any, any>;
@@ -29,14 +29,14 @@ type Props = {
       show_city: boolean | string;
     };
   };
-  BeforeStandardFields: any;
-  AfterStandardFields: any;
+  BeforeStandardFields?: any;
+  AfterStandardFields?: any;
   saving: boolean;
-  initialValues?: {
-    subject: string;
-    body: string;
-  };
   noTargetsError?: string;
+};
+
+type FormProps = {
+  submitting: boolean;
 };
 
 const PressureForm = ({
@@ -45,23 +45,24 @@ const PressureForm = ({
       show_city: showCity,
       main_color: buttonColor,
       button_text: buttonText,
+      pressure_subject: subject,
+      pressure_body: body,
     },
   },
   BeforeStandardFields,
   AfterStandardFields,
   onSubmit,
   saving,
-  initialValues,
   noTargetsError,
 }: Props) => {
   const { required } = Validators;
   return (
-    <ConnectedForm onSubmit={onSubmit} initialValues={initialValues}>
-      {({ submitting }) => {
+    <ConnectedForm onSubmit={onSubmit} initialValues={{ subject, body }}>
+      {({ submitting }: FormProps) => {
         return (
           <>
             <Wrapper>
-              <BeforeStandardFields />
+              {BeforeStandardFields && <BeforeStandardFields />}
               <WrapInputs>
                 <InputField
                   label="Nome"
@@ -88,7 +89,7 @@ const PressureForm = ({
                   />
                 </WrapInputs>
               )}
-              <AfterStandardFields />
+              {AfterStandardFields && <AfterStandardFields />}
             </Wrapper>
             {noTargetsError && <Error>{noTargetsError}</Error>}
             <ButtonWrapper color={buttonColor}>
@@ -101,15 +102,6 @@ const PressureForm = ({
       }}
     </ConnectedForm>
   );
-};
-
-PressureForm.defaultProps = {
-  widget: {
-    settings: {
-      button_text: 'Enviar e-mail',
-    },
-  },
-  changeParentState: () => {},
 };
 
 export default PressureForm;
