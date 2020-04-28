@@ -119,26 +119,10 @@ const Pressure = ({
     },
   } = overrides;
 
-  console.log(
-    {
-      widget,
-      asyncFillWidget,
-      twilioCall,
-      mobilization,
-      block,
-      saving,
-      filledPressureWidgets,
-      overrides,
-      callTransition,
-      countTwilioCallsByWidget,
-    },
-    'plugin'
-  );
-
-  const getTargetList = (targets: string): Array<string> =>
+  const getTargetList = (targets: string = ''): Array<string> =>
     targets.split(';').filter((target: string) => !!target.trim());
 
-  const targetList = getTargetList(targets);
+  const targetList = getTargetList(targets) || [];
   const pressureType = pressureUtils.getType(targetList);
 
   const [targetsError, setTargetsError] = useState<string | undefined>(
@@ -154,7 +138,7 @@ const Pressure = ({
     const isPressurePhone = pressureType === pressureUtils.PRESSURE_TYPE_PHONE;
     const hasCounter = !!widget.settings.count_text;
     if (hasCounter && isPressurePhone) {
-      countTwilioCallsByWidget({ widgetId: widget.id })
+      return countTwilioCallsByWidget({ widgetId: widget.id })
         .then(({ phonePressureCount }: { phonePressureCount: number }) =>
           setPressureCount(phonePressureCount)
         )
@@ -264,7 +248,7 @@ const Pressure = ({
       <Header backgroundColor={mainColor} fontFamily={mobilization.header_font}>
         {callToAction || titleText}
       </Header>
-      <Targets targets={targetList || []} pressureType={pressureType} />
+      <Targets targets={targetList} pressureType={pressureType} />
       {callTransition ? (
         <CallingTargets
           addTwilioCallMutation={twilioCall}

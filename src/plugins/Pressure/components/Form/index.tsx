@@ -43,7 +43,6 @@ const PressureForm = ({
   noTargetsError,
 }: Props) => {
   const { required } = Validators;
-  console.log({ noTargetsError });
   return (
     <ConnectedForm onSubmit={onSubmit} initialValues={initialValues}>
       {({ submitting }) => {
