@@ -14,8 +14,8 @@ import {
   DraftPlugin,
   FormAnalytics,
   FormTellAFriend,
-  PressureAnalytics,
-  PressureTellAFriend,
+  // PressureAnalytics,
+  // PressureTellAFriend,
   // Mobilization
   Mobilization,
   PluggableWidget,
@@ -24,7 +24,7 @@ import {
 } from 'bonde-webpages'
 
 import FormPlugin from './FormConnected';
-import PressurePlugin from './PressureConnected';
+// import PressurePlugin from './PressureConnected';
 // PRESSURE PLUGIN and external dependencies
 // import { PressureAnalytics, PressureTellAFriend } from 'bonde-webpage/lib/plugins/pressure'
 // import graphqlClient from './apolloClient'
@@ -100,19 +100,20 @@ const plugins = [
   },
   {
     kind: 'pressure',
-    component: (props: any) => (
-      <PressurePlugin
-        {...props}
-        analyticsEvents={PressureAnalytics}
-        overrides={{
-          FinishCustomMessage: { component: FinishMessageCustom },
-          FinishDefaultMessage: {
-            component: PressureTellAFriend,
-            props: { imageUrl, href: getSharedPath(props.mobilization) }
-          }
-        }}
-      />
-    )
+    component: () => <h2>PressurePluginTest</h2>
+    // component: (props: any) => (
+    //   <PressurePlugin
+    //     {...props}
+    //     analyticsEvents={PressureAnalytics}
+    //     overrides={{
+    //       FinishCustomMessage: { component: FinishMessageCustom },
+    //       FinishDefaultMessage: {
+    //         component: PressureTellAFriend,
+    //         props: { imageUrl, href: getSharedPath(props.mobilization) }
+    //       }
+    //     }}
+    //   />
+    // )
   },
   {
     kind: 'pressure-phone',
