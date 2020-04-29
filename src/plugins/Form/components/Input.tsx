@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import theme from '../../../base/theme';
 
 const Select = styled.select`
   border-radius: 2px;
@@ -47,7 +48,11 @@ const renderFieldKind = ({
       >
         <option value="">{'Selecione...'}</option>
         {field.placeholder.split(',').map(function(v: any, index: number) {
-          return <option key={`dropdown-option-${index}`}>{v}</option>;
+          return (
+            <option value={v} key={`dropdown-option-${index}`}>
+              {v}
+            </option>
+          );
         })}
       </Select>
     );
@@ -74,6 +79,10 @@ const Input = ({ field, bodyFont, ...props }: Props) => {
       {renderFieldKind({ ...props, field })}
     </div>
   );
+};
+
+Input.defaultProps = {
+  bodyFont: theme.fontFamily,
 };
 
 export default Input;
