@@ -34,7 +34,7 @@ export { default as Fields } from './plugins/Pressure/components/Form/Fields';
 export { default as CallingTargets } from './plugins/Pressure/Phone/CallingTargets';
 export { default as PhoneFields } from './plugins/Pressure/Phone';
 export { default as Targets } from './plugins/Pressure/components/Targets';
-export { default as Count } from './plugins/Pressure/components/Count';
+export { default as Count } from './components/Count';
 export { default as PressurePlugin } from './plugins/Pressure/plugin.connected';
 export { default as PressureAnalytics } from './plugins/Pressure/Analytics';
 export { default as PressureTellAFriend } from './plugins/Pressure/components/TellAFriend';
