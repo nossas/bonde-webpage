@@ -82,7 +82,7 @@ const renderButton = (
   />
 );
 
-const renderCount = ({
+export const renderCount = ({
   block: { scrollTopReached: startCounting },
   widget: { form_entries_count: count, settings },
   mobilization: { body_font: bodyFont },
@@ -95,7 +95,7 @@ const renderCount = ({
         duration={5}
       />
       &nbsp;
-      {settings.count}
+      {settings.count_text}
     </div>
   );
 };
