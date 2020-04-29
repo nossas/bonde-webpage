@@ -2,7 +2,6 @@ import React from 'react';
 import FacebookShareButton from './ShareButtons/Facebook';
 import TwitterShareButton from './ShareButtons/Twitter';
 import WhatsAppShareButton from './ShareButtons/Whatsapp';
-// import checkMarkImage from './check-mark-image.png';
 import { Wrap, Header, IconWrapper, WrapButtons } from './styles';
 
 type Props = {
@@ -33,10 +32,10 @@ const TellAFriend = ({
 }: Props) => {
   const { whatsapp_text = '' } = settings;
   return (
-    <Wrap className="center p3 bg-white darkengray rounded">
-      <Header className="m0 h3 bold">{message}</Header>
+    <Wrap>
+      <Header>{message}</Header>
       <IconWrapper className="py2">
-        <img src={imageUrl || ''} style={{ width: imageWidth || 100 }} alt="" />
+        <img src={imageUrl} style={{ width: imageWidth || 100 }} alt="" />
       </IconWrapper>
       <p>Agora, compartilhe com seus amigos!</p>
       <WrapButtons>

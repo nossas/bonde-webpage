@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
+import { Wrap } from './styles';
 
 const FacebookShareButton = ({ href }: any) => {
   const handleClick = () => {
@@ -12,13 +13,11 @@ const FacebookShareButton = ({ href }: any) => {
   };
 
   return (
-    <button
-      className="btn white h3 p3 col-12 caps h5 rounded"
-      onClick={handleClick}
-      style={{ backgroundColor: '#2D88ED' }}
-    >
-      Compartilhar no Facebook
-    </button>
+    <Wrap>
+      <button onClick={handleClick} style={{ backgroundColor: '#2D88ED' }}>
+        Compartilhar no Facebook
+      </button>
+    </Wrap>
   );
 };
 

@@ -6,6 +6,7 @@ export { default as Section } from './components/Section';
 export { default as Navigation } from './components/navigation';
 export { default as WidgetArea } from './components/WidgetArea';
 export { default as PluggableWidget } from './components/ux/PluggableWidget';
+export { default as TellAFriendBase } from './components/ux/TellAFriendBase';
 
 /* Async fetch mobilization data */
 export {
