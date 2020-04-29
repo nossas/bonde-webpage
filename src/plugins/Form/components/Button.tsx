@@ -1,5 +1,6 @@
 import React from 'react';
 import theme from '../../../base/theme';
+import styled from 'styled-components';
 
 type Props = {
   success: boolean;
@@ -8,19 +9,41 @@ type Props = {
   bodyFont: string;
 };
 
+const StyledButton = styled.button`
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: bold;
+  line-height: 1.125rem;
+  text-decoration: none;
+  cursor: pointer;
+`;
+
+const WrapButton = styled.div`
+  height: auto;
+  margin: 1.5rem 0 1rem 0;
+`;
+
 const Button = ({ success, buttonText, loading, bodyFont }: Props) => (
-  <div style={{ fontFamily: bodyFont }}>
-    <button
+  <WrapButton style={{ fontFamily: bodyFont }}>
+    <StyledButton
       type="submit"
       disabled={loading}
       className="caps btn bg-darken-4 p2 col-12 mt1 mb2 rounded white"
     >
       {loading ? 'Enviando...' : buttonText}
-    </button>
+    </StyledButton>
     {success && (
       <div className="center">Sua ação foi registrada com sucesso!</div>
     )}
-  </div>
+  </WrapButton>
 );
 
 Button.defaultProps = {

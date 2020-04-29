@@ -7,17 +7,33 @@ const Select = styled.select`
   padding: 1rem;
   display: inline-block;
   height: inherit;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border: 1px solid #eee;
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
 `;
 
 const StyledInput = styled.input`
+  cursor: pointer;
   border-radius: 2px;
   padding: 1rem;
+  box-sizing: border-box;
+  height: auto;
+  border: 1px solid #eee;
+  font-size: inherit;
+  font-family: inherit;
+  width: 100%;
 `;
 
 const Label = styled.label`
+  cursor: pointer;
   font-size: 0.75rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #fff;
 `;
 
 type Props = {
@@ -69,15 +85,21 @@ const renderFieldKind = ({
   );
 };
 
+const Wrapper = styled.div`
+  display: grid;
+  grid-row-gap: 1rem;
+  font-family: inherit;
+`;
+
 const Input = ({ field, bodyFont, ...props }: Props) => {
   return (
-    <div className="mb2" style={{ fontFamily: bodyFont }}>
+    <Wrapper style={{ fontFamily: bodyFont }}>
       <Label className="caps bold mb1 inline-block white">
         {field.label}
         {field.required === 'true' ? '*' : null}
       </Label>
       {renderFieldKind({ ...props, field })}
-    </div>
+    </Wrapper>
   );
 };
 
