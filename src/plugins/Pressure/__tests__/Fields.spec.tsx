@@ -2,22 +2,22 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Fields from '../components/Form/Fields';
 
-describe('Pressure Form Fields', function () {
+describe('Pressure Form Fields', function() {
   const fields = [
     {
       label: 'First name',
       name: 'firstName',
       placeholder: 'First name',
       disabled: false,
-      type: 'text'
+      type: 'text',
     },
     {
       label: 'Email',
       name: 'email',
       placeholder: 'Email',
       disabled: false,
-      type: 'email'
-    }
+      type: 'email',
+    },
   ];
 
   it('should render button', () => {
@@ -30,7 +30,7 @@ describe('Pressure Form Fields', function () {
     const wrapper = shallow(<Fields fields={fields} />);
 
     expect(wrapper.find('InputField').length).toEqual(2);
-  })
+  });
 
   it('should render TextareaField when type is textarea', () => {
     const textareaInput = {
@@ -38,19 +38,19 @@ describe('Pressure Form Fields', function () {
       name: 'about',
       placeholder: 'About',
       disabled: false,
-      type: 'textarea'
+      type: 'textarea',
     };
     const wrapper = shallow(<Fields fields={[textareaInput]} />);
 
     expect(wrapper.find('TextareaField').length).toEqual(1);
-  })
+  });
 
   it('should pass props to Field', () => {
     const textareaInput = {
       label: 'About',
       name: 'about',
       placeholder: 'About',
-      disabled: false
+      disabled: false,
     };
     const textInput = {
       label: 'Name',
@@ -58,7 +58,7 @@ describe('Pressure Form Fields', function () {
       placeholder: 'Name',
       disabled: true,
       type: 'text',
-      extraProps: { dummy: true } 
+      extraProps: { dummy: true },
     };
     const wrapper = shallow(
       <Fields fields={[{ ...textareaInput, type: 'textarea' }, textInput]} />
@@ -66,5 +66,5 @@ describe('Pressure Form Fields', function () {
 
     expect(wrapper.find('TextareaField').props()).toStrictEqual(textareaInput);
     expect(wrapper.find('InputField').props()).toStrictEqual(textInput);
-  })
+  });
 });

@@ -33,19 +33,19 @@ class Page extends React.Component<PageProps> {
       }
     }
     
-    const fetchData = async () => {
+    const fetchData = async (filter?: any) => {
       const regex = host.match(`(.+)\.${appDomain}`)
       const where = regex
         ? { slug: regex[1].replace(/^www\./, '') }
         : { custom_domain: host }
 
-      await dispatch(asyncFilterMobilization(where))
-      await dispatch(asyncFilterBlock(where))
-      await dispatch(asyncFilterWidget(where))
-    }
+      await dispatch(asyncFilterMobilization(filter || where))
+      await dispatch(asyncFilterBlock(filter || where))
+      await dispatch(asyncFilterWidget(filter || where))
+    };
 
-    // await fetchData('www.meurio.org.br')
-    await fetchData()
+    await fetchData();
+    // await fetchData({ slug: 'elevacaonajbnao' });
   }
 
   render () {

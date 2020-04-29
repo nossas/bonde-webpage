@@ -24,6 +24,7 @@ import {
 } from 'bonde-webpages'
 
 import FormPlugin from './FormConnected';
+import PressurePlugin from './PressureConnected';
 // import PressurePlugin from './PressureConnected';
 // PRESSURE PLUGIN and external dependencies
 // import { PressureAnalytics, PressureTellAFriend } from 'bonde-webpage/lib/plugins/pressure'
@@ -36,14 +37,7 @@ import FormPlugin from './FormConnected';
 
 // import { selectors as MobilizationSelectors } from '../../../src/redux'
 // import { FinishPostDonation } from 'bonde-webpage/lib/plugins/donation/components'
-
-export const getSharedPath = (mobilization: any) => {
-  const domain = 'staging.bonde.org'
-
-  return mobilization.custom_domain
-    ? `http://${mobilization.custom_domain}`
-    : `http://${mobilization.slug}.${domain}`
-}
+import Utils from '../../Utils';
 
 const mapStateToProps = (state: any, props: any) => {
   const query = MobilizationSelectors(state, props)
@@ -54,8 +48,6 @@ const mapStateToProps = (state: any, props: any) => {
     widgets: query.getWidgets()
   }
 }
-
-const imageUrl = '/static/images/check-mark-image.png'
 
 // const MyCustomPressurePlugin = (props) => (
 //   <PressurePlugin
@@ -88,7 +80,7 @@ const plugins = [
           FinishCustomMessage: { component: FinishMessageCustom },
           FinishDefaultMessage: {
             component: FormTellAFriend,
-            props: { imageUrl, href: getSharedPath(props.mobilization) }
+            props: { imageUrl: Utils.imageUrl, href: Utils.getSharedPath(props.mobilization) }
           }
         }}
       />
@@ -100,20 +92,7 @@ const plugins = [
   },
   {
     kind: 'pressure',
-    component: () => <h2>PressurePluginTest</h2>
-    // component: (props: any) => (
-    //   <PressurePlugin
-    //     {...props}
-    //     analyticsEvents={PressureAnalytics}
-    //     overrides={{
-    //       FinishCustomMessage: { component: FinishMessageCustom },
-    //       FinishDefaultMessage: {
-    //         component: PressureTellAFriend,
-    //         props: { imageUrl, href: getSharedPath(props.mobilization) }
-    //       }
-    //     }}
-    //   />
-    // )
+    component: PressurePlugin
   },
   {
     kind: 'pressure-phone',

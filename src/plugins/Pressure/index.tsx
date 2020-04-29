@@ -11,58 +11,58 @@ import PhoneFields from './Phone';
  * - bgColor
  */
 
-type Props = {
-  /* Below props are from root parent */
-  editable?: boolean;
-  mobilization: {
-    header_font?: string;
-    community_id?: string | number;
-  };
-  widget: {
-    id?: number | string;
-    count?: number;
-    settings: {
-      main_color: string;
-      call_to_action?: string;
-      title_text: string;
-      button_text: string;
-      pressure_subject: string;
-      pressure_body: string;
-      disable_edit_field?: any;
-      finish_message_type?: string;
-      finish_message?: Record<any, any>;
-      finish_message_background?: string;
-      targets: string;
-      count_text?: string;
-      show_city: boolean | string;
-    };
-  };
-  block: {
-    scrollTopReached?: any;
-  };
-  overrides: {
-    FinishCustomMessage: {
-      component?: any;
-      props: any;
-    };
-    FinishDefaultMessage: {
-      component?: any;
-      props: any;
-    };
-  };
-  analyticsEvents?: any;
+// type Props = {
+//   /* Below props are from root parent */
+//   editable?: boolean;
+//   mobilization: {
+//     header_font?: string;
+//     community_id?: string | number;
+//   };
+//   widget: {
+//     id?: number | string;
+//     count?: number;
+//     settings: {
+//       main_color: string;
+//       call_to_action?: string;
+//       title_text: string;
+//       button_text: string;
+//       pressure_subject: string;
+//       pressure_body: string;
+//       disable_edit_field?: any;
+//       finish_message_type?: string;
+//       finish_message?: Record<any, any>;
+//       finish_message_background?: string;
+//       targets: string;
+//       count_text?: string;
+//       show_city: boolean | string;
+//     };
+//   };
+//   block: {
+//     scrollTopReached?: any;
+//   };
+//   overrides: {
+//     FinishCustomMessage: {
+//       component?: any;
+//       props: any;
+//     };
+//     FinishDefaultMessage: {
+//       component?: any;
+//       props: any;
+//     };
+//   };
+//   analyticsEvents?: any;
 
-  /* */
+//   /* */
 
-  saving: boolean;
-  filledPressureWidgets: Array<any>;
-  asyncFillWidget?: Function;
+//   saving: boolean;
+//   filledPressureWidgets: Array<any>;
+//   asyncFillWidget?: Function;
 
-  /* Below props are created in direct parent */
-  countTwilioCallsByWidget?: Function;
-  twilioCall?: Function;
-  callTransition?: any;
-};
+//   /* Below props are created in direct parent */
+//   countTwilioCallsByWidget?: Function;
+//   twilioCall?: Function;
+//   callTransition?: any;
+// };
 
 const renderFields = (
   pressureType: string,
@@ -96,7 +96,15 @@ const Pressure = ({
 }: // analyticsEvents,
 // callTransition,
 // countTwilioCallsByWidget,
-Props) => {
+any) => {
+  const [targetsError, setTargetsError] = useState<string | undefined>(
+    undefined
+  );
+  // const [phonePressureCount, setPressureCount] = useState<number | undefined>(
+  //   undefined
+  // );
+  const [showFinishMessage] = useState(false);
+
   const {
     main_color: mainColor,
     call_to_action: callToAction,
@@ -123,13 +131,6 @@ Props) => {
   const targetList = getTargetList(targets) || [];
   const pressureType = pressureUtils.getType(targetList);
 
-  const [targetsError, setTargetsError] = useState<string | undefined>(
-    undefined
-  );
-  // const [phonePressureCount, setPressureCount] = useState<number | undefined>(
-  //   undefined
-  // );
-  const [showFinishMessage] = useState(false);
   // const [callManagement, setCalls] = useState<Array<any>>([]);
 
   // useEffect(() => {

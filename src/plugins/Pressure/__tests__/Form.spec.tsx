@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Form from '../components/Form';
 
-describe('Pressure Form', function () {
+describe('Pressure Form', function() {
   const widget = {
     id: 1,
     count: 0,
@@ -12,13 +12,13 @@ describe('Pressure Form', function () {
       pressure_subject: 'Pressure Subject',
       pressure_body: 'Pressure Body',
       targets: 'Target 1 <target1@test.org>;Target 2 <target1@test.org>;',
-      show_city: false
+      show_city: false,
     },
   };
   const props = {
     onSubmit: () => 'onSubmit',
     widget,
-    saving: false
+    saving: false,
   };
 
   it('should render form', () => {
@@ -31,9 +31,11 @@ describe('Pressure Form', function () {
     const wrapper = shallow(<Form {...props} />)
       .find('ConnectedForm')
       .renderProp<any>('children')({ submitting: false });
-    
+
     expect(wrapper.find('Button[type="submit"]').length).toEqual(1);
-    expect(wrapper.find('Button').props().children).toEqual(widget.settings.button_text);
+    expect(wrapper.find('Button').props().children).toEqual(
+      widget.settings.button_text
+    );
   });
 
   it('should render button "Enviando..." when saving form', () => {
@@ -55,21 +57,23 @@ describe('Pressure Form', function () {
   });
 
   it('should render noTargetsError if passed', () => {
-    const noTargetsError = 'select any target to continue'
-    const wrapper = shallow(<Form {...props} noTargetsError={noTargetsError}  />)
+    const noTargetsError = 'select any target to continue';
+    const wrapper = shallow(<Form {...props} noTargetsError={noTargetsError} />)
       .find('ConnectedForm')
       .renderProp<any>('children')({ submitting: false });
 
-    expect(wrapper.find('Error').props().children).toEqual(noTargetsError)
+    expect(wrapper.find('Error').props().children).toEqual(noTargetsError);
   });
 
   it('should pass onSubmit and initialValues to ConnectedForm', () => {
     const wrapper = shallow(<Form {...props} />);
     expect(wrapper.find('ConnectedForm').prop('initialValues')).toStrictEqual({
       subject: widget.settings.pressure_subject,
-      body: widget.settings.pressure_body
+      body: widget.settings.pressure_body,
     });
-    expect(wrapper.find('ConnectedForm').prop('onSubmit')).toEqual(props.onSubmit);
+    expect(wrapper.find('ConnectedForm').prop('onSubmit')).toEqual(
+      props.onSubmit
+    );
   });
 
   it('should render essential fields', () => {
