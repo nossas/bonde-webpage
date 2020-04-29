@@ -49,7 +49,7 @@ export default {
     created_at: '2020-02-20T10:45:33.705-03:00',
     donations_count: 0,
     exported_at: null,
-    form_entries_count: 0,
+    form_entries_count: 10,
     goal: null,
     id: 24522,
     kind: 'content',
@@ -57,6 +57,7 @@ export default {
     match_list: [],
     md_size: 6,
     settings: {
+      count_text: 'envios',
       button_text: 'enviar',
       call_to_action: 'Quero ser acolhidx',
       email_text:
@@ -140,7 +141,7 @@ export default {
         },
       },
       finish_message_background: '255,255,255,1',
-      finish_message_type: 'custom',
+      finish_message_type: '',
       main_color: 'rgba(189,83,181)',
     },
     sm_size: 12,
