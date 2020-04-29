@@ -2,7 +2,8 @@ import React from 'react';
 import FacebookShareButton from './ShareButtons/Facebook';
 import TwitterShareButton from './ShareButtons/Twitter';
 import WhatsAppShareButton from './ShareButtons/Whatsapp';
-// import checkMarkImage from './'
+// import checkMarkImage from './check-mark-image.png';
+import { Wrap, Header, IconWrapper, WrapButtons } from './styles';
 
 type Props = {
   preview?: boolean;
@@ -10,14 +11,16 @@ type Props = {
     twitter_share_text: string;
   };
   widget: {
-    settings: {
-      whatsapp_text: string;
-    };
+    settings:
+      | {
+          whatsapp_text?: string;
+        }
+      | Record<string, any>;
   };
-  message: any;
+  message: string;
   href: string;
   imageUrl: string;
-  imageWidth: string;
+  imageWidth?: string;
 };
 
 const TellAFriend = ({
@@ -30,26 +33,18 @@ const TellAFriend = ({
 }: Props) => {
   const { whatsapp_text = '' } = settings;
   return (
-    <div className="center p3 bg-white darkengray rounded">
-      <div className="m0 h3 bold">{message}</div>
-      <div className="py2">
-        <img
-          src={imageUrl || './check-mark-image.png'}
-          style={{ width: imageWidth || 100 }}
-          alt=""
-        />
-      </div>
+    <Wrap className="center p3 bg-white darkengray rounded">
+      <Header className="m0 h3 bold">{message}</Header>
+      <IconWrapper className="py2">
+        <img src={imageUrl || ''} style={{ width: imageWidth || 100 }} alt="" />
+      </IconWrapper>
       <p>Agora, compartilhe com seus amigos!</p>
-      <p>
+      <WrapButtons>
         <FacebookShareButton href={href} />
-      </p>
-      <p>
         <TwitterShareButton href={href} text={twitterShareText} />
-      </p>
-      <p>
         <WhatsAppShareButton whatsappText={whatsapp_text || href} />
-      </p>
-    </div>
+      </WrapButtons>
+    </Wrap>
   );
 };
 
