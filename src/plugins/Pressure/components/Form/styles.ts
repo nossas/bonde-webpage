@@ -92,6 +92,12 @@ export const ButtonWrapper = styled.div<ButtonProps>`
       border-radius: 3px;
       text-decoration: none;
       width: 100%;
+      ${props =>
+        props.color &&
+        `
+        background-color: ${props.color};
+        border-color: ${props.color};
+      `}
 
       font-family: ${props => props.theme.fontFamily};
       font-size: inherit;

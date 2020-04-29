@@ -153,6 +153,12 @@ const layoutStyles = css`
     float: right;
   }
 
+  // Styled components widget
+  .pressure-widget {
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
   // Mobile medias
   @media (min-width: 1024px) {
     .show-mobile {

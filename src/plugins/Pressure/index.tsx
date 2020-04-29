@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { pressureUtils } from './utils';
+// import { pressureUtils } from './utils';
 import { Count, Form, Targets } from './components';
 import { Header } from './styles';
 import EmailFields from './Email';
@@ -97,9 +97,9 @@ const Pressure = ({
 // callTransition,
 // countTwilioCallsByWidget,
 any) => {
-  const [targetsError, setTargetsError] = useState<string | undefined>(
-    undefined
-  );
+  // const [targetsError, setTargetsError] = useState<string | undefined>(
+  //   undefined
+  // );
   // const [phonePressureCount, setPressureCount] = useState<number | undefined>(
   //   undefined
   // );
@@ -129,7 +129,7 @@ any) => {
     targets.split(';').filter((target: string) => !!target.trim());
 
   const targetList = getTargetList(targets) || [];
-  const pressureType = pressureUtils.getType(targetList);
+  // const pressureType = pressureUtils.getType(targetList);
 
   // const [callManagement, setCalls] = useState<Array<any>>([]);
 
@@ -179,46 +179,47 @@ any) => {
   };
 
   const handleSubmit = (data: any) => {
-    if (data.pressureType === pressureUtils.PRESSURE_TYPE_EMAIL) {
-      const payload = {
-        activist: {
-          firstname: data.name,
-          lastname: data.lastname,
-          email: data.email,
-          city: data.city || null,
-        },
-        mail: {
-          cc: targetList.map((target: string) => getEmailTarget(target)),
-          subject: data.subject,
-          body: data.body,
-        },
-      };
-      return asyncFillWidget && asyncFillWidget({ payload, widget });
-    } else if (data.pressureType === pressureUtils.PRESSURE_TYPE_PHONE) {
-      if (targets.length < 1) {
-        return setTargetsError(
-          'Ops, você precisa selecionar pelo menos um alvo para poder pressionar'
-        );
-      }
+    // if (data.pressureType === pressureUtils.PRESSURE_TYPE_EMAIL) {
+    const payload = {
+      activist: {
+        firstname: data.name,
+        lastname: data.lastname,
+        email: data.email,
+        city: data.city || null,
+      },
+      mail: {
+        cc: targetList.map((target: string) => getEmailTarget(target)),
+        subject: data.subject,
+        body: data.body,
+      },
+    };
+    console.log('payload', { payload });
+    return asyncFillWidget && asyncFillWidget({ payload, widget });
+    // } else if (data.pressureType === pressureUtils.PRESSURE_TYPE_PHONE) {
+    //   if (targets.length < 1) {
+    //     return setTargetsError(
+    //       'Ops, você precisa selecionar pelo menos um alvo para poder pressionar'
+    //     );
+    //   }
 
-      // normalize phone number with + sign (e.g. +5511987654321)
-      data.phone = /^\+/.test(data.phone) ? data.phone : `+${data.phone}`;
+    //   // normalize phone number with + sign (e.g. +5511987654321)
+    //   data.phone = /^\+/.test(data.phone) ? data.phone : `+${data.phone}`;
 
-      setTargetsError(undefined);
+    //   setTargetsError(undefined);
 
-      // twilioCall(
-      //   {
-      //     widgetId: widget.id,
-      //     communityId: mobilization.community_id,
-      //     from: data.phone,
-      //     to: getEmailTarget(arrayUtils.shuffle(targetList)[0]),
-      //   },
-      //   true
-      // );
-    }
-    return setTargetsError(
-      'Ops, você precisa selecionar pelo menos um alvo para poder pressionar'
-    );
+    //   // twilioCall(
+    //   //   {
+    //   //     widgetId: widget.id,
+    //   //     communityId: mobilization.community_id,
+    //   //     from: data.phone,
+    //   //     to: getEmailTarget(arrayUtils.shuffle(targetList)[0]),
+    //   //   },
+    //   //   true
+    //   // );
+    // }
+    // return setTargetsError(
+    //   'Ops, você precisa selecionar pelo menos um alvo para poder pressionar'
+    // );
   };
 
   const finishPressure =
@@ -250,7 +251,7 @@ any) => {
       >
         {callToAction || titleText}
       </Header>
-      <Targets targets={targetList} pressureType={pressureType} />
+      <Targets targets={targetList} pressureType="email" />
       {/* {callTransition ? (
         <CallingTargets
           addTwilioCallMutation={twilioCall}
@@ -265,18 +266,18 @@ any) => {
           onSubmit={handleSubmit}
           saving={saving}
           BeforeStandardFields={() =>
-            renderFields(pressureType, {
+            renderFields('email', {
               Email: EmailFields.before(targetList),
               Phone: PhoneFields.before(targetList),
             })
           }
           AfterStandardFields={() =>
-            renderFields(pressureType, {
+            renderFields('email', {
               Email: EmailFields.after(disableEditField === 's'),
               Phone: null,
             })
           }
-          noTargetsError={targetsError}
+          // noTargetsError={targetsError}
           // analyticsEvents={analyticsEvents}
         />
         {countText && (

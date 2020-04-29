@@ -44,8 +44,8 @@ class Page extends React.Component<PageProps> {
       await dispatch(asyncFilterWidget(filter || where))
     };
 
-    await fetchData();
-    // await fetchData({ slug: 'elevacaonajbnao' });
+    // await fetchData();
+    await fetchData({ slug: 'elevacaonajbnao' });
   }
 
   render () {
