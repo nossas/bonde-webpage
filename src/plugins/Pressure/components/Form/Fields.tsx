@@ -7,7 +7,7 @@ type Props = {
     label: string;
     name: string;
     placeholder: string;
-    type?: string;
+    type: string;
     validate?: any;
     onBlur?: any;
     disabled: boolean;
@@ -19,32 +19,28 @@ const Fields = ({ fields }: Props) => {
     <Fragment>
       {fields.map(
         (
-          { name, label, type, placeholder, onBlur, disabled, ...configs },
+          { name, label, type, placeholder, disabled, ...configs },
           i: number
         ) => {
           if (type !== 'textarea')
             return (
-              <WrapInputs disabled={disabled}>
+              <WrapInputs key={`input-id-${i}`} disabled={disabled}>
                 <InputField
                   name={name}
                   label={label}
                   type={type}
                   placeholder={placeholder}
-                  key={`input-id-${i}`}
-                  onBlur={onBlur}
                   disabled={disabled}
                   {...configs}
                 />
               </WrapInputs>
             );
           return (
-            <WrapInputs disabled={disabled}>
+            <WrapInputs key={`textarea-id-${i}`} disabled={disabled}>
               <TextareaField
                 label={label}
                 name={name}
                 placeholder={placeholder}
-                key={`textarea-id-${i}`}
-                onBlur={onBlur}
                 disabled={disabled}
                 {...configs}
               />

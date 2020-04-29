@@ -1,5 +1,5 @@
 {
-  "version": "0.1.6",
+  "version": "0.1.8-alpha.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -78,6 +78,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.28",
     "@slate-editor/alignment-plugin": "5.1.0",
     "@slate-editor/bold-plugin": "5.1.0",
     "@slate-editor/color-plugin": "5.1.0",

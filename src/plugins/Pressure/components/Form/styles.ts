@@ -122,6 +122,8 @@ export const Error = styled.span`
   font-family: ${props => props.theme.fontFamily};
 `;
 
+Error.displayName = 'Error';
+
 Error.defaultProps = {
   theme,
 };

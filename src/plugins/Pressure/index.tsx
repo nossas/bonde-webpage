@@ -1,68 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import { arrayUtils, pressureUtils } from './utils';
+import React, { useState } from 'react';
+import { pressureUtils } from './utils';
 import { Count, Form, Targets } from './components';
 import { Header } from './styles';
 import EmailFields from './Email';
 import PhoneFields from './Phone';
-import CallingTargets from './Phone/CallingTargets';
+// import CallingTargets from './Phone/CallingTargets';
 
 /* TODO: Change static content by props
  * - title
  * - bgColor
  */
 
-type Props = {
-  /* Below props are from root parent */
-  editable: boolean;
-  mobilization: {
-    header_font: string;
-    community_id: string | number;
-  };
-  widget: {
-    id: number | string;
-    count: number;
-    settings: {
-      main_color: string;
-      call_to_action?: string;
-      title_text: string;
-      button_text: string;
-      pressure_subject?: string;
-      pressure_body?: string;
-      disable_edit_field?: any;
-      finish_message_type?: string;
-      finish_message?: Record<any, any>;
-      finish_message_background?: string;
-      targets: string;
-      count_text?: string;
-      show_city: boolean | string;
-    };
-  };
-  block: {
-    scrollTopReached: any;
-  };
-  overrides: {
-    FinishCustomMessage: {
-      component?: any;
-      props: any;
-    };
-    FinishDefaultMessage: {
-      component?: any;
-      props: any;
-    };
-  };
-  analyticsEvents?: any;
+// type Props = {
+//   /* Below props are from root parent */
+//   editable?: boolean;
+//   mobilization: {
+//     header_font?: string;
+//     community_id?: string | number;
+//   };
+//   widget: {
+//     id?: number | string;
+//     count?: number;
+//     settings: {
+//       main_color: string;
+//       call_to_action?: string;
+//       title_text: string;
+//       button_text: string;
+//       pressure_subject: string;
+//       pressure_body: string;
+//       disable_edit_field?: any;
+//       finish_message_type?: string;
+//       finish_message?: Record<any, any>;
+//       finish_message_background?: string;
+//       targets: string;
+//       count_text?: string;
+//       show_city: boolean | string;
+//     };
+//   };
+//   block: {
+//     scrollTopReached?: any;
+//   };
+//   overrides: {
+//     FinishCustomMessage: {
+//       component?: any;
+//       props: any;
+//     };
+//     FinishDefaultMessage: {
+//       component?: any;
+//       props: any;
+//     };
+//   };
+//   analyticsEvents?: any;
 
-  /* */
+//   /* */
 
-  saving: boolean;
-  filledPressureWidgets: Array<any>;
-  asyncFillWidget: Function;
+//   saving: boolean;
+//   filledPressureWidgets: Array<any>;
+//   asyncFillWidget?: Function;
 
-  /* Below props are created in direct parent */
-  countTwilioCallsByWidget: Function;
-  twilioCall: Function;
-  callTransition: any;
-};
+//   /* Below props are created in direct parent */
+//   countTwilioCallsByWidget?: Function;
+//   twilioCall?: Function;
+//   callTransition?: any;
+// };
 
 const renderFields = (
   pressureType: string,
@@ -76,27 +76,35 @@ const renderFields = (
   return null;
 };
 
-const parseTarget = (target: string) => {
-  const targetSplit = target.split('<');
-  const valid = targetSplit.length === 2;
-  return valid
-    ? { name: targetSplit[0].trim(), value: targetSplit[1].replace('>', '') }
-    : null;
-};
+// const parseTarget = (target: string) => {
+//   const targetSplit = target.split('<');
+//   const valid = targetSplit.length === 2;
+//   return valid
+//     ? { name: targetSplit[0].trim(), value: targetSplit[1].replace('>', '') }
+//     : null;
+// };
 
 const Pressure = ({
   widget,
   asyncFillWidget,
-  twilioCall,
+  // twilioCall,
   mobilization,
   block,
   saving,
   filledPressureWidgets,
   overrides,
-  // analyticsEvents,
-  callTransition,
-  countTwilioCallsByWidget,
-}: Props) => {
+}: // analyticsEvents,
+// callTransition,
+// countTwilioCallsByWidget,
+any) => {
+  const [targetsError, setTargetsError] = useState<string | undefined>(
+    undefined
+  );
+  // const [phonePressureCount, setPressureCount] = useState<number | undefined>(
+  //   undefined
+  // );
+  const [showFinishMessage] = useState(false);
+
   const {
     main_color: mainColor,
     call_to_action: callToAction,
@@ -104,8 +112,6 @@ const Pressure = ({
     // Maybe `reply_email` is necessary...
     // reply_email,
     count_text: countText,
-    pressure_subject: pressureSubject,
-    pressure_body: pressureBody,
     finish_message_type: finishMessageType,
     disable_edit_field: disableEditField,
     targets,
@@ -125,54 +131,47 @@ const Pressure = ({
   const targetList = getTargetList(targets) || [];
   const pressureType = pressureUtils.getType(targetList);
 
-  const [targetsError, setTargetsError] = useState<string | undefined>(
-    undefined
-  );
-  const [phonePressureCount, setPressureCount] = useState<number | undefined>(
-    undefined
-  );
-  const [showFinishMessage, toggleFinishMessage] = useState(false);
-  const [callManagement, setCalls] = useState<Array<any>>([]);
+  // const [callManagement, setCalls] = useState<Array<any>>([]);
 
-  useEffect(() => {
-    const isPressurePhone = pressureType === pressureUtils.PRESSURE_TYPE_PHONE;
-    const hasCounter = !!widget.settings.count_text;
-    if (hasCounter && isPressurePhone) {
-      return countTwilioCallsByWidget({ widgetId: widget.id })
-        .then(({ phonePressureCount }: { phonePressureCount: number }) =>
-          setPressureCount(phonePressureCount)
-        )
-        .catch((err: any) => console.error(err));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pressureType, widget.settings.count_text]);
+  // useEffect(() => {
+  //   const isPressurePhone = pressureType === pressureUtils.PRESSURE_TYPE_PHONE;
+  //   const hasCounter = !!widget.settings.count_text;
+  //   if (hasCounter && isPressurePhone) {
+  //     return countTwilioCallsByWidget({ widgetId: widget.id })
+  //       .then(({ phonePressureCount }: { phonePressureCount: number }) =>
+  //         setPressureCount(phonePressureCount)
+  //       )
+  //       .catch((err: any) => console.error(err));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [pressureType, widget.settings.count_text]);
 
-  useEffect(() => {
-    if (!callTransition && targetList && targetList.length) {
-      const value = targetList.map(target => ({
-        ...parseTarget(target),
-        attempts: 0,
-      }));
-      setCalls(value);
-    }
+  // useEffect(() => {
+  //   if (!callTransition && targetList && targetList.length) {
+  //     const value = targetList.map(target => ({
+  //       ...parseTarget(target),
+  //       attempts: 0,
+  //     }));
+  //     setCalls(value);
+  //   }
 
-    if (callTransition && targetList && targetList.length) {
-      const value = callManagement.map((target, index) => {
-        const isCallToCurrentTarget =
-          target.value === callTransition.twilioCallTo;
-        const transition = isCallToCurrentTarget ? callTransition : {};
-        const { twilioCallTransitionStatus: status } = transition;
-        const isFailStatus = ['busy', 'failed', 'no-answer'].includes(status);
+  //   if (callTransition && targetList && targetList.length) {
+  //     const value = callManagement.map((target, index) => {
+  //       const isCallToCurrentTarget =
+  //         target.value === callTransition.twilioCallTo;
+  //       const transition = isCallToCurrentTarget ? callTransition : {};
+  //       const { twilioCallTransitionStatus: status } = transition;
+  //       const isFailStatus = ['busy', 'failed', 'no-answer'].includes(status);
 
-        let attempts = callManagement[index].attempts;
-        if (isCallToCurrentTarget && isFailStatus) attempts++;
+  //       let attempts = callManagement[index].attempts;
+  //       if (isCallToCurrentTarget && isFailStatus) attempts++;
 
-        return { ...target, ...transition, attempts };
-      });
-      setCalls(value);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [callTransition, targetList, callManagement]);
+  //       return { ...target, ...transition, attempts };
+  //     });
+  //     setCalls(value);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [callTransition, targetList, callManagement]);
 
   const getEmailTarget = (target: string) => {
     const targetSplit = target.split('<');
@@ -194,7 +193,7 @@ const Pressure = ({
           body: data.body,
         },
       };
-      return asyncFillWidget({ payload, widget });
+      return asyncFillWidget && asyncFillWidget({ payload, widget });
     } else if (data.pressureType === pressureUtils.PRESSURE_TYPE_PHONE) {
       if (targets.length < 1) {
         return setTargetsError(
@@ -207,15 +206,15 @@ const Pressure = ({
 
       setTargetsError(undefined);
 
-      twilioCall(
-        {
-          widgetId: widget.id,
-          communityId: mobilization.community_id,
-          from: data.phone,
-          to: getEmailTarget(arrayUtils.shuffle(targetList)[0]),
-        },
-        true
-      );
+      // twilioCall(
+      //   {
+      //     widgetId: widget.id,
+      //     communityId: mobilization.community_id,
+      //     from: data.phone,
+      //     to: getEmailTarget(arrayUtils.shuffle(targetList)[0]),
+      //   },
+      //   true
+      // );
     }
     return setTargetsError(
       'Ops, você precisa selecionar pelo menos um alvo para poder pressionar'
@@ -245,67 +244,72 @@ const Pressure = ({
   return (
     <div className="pressure-widget">
       <div onKeyDown={e => e.stopPropagation()} />
-      <Header backgroundColor={mainColor} fontFamily={mobilization.header_font}>
+      <Header
+        backgroundColor={mainColor}
+        fontFamily={mobilization.header_font || ''}
+      >
         {callToAction || titleText}
       </Header>
       <Targets targets={targetList} pressureType={pressureType} />
-      {callTransition ? (
+      {/* {callTransition ? (
         <CallingTargets
           addTwilioCallMutation={twilioCall}
           buttonColor={mainColor}
           toggleFinishMessage={toggleFinishMessage}
           callManagement={callManagement}
         />
-      ) : (
-        <>
-          <Form
-            widget={widget}
-            onSubmit={handleSubmit}
-            saving={saving}
-            initialValues={{
-              body: pressureBody || '',
-              subject: pressureSubject || '',
-            }}
-            BeforeStandardFields={() =>
-              renderFields(pressureType, {
-                Email: EmailFields.before(targetList),
-                Phone: PhoneFields.before(targetList),
-              })
-            }
-            AfterStandardFields={() =>
-              renderFields(pressureType, {
-                Email: EmailFields.after(disableEditField === 's'),
-                Phone: null,
-              })
-            }
-            noTargetsError={targetsError}
-            // analyticsEvents={analyticsEvents}
+      ) : ( */}
+      <>
+        <Form
+          widget={widget}
+          onSubmit={handleSubmit}
+          saving={saving}
+          BeforeStandardFields={() =>
+            renderFields(pressureType, {
+              Email: EmailFields.before(targetList),
+              Phone: PhoneFields.before(targetList),
+            })
+          }
+          AfterStandardFields={() =>
+            renderFields(pressureType, {
+              Email: EmailFields.after(disableEditField === 's'),
+              Phone: null,
+            })
+          }
+          noTargetsError={targetsError}
+          // analyticsEvents={analyticsEvents}
+        />
+        {countText && (
+          <Count
+            // value={phonePressureCount || widget.count || 0}
+            value={widget.count || 0}
+            color={mainColor}
+            text={countText}
+            startCounting={block.scrollTopReached}
           />
-          {countText && (
-            <Count
-              value={phonePressureCount || widget.count || 0}
-              color={mainColor}
-              text={countText}
-              startCounting={block.scrollTopReached}
-            />
-          )}
-        </>
-      )}
+        )}
+      </>
+      {/* )} */}
     </div>
   );
 };
 
 Pressure.defaultProps = {
+  saving: false,
   overrides: {
     FinishCustomMessage: { props: {} },
     FinishDefaultMessage: { props: {} },
   },
+  filledPressureWidgets: [],
+  block: {},
+  mobilization: {},
   widget: {
     settings: {
       main_color: '#f23392',
       title_text: 'Converse com quem pode tomar essa decisão',
       button_text: 'Enviar',
       disable_edit_field: 'n',
+      target: '',
     },
   },
 };
