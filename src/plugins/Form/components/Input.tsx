@@ -49,7 +49,7 @@ type Props = {
   bodyFont: string;
 };
 
-const renderFieldKind = ({
+export const renderFieldKind = ({
   field,
   name,
   onChange,
@@ -61,6 +61,7 @@ const renderFieldKind = ({
         name={name}
         className="select block border border-gray94"
         onChange={onChange}
+        aria-label={name}
       >
         <option value="">{'Selecione...'}</option>
         {field.placeholder.split(',').map(function(v: any, index: number) {
@@ -73,16 +74,21 @@ const renderFieldKind = ({
       </Select>
     );
   }
-  return (
-    <StyledInput
-      name={name}
-      type={field.kind === 'email' ? 'email' : 'text'}
-      onChange={onChange}
-      onBlur={onBlur}
-      placeholder={field.placeholder}
-      className="input block border border-gray94"
-    />
-  );
+  if (field.kind !== 'greetings') {
+    return (
+      <StyledInput
+        aria-label={name}
+        name={name}
+        type={field.kind}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder={field.placeholder}
+        className="input block border border-gray94"
+      />
+    );
+  }
+
+  return null;
 };
 
 const Wrapper = styled.div`
@@ -91,14 +97,14 @@ const Wrapper = styled.div`
   font-family: inherit;
 `;
 
-const Input = ({ field, bodyFont, ...props }: Props) => {
+const Input = ({ field, bodyFont, name, ...props }: Props) => {
   return (
     <Wrapper style={{ fontFamily: bodyFont }}>
-      <Label className="caps bold mb1 inline-block white">
+      <Label>
         {field.label}
         {field.required === 'true' ? '*' : null}
       </Label>
-      {renderFieldKind({ ...props, field })}
+      {renderFieldKind({ ...props, name, field })}
     </Wrapper>
   );
 };
