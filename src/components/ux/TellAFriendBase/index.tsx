@@ -47,6 +47,4 @@ const TellAFriend = ({
   );
 };
 
-TellAFriend.propTypes = {};
-
 export default TellAFriend;
