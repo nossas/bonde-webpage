@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import {
   // Plugins
   ContentPlugin,
+  DonationPlugin,
   DraftPlugin,
   FormAnalytics,
   FormTellAFriend,
@@ -88,7 +89,7 @@ const plugins = [
   },
   {
     kind: 'donation',
-    component: () => <h2>DonationPluginTest</h2>
+    component: DonationPlugin
   },
   {
     kind: 'pressure',
