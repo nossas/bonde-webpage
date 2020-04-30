@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import CountUp from 'react-countup';
 // import { intlShape } from 'react-intl'
 import { Button, Input, Raise } from './components';
 import { getFieldName, validate, fields } from './utils';
@@ -41,26 +40,37 @@ type Props = {
   };
 };
 
+const WrapForm = styled.div<{ backgroundColor: string }>`
+  padding: 2rem;
+  border-radius: 3px;
+  position: relative;
+  background-color: ${props => props.backgroundColor};
+`;
+
+const Header = styled.h2`
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 2rem 0;
+  font-weight: normal;
+`;
+
+const WrapInputs = styled.div`
+  display: grid;
+  grid-row-gap: 1rem;
+`;
+
 const renderCallToAction = (widget: any, { header_font: headerFont }: any) => {
   const callToAction = (widget.settings && widget.settings.call_to_action
     ? widget.settings.call_to_action
     : 'Clique para configurar seu formulário...'
   ).replace('\n', '<br/><br/>');
 
-  const Header = styled.h2`
-    color: #ffffff;
-    text-align: center;
-    margin: 0 0 2rem 0;
-    font-weight: normal;
-  `;
-
-  return <Header style={{ fontFamily: headerFont }}>{callToAction}</Header>;
+  return (
+    <Header style={{ fontFamily: headerFont || 'inherit' }}>
+      {callToAction}
+    </Header>
+  );
 };
-
-const WrapInputs = styled.div`
-  display: grid;
-  grid-row-gap: 1rem;
-`;
 
 const renderFields = (
   { analyticsEvents, widget: { settings }, mobilization }: any,
@@ -78,7 +88,7 @@ const renderFields = (
               Number(index) === 0 ? analyticsEvents.formIsFilled() : () => {}
             }
             field={field}
-            bodyFont={mobilization && mobilization.body_font}
+            bodyFont={mobilization.body_font || 'inherit'}
           />
         );
       })}
@@ -99,31 +109,13 @@ const renderButton = (
   />
 );
 
-export const renderCount = ({
-  block: { scrollTopReached: startCounting },
-  widget: { form_entries_count: count, settings },
-  mobilization: { body_font: bodyFont },
-}: any) => {
-  return (
-    <div className="mt2 h3 center white" style={{ fontFamily: bodyFont }}>
-      <CountUp
-        start={0}
-        end={!isNaN(count) && startCounting ? Number(count) : 0}
-        duration={5}
-      />
-      &nbsp;
-      {settings.count_text}
-    </div>
-  );
-};
-
 const renderErrors = (errors: Array<any>) => {
   return (
-    <React.Fragment>
+    <div style={{ marginTop: '1.5rem' }}>
       {errors.map((error: any, i: number) => (
         <Raise key={`error-${i}`} message={error} />
       ))}
-    </React.Fragment>
+    </div>
   );
 };
 
@@ -216,20 +208,15 @@ const FormPlugin = (props: Props) => {
         ? widget.settings.main_color
         : 'rgba(0,0,0,0.25)';
 
-    const WrapForm = styled.div<{ backgroundColor: string }>`
-      padding: 2rem;
-      border-radius: 3px;
-      position: relative;
-      background-color: ${props => props.backgroundColor};
-    `;
-
     return (
       <WrapForm backgroundColor={bgcolor}>
         <form onSubmit={submit}>
           {renderCallToAction(widget, mobilization)}
           {renderFields(props, handleChange)}
           {errors.length > 0 && renderErrors(errors)}
-          {widget.settings.fields && renderButton(props, success, loading)}
+          {widget.settings.fields &&
+            widget.settings.fields.length > 0 &&
+            renderButton(props, success, loading)}
         </form>
       </WrapForm>
     );

@@ -1,6 +1,7 @@
 export default {
   href: 'http://mapalgbt.bonde.org',
-  imageUrl: '/static/images/check-mark-image.png',
+  imageUrl:
+    'https://www.pngfind.com/pngs/m/169-1695521_kisspng-computer-icons-check-mark-presentation-symbol-ok.png',
   mobilization: {
     body_font: null,
     color_scheme: 'mapalgbt-scheme',
