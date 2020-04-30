@@ -13,7 +13,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
+    "test": "tsdx test --passWithNoTests --collectCoverage",
     "test:watch": "tsdx test --watch --runInBand --detectOpenHandles",
     "lint": "tsdx lint --fix",
     "prepare": "tsdx build",
@@ -80,8 +80,6 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.28",
-    "@emotion/styled": "^10.0.27",
     "@slate-editor/alignment-plugin": "5.1.0",
     "@slate-editor/bold-plugin": "5.1.0",
     "@slate-editor/color-plugin": "5.1.0",
