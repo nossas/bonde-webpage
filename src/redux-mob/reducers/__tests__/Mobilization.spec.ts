@@ -40,7 +40,7 @@ describe('Testing mobilization reducers', () => {
   });
 
   describe('Fetch mobilizations', () => {
-    test('should trigger FETCH_MOBILIZATIONS_REQUEST action and change to expected state', () => {
+    it('should trigger FETCH_MOBILIZATIONS_REQUEST action and change to expected state', () => {
       const action = { type: t.FETCH_MOBILIZATIONS_REQUEST };
       const nextState = reducer(initialState, action);
       expect(nextState).toEqual({
@@ -49,7 +49,7 @@ describe('Testing mobilization reducers', () => {
       });
     });
 
-    test('should trigger FETCH_MOBILIZATIONS_SUCCESS action and change to expected state', () => {
+    it('should trigger FETCH_MOBILIZATIONS_SUCCESS action and change to expected state', () => {
       const state = { ...initialState, fetching: true };
       const payload = [
         { id: 1, name: 'Lorem' },
@@ -65,7 +65,7 @@ describe('Testing mobilization reducers', () => {
       });
     });
 
-    test('should trigger FETCH_MOBILIZATIONS_FAILURE action and change to expected state', () => {
+    it('should trigger FETCH_MOBILIZATIONS_FAILURE action and change to expected state', () => {
       const state = { ...initialState, fetching: true };
       const payload = '500 Internal Server Error';
       const action = { type: t.FETCH_MOBILIZATIONS_FAILURE, payload };
@@ -86,7 +86,7 @@ describe('Testing mobilization reducers', () => {
     ];
     const loadedState = { ...initialState, isLoaded: true, data };
 
-    test('should trigger UPDATE_MOBILIZATION_REQUEST action and change to expected state', () => {
+    it('should trigger UPDATE_MOBILIZATION_REQUEST action and change to expected state', () => {
       const action = { type: t.UPDATE_MOBILIZATION_REQUEST };
       const nextState = reducer(loadedState, action);
       expect(nextState).toEqual({
@@ -95,7 +95,7 @@ describe('Testing mobilization reducers', () => {
       });
     });
 
-    test('should trigger UPDATE_MOBILIZATION_SUCCESS action and change to expected state', () => {
+    it('should trigger UPDATE_MOBILIZATION_SUCCESS action and change to expected state', () => {
       const state = { ...loadedState, saving: true };
       const payload = { ...data[0], name: 'Edited' };
       const action = { type: t.UPDATE_MOBILIZATION_SUCCESS, payload };
@@ -107,7 +107,7 @@ describe('Testing mobilization reducers', () => {
       });
     });
 
-    test('should trigger UPDATE_MOBILIZATION_FAILURE action and change to expected state', () => {
+    it('should trigger UPDATE_MOBILIZATION_FAILURE action and change to expected state', () => {
       const state = { ...loadedState, saving: true };
       const payload = '500 Internal Server Error';
       const action = { type: t.UPDATE_MOBILIZATION_FAILURE, payload };
@@ -121,7 +121,7 @@ describe('Testing mobilization reducers', () => {
   });
 
   describe('Select mobilization', () => {
-    test('should trigger SELECT_MOBILIZATION action and change to expected state', () => {
+    it('should trigger SELECT_MOBILIZATION action and change to expected state', () => {
       const state = {
         ...initialState,
         isLoaded: true,
@@ -142,7 +142,7 @@ describe('Testing mobilization reducers', () => {
   });
 
   describe('Toggle mobilization menu', () => {
-    test('should trigger UPDATE_MOBILIZATION_FAILURE action and change mobilization status to on', () => {
+    it('should trigger UPDATE_MOBILIZATION_FAILURE action and change mobilization status to on', () => {
       const payload = 1;
       const action = { type: t.TOGGLE_MOBILIZATION_MENU, payload };
       const nextState = reducer(initialState, action);
@@ -152,7 +152,7 @@ describe('Testing mobilization reducers', () => {
       });
     });
 
-    test('should trigger UPDATE_MOBILIZATION_FAILURE action and change mobilization status to off', () => {
+    it('should trigger UPDATE_MOBILIZATION_FAILURE action and change mobilization status to off', () => {
       const state = { ...initialState, menuActiveIndex: 1 };
       const action = { type: t.TOGGLE_MOBILIZATION_MENU, payload: 1 };
       const nextState = reducer(state, action);
@@ -164,7 +164,7 @@ describe('Testing mobilization reducers', () => {
   });
 
   describe('Filter mobilization', () => {
-    test('should trigger FILTER_MOBILIZATIONS_REQUEST action and change to expected state', () => {
+    it('should trigger FILTER_MOBILIZATIONS_REQUEST action and change to expected state', () => {
       const action = { type: t.FILTER_MOBILIZATIONS_REQUEST };
       const nextState = reducer(initialState, action);
       expect(nextState).toEqual({
@@ -173,7 +173,7 @@ describe('Testing mobilization reducers', () => {
       });
     });
 
-    test('should trigger FILTER_MOBILIZATIONS_SUCCESS action and change to expected state', () => {
+    it('should trigger FILTER_MOBILIZATIONS_SUCCESS action and change to expected state', () => {
       const state = { ...initialState, fetching: true };
       const payload = [{ id: 2, name: 'Ipsum' }];
       const action = { type: t.FILTER_MOBILIZATIONS_SUCCESS, payload };
@@ -187,7 +187,7 @@ describe('Testing mobilization reducers', () => {
       });
     });
 
-    test('should trigger FILTER_MOBILIZATIONS_FAILURE action and change to expected state', () => {
+    it('should trigger FILTER_MOBILIZATIONS_FAILURE action and change to expected state', () => {
       const state = { ...initialState, fetching: true };
       const payload = '500 Internal Server Error';
       const action = { type: t.FILTER_MOBILIZATIONS_FAILURE, payload };
@@ -204,7 +204,7 @@ describe('Testing mobilization reducers', () => {
   describe('Fetch widgets and blocks success in mobilization', () => {
     const state = { ...initialState, reload: true };
 
-    test('should trigger FETCH_BLOCKS_SUCCESS action and change to expected state', () => {
+    it('should trigger FETCH_BLOCKS_SUCCESS action and change to expected state', () => {
       const action = { type: t.FETCH_BLOCKS_SUCCESS };
       const nextState = reducer(state, action);
       expect(nextState).toEqual({
@@ -213,7 +213,7 @@ describe('Testing mobilization reducers', () => {
       });
     });
 
-    test('should trigger FETCH_WIDGETS_SUCCESS action and change to expected state', () => {
+    it('should trigger FETCH_WIDGETS_SUCCESS action and change to expected state', () => {
       const action = { type: t.FETCH_WIDGETS_SUCCESS };
       const nextState = reducer(state, action);
       expect(nextState).toEqual({
