@@ -1,23 +1,35 @@
 import React from 'react';
+import styled from 'styled-components';
 
 type Props = {
   message: string;
-  classes: Array<any>;
-  styles: Record<any, any>;
+  classes: string;
+  styles?: Record<string, string>;
 };
 
+const Wrap = styled.div`
+  background-color: rgb(249, 202, 206);
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0 3px 3px 0;
+  border-color: #ff4136;
+  border-width: 8px;
+  border-left-style: solid;
+  & > p {
+    font-family: inherit;
+    color: #ff4136;
+    font-weight: bold;
+  }
+`;
+
 const Raise = ({ message, classes, styles }: Props) => (
-  <div
-    className={`p1 border-left border-red mb1 rounded-right red bold ${classes}`}
-    style={{ ...styles }}
-  >
-    {message}
-  </div>
+  <Wrap className={classes} style={{ ...styles }}>
+    <p>{message}</p>
+  </Wrap>
 );
 
 Raise.defaultProps = {
-  classes: [],
-  styles: { backgroundColor: '#f9cace', borderWidth: '8px' },
+  classes: '',
 };
 
 export default Raise;
