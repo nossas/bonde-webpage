@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import gql from 'graphql-tag';
 import DonationStats from './components/DonationStats';
 
-const query = `
+const query = gql`
 query fetchDonationGoalStats($widgetId: Int!) {
   stats: getWidgetDonationStats(widgetId: $widgetId)
 }
@@ -10,14 +11,14 @@ query fetchDonationGoalStats($widgetId: Int!) {
 type Props = {
   // Function created with createApolloFetch
   // https://www.apollographql.com/blog/4-simple-ways-to-call-a-graphql-api-a6807bcdb355
-  fetch: any;
+  client: any;
   widgetId: number;
   mainColor: string;
   goalDateLimit?: string;
 };
 
 const FetchDonationStats = ({
-  fetch,
+  client,
   widgetId,
   mainColor,
   goalDateLimit,
@@ -26,7 +27,7 @@ const FetchDonationStats = ({
   const [data, setData] = useState();
 
   useEffect(() => {
-    fetch({ query, variables: { widgetId } })
+    client.query({ query, variables: { widgetId } })
       .then(({ data }: any) => {
         setData(data.stats);
         setFetching(false);
@@ -34,7 +35,7 @@ const FetchDonationStats = ({
       .catch((err: any) => {
         console.error('FetchDonationStats: ', err);
       });
-  }, [fetch, widgetId]);
+  }, [client, widgetId]);
 
   if (fetching) return <div />;
   else
