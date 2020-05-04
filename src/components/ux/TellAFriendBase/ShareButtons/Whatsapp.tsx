@@ -10,6 +10,7 @@ const WhatsAppShareButton = ({ whatsappText }: { whatsappText: string }) => {
         href={`${baseUrl}send?text=${encodeURIComponent(whatsappText)}`}
         style={{ backgroundColor: '#4CEC68', color: '#fff' }}
         target="_blank"
+        rel="noopener noreferrer"
       >
         Compartilhar no WhatsApp
       </a>

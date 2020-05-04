@@ -121,9 +121,9 @@ const renderErrors = (errors: Array<any>) => {
 
 const renderShareButtons = ({ widget, overrides, mobilization }: any) => {
   // TODO: check how works greetings
-  const message = fields(widget.settings).filter((field: any) => {
-    if (field.kind === 'greetings') return field.placeholder;
-  });
+  const message = fields(widget.settings).filter(
+    (field: any) => field.kind === 'greetings'
+  );
 
   if (message.length < 1) {
     const {
