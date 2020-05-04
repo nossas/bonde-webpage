@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "apollo-fetch": "^0.7.0",
     "axios": "^0.19.2",
     "bonde-webpages": "0.1.8-alpha.1",
     "next": "latest",

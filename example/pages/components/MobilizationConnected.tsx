@@ -26,6 +26,7 @@ import {
 
 import FormPlugin from './FormConnected';
 import PressurePlugin from './PressureConnected';
+import DonationPlugin from './DonationConnected';
 // import PressurePlugin from './PressureConnected';
 // PRESSURE PLUGIN and external dependencies
 // import { PressureAnalytics, PressureTellAFriend } from 'bonde-webpage/lib/plugins/pressure'
@@ -92,7 +93,7 @@ const plugins = [
   },
   {
     kind: 'donation',
-    component: () => <h2>DonationPluginTest</h2>,
+    component: DonationPlugin,
   },
   {
     kind: 'pressure',

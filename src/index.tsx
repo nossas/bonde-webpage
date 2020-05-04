@@ -40,3 +40,6 @@ export { default as PhonePressurePlugin } from './plugins/Pressure/Phone';
 export { default as PressureAnalytics } from './plugins/Pressure/Analytics';
 export { default as PressureTellAFriend } from './plugins/Pressure/components/TellAFriend';
 export { default as asyncPressureCreate } from './plugins/Pressure/redux/ActionCreators/FillWidget';
+
+/* DonationPlugin */
+export { default as DonationPlugin } from './plugins/Donation';

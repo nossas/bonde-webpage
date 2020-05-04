@@ -45,7 +45,10 @@ class Page extends React.Component<PageProps> {
     };
 
     // await fetchData();
-    await fetchData({ slug: 'elevacaonajbnao' });
+    // Pressure Email Widget
+    // await fetchData({ slug: 'elevacaonajbnao' });
+    // Donation Widget
+    await fetchData({ slug: 'nova-home-meu-rio' });
   }
 
   render () {
