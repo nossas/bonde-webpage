@@ -17,7 +17,7 @@ const DraftPlugin = ({ editable, plugins, widget }: Props) => {
   const pluginsWithoutDraft = plugins.filter((w: any) => w.kind !== 'draft');
   if (editable)
     return (
-      <DraftWidget className="widget center rounded lightgray clearfix">
+      <DraftWidget id={`widget-${widget.id}`}>
         {pluginsWithoutDraft.map((plugin: any, index: any) => {
           // Settings each plugin
           const { action, label, icon: Icon } = getOptions(plugin);

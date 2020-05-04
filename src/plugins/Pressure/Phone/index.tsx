@@ -186,7 +186,7 @@ const PhonePressure = ({
     );
 
   return (
-    <div className="pressure-widget">
+    <div id={`widget-${widget.id}`}>
       <div onKeyDown={e => e.stopPropagation()} />
       <Header backgroundColor={mainColor}>{callToAction || titleText}</Header>
       <Targets targets={targetList} pressureType="phone" />
