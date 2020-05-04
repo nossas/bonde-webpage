@@ -76,7 +76,7 @@ const Progress = styled.div<ProgressProps>`
   font-weight: bold;
   color: #fff;
 
-  width: ${props => (props.value > 100 ? 100 : props.value)};
+  width: ${props => (props.value > 100 ? 100 : props.value)}%;
   background-color: ${props => props.mainColor};
 `;
 
@@ -125,7 +125,7 @@ const DonationStats: React.FC<Props> = ({
 }) => {
   const stats = JSON.parse(data || '{}');
 
-  return (
+  return stats.goal ? (
     <DonationStatsStyles mainColor={mainColor}>
       <Currency mainColor={mainColor}>
         <span>{`R$ ${currencyInt(stats.pledged)}`}</span>
@@ -148,7 +148,7 @@ const DonationStats: React.FC<Props> = ({
         )}
       </div>
     </DonationStatsStyles>
-  );
+  ) : null;
 };
 
 DonationStats.defaultProps = {

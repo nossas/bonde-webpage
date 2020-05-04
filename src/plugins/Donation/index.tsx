@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DonationForm from './components/DonationForm';
 import DonationButton from './components/DonationButton';
 import SelectPaymentType from './components/SelectPaymentType';
-import DonationStats from './components/DonationStats';
+import FetchDonationStats from './FetchDonationStats';
 
 type Props = {
   extraProps: {
@@ -12,10 +12,14 @@ type Props = {
     recurringPeriod: number;
     buttonText: string;
   };
+  // Function created with createApolloFetch
+  // https://www.apollographql.com/blog/4-simple-ways-to-call-a-graphql-api-a6807bcdb355
+  fetch: any;
   asyncDonationCreate?: any;
   donationCustomerData?: any;
   mobilization: any;
   widget: {
+    id: number;
     settings: {
       main_color?: string;
       title_text?: string;
@@ -35,6 +39,7 @@ type Props = {
 
 const DonationPlugin: React.FC<Props> = ({
   asyncDonationCreate,
+  fetch,
   donationCustomerData,
   extraProps,
   widget,
@@ -156,16 +161,20 @@ const DonationPlugin: React.FC<Props> = ({
           />
         )}
       </DonationForm>
-      <DonationStats
-        mainColor={mainColor || extraProps.mainColor}
-        goalDateLimit={goalDateLimit}
-      />
+      {fetch && goalDateLimit && (
+        <FetchDonationStats
+          fetch={fetch}
+          widgetId={widget.id}
+          mainColor={mainColor || extraProps.mainColor}
+          goalDateLimit={goalDateLimit}
+        />
+      )}
     </>
   );
 };
 
 DonationPlugin.defaultProps = {
-  widget: { settings: {} },
+  widget: { id: 0, settings: {} },
   extraProps: {
     mainColor: '#54d0f6',
     title: 'Clique para configurar seu bloco de doação',
