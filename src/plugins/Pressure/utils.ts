@@ -91,6 +91,22 @@ const checkPhoneTargetsList = (message: string, targetList: Array<any>) => (
     ? message
     : undefined;
 
+export const parseTarget = (target: string) => {
+  const targetSplit = target.split('<');
+  const valid = targetSplit.length === 2;
+  return valid
+    ? { name: targetSplit[0].trim(), value: targetSplit[1].replace('>', '') }
+    : null;
+};
+
+export const getEmailTarget = (target: string) => {
+  const targetSplit = target.split('<');
+  return targetSplit[1].replace('>', '');
+};
+
+export const getTargetList = (targets: string = ''): Array<string> =>
+  targets.split(';').filter((target: string) => !!target.trim());
+
 export const validateUtils = {
   isValidEmail,
   isValidPhoneE164,
