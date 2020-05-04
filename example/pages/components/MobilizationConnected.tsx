@@ -11,7 +11,6 @@ import { connect } from 'react-redux'
 import {
   // Plugins
   ContentPlugin,
-  DonationPlugin,
   DraftPlugin,
   FormAnalytics,
   FormTellAFriend,
@@ -26,6 +25,7 @@ import {
 
 import FormPlugin from './FormConnected';
 import PressurePlugin from './PressureConnected';
+import DonationPlugin from './DonationConnected';
 // import PressurePlugin from './PressureConnected';
 // PRESSURE PLUGIN and external dependencies
 // import { PressureAnalytics, PressureTellAFriend } from 'bonde-webpage/lib/plugins/pressure'
