@@ -66,7 +66,7 @@ type Props = {
   countTwilioCallsByWidget: (id: number) => any;
 };
 
-const Pressure = ({
+const PhonePressure = ({
   // analyticsEvents,
   widget,
   mobilization,
@@ -226,7 +226,7 @@ const Pressure = ({
   );
 };
 
-Pressure.defaultProps = {
+PhonePressure.defaultProps = {
   saving: false,
   overrides: {
     FinishDefaultMessage: { Component: () => null, props: {} },
@@ -244,4 +244,4 @@ Pressure.defaultProps = {
   AfterStandardFields: () => null,
 };
 
-export default Pressure;
+export default PhonePressure;

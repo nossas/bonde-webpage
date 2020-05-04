@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 // MOBILIZATION and external dependencies
 // import { Mobilization, PluggableWidget, FinishMessageCustom } from '../../../src'
 // DRAFT PLUGIN and external dependencies
@@ -7,7 +7,7 @@ import * as React from 'react'
 // import FormPlugin from './FormConnected'
 // import { FormAnalytics, FormTellAFriend } from '../../../src/plugins/Form'
 // CONTENT PLUGIN and external dependencies
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import {
   // Plugins
   ContentPlugin,
@@ -20,8 +20,9 @@ import {
   Mobilization,
   PluggableWidget,
   FinishMessageCustom,
-  selectors as MobilizationSelectors
-} from 'bonde-webpages'
+  selectors as MobilizationSelectors,
+  // PhonePressurePlugin,
+} from 'bonde-webpages';
 
 import FormPlugin from './FormConnected';
 import PressurePlugin from './PressureConnected';
@@ -40,35 +41,35 @@ import PressurePlugin from './PressureConnected';
 import Utils from '../../Utils';
 
 const mapStateToProps = (state: any, props: any) => {
-  const query = MobilizationSelectors(state, props)
+  const query = MobilizationSelectors(state, props);
   return {
     mobilization: query.getMobilization() || query.getMobilizations()[0],
     blocks: query.getBlocks(),
     blocksIsLoaded: query.blocksIsLoaded(),
-    widgets: query.getWidgets()
-  }
-}
+    widgets: query.getWidgets(),
+  };
+};
 
 // const MyCustomPressurePlugin = (props) => (
-//   <PressurePlugin
-//     {...props}
-//     analyticsEvents={PressureAnalytics}
-//     graphqlClient={graphqlClient}
-//     overrides={{
-//       FinishCustomMessage: { component: FinishMessageCustom },
-//       FinishDefaultMessage: {
-//         component: PressureTellAFriend,
-//         props: { imageUrl, href: getSharedPath(props.mobilization) }
-//       },
-//     }}
-//   />
+// <PressurePlugin
+//   {...props}
+//   analyticsEvents={PressureAnalytics}
+//   graphqlClient={graphqlClient}
+//   overrides={{
+//     FinishCustomMessage: { component: FinishMessageCustom },
+//     FinishDefaultMessage: {
+//       component: PressureTellAFriend,
+//       props: { imageUrl, href: getSharedPath(props.mobilization) }
+//     },
+//   }}
+// />
 // )
 
 const plugins = [
   {
     kind: 'draft',
     component: DraftPlugin,
-    options: { noOverlay: true }
+    options: { noOverlay: true },
   },
   {
     kind: 'form',
@@ -80,29 +81,34 @@ const plugins = [
           FinishCustomMessage: { component: FinishMessageCustom },
           FinishDefaultMessage: {
             component: FormTellAFriend,
-            props: { imageUrl: Utils.imageUrl, href: Utils.getSharedPath(props.mobilization) }
-          }
+            props: {
+              imageUrl: Utils.imageUrl,
+              href: Utils.getSharedPath(props.mobilization),
+            },
+          },
         }}
       />
-    )
+    ),
   },
   {
     kind: 'donation',
-    component: () => <h2>DonationPluginTest</h2>
+    component: () => <h2>DonationPluginTest</h2>,
   },
   {
     kind: 'pressure',
-    component: PressurePlugin
+    component: PressurePlugin,
   },
   {
     kind: 'pressure-phone',
-    component: () => <h2>PressurePhonePluginTest</h2>
+    component: (props: any) => (
+      <PressurePlugin {...props} PluginComponent={<div>bla</div>} />
+    ),
   },
   {
     kind: 'content',
-    component: ContentPlugin
-  }
-]
+    component: ContentPlugin,
+  },
+];
 
 // componentDidMount() {
 //   const isTest = false
@@ -122,14 +128,19 @@ const plugins = [
 //   }
 // }
 
-const MobilizationConnected = ({ mobilization, blocks, widgets, blocksIsLoaded }: any) => {
+const MobilizationConnected = ({
+  mobilization,
+  blocks,
+  widgets,
+  blocksIsLoaded,
+}: any) => {
   if (mobilization && blocksIsLoaded) {
     // Properties received by HOC
     const {
       color_scheme: colorScheme,
       header_font: headerFont,
-      body_font: bodyFont
-    } = mobilization
+      body_font: bodyFont,
+    } = mobilization;
 
     return (
       <Mobilization
@@ -143,12 +154,12 @@ const MobilizationConnected = ({ mobilization, blocks, widgets, blocksIsLoaded }
         extraWidgetProps={{
           mobilization: mobilization,
           editable: false,
-          plugins
+          plugins,
         }}
       />
-    )
+    );
   }
-  return <p>Carregando mobilização</p>
-}
+  return <p>Carregando mobilização</p>;
+};
 
-export default connect(mapStateToProps)(MobilizationConnected)
+export default connect(mapStateToProps)(MobilizationConnected);
