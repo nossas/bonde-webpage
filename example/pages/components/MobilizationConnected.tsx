@@ -21,7 +21,7 @@ import {
   PluggableWidget,
   FinishMessageCustom,
   selectors as MobilizationSelectors,
-  // PhonePressurePlugin,
+  PhonePressurePlugin,
 } from 'bonde-webpages';
 
 import FormPlugin from './FormConnected';
@@ -97,12 +97,14 @@ const plugins = [
   },
   {
     kind: 'pressure',
-    component: PressurePlugin,
+    component: (props: any) => (
+      <PressurePlugin {...props} PluginComponent={() => <div>bla</div>} />
+    ),
   },
   {
     kind: 'pressure-phone',
     component: (props: any) => (
-      <PressurePlugin {...props} PluginComponent={<div>bla</div>} />
+      <PressurePlugin {...props} PluginComponent={PhonePressurePlugin} />
     ),
   },
   {

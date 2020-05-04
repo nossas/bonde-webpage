@@ -8,7 +8,7 @@ type HeaderProps = {
 
 export const Header = styled.h2<HeaderProps>`
   background-color: ${props => props.backgroundColor};
-  font-family: ${props => props.theme.fontFamily};
+  font-family: inherit;
   color: #fff;
   display: grid;
   justify-items: center;
@@ -17,6 +17,7 @@ export const Header = styled.h2<HeaderProps>`
   margin: 0;
   border-radius: 3px 3px 0 0;
   font-weight: 400;
+  text-align: center;
 `;
 
 Header.defaultProps = {

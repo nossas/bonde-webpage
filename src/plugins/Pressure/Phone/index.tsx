@@ -208,7 +208,7 @@ const PhonePressure = ({
             widget={widget}
             onSubmit={handleSubmit}
             saving={!!showFinishMessage}
-            BeforeStandardFields={() => PhoneFields.before(targetList)} // pass analytics here
+            BeforeStandardFields={<PhoneFields targetList={targetList} />} // pass analytics here
             noTargetsError={targetsError}
           />
           {countText && (

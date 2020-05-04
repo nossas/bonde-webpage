@@ -5,7 +5,7 @@ import { validateUtils } from '../utils';
 
 const { required, composeValidators } = Validators;
 
-const before = (targetList: Array<any>) => (
+const PhoneFields = ({ targetList }: { targetList: Array<any> }) => (
   <Fields
     fields={[
       {
@@ -31,4 +31,4 @@ const before = (targetList: Array<any>) => (
   />
 );
 
-export default { before };
+export default PhoneFields;
