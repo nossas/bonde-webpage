@@ -80,6 +80,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
     "@slate-editor/alignment-plugin": "5.1.0",
     "@slate-editor/bold-plugin": "5.1.0",
     "@slate-editor/color-plugin": "5.1.0",
