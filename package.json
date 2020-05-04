@@ -13,7 +13,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests --collectCoverage",
+    "test": "tsdx test --passWithNoTests",
     "test:watch": "tsdx test --watch --runInBand --detectOpenHandles",
     "lint": "tsdx lint --fix",
     "prepare": "tsdx build",
