@@ -65,11 +65,7 @@ const renderCallToAction = (widget: any, { header_font: headerFont }: any) => {
     : 'Clique para configurar seu formulário...'
   ).replace('\n', '<br/><br/>');
 
-  return (
-    <Header style={{ fontFamily: headerFont || 'inherit' }}>
-      {callToAction}
-    </Header>
-  );
+  return <Header style={{ fontFamily: headerFont }}>{callToAction}</Header>;
 };
 
 const renderFields = (
@@ -225,19 +221,26 @@ const FormPlugin = (props: Props) => {
   const { header_font: headerFont } = mobilization;
 
   return (
-    <div className={`widget ${headerFont}-header`}>
+    <div id={`widget-${widget.id}`} className={`${headerFont}-header`}>
       {success ? renderShareButtons(props) : renderForm(props, errors)}
       {widget.settings && widget.settings.count_text && (
         <Count
           startCounting={block.scrollTopReached}
           value={widget.form_entries_count}
-          text={widget.settings.count_text || 'formulários preenchidos'}
+          text={widget.settings.count_text}
           fontFamily={mobilization.body_font}
           color={mobilization.main_color || '#000'}
         />
       )}
     </div>
   );
+};
+
+FormPlugin.defaultProps = {
+  mobilization: {
+    body_font: 'inherit',
+    header_font: 'inherit',
+  },
 };
 
 export default FormPlugin;

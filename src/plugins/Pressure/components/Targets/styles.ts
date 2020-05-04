@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import theme from '../../../../base/theme';
 
 export const Wrapper = styled.div`
   background-color: #eeeeee;
   padding: 0.5rem 1rem;
-  font-family: ${props => props.theme.fontFamily};
+  font-family: inherit;
 `;
 
 export const Label = styled.div`
@@ -13,10 +12,6 @@ export const Label = styled.div`
   margin: 5px 0 12px 0;
   font-weight: 700;
 `;
-
-Wrapper.defaultProps = {
-  theme,
-};
 
 export const Container = styled.div`
   overflow-x: auto;

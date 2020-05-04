@@ -188,13 +188,8 @@ const PhonePressure = ({
   return (
     <div className="pressure-widget">
       <div onKeyDown={e => e.stopPropagation()} />
-      <Header
-        backgroundColor={mainColor}
-        fontFamily={mobilization.header_font || ''}
-      >
-        {callToAction || titleText}
-      </Header>
-      <Targets targets={targetList} pressureType="email" />
+      <Header backgroundColor={mainColor}>{callToAction || titleText}</Header>
+      <Targets targets={targetList} pressureType="phone" />
       {callTransition ? (
         <CallingTargets
           addTwilioCallMutation={twilioCall}

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme from '../../../base/theme';
 
 const Select = styled.select`
   border-radius: 2px;
@@ -107,10 +106,6 @@ const Input = ({ field, bodyFont, name, ...props }: Props) => {
       {renderFieldKind({ ...props, name, field })}
     </Wrapper>
   );
-};
-
-Input.defaultProps = {
-  bodyFont: theme.fontFamily,
 };
 
 export default Input;

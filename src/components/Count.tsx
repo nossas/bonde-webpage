@@ -15,7 +15,7 @@ const Wrapper = styled.div<{ fontFamily?: string }>`
   }
 `;
 
-const Title = styled.h1<{ color: string; fontFamily?: string }>`
+const Title = styled.h1<{ color: string }>`
   color: ${props => props.color};
   font-weight: 300;
   font-size: 2.15rem;
@@ -28,6 +28,7 @@ const Subtitle = styled.h3`
   font-weight: 700;
   font-size: 1.25rem;
   margin: 0;
+  text-align: center;
 `;
 
 type Props = {

@@ -1,5 +1,4 @@
 import React from 'react';
-import theme from '../../../base/theme';
 import styled from 'styled-components';
 
 type Props = {
@@ -49,7 +48,6 @@ const Button = ({ success, buttonText, loading, bodyFont }: Props) => (
 Button.defaultProps = {
   success: false,
   loading: false,
-  bodyFont: theme.fontFamily,
 };
 
 export default Button;

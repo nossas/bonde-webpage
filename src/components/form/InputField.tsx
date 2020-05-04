@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   && {
     label {
-      font-family: ${props => props.theme.fontFamily};
+      font-family: inherit;
       line-height: 1.5;
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;
@@ -46,7 +46,7 @@ const Wrapper = styled.div`
       }
 
       span {
-        font-family: ${props => props.theme.fontFamily};
+        font-family: inherit;
         font-size: 0.75rem;
         line-height: 1.5;
         margin-left: 0.5rem;

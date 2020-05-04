@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-import theme from '../../base/theme';
 
 type HeaderProps = {
   backgroundColor: string;
-  fontFamily: string;
 };
 
 export const Header = styled.h2<HeaderProps>`
@@ -19,7 +17,3 @@ export const Header = styled.h2<HeaderProps>`
   font-weight: 400;
   text-align: center;
 `;
-
-Header.defaultProps = {
-  theme,
-};

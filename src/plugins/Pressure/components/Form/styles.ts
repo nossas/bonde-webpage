@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import theme from '../../../../base/theme';
 
 export const WrapInputs = styled.div<{ disabled?: boolean }>`
   padding: 1rem 2rem 0.5rem;
@@ -24,7 +23,7 @@ export const WrapInputs = styled.div<{ disabled?: boolean }>`
 `;
 
 export const Wrapper = styled.div`
-  font-family: ${props => props.theme.fontFamily};
+  font-family: inherit;
   && {
     label {
       line-height: 1.5;
@@ -99,7 +98,7 @@ export const ButtonWrapper = styled.div<ButtonProps>`
         border-color: ${props.color};
       `}
 
-      font-family: ${props => props.theme.fontFamily};
+      font-family: inherit;
       font-size: inherit;
       font-weight: 700;
       cursor: pointer;
@@ -115,21 +114,13 @@ export const ButtonWrapper = styled.div<ButtonProps>`
   }
 `;
 
-ButtonWrapper.defaultProps = {
-  theme,
-};
-
 export const Error = styled.span`
   color: red;
   font-weight: 700;
   padding: 1rem 2rem 0.5rem;
   font-size: 13px;
   text-align: center;
-  font-family: ${props => props.theme.fontFamily};
+  font-family: inherit;
 `;
 
 Error.displayName = 'Error';
-
-Error.defaultProps = {
-  theme,
-};
