@@ -9,9 +9,18 @@ export const initialState = {
   error: undefined,
 };
 
+type State = {
+  currentId?: number | string;
+  isLoaded: boolean;
+  fetching: boolean;
+  saving: boolean;
+  data: Array<any>;
+  error?: any;
+};
+
 export default (
-  state = initialState,
-  action: { type: string; payload: any }
+  state: State = initialState,
+  action: { type: string; payload?: any }
 ) => {
   switch (action.type) {
     case t.SELECT_WIDGET:

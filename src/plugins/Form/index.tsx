@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import CountUp from 'react-countup';
 // import { intlShape } from 'react-intl'
 import { Button, Input, Raise } from './components';
 import { getFieldName, validate, fields } from './utils';
+import styled from 'styled-components';
+import { Count } from '../../components';
 
 type Props = {
   mobilization:
     | {
         body_font: string;
         header_font: string;
+        main_color?: string;
       }
     | Record<any, any>;
   widget: {
@@ -38,6 +40,25 @@ type Props = {
   };
 };
 
+const WrapForm = styled.div<{ backgroundColor: string }>`
+  padding: 2rem;
+  border-radius: 3px;
+  position: relative;
+  background-color: ${props => props.backgroundColor};
+`;
+
+const Header = styled.h2`
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 2rem 0;
+  font-weight: normal;
+`;
+
+const WrapInputs = styled.div`
+  display: grid;
+  grid-row-gap: 1rem;
+`;
+
 const renderCallToAction = (widget: any, { header_font: headerFont }: any) => {
   const callToAction = (widget.settings && widget.settings.call_to_action
     ? widget.settings.call_to_action
@@ -45,9 +66,9 @@ const renderCallToAction = (widget: any, { header_font: headerFont }: any) => {
   ).replace('\n', '<br/><br/>');
 
   return (
-    <h2 className="mt0 mb3 center white" style={{ fontFamily: headerFont }}>
+    <Header style={{ fontFamily: headerFont || 'inherit' }}>
       {callToAction}
-    </h2>
+    </Header>
   );
 };
 
@@ -55,18 +76,24 @@ const renderFields = (
   { analyticsEvents, widget: { settings }, mobilization }: any,
   handleChange: any
 ) => {
-  return fields(settings).map((field: any, index: any) => {
-    return (
-      <Input
-        key={field.uid}
-        name={getFieldName(field.uid)}
-        onChange={handleChange}
-        onBlur={Number(index) === 0 ? analyticsEvents.formIsFilled() : () => {}}
-        field={field}
-        bodyFont={mobilization && mobilization.body_font}
-      />
-    );
-  });
+  return (
+    <WrapInputs>
+      {fields(settings).map((field: any, index: any) => {
+        return (
+          <Input
+            key={field.uid}
+            name={getFieldName(field.uid)}
+            onChange={handleChange}
+            onBlur={
+              Number(index) === 0 ? analyticsEvents.formIsFilled() : () => {}
+            }
+            field={field}
+            bodyFont={mobilization.body_font || 'inherit'}
+          />
+        );
+      })}
+    </WrapInputs>
+  );
 };
 
 const renderButton = (
@@ -82,42 +109,23 @@ const renderButton = (
   />
 );
 
-const renderCount = ({
-  block: { scrollTopReached: startCounting },
-  widget: { form_entries_count: count, settings },
-  mobilization: { body_font: bodyFont },
-}: any) => {
-  return (
-    <div className="mt2 h3 center white" style={{ fontFamily: bodyFont }}>
-      <CountUp
-        start={0}
-        end={!isNaN(count) && startCounting ? Number(count) : 0}
-        duration={5}
-      />
-      &nbsp;
-      {settings.count}
-    </div>
-  );
-};
-
 const renderErrors = (errors: Array<any>) => {
   return (
-    <React.Fragment>
+    <div style={{ marginTop: '1.5rem' }}>
       {errors.map((error: any, i: number) => (
         <Raise key={`error-${i}`} message={error} />
       ))}
-    </React.Fragment>
+    </div>
   );
 };
 
 const renderShareButtons = ({ widget, overrides, mobilization }: any) => {
   // TODO: check how works greetings
-  const message = fields(widget.settings).map((field: any) => {
+  const message = fields(widget.settings).filter((field: any) => {
     if (field.kind === 'greetings') return field.placeholder;
-    return '';
   });
 
-  if (message[0] === '') {
+  if (message.length < 1) {
     const {
       settings: { finish_message_type: finishMessageType },
     } = widget;
@@ -151,7 +159,7 @@ const renderShareButtons = ({ widget, overrides, mobilization }: any) => {
 };
 
 const FormPlugin = (props: Props) => {
-  const { asyncFormEntryCreate, mobilization, widget } = props;
+  const { asyncFormEntryCreate, mobilization, widget, block } = props;
   const [loading, setLoader] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState([]);
@@ -201,14 +209,16 @@ const FormPlugin = (props: Props) => {
         : 'rgba(0,0,0,0.25)';
 
     return (
-      <div className="rounded p3 relative" style={{ backgroundColor: bgcolor }}>
+      <WrapForm backgroundColor={bgcolor}>
         <form onSubmit={submit}>
           {renderCallToAction(widget, mobilization)}
           {renderFields(props, handleChange)}
           {errors.length > 0 && renderErrors(errors)}
-          {widget.settings.fields && renderButton(props, success, loading)}
+          {widget.settings.fields &&
+            widget.settings.fields.length > 0 &&
+            renderButton(props, success, loading)}
         </form>
-      </div>
+      </WrapForm>
     );
   };
 
@@ -217,16 +227,17 @@ const FormPlugin = (props: Props) => {
   return (
     <div className={`widget ${headerFont}-header`}>
       {success ? renderShareButtons(props) : renderForm(props, errors)}
-      {widget.settings && widget.settings.count_text && renderCount(props)}
+      {widget.settings && widget.settings.count_text && (
+        <Count
+          startCounting={block.scrollTopReached}
+          value={widget.form_entries_count}
+          text={widget.settings.count_text || 'formulários preenchidos'}
+          fontFamily={mobilization.body_font}
+          color={mobilization.main_color || '#000'}
+        />
+      )}
     </div>
   );
-};
-
-FormPlugin.defaultProps = {
-  overrides: {
-    FinishCustomMessage: { props: {} },
-    FinishDefaultMessage: { props: {} },
-  },
 };
 
 export default FormPlugin;

@@ -1,4 +1,4 @@
-export const createAction = (
-  type: string,
-  payload: Record<string, string>
-) => ({ type, payload });
+export const createAction = (type: string, payload?: any) => ({
+  type,
+  payload,
+});

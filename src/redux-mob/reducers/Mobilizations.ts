@@ -12,9 +12,21 @@ export const initialState = {
   reload: false,
 };
 
+type State = {
+  isLoaded: boolean;
+  fetching: boolean;
+  saving: boolean;
+  data: Array<any>;
+  currentId?: number | string;
+  menuActiveIndex?: any;
+  error?: any;
+  communityId?: number | string;
+  reload: boolean;
+};
+
 export default (
-  state = initialState,
-  action: { type: string; payload: any }
+  state: State = initialState,
+  action: { type: string; payload?: any }
 ) => {
   switch (action.type) {
     case t.ADD_MOBILIZATION_REQUEST:

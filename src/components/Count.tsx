@@ -1,10 +1,9 @@
 import React from 'react';
 import CountUp from 'react-countup';
 import styled from 'styled-components';
-import theme from '../../../base/theme';
 
-const Wrapper = styled.div<{ theme: { fontFamily: string } }>`
-  font-family: ${props => props.theme.fontFamily};
+const Wrapper = styled.div<{ fontFamily?: string }>`
+  font-family: ${props => props.fontFamily || 'inherit'};
   box-shadow: rgb(227, 224, 227) 0px 15px 18px -10px inset;
   background-color: #fff;
   padding: 2rem;
@@ -16,15 +15,12 @@ const Wrapper = styled.div<{ theme: { fontFamily: string } }>`
   }
 `;
 
-Wrapper.defaultProps = {
-  theme,
-};
-
-const Title = styled.h1<{ color: string }>`
+const Title = styled.h1<{ color: string; fontFamily?: string }>`
   color: ${props => props.color};
   font-weight: 300;
   font-size: 2.15rem;
   margin: 15px 0;
+  font-family: inherit;
 `;
 
 const Subtitle = styled.h3`
@@ -38,20 +34,21 @@ type Props = {
   value: number;
   color: string;
   text: string;
-  startCounting?: boolean;
+  startCounting: boolean;
+  fontFamily?: string;
 };
 
-const Count = ({ value, color, text }: Props) => {
+const Count = ({ value, color, text, startCounting, fontFamily }: Props) => {
   return (
-    <Wrapper>
+    <Wrapper fontFamily={fontFamily}>
       <Title color={color}>
         <CountUp
           start={0}
-          end={!isNaN(value) ? Number(value) : 0}
+          end={!isNaN(value) && startCounting ? Number(value) : 0}
           duration={5}
         />
       </Title>
-      <Subtitle>{text || 'pressões feitas'}</Subtitle>
+      <Subtitle>{text}</Subtitle>
     </Wrapper>
   );
 };
@@ -59,7 +56,6 @@ const Count = ({ value, color, text }: Props) => {
 Count.defaultProps = {
   value: 0,
   startCounting: false,
-  theme,
 };
 
 export default Count;

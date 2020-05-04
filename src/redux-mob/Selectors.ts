@@ -25,13 +25,14 @@ export default (state: any, props: any = {}) => ({
     return id ? data.filter((mob: any) => mob.id === id)[0] : undefined;
   },
 
-  mobilizationsIsLoading: () => state.mobilizations.list.fetching,
+  mobilizationsIsLoading: (): boolean => state.mobilizations.list.fetching,
 
-  mobilizationsIsLoaded: () => state.mobilizations.list.isLoaded,
+  mobilizationsIsLoaded: (): boolean => state.mobilizations.list.isLoaded,
 
-  mobilizationIsSaving: () => state.mobilizations.list.saving,
+  mobilizationIsSaving: (): boolean => state.mobilizations.list.saving,
 
-  getMobilizationMenuActive: () => state.mobilizations.list.menuActiveIndex,
+  getMobilizationMenuActive: (): number =>
+    state.mobilizations.list.menuActiveIndex,
 
   getMobilizations: (f?: any) => {
     const {

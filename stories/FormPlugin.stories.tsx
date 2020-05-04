@@ -18,11 +18,15 @@ export const Form = () => {
       overrides={{
         FinishCustomMessage: {
           component: FinishMessageCustom,
-          props: { ...FormProps },
+          props: {},
         },
         FinishDefaultMessage: {
           component: FormTellAFriend,
-          props: { ...FormProps },
+          props: {
+            imageUrl:
+              'https://www.pngfind.com/pngs/m/169-1695521_kisspng-computer-icons-check-mark-presentation-symbol-ok.png',
+            href: 'http://mapalgbt.bonde.org',
+          },
         },
       }}
     />

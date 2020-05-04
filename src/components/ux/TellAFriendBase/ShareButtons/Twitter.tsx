@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 // import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
+import { Wrap } from './styles';
 
 const TwitterShareButton = ({ href, text }: any) => {
   const handleClick = () => {
@@ -18,13 +19,11 @@ const TwitterShareButton = ({ href, text }: any) => {
   };
 
   return (
-    <button
-      className="btn white h3 p3 col-12 caps h5 rounded"
-      onClick={handleClick}
-      style={{ backgroundColor: '#3DD1F4' }}
-    >
-      Compartilhar no Twitter
-    </button>
+    <Wrap>
+      <button onClick={handleClick} style={{ backgroundColor: '#3DD1F4' }}>
+        Compartilhar no Twitter
+      </button>
+    </Wrap>
   );
 };
 
