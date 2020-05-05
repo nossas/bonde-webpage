@@ -8,7 +8,9 @@ import {
   Styles
 } from 'bonde-webpages';
 import MobilizationConnected from './components/MobilizationConnected';
-// import FetchData from './FetchData';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 interface PageProps {
   mobilization: any
@@ -21,7 +23,7 @@ class Page extends React.Component<PageProps> {
     const host = getState().sourceRequest.host;
     const protocol = getState().sourceRequest.protocol;
     // TODO: change to enviroment variable
-    const appDomain = 'staging.bonde.org';
+    const appDomain = publicRuntimeConfig.domainPublic || 'staging.bonde.org';
 
     if (host) {
       if (res) {

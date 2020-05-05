@@ -1,5 +1,8 @@
-import axios from 'axios'
+import axios from 'axios';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 export default axios.create({
-  baseURL: 'https://api-rest.staging.bonde.org'
+  baseURL: publicRuntimeConfig.domainApiRest || 'https://api-rest.staging.bonde.org'
 })

@@ -6,16 +6,20 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import fetch from "node-fetch";
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+
 
 let link = createHttpLink({
-  uri: process.env.GRAPHQL_URL || "https://api-v2.staging.bonde.org/graphql",
+  uri: publicRuntimeConfig.domainApiGraphql || "https://api-v2.staging.bonde.org/graphql",
   fetch
 });
 
 if (process.browser) {
   // Create a WebSocket link:
   const wsLink = new WebSocketLink({
-    uri: process.env.WS_GRAPHQL_URL || "wss://api-v2.staging.bonde.org/graphql",
+    uri: publicRuntimeConfig.domainApiGraphqlWs || "ws://api-v2.staging.bonde.org/graphql",
     options: { reconnect: true },
     webSocketImpl: window.WebSocket
   });
