@@ -76,18 +76,25 @@ const DonationPlugin: React.FC<Props> = ({
     any
   >)[recurringPeriod || extraProps.recurringPeriod];
 
-  const handleClickDonate = async () => {
+  const handleClickDonate = () => {
     if (asyncDonationCreate) {
       setLoading(true);
-      await asyncDonationCreate({
+      asyncDonationCreate({
         mobilization,
         widget,
-        selectedValue,
-        selectedPaymentType,
-        storedDonationCustomerData: donationCustomerData,
+        formValues: {
+          value: selectedValue,
+          paymentType: selectedPaymentType,
+        },
+        customerData: donationCustomerData,
+      }).then((res: any) => {
+        console.log('res', { res });
+        setLoading(false);
       });
-      console.log('successfully');
-      setLoading(false);
+      // .catch((err: any) => {
+      //   console.log('err', { err });
+      //   setLoading(false);
+      // });
     }
   };
 
