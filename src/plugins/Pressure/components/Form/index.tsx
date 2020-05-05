@@ -5,14 +5,14 @@ import {
   Validators,
   Button,
 } from 'bonde-components';
-// import BeforeStandardFields from '../Form/BeforeStandardFields';
 import {
   WrapFields,
   ButtonWrapper,
   WrapInputs,
-  Error,
   Wrapper,
+  WrapRaise,
 } from './styles';
+import { Raise } from '../../../../components';
 
 type Props = {
   onSubmit: any;
@@ -20,22 +20,22 @@ type Props = {
     id?: number | string;
     count?: number;
     settings: {
-      main_color?: string;
-      call_to_action?: string;
-      title_text: string;
+      main_color: string;
+      show_city: boolean | string;
       button_text: string;
       pressure_subject: string;
       pressure_body: string;
+      call_to_action?: string;
+      title_text?: string;
       disable_edit_field?: any;
       finish_message_type?: string;
       finish_message?: Record<any, any>;
       finish_message_background?: string;
       targets?: string;
       count_text?: string;
-      show_city: boolean | string;
     };
   };
-  BeforeStandardFields?: any;
+  BeforeStandardFields: any;
   AfterStandardFields?: any;
   saving: boolean;
   noTargetsError?: string;
@@ -51,8 +51,8 @@ const PressureForm = ({
       show_city: showCity,
       main_color: buttonColor,
       button_text: buttonText,
-      pressure_subject: subject,
-      pressure_body: body,
+      pressure_subject: subject = '',
+      pressure_body: body = '',
     },
   },
   BeforeStandardFields,
@@ -85,7 +85,7 @@ const PressureForm = ({
                   validate={required('Preenchimento obrigatório')}
                 />
               </WrapInputs>
-              {(!showCity || showCity === 'city-true') && (
+              {showCity && showCity === 'city-true' && (
                 <WrapInputs>
                   <InputField
                     label="Cidade"
@@ -97,7 +97,11 @@ const PressureForm = ({
               )}
               {AfterStandardFields && <AfterStandardFields />}
             </WrapFields>
-            {noTargetsError && <Error>{noTargetsError}</Error>}
+            {noTargetsError && (
+              <WrapRaise>
+                <Raise message={noTargetsError} />
+              </WrapRaise>
+            )}
             <ButtonWrapper color={buttonColor}>
               <Button type="submit" disabled={submitting}>
                 {submitting || saving ? 'Enviando...' : buttonText}

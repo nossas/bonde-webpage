@@ -128,3 +128,8 @@ Error.displayName = 'Error';
 export const Wrapper = styled.div`
   background-color: #fff;
 `;
+
+export const WrapRaise = styled.div`
+  margin-top: 1rem;
+  padding: 0 2rem;
+`;
