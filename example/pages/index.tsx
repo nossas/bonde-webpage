@@ -20,7 +20,8 @@ class Page extends React.Component<PageProps> {
     const { dispatch, getState } = store;
     const host = getState().sourceRequest.host;
     const protocol = getState().sourceRequest.protocol;
-    const appDomain = 'staging.bonde.org'
+    // TODO: change to enviroment variable
+    const appDomain = 'staging.bonde.org';
 
     if (host) {
       if (res) {
@@ -44,11 +45,11 @@ class Page extends React.Component<PageProps> {
       await dispatch(asyncFilterWidget(filter || where))
     };
 
-    // await fetchData();
+    await fetchData();
     // Pressure Email Widget
     // await fetchData({ slug: 'elevacaonajbnao' });
     // Donation Widget
-    await fetchData({ slug: 'nova-home-meu-rio' });
+    // await fetchData({ slug: 'nova-home-meu-rio' });
   }
 
   render () {
