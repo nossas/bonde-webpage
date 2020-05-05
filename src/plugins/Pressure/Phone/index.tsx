@@ -119,11 +119,11 @@ const PhonePressure = ({
 
   useEffect(() => {
     if (!callTransition && targetList && targetList.length) {
-      const value = targetList.map(target => ({
+      const value = targetList.map((target: any) => ({
         ...parseTarget(target),
         attempts: 0,
       }));
-      setCalls(value);
+      return setCalls(value);
     }
 
     if (callTransition && targetList && targetList.length) {
@@ -141,8 +141,7 @@ const PhonePressure = ({
       });
       setCalls(value);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [callTransition, targetList, callManagement]);
+  }, []);
 
   const handleSubmit = (data: any) => {
     if (targetList.length < 1) {
@@ -187,7 +186,7 @@ const PhonePressure = ({
 
   return (
     <div id={`widget-${widget.id}`}>
-      <div onKeyDown={e => e.stopPropagation()} />
+      {/* <div onKeyDown={e => e.stopPropagation()} /> */}
       <Header backgroundColor={mainColor}>{callToAction || titleText}</Header>
       <Targets targets={targetList} pressureType="phone" />
       {callTransition ? (
@@ -203,7 +202,7 @@ const PhonePressure = ({
             widget={widget}
             onSubmit={handleSubmit}
             saving={!!showFinishMessage}
-            BeforeStandardFields={<PhoneFields targetList={targetList} />} // pass analytics here
+            BeforeStandardFields={() => PhoneFields(targetList)} // pass analytics here
             noTargetsError={targetsError}
           />
           {countText && (

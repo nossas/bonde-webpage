@@ -5,7 +5,7 @@ import { validateUtils } from '../utils';
 
 const { required, composeValidators } = Validators;
 
-const PhoneFields = ({ targetList }: { targetList: Array<any> }) => (
+const PhoneFields = (targetList: Array<any>) => (
   <Fields
     fields={[
       {
