@@ -174,8 +174,6 @@ EmailPressure.defaultProps = {
       title_text: 'Pressione quem pode tomar essa decisão',
       button_text: 'Enviar',
       disable_edit_field: 'n',
-      pressure_subject: '',
-      pressure_body: '',
     },
   },
 };
