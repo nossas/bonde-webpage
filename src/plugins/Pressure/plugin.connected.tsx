@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
-type ComponentProps = {
-  phonePressureCount: number;
-  addPhonePressureCount: (param: number) => void;
-  callTransition: any;
-  twilioCall: (variables: any, watchQuery: boolean) => any;
-  countTwilioCallsByWidget: (id: number) => any;
-  asyncFillWidget: Function;
-  saving: boolean;
-  filledPressureWidgets: Array<any>;
-};
+// type ComponentProps = {
+//   phonePressureCount: number;
+//   addPhonePressureCount: (param: number) => void;
+//   callTransition: any;
+//   twilioCall: (variables: any, watchQuery: boolean) => any;
+//   countTwilioCallsByWidget: (id: number) => any;
+//   asyncFillWidget: Function;
+//   saving: boolean;
+//   filledPressureWidgets: Array<any>;
+// };
 
 type Props = {
   /* Below props are passed from root parent */
@@ -28,18 +28,7 @@ type Props = {
       props: any;
     };
   };
-  PluginComponent: ({
-    /*Phone Pressure Props*/
-    callTransition,
-    phonePressureCount,
-    addPhonePressureCount,
-    twilioCall,
-    countTwilioCallsByWidget,
-    /*Email Pressure Props*/
-    asyncFillWidget,
-    saving,
-    filledPressureWidgets,
-  }: ComponentProps) => JSX.Element;
+  PluginComponent: (param: any) => JSX.Element;
 };
 
 const countTwilioCallsByWidget = (variables: any) => {

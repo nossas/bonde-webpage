@@ -21,7 +21,8 @@ import {
   PluggableWidget,
   FinishMessageCustom,
   selectors as MobilizationSelectors,
-  PhonePressurePlugin,
+  // PhonePressurePlugin,
+  EmailPressurePlugin,
 } from 'bonde-webpages';
 
 import FormPlugin from './FormConnected';
@@ -50,21 +51,6 @@ const mapStateToProps = (state: any, props: any) => {
     widgets: query.getWidgets(),
   };
 };
-
-// const MyCustomPressurePlugin = (props) => (
-// <PressurePlugin
-//   {...props}
-//   analyticsEvents={PressureAnalytics}
-//   graphqlClient={graphqlClient}
-//   overrides={{
-//     FinishCustomMessage: { component: FinishMessageCustom },
-//     FinishDefaultMessage: {
-//       component: PressureTellAFriend,
-//       props: { imageUrl, href: getSharedPath(props.mobilization) }
-//     },
-//   }}
-// />
-// )
 
 const plugins = [
   {
@@ -98,13 +84,14 @@ const plugins = [
   {
     kind: 'pressure',
     component: (props: any) => (
-      <PressurePlugin {...props} PluginComponent={() => <div>bla</div>} />
+      <PressurePlugin {...props} PluginComponent={EmailPressurePlugin} />
     ),
   },
   {
     kind: 'pressure-phone',
-    component: (props: any) => (
-      <PressurePlugin {...props} PluginComponent={PhonePressurePlugin} />
+    component: () => (
+      // <PressurePlugin {...props} PluginComponent={null} />
+      <div>Pressure Phone</div>
     ),
   },
   {
