@@ -14,7 +14,7 @@ type Props = {
   };
   // Function created with createApolloFetch
   // https://www.apollographql.com/blog/4-simple-ways-to-call-a-graphql-api-a6807bcdb355
-  fetch: any;
+  client: any;
   asyncDonationCreate?: any;
   donationCustomerData?: any;
   mobilization: any;
@@ -39,7 +39,7 @@ type Props = {
 
 const DonationPlugin: React.FC<Props> = ({
   asyncDonationCreate,
-  fetch,
+  client,
   donationCustomerData,
   extraProps,
   widget,
@@ -161,9 +161,9 @@ const DonationPlugin: React.FC<Props> = ({
           />
         )}
       </DonationForm>
-      {fetch && goalDateLimit && (
+      {client && goalDateLimit && (
         <FetchDonationStats
-          fetch={fetch}
+          client={client}
           widgetId={widget.id}
           mainColor={mainColor || extraProps.mainColor}
           goalDateLimit={goalDateLimit}

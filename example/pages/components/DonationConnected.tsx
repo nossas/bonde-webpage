@@ -1,10 +1,7 @@
 import React from 'react';
-import { createApolloFetch } from 'apollo-fetch';
 import { DonationPlugin } from 'bonde-webpages';
+import { client } from '../../graphql-app';
 
-// TODO: use enviroment variable
-const fetch = createApolloFetch({
-  uri: 'https://api-v2.staging.bonde.org/graphql',
-});
-
-export default (props: any) => <DonationPlugin fetch={fetch} {...props} />;
+export default (props: any) => (
+  <DonationPlugin client={client} {...props} />
+);
