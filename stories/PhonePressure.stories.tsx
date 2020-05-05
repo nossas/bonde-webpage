@@ -8,8 +8,14 @@ import {
   HowItWorks,
   FinishButton,
 } from '../src/plugins/Pressure/Phone/components';
-import PhonePressureProps from './mocks/plugin/pressure/phone';
+import PressureProps from './mocks/plugin/pressure/phone';
 import styled from 'styled-components';
+import {
+  PressurePlugin,
+  PhonePressurePlugin,
+  PressureForm,
+  PhoneFields,
+} from '../src';
 
 const UnordedList = styled.ul`
   font-family: 'Source Sans Pro', 'Proxima Nova', sans-serif;
@@ -25,6 +31,19 @@ const UnordedList = styled.ul`
   }
 `;
 
+export const PhonePressureForm = ({
+  targetList = PressureProps.targetList,
+}) => {
+  return (
+    <PressureForm
+      {...PressureProps}
+      onSubmit={() => console.log('onSubmit')}
+      saving={false}
+      BeforeStandardFields={() => PhoneFields(targetList)}
+    />
+  );
+};
+
 export const CallingTargets = () => {
   return (
     <>
@@ -33,7 +52,7 @@ export const CallingTargets = () => {
           name="Viviane"
           listKey={`call-again-${1}`}
           attempts={3}
-          {...PhonePressureProps}
+          {...PressureProps}
         />
         <br />
         <CallCompleted
@@ -47,7 +66,7 @@ export const CallingTargets = () => {
         <CallNextTarget
           name="Viviane"
           listKey={`call-again-${1}`}
-          {...PhonePressureProps}
+          {...PressureProps}
         />
         <br />
         <Calling
@@ -58,8 +77,46 @@ export const CallingTargets = () => {
       </UnordedList>
       <HowItWorks />
       <br />
-      <FinishButton buttonColor="#f1618c" {...PhonePressureProps} />
+      <FinishButton
+        buttonColor="#f1618c"
+        toggleFinishMessage={() => console.log('toggleFinishMessage')}
+        {...PressureProps}
+      />
     </>
+  );
+};
+
+export const PhoneWithoutCallTransition = () => {
+  return (
+    <PressurePlugin
+      {...PressureProps}
+      PluginComponent={PhonePressurePlugin}
+      fillWidget={() => Promise.resolve()}
+      overrides={{
+        FinishCustomMessage: { component: null, props: {} },
+        FinishDefaultMessage: {
+          component: <div>compartilhe!</div>,
+          props: { imageUrl: 'bla', href: 'https://www.mapalgbt.bonde.org' },
+        },
+      }}
+    />
+  );
+};
+
+export const PhoneWithCallTransition = () => {
+  return (
+    <PressurePlugin
+      {...PressureProps}
+      PluginComponent={PhonePressurePlugin}
+      fillWidget={() => Promise.resolve()}
+      overrides={{
+        FinishCustomMessage: { component: null, props: {} },
+        FinishDefaultMessage: {
+          component: <div>compartilhe!</div>,
+          props: { imageUrl: 'bla', href: 'https://www.mapalgbt.bonde.org' },
+        },
+      }}
+    />
   );
 };
 
