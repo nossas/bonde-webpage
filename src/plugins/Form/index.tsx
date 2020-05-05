@@ -59,9 +59,12 @@ const WrapInputs = styled.div`
   grid-row-gap: 1rem;
 `;
 
-const renderCallToAction = (widget: any, { header_font: headerFont }: any) => {
-  const callToAction = (widget.settings && widget.settings.call_to_action
-    ? widget.settings.call_to_action
+const renderCallToAction = (
+  { settings }: any,
+  { header_font: headerFont }: any
+) => {
+  const callToAction = (settings.call_to_action
+    ? settings.call_to_action
     : 'Clique para configurar seu formulário...'
   ).replace('\n', '<br/><br/>');
 
@@ -221,13 +224,13 @@ const FormPlugin = (props: Props) => {
   const { header_font: headerFont } = mobilization;
 
   return (
-    <div id={`widget-${widget.id}`} className={`${headerFont}-header`}>
+    <div className={`widget ${headerFont}-header`}>
       {success ? renderShareButtons(props) : renderForm(props, errors)}
       {widget.settings && widget.settings.count_text && (
         <Count
           startCounting={block.scrollTopReached}
           value={widget.form_entries_count}
-          text={widget.settings.count_text}
+          text={widget.settings.count_text || 'formulários preenchidos'}
           fontFamily={mobilization.body_font}
           color={mobilization.main_color || '#000'}
         />

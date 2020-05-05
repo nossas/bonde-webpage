@@ -22,7 +22,7 @@ export const WrapInputs = styled.div<{ disabled?: boolean }>`
     `}
 `;
 
-export const Wrapper = styled.div`
+export const WrapFields = styled.div`
   font-family: inherit;
   && {
     label {
@@ -124,3 +124,7 @@ export const Error = styled.span`
 `;
 
 Error.displayName = 'Error';
+
+export const Wrapper = styled.div`
+  background-color: #fff;
+`;

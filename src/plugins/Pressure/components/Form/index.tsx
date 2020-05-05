@@ -6,7 +6,13 @@ import {
   Button,
 } from 'bonde-components';
 // import BeforeStandardFields from '../Form/BeforeStandardFields';
-import { Wrapper, ButtonWrapper, WrapInputs, Error } from './styles';
+import {
+  WrapFields,
+  ButtonWrapper,
+  WrapInputs,
+  Error,
+  Wrapper,
+} from './styles';
 
 type Props = {
   onSubmit: any;
@@ -60,8 +66,8 @@ const PressureForm = ({
     <ConnectedForm onSubmit={onSubmit} initialValues={{ subject, body }}>
       {({ submitting }: FormProps) => {
         return (
-          <>
-            <Wrapper>
+          <Wrapper>
+            <WrapFields>
               {BeforeStandardFields && <BeforeStandardFields />}
               <WrapInputs>
                 <InputField
@@ -90,14 +96,14 @@ const PressureForm = ({
                 </WrapInputs>
               )}
               {AfterStandardFields && <AfterStandardFields />}
-            </Wrapper>
+            </WrapFields>
             {noTargetsError && <Error>{noTargetsError}</Error>}
             <ButtonWrapper color={buttonColor}>
               <Button type="submit" disabled={submitting}>
                 {submitting || saving ? 'Enviando...' : buttonText}
               </Button>
             </ButtonWrapper>
-          </>
+          </Wrapper>
         );
       }}
     </ConnectedForm>
