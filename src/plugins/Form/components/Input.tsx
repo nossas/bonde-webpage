@@ -108,4 +108,8 @@ const Input = ({ field, bodyFont, name, ...props }: Props) => {
   );
 };
 
+Input.defaultProps = {
+  bodyFont: '',
+};
+
 export default Input;

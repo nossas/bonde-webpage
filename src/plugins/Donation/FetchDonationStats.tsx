@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 import DonationStats from './components/DonationStats';
 
 const query = gql`
-query fetchDonationGoalStats($widgetId: Int!) {
-  stats: getWidgetDonationStats(widgetId: $widgetId)
-}
+  query fetchDonationGoalStats($widgetId: Int!) {
+    stats: getWidgetDonationStats(widgetId: $widgetId)
+  }
 `;
 
 type Props = {
@@ -27,7 +27,8 @@ const FetchDonationStats = ({
   const [data, setData] = useState();
 
   useEffect(() => {
-    client.query({ query, variables: { widgetId } })
+    client
+      .query({ query, variables: { widgetId } })
       .then(({ data }: any) => {
         setData(data.stats);
         setFetching(false);

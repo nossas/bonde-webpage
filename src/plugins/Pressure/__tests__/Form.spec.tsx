@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Form from '../components/Form';
+import EmailFields from '../Email/EmailFields';
 
 describe('Pressure Form', function() {
   const widget = {
@@ -13,12 +14,24 @@ describe('Pressure Form', function() {
       pressure_body: 'Pressure Body',
       targets: 'Target 1 <target1@test.org>;Target 2 <target1@test.org>;',
       show_city: false,
+      main_color: '#f08585',
     },
   };
+
+  const targetList = [
+    'Viviane <viviane@gmail.com>',
+    'Camila <caamila@gmail.com>',
+    'Lucas <lucas@gmail.com>',
+    'Meire <teste@gmail.com',
+    'Teste <testes2@gmail.com',
+  ];
+
   const props = {
     onSubmit: () => 'onSubmit',
     widget,
     saving: false,
+    BeforeStandardFields: () => EmailFields.before(targetList),
+    AfterStandardFields: () => EmailFields.after(true),
   };
 
   it('should render form', () => {
@@ -62,7 +75,9 @@ describe('Pressure Form', function() {
       .find('ConnectedForm')
       .renderProp<any>('children')({ submitting: false });
 
-    expect(wrapper.find('Error').props().children).toEqual(noTargetsError);
+    const error = wrapper.find('Raise') as any;
+
+    expect(error.props().message).toEqual(noTargetsError);
   });
 
   it('should pass onSubmit and initialValues to ConnectedForm', () => {

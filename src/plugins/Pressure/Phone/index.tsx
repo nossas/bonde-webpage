@@ -141,6 +141,7 @@ const PhonePressure = ({
       });
       setCalls(value);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (data: any) => {
