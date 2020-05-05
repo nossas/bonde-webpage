@@ -21,6 +21,7 @@ For run development enrivonment, create a link to `bonde-webpages` and `react` f
 ```
 yarn link # create link to bonde-webpages
 cd node_modules/react && yarn link # create link to react
+cd ../react-dom && yarn link # create link to react-dom
 ```
 
 ### Example
@@ -30,7 +31,7 @@ Then run the example inside another:
 ```
 cd example
 yarn
-yarn link bonde-webpages react
+yarn link bonde-webpages react react-dom
 yarn build # or `yarn run dev` to start dev server
 ```
 
