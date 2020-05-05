@@ -11,8 +11,11 @@ import {
 import styled from 'styled-components';
 
 const UnordedList = styled.ul`
-  font-family: 'Source Sans Pro', 'Proxima Nova', sans-serif;
+  font-family: inherit;
+  list-style: none;
+  padding: 0;
   font-size: 0.8rem;
+  margin: 0 0 0.8rem;
 `;
 
 const PhoneCalls = styled.div`

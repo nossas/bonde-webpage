@@ -5,13 +5,25 @@ import styled from 'styled-components';
 const Button = styled(Btn)`
   && {
     border-radius: 2px;
-    background-color: #40b4e5;
+    background-color: #40b4f5;
     max-width: 120px;
+    border-color: #40b4f5;
     &:hover {
       color: #fff;
     }
   }
 `;
+
+const Item = styled.li`
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-items: center;
+
+  text-transform: uppercase;
+  padding: 1.5rem;
+`;
+
 const CallNextTarget = ({
   listKey,
   name,
@@ -22,7 +34,7 @@ const CallNextTarget = ({
   addTwilioCallMutation: any;
 }) => {
   return (
-    <li key={listKey}>
+    <Item key={listKey}>
       <div>
         <span className="fa fa-phone-square primary" />
         <div>{name}</div>
@@ -37,7 +49,7 @@ const CallNextTarget = ({
       >
         Ligar
       </Button>
-    </li>
+    </Item>
   );
 };
 

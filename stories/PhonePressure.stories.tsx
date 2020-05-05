@@ -18,7 +18,7 @@ import {
 } from '../src';
 
 const UnordedList = styled.ul`
-  font-family: 'Source Sans Pro', 'Proxima Nova', sans-serif;
+  font-family: inherit;
   font-size: 0.8rem;
   color: #333333;
   & li {

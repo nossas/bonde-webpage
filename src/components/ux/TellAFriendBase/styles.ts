@@ -6,6 +6,9 @@ export const Wrap = styled.div`
   text-align: center;
   padding: 2rem;
   border-radius: 3px;
+  & > p {
+    margin: 1em 0;
+  }
 `;
 
 export const Header = styled.h3`
