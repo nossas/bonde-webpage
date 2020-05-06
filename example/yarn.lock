@@ -2086,10 +2086,10 @@ bonde-components@^0.0.2-alpha.17:
     react-final-form "^6.3.5"
     styled-components "^5.0.1"
 
-bonde-webpages@0.1.8:
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/bonde-webpages/-/bonde-webpages-0.1.8.tgz#8c286618dcce1f914b8da4b0330df148b2c8e74f"
-  integrity sha512-7y5bFQuFHKhxGgZoJ/WdwAy+JGNqEgtG7EF6gVTLv8l5mtjtDx602cU/rkR4660m3mN27I3NPQi4tWWPoc31ZA==
+bonde-webpages@0.1.9-alpha.0:
+  version "0.1.9-alpha.0"
+  resolved "https://registry.yarnpkg.com/bonde-webpages/-/bonde-webpages-0.1.9-alpha.0.tgz#be1aa12e602793da99b09ab2241b59f3f3f94240"
+  integrity sha512-Qbx1HIhFLAkR5UxA5l8ZR7JAgDMekdNB4J6iIRPPFXscb+bEV7MARQPROnc0xDWFtK8c2sqbr1elVdhp04eLXA==
   dependencies:
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Head from 'next/head'
+import ReactGA from 'react-ga'
 import { connect } from 'react-redux'
 import {
   asyncFilterMobilization,
@@ -13,7 +14,8 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
 interface PageProps {
-  mobilization: any
+  mobilization: any;
+  protocol: string;
 }
 
 class Page extends React.Component<PageProps> {
@@ -22,7 +24,6 @@ class Page extends React.Component<PageProps> {
     const { dispatch, getState } = store;
     const host = getState().sourceRequest.host;
     const protocol = getState().sourceRequest.protocol;
-    // TODO: change to enviroment variable
     const appDomain = publicRuntimeConfig.domainPublic || 'staging.bonde.org';
 
     if (host) {
@@ -48,10 +49,26 @@ class Page extends React.Component<PageProps> {
     };
 
     await fetchData();
-    // Pressure Email Widget
-    // await fetchData({ slug: 'elevacaonajbnao' });
     // Donation Widget
     // await fetchData({ slug: 'nova-home-meu-rio' });
+  }
+
+  componentDidMount () {
+    const isTestEnvironment = process.env.NODE_ENV === undefined || process.env.NODE_ENV === 'test';
+    const { mobilization } = this.props;
+    
+    if (!isTestEnvironment && !!mobilization) {
+      ReactGA.initialize('UA-26278513-30');
+      ReactGA.pageView('/' + mobilization.slug);
+      if (mobilization.google_analytics_code) {
+        ReactGA.initialize(
+          mobilization.google_analytics_code,
+          { gaOptions: { name: 'MobilizationTracker' } }
+        );
+        ReactGA.ga('MobilizationTracker.send', 'pageview', '/')
+        ReactGA.ga('require', 'GTM-W4T6JCX')
+      }
+    }
   }
 
   render () {
@@ -62,10 +79,10 @@ class Page extends React.Component<PageProps> {
       facebook_share_title: facebookShareTitle,
       facebook_share_description: facebookShareDescription,
       facebook_share_image: facebookShareImage,
-      // header_font: headerFont,
-      // body_font: bodyFont,
-      // custom_domain: customDomain
+      custom_domain: customDomain
     } = this.props.mobilization;
+
+    const url = `${this.props.protocol}://${customDomain}`
 
     return (
       <div className="container">
@@ -78,8 +95,8 @@ class Page extends React.Component<PageProps> {
           <meta name='twitter:title' content={facebookShareTitle} />
           <meta name='twitter:description' content={facebookShareDescription} />
           <meta name='twitter:image' content={facebookShareImage} />
-          {/* <meta property='twitter:url' content={url} />
-          <meta property='og:url' content={url} /> */}
+          <meta property='twitter:url' content={url} />
+          <meta property='og:url' content={url} />
           <meta property='og:title' content={facebookShareTitle} />
           <meta property='og:description' content={facebookShareDescription} />
           <meta property='og:image' content={facebookShareImage} />
