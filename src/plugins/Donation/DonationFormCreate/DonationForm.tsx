@@ -6,17 +6,6 @@ type DonationFormStylesProps = {
 };
 
 const DonationFormStyles = styled.div<DonationFormStylesProps>`
-  text-align: center;
-
-  h2 {
-    padding: 1rem;
-    color: #fff;
-    border-radius: 3px 3px 0 0;
-    font-weight: 400;
-    margin: 0;
-    background-color: ${props => props.mainColor};
-  }
-
   .donation-form {
     position: relative;
     padding: 2rem;
@@ -37,12 +26,6 @@ const DonationFormStyles = styled.div<DonationFormStylesProps>`
     &:focus {
       outline: none;
     }
-  }
-
-  &:after,
-  &:before {
-    content: ' ';
-    display: table;
   }
 `;
 

@@ -59,7 +59,7 @@ class Page extends React.Component<PageProps> {
     
     if (!isTestEnvironment && !!mobilization) {
       ReactGA.initialize('UA-26278513-30');
-      ReactGA.pageView('/' + mobilization.slug);
+      ReactGA.pageview('/' + mobilization.slug);
       if (mobilization.google_analytics_code) {
         ReactGA.initialize(
           mobilization.google_analytics_code,

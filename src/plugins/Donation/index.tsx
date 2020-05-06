@@ -1,8 +1,31 @@
 import React, { useState } from 'react';
-import DonationForm from './components/DonationForm';
-import DonationButton from './components/DonationButton';
-import SelectPaymentType from './components/SelectPaymentType';
-import FetchDonationStats from './FetchDonationStats';
+import styled from 'styled-components';
+import DonationForm from './DonationFormCreate';
+import ReattemptDonation from './ReattemptDonation';
+
+type DonationStylesProps = {
+  mainColor: string;
+};
+
+const DonationStyles = styled.div<DonationStylesProps>`
+  text-align: center;
+  border-radius: '3px 3px 0 0';
+  background: '#fff';
+
+  h2 {
+    padding: 1rem;
+    color: #fff;
+    font-weight: 400;
+    margin: 0;
+    background-color: ${props => props.mainColor};
+  }
+
+  &:after,
+  &:before {
+    content: ' ';
+    display: table;
+  }
+`;
 
 type Props = {
   extraProps: {
@@ -12,8 +35,7 @@ type Props = {
     recurringPeriod: number;
     buttonText: string;
   };
-  // Function created with createApolloFetch
-  // https://www.apollographql.com/blog/4-simple-ways-to-call-a-graphql-api-a6807bcdb355
+  // ApolloClient instance
   client: any;
   asyncDonationCreate?: any;
   donationCustomerData?: any;
@@ -52,17 +74,12 @@ const DonationPlugin: React.FC<Props> = ({
       title_text: titleText,
       call_to_action: callToAction,
       button_text: buttonText,
-      goal_date_limit: goalDateLimit,
       payment_type: paymentType,
       recurring_period: recurringPeriod,
-      donation_value1: donationValue1,
-      donation_value2: donationValue2,
-      donation_value3: donationValue3,
-      donation_value4: donationValue4,
-      donation_value5: donationValue5,
     },
   } = widget;
   // States
+  const [donation, setDonation] = useState();
   const [selectedPaymentType, setSelectedPaymentType] = useState(
     !!paymentType && paymentType !== 'users_choice'
       ? paymentType
@@ -88,7 +105,7 @@ const DonationPlugin: React.FC<Props> = ({
         },
         customerData: donationCustomerData,
       }).then((res: any) => {
-        console.log('res', { res });
+        setDonation(res.donation);
         setLoading(false);
       });
       // .catch((err: any) => {
@@ -98,85 +115,39 @@ const DonationPlugin: React.FC<Props> = ({
     }
   };
 
-  return (
-    <>
+  const renderStrategy = () => {
+    const defaultProps = {
+      headerFont,
+      handleClickDonate,
+      mainColor: mainColor || extraProps.mainColor,
+    };
+
+    // Workflow Renders
+    if (donationCustomerData) return <ReattemptDonation {...defaultProps} />;
+
+    if (donation) return <h2>ThankYouText</h2>;
+
+    return (
       <DonationForm
-        headerFont={headerFont}
-        mainColor={mainColor || extraProps.mainColor}
-        title={callToAction || titleText || extraProps.title}
-        buttonText={buttonText || extraProps.buttonText}
-        onClickDonate={handleClickDonate}
+        {...defaultProps}
+        client={client}
+        widget={widget}
         loading={loading}
-      >
-        {paymentType === 'users_choice' && (
-          <SelectPaymentType
-            mainColor={mainColor || extraProps.mainColor}
-            selected={selectedPaymentType}
-            onSelect={setSelectedPaymentType}
-            uniqueLabel="Doação única"
-            recurringLabel={`Apoiar todo ${recurringLabel}`}
-          />
-        )}
-        {donationValue1 && (
-          <DonationButton
-            mainColor={mainColor || extraProps.mainColor}
-            value={donationValue1}
-            label={selectedPaymentType === 'unique' ? '' : recurringLabel}
-            paymentType={selectedPaymentType}
-            active={selectedValue === 1}
-            onClick={() => setSelectedValue(1)}
-          />
-        )}
-        {donationValue2 && (
-          <DonationButton
-            mainColor={mainColor || extraProps.mainColor}
-            value={donationValue2}
-            label={selectedPaymentType === 'unique' ? '' : recurringLabel}
-            paymentType={selectedPaymentType}
-            active={selectedValue === 2}
-            onClick={() => setSelectedValue(2)}
-          />
-        )}
-        {donationValue3 && (
-          <DonationButton
-            mainColor={mainColor || extraProps.mainColor}
-            value={donationValue3}
-            label={selectedPaymentType === 'unique' ? '' : recurringLabel}
-            paymentType={selectedPaymentType}
-            active={selectedValue === 3}
-            onClick={() => setSelectedValue(3)}
-          />
-        )}
-        {donationValue4 && (
-          <DonationButton
-            mainColor={mainColor || extraProps.mainColor}
-            value={donationValue4}
-            label={selectedPaymentType === 'unique' ? '' : recurringLabel}
-            paymentType={selectedPaymentType}
-            active={selectedValue === 4}
-            onClick={() => setSelectedValue(4)}
-          />
-        )}
-        {donationValue5 && (
-          <DonationButton
-            mainColor={mainColor || extraProps.mainColor}
-            value={donationValue5}
-            label={selectedPaymentType === 'unique' ? '' : recurringLabel}
-            paymentType={selectedPaymentType}
-            active={selectedValue === 5}
-            onClick={() => setSelectedValue(5)}
-          />
-        )}
-      </DonationForm>
-      {client && goalDateLimit && (
-        <FetchDonationStats
-          client={client}
-          widgetId={widget.id}
-          mainColor={mainColor || extraProps.mainColor}
-          goalDateLimit={goalDateLimit}
-        />
-      )}
-    </>
+        recurringLabel={recurringLabel}
+        selectedValue={selectedValue}
+        setSelectedValue={setSelectedValue}
+        selectedPaymentType={selectedPaymentType}
+        setSelectedPaymentType={setSelectedPaymentType}
+        titleText={callToAction || titleText || extraProps.title}
+        buttonText={buttonText || extraProps.buttonText}
+      />
+    );
+  };
+
+  return (
+    <DonationStyles mainColor={mainColor || extraProps.mainColor}>
+      {renderStrategy()}
+    </DonationStyles>
   );
 };
 

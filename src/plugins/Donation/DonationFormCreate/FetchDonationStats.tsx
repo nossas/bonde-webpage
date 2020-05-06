@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import gql from 'graphql-tag';
-import DonationStats from './components/DonationStats';
+import DonationStats from './DonationStats';
 
 const query = gql`
   query fetchDonationGoalStats($widgetId: Int!) {
