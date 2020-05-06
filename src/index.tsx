@@ -26,6 +26,7 @@ export { default as FormAnalytics } from './plugins/Form/Analytics';
 export { default as FinishMessageCustom } from './components/ux/FinishMessageCustom';
 export { default as FormTellAFriend } from './plugins/Form/TellAFriend';
 export { default as asyncFormEntryCreate } from './redux-mob/action-creators/FormEntryCreate';
+export { default as ShareButtons } from './plugins/Form/components/ShareButtons';
 
 /* PressurePlugin */
 export { default as PressureForm } from './plugins/Pressure/components/Form';
