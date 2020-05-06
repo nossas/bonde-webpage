@@ -1,61 +1,89 @@
 import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import FormPlugin from '../index';
+import { addValueToFields } from '../utils';
 
-describe('Form Plugin', function() {
-  afterEach(() => {
-    jest.clearAllMocks();
-    cleanup();
-  });
+afterEach(() => {
+  cleanup();
+  jest.clearAllMocks();
+});
 
-  const count = 10;
-  const widget = {
-    settings: {
-      fields: [
-        {
-          kind: 'text',
-          label: 'Nome',
-          placeholder: 'Escreva aqui o seu nome',
-          required: 'true',
-          uid: 'field-1582206422711-52',
-        },
-        {
-          kind: 'email',
-          label: 'Seu melhor e-mail',
-          placeholder: 'Escreva aqui o seu email',
-          required: 'true',
-          uid: 'field-1582206463222-60',
-        },
-        {
-          kind: 'number',
-          label: 'Whatsapp (com DDD)',
-          placeholder: 'Escreva aqui o seu whats (somente numeros)',
-          required: 'true',
-          uid: 'field-1582206476330-11',
-        },
-      ],
-      button_text: 'enviar',
-      // count_text: 'pressões',
-    },
-    id: 0,
-    form_entries_count: count,
+const count = 10;
+const widget = {
+  settings: {
+    fields: [
+      {
+        kind: 'email',
+        label: 'Seu melhor e-mail',
+        placeholder: 'Escreva aqui o seu email',
+        required: 'true',
+        uid: 'field-1582206463222-60',
+      },
+      {
+        kind: 'number',
+        label: 'Whatsapp (com DDD)',
+        placeholder: 'Escreva aqui o seu whats (somente numeros)',
+        required: 'true',
+        uid: 'field-1582206476330-11',
+      },
+    ],
+    button_text: 'enviar',
+    count_text: 'pressões',
+  },
+  id: 0,
+  form_entries_count: count,
+};
+
+test('Form renders according with placed logics', () => {
+  const component = render(
+    <FormPlugin
+      asyncFormEntryCreate={() => jest.fn()}
+      analyticsEvents={{ formIsFilled: jest.fn() }}
+      mobilization={{}}
+      widget={widget}
+      block={{ scrollTopReached: true }}
+    />
+  );
+
+  const { getByLabelText, getByText } = component;
+
+  // email
+  expect(getByLabelText(/input-field-1582206463222-60/i)).toBeInTheDocument();
+  // phone
+  expect(getByLabelText(/input-field-1582206476330-11/i)).toBeInTheDocument();
+  // button
+  expect(getByText(/enviar/i)).toBeInTheDocument();
+  // count
+  expect(getByText(/pressões/i)).toBeInTheDocument();
+});
+
+test('Form successful flow works as expected', async () => {
+  const mockedValues = {
+    email: 'mockemail@teste.com',
+    'input-field-1582206463222-60': 'mockemail@teste.com',
+    phone: '12989999999',
+    'input-field-1582206476330-11': '12989999999',
   };
 
-  const component = (
+  const handleSubmit = jest
+    .fn()
+    .mockResolvedValue({ type: 'WIDGET_FORM_ENTRY_CREATE_REQUEST' });
+
+  const { getByLabelText, getByText } = render(
     <FormPlugin
-      asyncFormEntryCreate={jest.fn().mockResolvedValue(true)}
+      asyncFormEntryCreate={handleSubmit}
       analyticsEvents={{ formIsFilled: jest.fn() }}
-      mobilization={{ twitter_share_text: 'test' }}
+      mobilization={{ twitter_share_text: 'test', id: 0 }}
       widget={widget}
       block={{ scrollTopReached: true }}
       overrides={{
         FinishCustomMessage: {
-          component: <div>test</div>,
+          component: () => <div>test</div>,
           props: {},
         },
         FinishDefaultMessage: {
-          component: <div>facebook</div>,
+          component: () => <button>Compartilhe no facebook</button>,
           props: {
             href: 'www.test.com',
             message: 'test test',
@@ -66,31 +94,46 @@ describe('Form Plugin', function() {
     />
   );
 
-  it('renderCount should be 0 if there"s no `count_text`', () => {
-    const { container } = render(component);
-    const number = container.getElementsByTagName('span');
-    expect(number).toHaveLength(0);
+  const email = getByLabelText(
+    /input-field-1582206463222-60/i
+  ) as HTMLInputElement;
+  const phone = getByLabelText(
+    /input-field-1582206476330-11/i
+  ) as HTMLInputElement;
+  const submitButton = getByText(/enviar/i);
+
+  fireEvent.change(email, { target: { value: mockedValues.email } });
+  fireEvent.change(phone, { target: { value: mockedValues.phone } });
+  fireEvent.click(submitButton);
+
+  expect(email.value).toBe(mockedValues.email);
+  expect(phone.value).toBe(mockedValues.phone);
+
+  expect(handleSubmit).toHaveBeenCalledTimes(1);
+  const submitting = getByText(/enviando/i);
+  expect(submitting).toBeInTheDocument();
+
+  const submitValues = {
+    formEntry: {
+      widget_id: widget.id,
+      fields: JSON.stringify(
+        addValueToFields(widget.settings.fields, mockedValues)
+      ),
+    },
+    mobilization_id: 0,
+  };
+
+  expect(handleSubmit).toBeCalledWith(submitValues);
+  await waitFor(() => {
+    expect(submitting).not.toBeInTheDocument();
   });
+});
 
-  it('renders a form with name, email, phone fields', async () => {
-    const { container } = render(
+describe('Form error flow works as expected', () => {
+  it('should omit those components', () => {
+    const { container, queryByText } = render(
       <FormPlugin
-        asyncFormEntryCreate={jest.fn().mockResolvedValue(true)}
-        analyticsEvents={{ formIsFilled: jest.fn() }}
-        mobilization={{}}
-        widget={widget}
-        block={{ scrollTopReached: true }}
-      />
-    );
-
-    const inputs = container.getElementsByTagName('input');
-    expect(inputs).toHaveLength(3);
-  });
-
-  it("button shouldn't appear if there's no fields", () => {
-    const { queryByText } = render(
-      <FormPlugin
-        asyncFormEntryCreate={jest.fn().mockResolvedValue(true)}
+        asyncFormEntryCreate={() => jest.fn()}
         analyticsEvents={{ formIsFilled: jest.fn() }}
         mobilization={{}}
         widget={{
@@ -98,74 +141,82 @@ describe('Form Plugin', function() {
           settings: {
             ...widget.settings,
             fields: [],
+            count_text: undefined,
           },
         }}
         block={{ scrollTopReached: true }}
       />
     );
 
+    // no count
+    expect(container.getElementsByTagName('span')).toHaveLength(0);
+
+    // no buttons
     const submitButton = queryByText(/enviar/i);
     expect(submitButton).not.toBeInTheDocument();
   });
 
-  describe('Check form usability', () => {
-    it('should render fields', () => {
-      const { getByLabelText, getByText } = render(component);
-      // const phone = getByLabelText(/input-field-1582206476330-11/i);
-      const email = getByLabelText(
-        /input-field-1582206463222-60/i
-      ) as HTMLInputElement;
-      const name = getByLabelText(
-        /input-field-1582206422711-52/i
-      ) as HTMLInputElement;
-      const phone = getByLabelText(
-        /input-field-1582206476330-11/i
-      ) as HTMLInputElement;
-      const submitButton = getByText(/enviar/i);
+  it('should trigger a validation error', () => {
+    const { getByLabelText, getByText, getAllByText } = render(
+      <FormPlugin
+        asyncFormEntryCreate={() => jest.fn()}
+        analyticsEvents={{ formIsFilled: jest.fn() }}
+        mobilization={{}}
+        widget={widget}
+        block={{ scrollTopReached: true }}
+      />
+    );
 
-      expect(name).toBeInTheDocument();
-      expect(email).toBeInTheDocument();
-      expect(phone).toBeInTheDocument();
-      expect(submitButton).toBeInTheDocument();
-    });
+    const phone = getByLabelText(
+      /input-field-1582206476330-11/i
+    ) as HTMLInputElement;
+    const submitButton = getByText(/enviar/i);
 
-    it('should record field changes', () => {
-      const { getByLabelText } = render(component);
-      // const phone = getByLabelText(/input-field-1582206476330-11/i);
-      const email = getByLabelText(
-        /input-field-1582206463222-60/i
-      ) as HTMLInputElement;
-      const name = getByLabelText(
-        /input-field-1582206422711-52/i
-      ) as HTMLInputElement;
-      const phone = getByLabelText(
-        /input-field-1582206476330-11/i
-      ) as HTMLInputElement;
+    fireEvent.change(phone, { target: { value: '1198880195' } });
+    fireEvent.click(submitButton);
 
-      fireEvent.change(name, { target: { value: 'mockname' } });
-      fireEvent.change(email, { target: { value: 'mockemail@test.com' } });
-      fireEvent.change(phone, { target: { value: '011989999999' } });
-      expect(name.value).toBe('mockname');
-      expect(email.value).toBe('mockemail@test.com');
-      expect(phone.value).toBe('011989999999');
-    });
+    const errors = getAllByText(/branco/i);
+    expect(errors[0]).toHaveTextContent(
+      'Seu melhor e-mail não pode ficar em branco'
+    );
+    expect(errors).toHaveLength(1);
+  });
 
-    it('should render validation error', () => {
-      const { getByLabelText, getByText } = render(component);
-      const email = getByLabelText(
-        /input-field-1582206463222-60/i
-      ) as HTMLInputElement;
-      const phone = getByLabelText(
-        /input-field-1582206476330-11/i
-      ) as HTMLInputElement;
-      const submitButton = getByText(/enviar/i);
+  it('should display an error message if bad req', async () => {
+    const mockedValues = {
+      email: 'mockemail@teste.com',
+      'input-field-1582206463222-60': 'mockemail@teste.com',
+      phone: '12989999999',
+      'input-field-1582206476330-11': '12989999999',
+    };
 
-      fireEvent.change(email, { target: { value: 'mockemail@test.com' } });
-      fireEvent.change(phone, { target: { value: '011989999999' } });
-      fireEvent.click(submitButton);
+    const handleSubmit = jest.fn().mockRejectedValue('form submit error');
 
-      const error = getByText(/branco/i);
-      expect(error).toHaveTextContent('Nome não pode ficar em branco');
+    const { getByLabelText, getByText } = render(
+      <FormPlugin
+        asyncFormEntryCreate={handleSubmit}
+        analyticsEvents={{ formIsFilled: jest.fn() }}
+        mobilization={{ twitter_share_text: 'test', id: 0 }}
+        widget={widget}
+        block={{ scrollTopReached: true }}
+      />
+    );
+
+    const email = getByLabelText(
+      /input-field-1582206463222-60/i
+    ) as HTMLInputElement;
+    const phone = getByLabelText(
+      /input-field-1582206476330-11/i
+    ) as HTMLInputElement;
+    const submitButton = getByText(/enviar/i);
+
+    fireEvent.change(email, { target: { value: mockedValues.email } });
+    fireEvent.change(phone, { target: { value: mockedValues.phone } });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      const error = getByText(/houve um erro ao enviar o formulário/i);
+      expect(error).toBeInTheDocument();
     });
   });
 });
