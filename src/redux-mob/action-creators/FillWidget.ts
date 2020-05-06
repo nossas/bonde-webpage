@@ -1,13 +1,13 @@
 /* eslint-disable prefer-promise-reject-errors */
-import MobSelectors from '../../../../redux-mob/Selectors';
-import * as MobActionTypes from '../../../../redux-mob/ActionTypes';
-
+import MobSelectors from '../Selectors';
+import * as MobActionTypes from '../ActionTypes';
+import AnalyticsEvents from '../../plugins/Pressure/Analytics';
 //
 // The name of this action needs to be refactored to make more sense.
 // Besides to have to refact this action name, needs to refact
 // API endpoint too.
 //
-const fillWidget = ({ payload: fill, widget }: any) => (
+const asyncFillWidget = ({ payload: fill, widget }: any) => async (
   dispatch: any,
   getState: any,
   { api }: any
@@ -18,20 +18,20 @@ const fillWidget = ({ payload: fill, widget }: any) => (
   const endpoint = `/widgets/${widget.id}/fill`;
   const body = { fill };
 
-  return api
-    .post(endpoint, body)
-    .then(({ data }: any) => {
-      dispatch({
-        type: MobActionTypes.UPDATE_WIDGET_SUCCESS,
-        payload: updateWidget(state, data),
-      });
+  try {
+    const { data } = await api.post(endpoint, body);
 
-      /*AnalyticsEvents.pressureSavedData()*/
-      return Promise.resolve({ widget });
-    })
-    .catch((failure: any) => {
-      return Promise.reject({ _error: `Response ${failure}` });
+    dispatch({
+      type: MobActionTypes.UPDATE_WIDGET_SUCCESS,
+      payload: updateWidget(state, data),
     });
+
+    AnalyticsEvents.pressureSavedData();
+
+    return Promise.resolve({ widget });
+  } catch (e) {
+    return Promise.reject({ _error: `Response ${e}` });
+  }
 };
 
 const updateWidget = (state: any, payload: any) => {
@@ -40,4 +40,4 @@ const updateWidget = (state: any, payload: any) => {
   return { ...widget, count };
 };
 
-export default fillWidget;
+export default asyncFillWidget;
