@@ -97,10 +97,10 @@ const PressureForm = ({
               )}
               {AfterStandardFields && <AfterStandardFields />}
             </WrapFields>
-            {errors.length > 1 && (
+            {errors.length >= 1 && (
               <>
-                {errors.map((error: string) => (
-                  <WrapRaise>
+                {errors.map((error: string, i: number) => (
+                  <WrapRaise key={`error-${i}`}>
                     <Raise message={error} />
                   </WrapRaise>
                 ))}

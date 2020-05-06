@@ -30,8 +30,10 @@ describe('Pressure Form', function() {
     onSubmit: () => 'onSubmit',
     widget,
     saving: false,
-    BeforeStandardFields: () => EmailFields.before(targetList),
+    BeforeStandardFields: () =>
+      EmailFields.before(targetList, () => console.log('touched')),
     AfterStandardFields: () => EmailFields.after(true),
+    errors: [],
   };
 
   it('should render form', () => {
@@ -71,12 +73,11 @@ describe('Pressure Form', function() {
 
   it('should render noTargetsError if passed', () => {
     const noTargetsError = 'select any target to continue';
-    const wrapper = shallow(<Form {...props} noTargetsError={noTargetsError} />)
+    const wrapper = shallow(<Form {...props} errors={[noTargetsError]} />)
       .find('ConnectedForm')
       .renderProp<any>('children')({ submitting: false });
 
     const error = wrapper.find('Raise') as any;
-
     expect(error.props().message).toEqual(noTargetsError);
   });
 
