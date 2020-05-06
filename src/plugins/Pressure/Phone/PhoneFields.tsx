@@ -5,7 +5,7 @@ import { validateUtils } from '../utils';
 
 const { required, composeValidators } = Validators;
 
-const PhoneFields = (targetList: Array<any>) => (
+const PhoneFields = (targetList: Array<any>, onBlur: any) => (
   <Fields
     fields={[
       {
@@ -14,6 +14,7 @@ const PhoneFields = (targetList: Array<any>) => (
         type: 'text',
         placeholder: 'Insira seu telefone. Ex: +5511987654321',
         disabled: false,
+        onBlur,
         validate: composeValidators(
           required('Preenchimento obrigatório'),
           validateUtils.isValidPhoneE164({

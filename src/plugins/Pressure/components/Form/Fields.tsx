@@ -19,7 +19,7 @@ const Fields = ({ fields }: Props) => {
     <Fragment>
       {fields.map(
         (
-          { name, label, type, placeholder, disabled, ...configs },
+          { name, label, type, placeholder, disabled, onBlur, ...configs },
           i: number
         ) => {
           if (type !== 'textarea')
@@ -31,6 +31,7 @@ const Fields = ({ fields }: Props) => {
                   type={type}
                   placeholder={placeholder}
                   disabled={disabled}
+                  onBlur={onBlur}
                   {...configs}
                 />
               </WrapInputs>
