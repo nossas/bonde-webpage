@@ -4,14 +4,16 @@ import MobSelectors from '../Selectors';
 import * as t from '../ActionTypes';
 import { createAction } from './CreateAction';
 
-const asyncFormEntryCreate = ({ mobilization, formEntry }: any) => (
-  dispatch: any,
-  getState: any,
-  { api }: any
-) => {
+const asyncFormEntryCreate = async ({
+  mobilization_id,
+  formEntry,
+}: {
+  mobilization_id: number;
+  formEntry: Record<string, any>;
+}) => (dispatch: any, getState: any, { api }: any) => {
   const state = getState();
 
-  const endpoint = `/mobilizations/${mobilization.id}/form_entries`;
+  const endpoint = `/mobilizations/${mobilization_id}/form_entries`;
   const body = { form_entry: formEntry };
 
   dispatch({ type: t.WIDGET_FORM_ENTRY_CREATE_REQUEST });
