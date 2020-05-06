@@ -1,12 +1,4 @@
 import * as React from 'react';
-// MOBILIZATION and external dependencies
-// import { Mobilization, PluggableWidget, FinishMessageCustom } from '../../../src'
-// DRAFT PLUGIN and external dependencies
-// import DraftPlugin from '../../../src/plugins/Draft'
-// FORM PLUGIN and external dependencies
-// import FormPlugin from './FormConnected'
-// import { FormAnalytics, FormTellAFriend } from '../../../src/plugins/Form'
-// CONTENT PLUGIN and external dependencies
 import { connect } from 'react-redux';
 import {
   // Plugins
@@ -14,33 +6,27 @@ import {
   DraftPlugin,
   FormAnalytics,
   FormTellAFriend,
-  // PressureAnalytics,
-  // PressureTellAFriend,
   // Mobilization
   Mobilization,
   PluggableWidget,
   FinishMessageCustom,
   selectors as MobilizationSelectors,
-  PhonePressurePlugin,
-  EmailPressurePlugin,
+  PressureAnalytics,
+  PressureTellAFriend,
 } from 'bonde-webpages';
 
 import FormPlugin from './FormConnected';
-import PressurePlugin from './PressureConnected';
+import PressureEmailPlugin from './PressureEmailConnected';
+// import PressurePhonePlugin from './PressurePhonelConnected';
 import DonationPlugin from './DonationConnected';
-// import PressurePlugin from './PressureConnected';
-// PRESSURE PLUGIN and external dependencies
-// import { PressureAnalytics, PressureTellAFriend } from 'bonde-webpage/lib/plugins/pressure'
+import Utils from '../../Utils';
+
 // import graphqlClient from './apolloClient'
 // PRESSURE PLUGIN and external dependencies
 // import DonationPlugin from './plugin-donation.connected'
 // import { DonationAnalytics, DonationTellAFriend } from 'bonde-webpage/lib/plugins/donation'
 // TODO: Icons should be inside plugin reference.
 /*import { PressureEmailIcon, PressurePhoneIcon } from '@/pages/playground-mobs/icons'*/
-
-// import { selectors as MobilizationSelectors } from '../../../src/redux'
-// import { FinishPostDonation } from 'bonde-webpage/lib/plugins/donation/components'
-import Utils from '../../Utils';
 
 const mapStateToProps = (state: any, props: any) => {
   const query = MobilizationSelectors(state, props);
@@ -84,14 +70,27 @@ const plugins = [
   {
     kind: 'pressure',
     component: (props: any) => (
-      <PressurePlugin {...props} PluginComponent={EmailPressurePlugin} />
+      <PressureEmailPlugin
+        {...props}
+        analyticsEvents={PressureAnalytics}
+        overrides={{
+          FinishCustomMessage: { component: FinishMessageCustom },
+          FinishDefaultMessage: {
+            component: PressureTellAFriend,
+            props: {
+              imageUrl: Utils.imageUrl,
+              href: Utils.getSharedPath(props.mobilization),
+            },
+          },
+        }}
+      />
     ),
   },
   {
     kind: 'pressure-phone',
-    component: (props: any) => (
-      <PressurePlugin {...props} PluginComponent={PhonePressurePlugin} />
-    ),
+    component: () =>
+      // <PressurePlugin {...props} PluginComponent={PhonePressurePlugin} />
+      null,
   },
   {
     kind: 'content',
