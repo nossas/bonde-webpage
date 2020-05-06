@@ -13,7 +13,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
+    "test": "tsdx test --passWithNoTests --env=jest-environment-jsdom-sixteen",
     "test:watch": "tsdx test --watch --runInBand --detectOpenHandles --env=jest-environment-jsdom-sixteen",
     "lint": "tsdx lint --fix",
     "prepare": "tsdx build",
