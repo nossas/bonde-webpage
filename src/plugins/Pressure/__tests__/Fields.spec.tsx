@@ -10,6 +10,7 @@ describe('Pressure Form Fields', function() {
       placeholder: 'First name',
       disabled: false,
       type: 'text',
+      onBlur: () => console.log('touched'),
     },
     {
       label: 'Email',
@@ -17,6 +18,7 @@ describe('Pressure Form Fields', function() {
       placeholder: 'Email',
       disabled: false,
       type: 'email',
+      onBlur: () => console.log('touched'),
     },
   ];
 
@@ -59,6 +61,7 @@ describe('Pressure Form Fields', function() {
       disabled: true,
       type: 'text',
       extraProps: { dummy: true },
+      onBlur: () => console.log('touched'),
     };
     const wrapper = shallow(
       <Fields fields={[{ ...textareaInput, type: 'textarea' }, textInput]} />
