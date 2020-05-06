@@ -27,3 +27,12 @@ export const fields = (settings: any) => {
   // TODO: this field 'greetings' used to only render in edit mode
   return fields.filter((f: any) => f.kind !== 'greetings');
 };
+
+export const addValueToFields = (
+  fields: Array<any>,
+  values: Record<string, any>
+) =>
+  fields.map((field: { uid: string }) => ({
+    ...field,
+    value: values[getFieldName(field.uid)],
+  }));

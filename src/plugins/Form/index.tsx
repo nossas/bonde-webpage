@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // import { intlShape } from 'react-intl'
-import { Button, Input, Raise } from './components';
-import { getFieldName, validate, fields } from './utils';
+import { Button, Input, Raise, ShareButtons } from './components';
+import { getFieldName, validate, fields, addValueToFields } from './utils';
 import styled from 'styled-components';
 import { Count } from '../../components';
 
@@ -11,6 +11,7 @@ type Props = {
         body_font: string;
         header_font: string;
         main_color?: string;
+        id: number;
       }
     | Record<any, any>;
   widget: {
@@ -118,80 +119,42 @@ const renderErrors = (errors: Array<any>) => {
   );
 };
 
-const renderShareButtons = ({ widget, overrides, mobilization }: any) => {
-  // TODO: check how works greetings
-  const message = fields(widget.settings).filter(
-    (field: any) => field.kind === 'greetings'
-  );
-
-  if (message.length < 1) {
-    const {
-      settings: { finish_message_type: finishMessageType },
-    } = widget;
-    const {
-      FinishCustomMessage: {
-        component: FinishCustomMessage,
-        props: customProps,
-      },
-      FinishDefaultMessage: {
-        component: FinishDefaultMessage,
-        props: defaultProps,
-      },
-    } = overrides;
-
-    return finishMessageType === 'custom' ? (
-      <FinishCustomMessage
-        mobilization={mobilization}
-        widget={widget}
-        {...customProps}
-      />
-    ) : (
-      <FinishDefaultMessage
-        mobilization={mobilization}
-        widget={widget}
-        {...defaultProps}
-      />
-    );
-  }
-
-  return <p className="center p2 bg-darken-3">{message[0]}</p>;
-};
-
 const FormPlugin = (props: Props) => {
   const { asyncFormEntryCreate, mobilization, widget, block } = props;
-  const [loading, setLoader] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const [status, setStatus] = useState<string>('idle');
+  const [errors, setErrors] = useState<Array<string>>([]);
   const [values, setValues] = useState<Record<string, string>>({});
 
   const submit = async (e: any) => {
     e.preventDefault();
+    setErrors([]);
 
-    const fieldsWithValue = widget.settings.fields.map(
-      (field: { uid: string }) => ({
-        ...field,
-        value: values[getFieldName(field.uid)],
-      })
-    );
+    const fieldsWithValue = addValueToFields(widget.settings.fields, values);
 
     const errors = validate(fieldsWithValue);
 
     if (errors.length > 0) {
-      setErrors(errors);
-      setLoader(false);
-      setSuccess(false);
+      return setErrors(errors);
     } else {
-      setLoader(true);
+      setStatus('pending');
+
       const formEntry = {
         widget_id: widget.id,
         fields: JSON.stringify(fieldsWithValue),
       };
 
-      return asyncFormEntryCreate({ mobilization, formEntry }).then(() => {
-        setLoader(false);
-        setSuccess(true);
+      try {
+        await asyncFormEntryCreate({
+          mobilization_id: mobilization.id,
+          formEntry,
+        });
+        setStatus('fulfilled');
         setValues({});
-      });
+      } catch (e) {
+        // console.log(e);
+        setStatus('rejected');
+        setErrors(['Houve um erro ao enviar o formulário']);
+      }
     }
   };
 
@@ -215,7 +178,7 @@ const FormPlugin = (props: Props) => {
           {errors.length > 0 && renderErrors(errors)}
           {widget.settings.fields &&
             widget.settings.fields.length > 0 &&
-            renderButton(props, success, loading)}
+            renderButton(props, status === 'fulfilled', status === 'pending')}
         </form>
       </WrapForm>
     );
@@ -224,8 +187,12 @@ const FormPlugin = (props: Props) => {
   const { header_font: headerFont } = mobilization;
 
   return (
-    <div className={`widget ${headerFont}-header`}>
-      {success ? renderShareButtons(props) : renderForm(props, errors)}
+    <div id={`widget-${widget.id}`} className={`widget ${headerFont}-header`}>
+      {status === 'fulfilled' ? (
+        <ShareButtons {...props} />
+      ) : (
+        renderForm(props, errors)
+      )}
       {widget.settings && widget.settings.count_text && (
         <Count
           startCounting={block.scrollTopReached}
