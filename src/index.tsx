@@ -47,3 +47,5 @@ export { default as asyncPressureCreate } from './plugins/Pressure/redux/ActionC
 export { default as DonationPlugin } from './plugins/Donation';
 export { default as PagarMeCheckout } from './plugins/Donation/PagarMeCheckout';
 export { default as asyncDonationCreate } from './plugins/Donation/asyncDonationCreate';
+export { default as DonationTellAFriend } from './plugins/Donation/TellAFriend';
+export { default as FinishDonationMessage } from './plugins/Donation/FinishDonationMessage';

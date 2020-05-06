@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import DonationForm from './DonationFormCreate';
 import ReattemptDonation from './ReattemptDonation';
+import ThankYou from './ThankYou';
 
 type DonationStylesProps = {
   mainColor: string;
@@ -57,6 +58,7 @@ type Props = {
       donation_value5?: number;
     };
   };
+  overrides: any;
 };
 
 const DonationPlugin: React.FC<Props> = ({
@@ -66,6 +68,7 @@ const DonationPlugin: React.FC<Props> = ({
   extraProps,
   widget,
   mobilization,
+  overrides,
 }) => {
   const { headerFont } = mobilization;
   const {
@@ -125,7 +128,18 @@ const DonationPlugin: React.FC<Props> = ({
     // Workflow Renders
     if (donationCustomerData) return <ReattemptDonation {...defaultProps} />;
 
-    if (donation) return <h2>ThankYouText</h2>;
+    if (donation) {
+      return (
+        <ThankYou
+          donation={donation}
+          widget={widget}
+          mobilization={mobilization}
+          overrides={overrides}
+          selectedValue={selectedValue}
+          handleConvertDonation={() => console.log('teste convert donation')}
+        />
+      );
+    }
 
     return (
       <DonationForm
