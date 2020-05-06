@@ -5,7 +5,7 @@ import { validateUtils } from '../utils';
 
 const { required, isEmail, composeValidators } = Validators;
 
-const before = (targetList: Array<any>) => (
+const before = (targetList: Array<any>, onBlur: any) => (
   <Fields
     fields={[
       {
@@ -14,6 +14,7 @@ const before = (targetList: Array<any>) => (
         type: 'email',
         placeholder: 'Insira seu e-mail',
         disabled: false,
+        onBlur,
         validate: composeValidators(
           required('Preenchimento obrigatório'),
           isEmail('E-mail inválido'),

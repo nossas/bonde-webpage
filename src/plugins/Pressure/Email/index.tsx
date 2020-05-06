@@ -26,17 +26,17 @@ type Props = {
       button_text: string;
       pressure_subject: string;
       pressure_body: string;
-      disable_edit_field?: any;
+      disable_edit_field: string;
+      targets: string;
       finish_message_type?: string;
       finish_message?: Record<any, any>;
       finish_message_background?: string;
-      targets: string;
       count_text?: string;
       show_city: boolean | string;
     };
   };
   block: {
-    scrollTopReached: any;
+    scrollTopReached: boolean;
   };
   overrides: {
     FinishCustomMessage: {
@@ -48,12 +48,13 @@ type Props = {
       props: any;
     };
   };
-  analyticsEvents?: any;
-
-  /* These props come from the plugin.connected component */
-  saving: boolean;
-  filledPressureWidgets: Array<any>;
-  asyncFillWidget: Function;
+  analyticsEvents: {
+    pressureIsFilled: () => void;
+  };
+  asyncFillWidget: (params: {
+    payload: Record<string, any>;
+    widget: Record<string, any>;
+  }) => Promise<{ widget: any }>;
 };
 
 const EmailPressure = ({
@@ -61,9 +62,7 @@ const EmailPressure = ({
   asyncFillWidget,
   mobilization,
   block,
-  saving,
-  filledPressureWidgets,
-  // analyticsEvents,
+  analyticsEvents,
   overrides,
 }: Props) => {
   const {
@@ -87,17 +86,19 @@ const EmailPressure = ({
   } = overrides;
 
   const targetList = getTargetList(targets) || [];
+  const [errors, setError] = useState<Array<string>>([]);
+  const [status, setStatus] = useState<string>('idle');
+  const [filledPressureWidgets, setFilledPressureWidgets] = useState<
+    Array<any>
+  >([]);
 
-  const [targetsError, setTargetsError] = useState<string | undefined>(
-    undefined
-  );
-
-  const handleSubmit = (data: any) => {
+  const handleSubmit = async (data: any) => {
     if (targets.length < 1) {
-      return setTargetsError(
-        'Ops, você precisa selecionar pelo menos um alvo para poder pressionar'
-      );
+      return setError([
+        'Ops, você precisa selecionar pelo menos um alvo para poder pressionar',
+      ]);
     }
+    setStatus('pending');
     const payload = {
       activist: {
         firstname: data.name,
@@ -111,7 +112,14 @@ const EmailPressure = ({
         body: data.body,
       },
     };
-    return asyncFillWidget({ payload, widget });
+    try {
+      await asyncFillWidget({ payload, widget });
+      setStatus('fulfilled');
+      setFilledPressureWidgets([...filledPressureWidgets, widget.id]);
+    } catch (e) {
+      setStatus('rejected');
+      setError(['Houve um erro ao fazer a pressão']);
+    }
   };
 
   const finishPressure =
@@ -143,12 +151,14 @@ const EmailPressure = ({
         <Form
           widget={widget}
           onSubmit={handleSubmit}
-          saving={saving}
-          BeforeStandardFields={() => EmailFields.before(targetList)} // pass analytics here
+          saving={status === 'pending'}
+          BeforeStandardFields={() =>
+            EmailFields.before(targetList, analyticsEvents.pressureIsFilled())
+          }
           AfterStandardFields={() =>
             EmailFields.after(disableEditField === 's')
           }
-          noTargetsError={targetsError}
+          errors={errors}
         />
         {countText && (
           <Count
@@ -163,19 +173,15 @@ const EmailPressure = ({
   );
 };
 
-EmailPressure.defaultProps = {
-  overrides: {
-    FinishCustomMessage: { props: {} },
-    FinishDefaultMessage: { props: {} },
-  },
-  widget: {
-    settings: {
-      main_color: '#f23392',
-      title_text: 'Pressione quem pode tomar essa decisão',
-      button_text: 'Enviar',
-      disable_edit_field: 'n',
-    },
-  },
-};
+// EmailPressure.defaultProps = {
+//   widget: {
+//     settings: {
+//       main_color: '#f23392',
+//       title_text: 'Pressione quem pode tomar essa decisão',
+//       button_text: 'Enviar',
+//       disable_edit_field: 'n',
+//     },
+//   },
+// };
 
 export default EmailPressure;

@@ -24,7 +24,9 @@ type Props = {
     id: number;
     form_entries_count: any;
   };
-  analyticsEvents: Record<any, any>;
+  analyticsEvents: {
+    formIsFilled: () => void;
+  };
   overrides?: {
     FinishCustomMessage?: {
       component?: React.ReactNode;
@@ -73,7 +75,11 @@ const renderCallToAction = (
 };
 
 const renderFields = (
-  { analyticsEvents, widget: { settings }, mobilization }: any,
+  {
+    analyticsEvents,
+    widget: { settings },
+    mobilization,
+  }: Pick<Props, 'analyticsEvents' | 'widget' | 'mobilization'>,
   handleChange: any
 ) => {
   return (
@@ -97,9 +103,9 @@ const renderFields = (
 };
 
 const renderButton = (
-  { widget, mobilization }: any,
-  success: any,
-  loading: any
+  { widget, mobilization }: Pick<Props, 'widget' | 'mobilization'>,
+  success: boolean,
+  loading: boolean
 ) => (
   <Button
     buttonText={(widget.settings && widget.settings.button_text) || 'Enviar'}
