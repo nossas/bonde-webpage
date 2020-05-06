@@ -38,7 +38,7 @@ type Props = {
   BeforeStandardFields: any;
   AfterStandardFields?: any;
   saving: boolean;
-  noTargetsError?: string;
+  errors: Array<string>;
 };
 
 type FormProps = {
@@ -59,7 +59,7 @@ const PressureForm = ({
   AfterStandardFields,
   onSubmit,
   saving,
-  noTargetsError,
+  errors,
 }: Props) => {
   const { required } = Validators;
   return (
@@ -97,10 +97,14 @@ const PressureForm = ({
               )}
               {AfterStandardFields && <AfterStandardFields />}
             </WrapFields>
-            {noTargetsError && (
-              <WrapRaise>
-                <Raise message={noTargetsError} />
-              </WrapRaise>
+            {errors.length > 1 && (
+              <>
+                {errors.map((error: string) => (
+                  <WrapRaise>
+                    <Raise message={error} />
+                  </WrapRaise>
+                ))}
+              </>
             )}
             <ButtonWrapper color={buttonColor}>
               <Button type="submit" disabled={submitting}>

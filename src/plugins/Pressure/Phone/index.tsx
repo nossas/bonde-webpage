@@ -56,33 +56,75 @@ type Props = {
       props: any;
     };
   };
-  analyticsEvents?: any;
-
-  /* Props that come from direct parent*/
-  phonePressureCount: number;
-  addPhonePressureCount: (param: number) => void;
-  twilioCall: (variables: any, watchQuery: boolean) => any;
-  callTransition: any;
-  countTwilioCallsByWidget: (id: number) => any;
+  analyticsEvents: {
+    pressureIsFilled: () => void;
+  };
 };
 
+// const countTwilioCallsByWidget = (variables: any) => {
+// return graphqlClient
+//   .query({
+//     query: graphqlQueries.countTwilioCallsByWidget,
+//     variables,
+//   })
+//   .then(
+//     ({
+//       data: {
+//         allTwilioCalls: { totalCount: phonePressureCount },
+//       },
+//     }: any) => {
+//       return Promise.resolve({ phonePressureCount });
+//     }
+//   );
+// return variables;
+// };
+
 const PhonePressure = ({
-  // analyticsEvents,
+  analyticsEvents,
   widget,
   mobilization,
   block,
   overrides,
-  phonePressureCount,
-  // addPhonePressureCount,
-  // countTwilioCallsByWidget,
-  twilioCall,
-  callTransition,
 }: Props) => {
-  const [targetsError, setTargetsError] = useState<string | undefined>(
-    undefined
-  );
+  const [targetsError, setTargetsError] = useState<Array<string>>([]);
   const [showFinishMessage, toggleFinishMessage] = useState(false);
   const [callManagement, setCalls] = useState<Array<any>>([]);
+  const [
+    callTransition,
+    // setTransition
+  ] = useState<any>(undefined);
+  const [
+    phonePressureCount,
+    // addPhonePressureCount
+  ] = useState(0);
+
+  const twilioCall = (variables: any, watchQuery: boolean = false) => {
+    //   addPhonePressureCount(phonePressureCount + 1);
+    // return graphqlClient
+    //   .mutate({
+    //     mutation: graphqlMutations.addTwilioCall,
+    //     variables,
+    //   })
+    //   .then(() => {
+    //     if (watchQuery && !observableQuery) {
+    //       const observableQuery = graphqlClient.watchQuery({
+    //         pollInterval: 2000,
+    //         query: graphqlQueries.watchTwilioCallTransitions,
+    //         variables: { widgetId: variables.widgetId, from: variables.from },
+    //       });
+    //       observableQuery.subscribe({
+    //         next: ({
+    //           data: { watchTwilioCallTransitions: callTransition },
+    //         }: any) => {
+    //           setTransition(callTransition);
+    //         },
+    //       });
+    //       setObservableQuery(observableQuery);
+    //     }
+    //   });
+    console.log({ variables, watchQuery });
+    // setTransition({ variables, watchQuery });
+  };
 
   const {
     main_color: mainColor,
@@ -146,15 +188,15 @@ const PhonePressure = ({
 
   const handleSubmit = (data: any) => {
     if (targetList.length < 1) {
-      return setTargetsError(
-        'Ops, você precisa selecionar pelo menos um alvo para poder pressionar'
-      );
+      return setTargetsError([
+        'Ops, você precisa selecionar pelo menos um alvo para poder pressionar',
+      ]);
     }
 
     // normalize phone number with + sign (e.g. +5511987654321)
     data.phone = /^\+/.test(data.phone) ? data.phone : `+${data.phone}`;
 
-    setTargetsError(undefined);
+    setTargetsError([]);
 
     return twilioCall(
       {
@@ -203,8 +245,10 @@ const PhonePressure = ({
             widget={widget}
             onSubmit={handleSubmit}
             saving={!!showFinishMessage}
-            BeforeStandardFields={() => PhoneFields(targetList)} // pass analytics here
-            noTargetsError={targetsError}
+            BeforeStandardFields={() =>
+              PhoneFields(targetList, analyticsEvents.pressureIsFilled())
+            }
+            errors={targetsError}
           />
           {countText && (
             <Count
@@ -221,22 +265,22 @@ const PhonePressure = ({
   );
 };
 
-PhonePressure.defaultProps = {
-  saving: false,
-  overrides: {
-    FinishDefaultMessage: { Component: () => null, props: {} },
-  },
-  filledPressureWidgets: [],
-  widget: {
-    settings: {
-      main_color: '#f23392',
-      title_text: 'Converse com quem pode tomar essa decisão',
-      button_text: 'Enviar',
-      disable_edit_field: 'n',
-      target: '',
-    },
-  },
-  AfterStandardFields: () => null,
-};
+// PhonePressure.defaultProps = {
+//   saving: false,
+//   overrides: {
+//     FinishDefaultMessage: { Component: () => null, props: {} },
+//   },
+//   filledPressureWidgets: [],
+//   widget: {
+//     settings: {
+//       main_color: '#f23392',
+//       title_text: 'Converse com quem pode tomar essa decisão',
+//       button_text: 'Enviar',
+//       disable_edit_field: 'n',
+//       target: '',
+//     },
+//   },
+//   AfterStandardFields: () => null,
+// };
 
 export default PhonePressure;
