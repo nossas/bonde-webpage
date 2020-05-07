@@ -1,4 +1,4 @@
-import AnalyticsBase from '../../AnalyticsBase';
+import sendEvent from '../../AnalyticsBase';
 
 const PRESSURE_FILLED = {
   category: 'Pressão',
@@ -10,8 +10,8 @@ const PRESSURE_SAVED = {
   action: 'Dados Salvos com Sucesso',
 };
 
-const pressureIsFilled = () => AnalyticsBase.sendEvent(PRESSURE_FILLED);
-const pressureSavedData = () => AnalyticsBase.sendEvent(PRESSURE_SAVED);
+const pressureIsFilled = () => sendEvent(PRESSURE_FILLED);
+const pressureSavedData = () => sendEvent(PRESSURE_SAVED);
 
 const Analytics = {
   pressureIsFilled,

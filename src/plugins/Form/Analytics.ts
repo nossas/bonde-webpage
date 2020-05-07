@@ -1,4 +1,4 @@
-import AnalyticsBase from '../../AnalyticsBase';
+import sendEvent from '../../AnalyticsBase';
 
 const FORM_FILLED = {
   category: 'Formulário',
@@ -10,8 +10,8 @@ const FORM_SAVED = {
   action: 'Dados Salvos com Sucesso',
 };
 
-const formIsFilled = () => AnalyticsBase.sendEvent(FORM_FILLED);
-const formSavedData = () => AnalyticsBase.sendEvent(FORM_SAVED);
+const formIsFilled = () => sendEvent(FORM_FILLED);
+const formSavedData = () => sendEvent(FORM_SAVED);
 
 const Analytics = {
   formIsFilled,
