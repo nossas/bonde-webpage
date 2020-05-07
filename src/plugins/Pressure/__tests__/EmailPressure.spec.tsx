@@ -1,0 +1,430 @@
+import React from 'react';
+import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import EmailPlugin from '../Email';
+import { getTargetList, getEmailTarget } from '../utils';
+
+afterEach(() => {
+  cleanup();
+  jest.clearAllMocks();
+});
+
+const widget = {
+  action_community: false,
+  action_opportunity: false,
+  block_id: 14180,
+  count: 0,
+  created_at: '2020-01-24T13:43:37.438-03:00',
+  donations_count: 0,
+  exported_at: null,
+  form_entries_count: 0,
+  goal: null,
+  id: 24307,
+  kind: 'pressure',
+  lg_size: 6,
+  match_list: [],
+  md_size: 6,
+  settings: {
+    count_text: 'pressões',
+    button_text: 'Send Email',
+    disable_edit_field: 'n',
+    main_color: '#f23392',
+    pressure_body: 'Corpo da mensagem',
+    pressure_subject: 'Assunto',
+    show_city: 'city-true',
+    title_text: 'Send an email to anyone who can make this decision',
+    targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
+  },
+};
+const overrides = {
+  FinishCustomMessage: { component: () => <div>nice!</div>, props: {} },
+  FinishDefaultMessage: {
+    component: () => <div>compartilhe!</div>,
+    props: { imageUrl: 'bla', href: 'https://www.mapalgbt.bonde.org' },
+  },
+};
+const block = {
+  bg_class: null,
+  bg_image: null,
+  created_at: '2020-01-24T13:43:37.374-03:00',
+  deleted_at: null,
+  hidden: null,
+  id: 14180,
+  menu_hidden: null,
+  mobilization_id: 1378,
+  name: null,
+  offsetTop: 0,
+  position: 1,
+  scrollTopReached: true,
+  updated_at: '2020-01-24T13:43:37.374-03:00',
+};
+
+const targetsList = getTargetList(widget.settings.targets);
+
+describe('Plugin needs to render', () => {
+  const props = {
+    widget,
+    editable: false,
+    overrides,
+    analyticsEvents: { pressureIsFilled: () => true },
+    asyncFillWidget: async () => ({ widget: {} }),
+    mobilization: {},
+    block,
+  };
+
+  it('should render Header with correct text content', () => {
+    const { getByText } = render(<EmailPlugin {...props} />);
+    const header = getByText(/send an email/i);
+    expect(header).toBeInTheDocument();
+    expect(header).toHaveTextContent(
+      'Send an email to anyone who can make this decision'
+    );
+  });
+
+  it('should render a list of targets according to the targetsList length', () => {
+    const { getAllByText } = render(<EmailPlugin {...props} />);
+    const targets = getAllByText(/@/i);
+    expect(targets).toHaveLength(targetsList.length);
+  });
+
+  it("should render an input with name 'email'", () => {
+    const { container } = render(<EmailPlugin {...props} />);
+    const email = container.querySelector('input[name="email"]');
+    expect(email).toBeInTheDocument();
+  });
+
+  it('should render certain inputs', () => {
+    const { container } = render(<EmailPlugin {...props} />);
+    const name = container.querySelector('input[name="name"]');
+    expect(name).toBeInTheDocument();
+    const lastname = container.querySelector('input[name="lastname"]');
+    expect(lastname).toBeInTheDocument();
+    const city = container.querySelector('input[name="city"]');
+    expect(city).toBeInTheDocument();
+    const subject = container.querySelector('input[name="subject"]');
+    expect(subject).toBeInTheDocument();
+    const body = container.querySelector('textarea[name="body"]');
+    expect(body).toBeInTheDocument();
+  });
+
+  it("subject and body fields shouldn't be disabled", () => {
+    const { container } = render(<EmailPlugin {...props} />);
+    const subject = container.querySelector('input[name="subject"]');
+    const body = container.querySelector('textarea[name="body"]');
+    expect(subject).not.toBeDisabled();
+    expect(body).not.toBeDisabled();
+  });
+
+  it('should render the count component if there is a count_text', () => {
+    const { getByText } = render(<EmailPlugin {...props} />);
+    expect(getByText(/pressões/i)).toBeInTheDocument();
+  });
+});
+
+describe('Plugin successful behavior paths', () => {
+  const mockedValues = {
+    name: 'Teste',
+    lastname: 'Sobrenome Teste',
+    city: 'São Paulo',
+    subject: 'Vou te pressionar!',
+    body: 'Estou te pressionando :@',
+    email: 'test@email.com',
+  };
+  const handleSubmit = jest
+    .fn()
+    .mockResolvedValue({ type: 'UPDATE_WIDGET_SUCCESS' });
+  const props = {
+    widget,
+    editable: false,
+    overrides,
+    analyticsEvents: { pressureIsFilled: () => true },
+    asyncFillWidget: handleSubmit,
+    mobilization: {},
+    block,
+  };
+
+  it('should change input value accordingly', () => {
+    const { container } = render(<EmailPlugin {...props} />);
+
+    const name = container.querySelector(
+      'input[name="name"]'
+    ) as HTMLInputElement;
+    const lastname = container.querySelector(
+      'input[name="lastname"]'
+    ) as HTMLInputElement;
+    const email = container.querySelector(
+      'input[name="email"]'
+    ) as HTMLInputElement;
+    const city = container.querySelector(
+      'input[name="city"]'
+    ) as HTMLInputElement;
+    const subject = container.querySelector(
+      'input[name="subject"]'
+    ) as HTMLInputElement;
+    const body = container.querySelector(
+      'textarea[name="body"]'
+    ) as HTMLInputElement;
+
+    fireEvent.change(name, { target: { value: mockedValues.name } });
+    fireEvent.change(lastname, { target: { value: mockedValues.lastname } });
+    fireEvent.change(email, { target: { value: mockedValues.email } });
+    fireEvent.change(city, { target: { value: mockedValues.city } });
+    fireEvent.change(subject, { target: { value: mockedValues.subject } });
+    fireEvent.change(body, { target: { value: mockedValues.body } });
+
+    expect(name.value).toBe(mockedValues.name);
+    expect(lastname.value).toBe(mockedValues.lastname);
+    expect(email.value).toBe(mockedValues.email);
+    expect(city.value).toBe(mockedValues.city);
+    expect(subject.value).toBe(mockedValues.subject);
+    expect(body.value).toBe(mockedValues.body);
+  });
+
+  it('should submit form with expected values and have a successful submit', async () => {
+    const { container, getByText, queryByText } = render(
+      <EmailPlugin {...props} />
+    );
+    const payload = {
+      activist: {
+        firstname: mockedValues.name,
+        lastname: mockedValues.lastname,
+        email: mockedValues.email,
+        city: mockedValues.city || null,
+      },
+      mail: {
+        cc: targetsList.map((target: string) => getEmailTarget(target)),
+        subject: mockedValues.subject,
+        body: mockedValues.body,
+      },
+    };
+
+    const name = container.querySelector(
+      'input[name="name"]'
+    ) as HTMLInputElement;
+    const lastname = container.querySelector(
+      'input[name="lastname"]'
+    ) as HTMLInputElement;
+    const email = container.querySelector(
+      'input[name="email"]'
+    ) as HTMLInputElement;
+    const city = container.querySelector(
+      'input[name="city"]'
+    ) as HTMLInputElement;
+    const subject = container.querySelector(
+      'input[name="subject"]'
+    ) as HTMLInputElement;
+    const body = container.querySelector(
+      'textarea[name="body"]'
+    ) as HTMLInputElement;
+    const submitButton = getByText(/send email/i);
+
+    fireEvent.change(name, { target: { value: mockedValues.name } });
+    fireEvent.change(lastname, { target: { value: mockedValues.lastname } });
+    fireEvent.change(email, { target: { value: mockedValues.email } });
+    fireEvent.change(city, { target: { value: mockedValues.city } });
+    fireEvent.change(subject, { target: { value: mockedValues.subject } });
+    fireEvent.change(body, { target: { value: mockedValues.body } });
+    fireEvent.click(submitButton);
+
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
+    const submitting = getByText(/enviando/i);
+    expect(submitting).toBeInTheDocument();
+
+    expect(handleSubmit).toBeCalledWith({ payload, widget });
+    await waitFor(() => {
+      expect(submitting).not.toBeInTheDocument();
+    });
+
+    expect(queryByText(/Houve um erro ao fazer a pressão/i)).toBeFalsy();
+
+    await waitFor(() => {
+      expect(getByText(/compartilhe!/i)).toBeInTheDocument();
+    });
+  });
+});
+
+describe('Plugin unsuccessful behavior paths', () => {
+  const mockedValues = {
+    name: 'Teste',
+    lastname: 'Sobrenome Teste',
+    city: 'São Paulo',
+    subject: 'Vou te pressionar!',
+    body: 'Estou te pressionando :@',
+    email: 'test@email.com',
+  };
+  const handleSubmit = jest
+    .fn()
+    .mockRejectedValue({ type: 'UPDATE_WIDGET_SUCCESS' });
+  const props = {
+    widget: {
+      ...widget,
+      settings: {
+        ...widget.settings,
+        targets: '',
+        show_city: 'city-false',
+        disable_edit_field: 's',
+        count_text: undefined,
+      },
+    },
+    editable: false,
+    overrides,
+    analyticsEvents: { pressureIsFilled: () => true },
+    asyncFillWidget: handleSubmit,
+    mobilization: {},
+    block,
+  };
+
+  it('should not render the count component if there isnt a count_text', () => {
+    const { queryByText } = render(<EmailPlugin {...props} />);
+    expect(queryByText(/pressões/i)).not.toBeInTheDocument();
+  });
+
+  it('should return an error if there are no set targets', async () => {
+    const { container, getByText } = render(<EmailPlugin {...props} />);
+    const name = container.querySelector(
+      'input[name="name"]'
+    ) as HTMLInputElement;
+    const lastname = container.querySelector(
+      'input[name="lastname"]'
+    ) as HTMLInputElement;
+    const email = container.querySelector(
+      'input[name="email"]'
+    ) as HTMLInputElement;
+    const submitButton = getByText(/send email/i);
+
+    fireEvent.change(name, { target: { value: mockedValues.name } });
+    fireEvent.change(lastname, { target: { value: mockedValues.lastname } });
+    fireEvent.change(email, { target: { value: mockedValues.email } });
+    fireEvent.click(submitButton);
+
+    expect(handleSubmit).not.toHaveBeenCalled();
+    const submitting = getByText(/enviando/i);
+    expect(submitting).toHaveTextContent('Enviando...');
+
+    await waitFor(() => {
+      expect(submitButton).toHaveTextContent('Send Email');
+    });
+
+    const error = getByText(/selecionar pelo menos um alvo/i);
+    expect(error).toBeInTheDocument();
+    expect(error).toHaveTextContent(
+      'Ops, você precisa selecionar pelo menos um alvo para poder pressionar'
+    );
+  });
+
+  it('should not display city field if show_city is false', () => {
+    const { queryByText } = render(<EmailPlugin {...props} />);
+    const city = queryByText(/cidade/i);
+    expect(city).toBeFalsy();
+  });
+
+  test('subject and body input should be disabled', () => {
+    const { container } = render(<EmailPlugin {...props} />);
+    const subject = container.querySelector(
+      'input[name="subject"]'
+    ) as HTMLInputElement;
+    const body = container.querySelector(
+      'textarea[name="body"]'
+    ) as HTMLInputElement;
+    expect(subject).toBeDisabled();
+    expect(body).toBeDisabled();
+  });
+
+  it('should display validation error messages', async () => {
+    const { container, getByText, getAllByText } = render(
+      <EmailPlugin
+        {...props}
+        widget={{
+          ...props.widget,
+          settings: {
+            ...props.widget.settings,
+            targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
+          },
+        }}
+      />
+    );
+    const email = container.querySelector(
+      'input[name="email"]'
+    ) as HTMLInputElement;
+    const submitButton = getByText(/send email/i);
+
+    fireEvent.change(email, { target: { value: 'error_email' } });
+    fireEvent.click(submitButton);
+
+    expect(handleSubmit).not.toHaveBeenCalled();
+
+    const required = getAllByText(/preenchimento obrigatório/i);
+    expect(required).toHaveLength(2);
+    const emailInvalid = getByText(/e-mail inválido/i);
+    expect(emailInvalid).toHaveTextContent('E-mail inválido');
+  });
+
+  it('should display error if email input is present in targets', async () => {
+    const { container, getByText } = render(
+      <EmailPlugin
+        {...props}
+        widget={{
+          ...props.widget,
+          settings: {
+            ...props.widget.settings,
+            targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
+          },
+        }}
+      />
+    );
+    const email = container.querySelector(
+      'input[name="email"]'
+    ) as HTMLInputElement;
+    const submitButton = getByText(/send email/i);
+
+    fireEvent.change(email, { target: { value: 'vivi@email.com' } });
+    fireEvent.click(submitButton);
+
+    expect(handleSubmit).not.toHaveBeenCalled();
+
+    const list = getByText(/alvos da mobilização/i);
+    expect(list).toHaveTextContent(
+      'O email que você está tentando usar é de um dos alvos da mobilização.'
+    );
+  });
+
+  test('submit form should have an unsuccessful submit', async () => {
+    const { container, getByText, queryByText } = render(
+      <EmailPlugin
+        {...props}
+        widget={{
+          ...props.widget,
+          settings: {
+            ...props.widget.settings,
+            targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
+          },
+        }}
+      />
+    );
+
+    const name = container.querySelector(
+      'input[name="name"]'
+    ) as HTMLInputElement;
+    const lastname = container.querySelector(
+      'input[name="lastname"]'
+    ) as HTMLInputElement;
+    const email = container.querySelector(
+      'input[name="email"]'
+    ) as HTMLInputElement;
+    const submitButton = getByText(/send email/i);
+
+    fireEvent.change(name, { target: { value: mockedValues.name } });
+    fireEvent.change(lastname, { target: { value: mockedValues.lastname } });
+    fireEvent.change(email, { target: { value: mockedValues.email } });
+    fireEvent.click(submitButton);
+
+    expect(submitButton).toHaveTextContent('Enviando...');
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
+
+    await waitFor(() => {
+      expect(submitButton).not.toHaveTextContent('Enviando...');
+    });
+
+    expect(queryByText(/Houve um erro ao fazer a pressão/i)).toBeTruthy();
+  });
+});
