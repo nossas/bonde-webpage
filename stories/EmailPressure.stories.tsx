@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  PressureForm,
-  EmailPressurePlugin,
-  PressurePlugin,
-  EmailFields,
-} from '../src';
+import { PressureForm, EmailPressurePlugin, EmailFields } from '../src';
 import PressureProps from './mocks/plugin/pressure';
 import EmailProps from './mocks/plugin/pressure/email';
 
@@ -16,7 +11,10 @@ export const EmailPressureForm = ({
     <PressureForm
       {...PressureProps}
       saving={false}
-      BeforeStandardFields={() => EmailFields.before(targetList)}
+      errors={[]}
+      BeforeStandardFields={() =>
+        EmailFields.before(targetList, () => console.log('onBlur'))
+      }
       AfterStandardFields={() => EmailFields.after(disableSubjectAndBody)}
     />
   );
@@ -24,10 +22,9 @@ export const EmailPressureForm = ({
 
 export const EmailPressure = () => {
   return (
-    <PressurePlugin
+    <EmailPressurePlugin
       {...EmailProps}
-      PluginComponent={EmailPressurePlugin}
-      fillWidget={async () => true}
+      asyncFillWidget={async () => ({ widget: {} })}
       overrides={{
         FinishCustomMessage: { component: null, props: {} },
         FinishDefaultMessage: {
@@ -40,5 +37,5 @@ export const EmailPressure = () => {
 };
 
 export default {
-  title: 'PressurePlugin',
+  title: 'EmailPressurePlugin',
 };

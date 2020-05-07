@@ -12,10 +12,7 @@ import { getTargetList, getEmailTarget } from '../utils';
 type Props = {
   /* Below props are from root parent */
   editable: boolean;
-  mobilization: {
-    header_font: string;
-    community_id: string | number;
-  };
+  mobilization: any;
   widget: {
     id: number | string;
     count: number;
@@ -24,15 +21,15 @@ type Props = {
       call_to_action?: string;
       title_text: string;
       button_text: string;
-      pressure_subject: string;
-      pressure_body: string;
+      pressure_subject?: string;
+      pressure_body?: string;
       disable_edit_field: string;
       targets: string;
       finish_message_type?: string;
       finish_message?: Record<any, any>;
       finish_message_background?: string;
       count_text?: string;
-      show_city: boolean | string;
+      show_city?: string;
     };
   };
   block: {
@@ -93,7 +90,7 @@ const EmailPressure = ({
   >([]);
 
   const handleSubmit = async (data: any) => {
-    if (targets.length < 1) {
+    if (targetList.length < 1) {
       return setError([
         'Ops, você precisa selecionar pelo menos um alvo para poder pressionar',
       ]);

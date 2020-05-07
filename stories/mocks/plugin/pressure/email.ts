@@ -1,6 +1,6 @@
 export default {
   addTwilioCallMutation: () => console.log('addTwilioCallMutation'),
-  analyticsEvents: {},
+  analyticsEvents: { pressureIsFilled: () => {} },
   body: '',
   buttonColor: '#f23392',
   buttonText: 'Ligar',

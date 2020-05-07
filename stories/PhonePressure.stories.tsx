@@ -11,8 +11,7 @@ import {
 import PressureProps from './mocks/plugin/pressure/phone';
 import styled from 'styled-components';
 import {
-  PressurePlugin,
-  PhonePressurePlugin,
+  // PhonePressurePlugin,
   PressureForm,
   PhoneFields,
 } from '../src';
@@ -39,7 +38,8 @@ export const PhonePressureForm = ({
       {...PressureProps}
       onSubmit={() => console.log('onSubmit')}
       saving={false}
-      BeforeStandardFields={() => PhoneFields(targetList)}
+      BeforeStandardFields={() => PhoneFields(targetList, () => {})}
+      errors={[]}
     />
   );
 };
@@ -88,35 +88,35 @@ export const CallingTargets = () => {
 
 export const PhoneWithoutCallTransition = () => {
   return (
-    <PressurePlugin
-      {...PressureProps}
-      PluginComponent={PhonePressurePlugin}
-      fillWidget={() => Promise.resolve()}
-      overrides={{
-        FinishCustomMessage: { component: null, props: {} },
-        FinishDefaultMessage: {
-          component: <div>compartilhe!</div>,
-          props: { imageUrl: 'bla', href: 'https://www.mapalgbt.bonde.org' },
-        },
-      }}
-    />
+    <div>PhoneWithoutCallTransition</div>
+    // <PhonePressurePlugin
+    //   {...PressureProps}
+    //   asyncFillWidget={async () => ({ widget: {} })}
+    //   overrides={{
+    //     FinishCustomMessage: { component: null, props: {} },
+    //     FinishDefaultMessage: {
+    //       component: <div>compartilhe!</div>,
+    //       props: { imageUrl: 'bla', href: 'https://www.mapalgbt.bonde.org' },
+    //     },
+    //   }}
+    // />
   );
 };
 
 export const PhoneWithCallTransition = () => {
   return (
-    <PressurePlugin
-      {...PressureProps}
-      PluginComponent={PhonePressurePlugin}
-      fillWidget={() => Promise.resolve()}
-      overrides={{
-        FinishCustomMessage: { component: null, props: {} },
-        FinishDefaultMessage: {
-          component: <div>compartilhe!</div>,
-          props: { imageUrl: 'bla', href: 'https://www.mapalgbt.bonde.org' },
-        },
-      }}
-    />
+    <div>PhoneWithCallTransition</div>
+    // <PhonePressurePlugin
+    //   {...PressureProps}
+    //   asyncFillWidget={() => Promise.resolve()}
+    //   overrides={{
+    //     FinishCustomMessage: { component: null, props: {} },
+    //     FinishDefaultMessage: {
+    //       component: <div>compartilhe!</div>,
+    //       props: { imageUrl: 'bla', href: 'https://www.mapalgbt.bonde.org' },
+    //     },
+    //   }}
+    // />
   );
 };
 
