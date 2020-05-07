@@ -1,5 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { render, waitFor, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import Form from '../components/Form';
 import EmailFields from '../Email/EmailFields';
 
@@ -13,7 +15,7 @@ describe('Pressure Form', function() {
       pressure_subject: 'Pressure Subject',
       pressure_body: 'Pressure Body',
       targets: 'Target 1 <target1@test.org>;Target 2 <target1@test.org>;',
-      show_city: false,
+      show_city: 'city-false',
       main_color: '#f08585',
     },
   };
@@ -26,12 +28,13 @@ describe('Pressure Form', function() {
     'Teste <testes2@gmail.com',
   ];
 
+  const onBlur = jest.fn();
+
   const props = {
     onSubmit: () => 'onSubmit',
     widget,
     saving: false,
-    BeforeStandardFields: () =>
-      EmailFields.before(targetList, () => console.log('touched')),
+    BeforeStandardFields: () => EmailFields.before(targetList, onBlur),
     AfterStandardFields: () => EmailFields.after(true),
     errors: [],
   };
@@ -99,5 +102,16 @@ describe('Pressure Form', function() {
 
     expect(wrapper.find('InputField[name="name"]').length).toEqual(1);
     expect(wrapper.find('InputField[name="lastname"]').length).toEqual(1);
+  });
+
+  it('check if onBlur func is being called', async () => {
+    const { container } = render(<Form {...props} />);
+    const email = container.querySelector(
+      'input[name="email"]'
+    ) as HTMLInputElement;
+    fireEvent.blur(email);
+    await waitFor(() => {
+      expect(onBlur).toHaveBeenCalledTimes(1);
+    });
   });
 });

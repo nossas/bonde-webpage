@@ -17,14 +17,14 @@ import { Raise } from '../../../../components';
 type Props = {
   onSubmit: any;
   widget: {
-    id?: number | string;
+    id: number;
     count?: number;
     settings: {
       main_color: string;
-      show_city: boolean | string;
+      show_city?: string;
       button_text: string;
-      pressure_subject: string;
-      pressure_body: string;
+      pressure_subject?: string;
+      pressure_body?: string;
       call_to_action?: string;
       title_text?: string;
       disable_edit_field?: any;
