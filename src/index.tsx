@@ -46,5 +46,6 @@ export { default as PressureTellAFriend } from './plugins/Pressure/components/Te
 export { default as DonationPlugin } from './plugins/Donation';
 export { default as PagarMeCheckout } from './plugins/Donation/PagarMeCheckout';
 export { default as asyncDonationCreate } from './plugins/Donation/asyncDonationCreate';
+export { default as asyncDonationConvert } from './plugins/Donation/asyncDonationConvert';
 export { default as DonationTellAFriend } from './plugins/Donation/TellAFriend';
 export { default as FinishDonationMessage } from './plugins/Donation/FinishDonationMessage';

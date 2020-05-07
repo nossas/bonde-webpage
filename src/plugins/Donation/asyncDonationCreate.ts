@@ -5,7 +5,6 @@ const donationTransactionCreate = (params: any) => (
 ) => {
   const endpoint = `/mobilizations/${params.mobilization_id}/donations`;
   const body = { donation: genRequestPayload(params) };
-  console.log('called asyncDonationCreate', { params });
   return api.post(endpoint, body);
 };
 

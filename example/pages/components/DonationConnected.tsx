@@ -3,6 +3,7 @@ import {
   DonationPlugin,
   PagarMeCheckout,
   asyncDonationCreate,
+  asyncDonationConvert,
   FinishMessageCustom,
   FinishDonationMessage,
   DonationTellAFriend
@@ -17,7 +18,10 @@ const { publicRuntimeConfig } = getConfig();
 
 const mapStateToProps = () => ({ client });
 
-const mapDispatchToProps = { createTransaction: asyncDonationCreate };
+const mapDispatchToProps = {
+  createTransaction: asyncDonationCreate,
+  asyncDonationConvert
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)((props: any) => (
   <PagarMeCheckout

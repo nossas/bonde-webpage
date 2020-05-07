@@ -39,6 +39,7 @@ type Props = {
   // ApolloClient instance
   client: any;
   asyncDonationCreate?: any;
+  asyncDonationConvert?: any;
   donationCustomerData?: any;
   mobilization: any;
   widget: {
@@ -63,6 +64,7 @@ type Props = {
 
 const DonationPlugin: React.FC<Props> = ({
   asyncDonationCreate,
+  asyncDonationConvert,
   client,
   donationCustomerData,
   extraProps,
@@ -136,7 +138,7 @@ const DonationPlugin: React.FC<Props> = ({
           mobilization={mobilization}
           overrides={overrides}
           selectedValue={selectedValue}
-          handleConvertDonation={() => console.log('teste convert donation')}
+          handleConvertDonation={asyncDonationConvert}
         />
       );
     }

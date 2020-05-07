@@ -16,7 +16,7 @@ const FinishDonationMessage = ({
   defaultSelectedValue,
   mobilization,
   widget,
-  onClickDonation,
+  onClickDonate,
   ...ownProps
 }: any) => {
   const [value, setValue] = useState(defaultSelectedValue);
@@ -45,7 +45,7 @@ const FinishDonationMessage = ({
       onChange={onChange}
       value={value}
       onSubmit={async (value: number | string) => {
-        await onClickDonation(value);
+        await onClickDonate(value);
         setValue(value);
         setSuccess(true);
       }}
