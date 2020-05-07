@@ -25,7 +25,7 @@ type Props = {
     community_id?: string | number;
   };
   widget: {
-    id?: number | string;
+    id: number;
     count?: number;
     settings: {
       main_color: string;
@@ -40,7 +40,7 @@ type Props = {
       finish_message_background?: string;
       targets: string;
       count_text?: string;
-      show_city: boolean | string;
+      show_city?: string;
     };
   };
   block: {

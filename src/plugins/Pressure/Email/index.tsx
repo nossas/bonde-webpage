@@ -14,7 +14,7 @@ type Props = {
   editable: boolean;
   mobilization: any;
   widget: {
-    id: number | string;
+    id: number;
     count: number;
     settings: {
       main_color: string;
