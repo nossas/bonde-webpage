@@ -47,13 +47,9 @@ class Page extends React.Component<PageProps> {
       await dispatch(asyncFilterWidget(filter || where));
     };
 
-    // await fetchData();
+    await fetchData();
     // Donation Widget
     // await fetchData({ slug: 'nova-home-meu-rio' });
-    // Form Widget
-    // await fetchData({ slug: 'mapalgbt' });
-    // Pressure Email
-    await fetchData({ slug: 'elevacaonajbnao' });
   }
 
   componentDidMount() {
