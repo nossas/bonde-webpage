@@ -130,6 +130,7 @@ const FormPlugin = (props: Props) => {
   const [status, setStatus] = useState<string>('idle');
   const [errors, setErrors] = useState<Array<string>>([]);
   const [values, setValues] = useState<Record<string, string>>({});
+  const [count, setCount] = useState<number>(widget.form_entries_count || 0);
 
   const submit = async (e: any) => {
     e.preventDefault();
@@ -141,27 +142,26 @@ const FormPlugin = (props: Props) => {
 
     if (errors.length > 0) {
       return setErrors(errors);
-    } else {
-      setStatus('pending');
+    }
+    setStatus('pending');
 
-      const formEntry = {
-        widget_id: widget.id,
-        fields: JSON.stringify(fieldsWithValue),
-      };
+    const formEntry = {
+      widget_id: widget.id,
+      fields: JSON.stringify(fieldsWithValue),
+    };
 
-      try {
-        await asyncFormEntryCreate({
-          mobilization_id: mobilization.id,
-          formEntry,
-        });
+    asyncFormEntryCreate({ mobilizationId: mobilization.id, formEntry })
+      .then(() => {
         setStatus('fulfilled');
+        setCount(count + 1);
         setValues({});
-      } catch (e) {
+        return Promise.resolve();
+      })
+      .catch(() => {
         // console.log(e);
         setStatus('rejected');
-        setErrors(['Houve um erro ao enviar o formulário']);
-      }
-    }
+        setErrors(['Houve um erro ao enviar o formulário. Tente novamente']);
+      });
   };
 
   const handleChange = (e: any) =>
@@ -202,7 +202,7 @@ const FormPlugin = (props: Props) => {
       {widget.settings && widget.settings.count_text && (
         <Count
           startCounting={block.scrollTopReached}
-          value={widget.form_entries_count}
+          value={count}
           text={widget.settings.count_text || 'formulários preenchidos'}
           fontFamily={mobilization.body_font}
           color={mobilization.main_color || '#000'}

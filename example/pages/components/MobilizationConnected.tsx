@@ -4,8 +4,6 @@ import {
   // Plugins
   ContentPlugin,
   DraftPlugin,
-  FormAnalytics,
-  FormTellAFriend,
   // Mobilization
   Mobilization,
   PluggableWidget,
@@ -46,22 +44,7 @@ const plugins = [
   },
   {
     kind: 'form',
-    component: (props: any) => (
-      <FormPlugin
-        {...props}
-        analyticsEvents={FormAnalytics}
-        overrides={{
-          FinishCustomMessage: { component: FinishMessageCustom },
-          FinishDefaultMessage: {
-            component: FormTellAFriend,
-            props: {
-              imageUrl: Utils.imageUrl,
-              href: Utils.getSharedPath(props.mobilization),
-            },
-          },
-        }}
-      />
-    ),
+    component: FormPlugin,
   },
   {
     kind: 'donation',

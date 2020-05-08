@@ -120,7 +120,7 @@ test('Form successful flow works as expected', async () => {
         addValueToFields(widget.settings.fields, mockedValues)
       ),
     },
-    mobilization_id: 0,
+    mobilizationId: 0,
   };
 
   expect(handleSubmit).toBeCalledWith(submitValues);

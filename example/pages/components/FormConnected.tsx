@@ -1,16 +1,37 @@
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 // import { injectIntl } from 'react-intl'
 // import FormPlugin from '../../../src/plugins/Form'
 // import { asyncFormEntryCreate } from '../../../src/redux/action-creators'
+
 import {
   FormPlugin,
   asyncFormEntryCreate,
-  selectors as MobSelectors
-} from 'bonde-webpages'
+  FormAnalytics,
+  FormTellAFriend,
+  FinishMessageCustom,
+} from 'bonde-webpages';
+import Utils from '../../Utils';
 
-const mapDispatchToProps = { asyncFormEntryCreate }
+const mapDispatchToProps = { asyncFormEntryCreate };
 
-const mapStateToProps = (state: any) => MobSelectors(state).getMobilizationLink()
-
-// export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(FormPlugin))
-export default connect(mapStateToProps, mapDispatchToProps)(FormPlugin)
+export default connect(
+  undefined,
+  mapDispatchToProps
+)((props: any) => {
+  return (
+    <FormPlugin
+      {...props}
+      analyticsEvents={FormAnalytics}
+      overrides={{
+        FinishCustomMessage: { component: FinishMessageCustom },
+        FinishDefaultMessage: {
+          component: FormTellAFriend,
+          props: {
+            imageUrl: Utils.imageUrl,
+            href: Utils.getSharedPath(props.mobilization),
+          },
+        },
+      }}
+    />
+  );
+});
