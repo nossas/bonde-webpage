@@ -5,7 +5,8 @@ import {
   ContentPlugin,
   DraftPlugin,
   // Mobilization
-  Mobilization,
+  // Mobilization,
+  MobilizationClass as Mobilization,
   PluggableWidget,
   FinishMessageCustom,
   selectors as MobilizationSelectors,

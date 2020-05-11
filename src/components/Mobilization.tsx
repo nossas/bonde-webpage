@@ -64,19 +64,19 @@ const getVisibleBlocks = (blocks: any, editable: any) =>
   !editable ? blocks.filter((b: any) => !b.hidden) : blocks;
 
 const Mobilization: React.FC<MobilizationProps> = props => {
-  const { blocks: ownBlocks, linkTo, editable } = props;
-  const [blocks, setBlocks] = useState(
-    getVisibleBlocks(props.blocks, props.editable)
-  );
+  console.log('Mobilization render');
+  const { linkTo, editable } = props;
+  const visibleBlocks = getVisibleBlocks(props.blocks, props.editable);
+
+  const [blocks, setBlocks] = useState(visibleBlocks);
 
   useEffect(() => {
-    setBlocks(getVisibleBlocks(ownBlocks, editable));
-  }, [ownBlocks, editable]);
-
-  useEffect(() => {
+    console.log('useEffect');
     let blocksTotalHeight: number = 0;
     const blocksWithOffsetTop: any[] = [];
     const element: any = document.querySelector('#blocks-list');
+
+    // console.log('blocksTotalHeight', { blocksTotalHeight });
 
     // watch the scroll event
     const scroll = ({ target }: any) => {
@@ -86,8 +86,12 @@ const Mobilization: React.FC<MobilizationProps> = props => {
       //
       blocksWithOffsetTop.map((block: any) => {
         const scrollPassed = target.scrollTop + 120 >= block.offsetTop;
-
+        // console.log('scrollPassed', {
+        //   scrollPassed,
+        //   scrollTopReached: !block.scrollTopReached,
+        // });
         if (scrollPassed && !block.scrollTopReached) {
+          // console.log('map updateBlock');
           updateBlock(block, { scrollTopReached: true }, blocks, setBlocks);
         }
         return scrollPassed;
@@ -100,19 +104,19 @@ const Mobilization: React.FC<MobilizationProps> = props => {
       //
       const viewportBottom = target.scrollTop + target.offsetHeight;
       const isBottom = viewportBottom >= blocksTotalHeight;
-      const lastBlock = ownBlocks.slice(-1)[0];
+      const lastBlock = visibleBlocks.slice(-1)[0];
 
       if (isBottom && !lastBlock.scrollTopReached) {
+        // console.log('isBottom updateBlock');
         updateBlock(lastBlock, { scrollTopReached: true }, blocks, setBlocks);
       }
     };
 
     if (typeof window !== 'undefined') {
       // get the offsetTop of each block and put it on state
-      ownBlocks.forEach((block: any, index: number) => {
-        const { offsetTop, offsetHeight }: any = document.querySelector(
-          `#${linkTo(block)}`
-        );
+      visibleBlocks.forEach((block: any, index: number) => {
+        const { offsetTop, offsetHeight }: any =
+          document.querySelector(`#${linkTo(block)}`) || {};
         const scrollTopReached = index === 0;
 
         blocksWithOffsetTop.push({ ...block, offsetTop, scrollTopReached });
@@ -124,7 +128,7 @@ const Mobilization: React.FC<MobilizationProps> = props => {
     return () => {
       element.removeEventListener('scroll', scroll);
     };
-  }, [ownBlocks, linkTo, blocks]);
+  }, [blocks, visibleBlocks, linkTo]);
 
   // Props used on editable mode
   // Props to customize layout themes
