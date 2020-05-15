@@ -21,7 +21,7 @@
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.0.0",
-    "next": "latest",
+    "next": "^9.4.1-canary.5",
     "next-redux-wrapper": "^6.0.0-rc.7",
     "node-fetch": "^2.6.0",
     "react": "^16.13.1",
@@ -47,6 +47,7 @@
     "@zeit/next-sass": "^1.0.1",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-react-intl": "^7.5.2",
+    "babel-plugin-styled-components": "^1.10.7",
     "ts-node": "^8.1.0",
     "typescript": "^3.4.5"
   }
