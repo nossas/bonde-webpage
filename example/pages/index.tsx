@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Head from 'next/head';
+// import Error from 'next/error';
 import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import {
@@ -10,6 +11,7 @@ import {
 } from 'bonde-webpages';
 import MobilizationConnected from './components/MobilizationConnected';
 import getConfig from 'next/config';
+import Custom404 from './404';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -48,8 +50,9 @@ class Page extends React.Component<PageProps> {
     };
 
     await fetchData();
-    // Donation Widget
-    // await fetchData({ slug: 'nova-home-meu-rio' });
+    // Mobiization with all widgets configured.
+    // await fetchData({ slug: 'teste-de-widgets' });
+    // await fetchData({ slug: 'mapa-do-acolhimento' });
   }
 
   componentDidMount() {
@@ -71,6 +74,10 @@ class Page extends React.Component<PageProps> {
   }
 
   render() {
+    const { mobilization } = this.props;
+
+    if (!mobilization) return <Custom404 />
+
     const {
       name,
       goal,
@@ -79,7 +86,7 @@ class Page extends React.Component<PageProps> {
       facebook_share_description: facebookShareDescription,
       facebook_share_image: facebookShareImage,
       custom_domain: customDomain,
-    } = this.props.mobilization;
+    } = mobilization;
 
     const url = `${this.props.protocol}://${customDomain}`;
 
@@ -134,43 +141,6 @@ class Page extends React.Component<PageProps> {
     );
   }
 }
-
-// static async getInitialProps({ store, req, res }) {
-//   const { dispatch, getState } = store
-//   const host = getState().sourceRequest.host
-//   const protocol = getState().sourceRequest.protocol
-//   const appDomain = publicRuntimeConfig.domainPublic || 'bonde.devel'
-
-//   if (host) {
-//     if (res) { // force host to be with www
-//       if (!host.startsWith("www", 0)) {
-//         res.writeHead(302, {
-//           Location: `${protocol}://www.${host}`
-//         })
-//         res.end()
-//       }
-//     }
-
-//     // eslint-disable-next-line
-//     const regex = host.match(`(.+)\.${appDomain}`)
-
-//     const where = regex
-//       ? { slug: regex[1].replace(/^www\./, '') }
-//       : { custom_domain: host }
-
-//     await dispatch(asyncFilterMobilization(where))
-//     await dispatch(asyncFilterBlock(where))
-//     await dispatch(asyncFilterWidget(where))
-//   }
-
-//   let currentLocale
-//   if ('accept-language' in req.headers) {
-//     currentLocale = req.headers['accept-language'].split(';')[0].split(',')[0]
-//   } else {
-//     currentLocale = 'pt-BR'
-//   }
-//   dispatch(setCurrentLocale(localeStrategy(currentLocale)))
-// }
 
 const mapStateToProps = (state: any) => {
   const composeProps: any = {};

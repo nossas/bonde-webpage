@@ -21,6 +21,13 @@ export default connect(
   return (
     <FormPlugin
       {...props}
+      widget={{
+        ...props.widget,
+        settings: {
+          ...props.widget.settings,
+          fields: JSON.parse(props.widget.settings.fields)
+        }
+      }}
       analyticsEvents={FormAnalytics}
       overrides={{
         FinishCustomMessage: { component: FinishMessageCustom },
