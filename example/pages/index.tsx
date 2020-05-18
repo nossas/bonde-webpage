@@ -9,9 +9,10 @@ import {
   asyncFilterWidget,
   Styles,
 } from 'bonde-webpages';
+import MeuRioStyles from './components/MeuRioStyles';
 import MobilizationConnected from './components/MobilizationConnected';
 import getConfig from 'next/config';
-import Custom404 from './404';
+import Error404 from './404';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -52,7 +53,7 @@ class Page extends React.Component<PageProps> {
     await fetchData();
     // Mobiization with all widgets configured.
     // await fetchData({ slug: 'teste-de-widgets' });
-    // await fetchData({ slug: 'mapa-do-acolhimento' });
+    // await fetchData({ slug: '159-mr-apoie' });
   }
 
   componentDidMount() {
@@ -74,9 +75,7 @@ class Page extends React.Component<PageProps> {
   }
 
   render() {
-    const { mobilization } = this.props;
-
-    if (!mobilization) return <Custom404 />
+    if (!this.props.mobilization) return <Error404 />
 
     const {
       name,
@@ -86,7 +85,7 @@ class Page extends React.Component<PageProps> {
       facebook_share_description: facebookShareDescription,
       facebook_share_image: facebookShareImage,
       custom_domain: customDomain,
-    } = mobilization;
+    } = this.props.mobilization;
 
     const url = `${this.props.protocol}://${customDomain}`;
 
@@ -134,9 +133,11 @@ class Page extends React.Component<PageProps> {
             src="https://assets.pagar.me/checkout/checkout.js"
           />
         </Head>
-        <Styles>
-          <MobilizationConnected />
-        </Styles>
+        <MeuRioStyles>
+          <Styles>
+            <MobilizationConnected />
+          </Styles>
+        </MeuRioStyles>
       </div>
     );
   }
