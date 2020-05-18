@@ -16,7 +16,7 @@ const Wrapper = styled.div<{ fontFamily?: string }>`
 `;
 
 const Title = styled.h1<{ color: string }>`
-  color: ${props => props.color};
+  color: ${props => props.color}!important;
   font-weight: 300;
   font-size: 2.15rem;
   margin: 15px 0;
@@ -24,7 +24,7 @@ const Title = styled.h1<{ color: string }>`
 `;
 
 const Subtitle = styled.h3`
-  color: #111;
+  color: #111 !important;
   font-weight: 700;
   font-size: 1.25rem;
   margin: 0;
