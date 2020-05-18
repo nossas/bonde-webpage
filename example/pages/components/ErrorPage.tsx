@@ -22,11 +22,11 @@ const Fullpage = styled.div`
   }
 
   .content {
-    width: 428px;
+    max-width: 428px;
     margin-left: 70px;
 
     h2 {
-      font-size: 70px;
+      font-size: 60px;
       font-weight: 900;
       line-height: 66px;
       margin: 20px 0;
@@ -40,6 +40,23 @@ const Fullpage = styled.div`
 
     a {
       color: rgb(233,97,184);
+    }
+  }
+
+  @media screen and (max-width: 991px) {
+    padding: 0 29px;
+
+    .main {
+      flex-direction: column;
+      margin: 0;
+
+      img {
+        width: 100%;
+      }
+
+      .content {
+        margin-left: 0;
+      }
     }
   }
 `
