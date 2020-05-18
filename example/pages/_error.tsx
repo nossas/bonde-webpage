@@ -6,7 +6,7 @@ function Error() {
     <ErrorPage>
       <img src="/static/images/500.png" alt="500 Internal Server Error" />
       <div className='content'>
-        <h2>Ops!</h2> 
+        <h2>Ops</h2> 
         <p>Estamos com um problema inesperado nos nossos servidores. Nossa equipe já foi alertada e está trabalhando para colocar o Bonde nos trilhos novamente.</p>
         <p>Tente acessar a página de novo em alguns minutos.</p>
         <p>Caso seja algo urgente ou você queira falar sobre outro assunto, envie um email para <a href="mailto:suporte@bonde.org.">suporte@bonde.org</a>.</p>
