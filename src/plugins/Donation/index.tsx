@@ -10,8 +10,8 @@ type DonationStylesProps = {
 
 const DonationStyles = styled.div<DonationStylesProps>`
   text-align: center;
-  border-radius: '3px 3px 0 0';
-  background: '#fff';
+  border-radius: 3px 3px 0 0;
+  background: #fff;
 
   h2 {
     padding: 1rem;
