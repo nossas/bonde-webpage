@@ -13,6 +13,7 @@ type Props = {
     settings:
       | {
           whatsapp_text?: string;
+          main_color?: string;
         }
       | Record<string, any>;
   };
@@ -30,10 +31,10 @@ const TellAFriend = ({
   imageWidth,
   widget: { settings },
 }: Props) => {
-  const { whatsapp_text = '' } = settings;
+  const { whatsapp_text = '', main_color: mainColor } = settings;
   return (
     <Wrap>
-      <Header>{message}</Header>
+      <Header mainColor={mainColor}>{message}</Header>
       <IconWrapper className="py2">
         <img src={imageUrl} style={{ width: imageWidth || 100 }} alt="" />
       </IconWrapper>

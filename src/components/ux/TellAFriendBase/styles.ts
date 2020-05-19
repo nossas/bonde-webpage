@@ -11,12 +11,17 @@ export const Wrap = styled.div`
   }
 `;
 
-export const Header = styled.h3`
-  font-weight: bold;
-  font-size: 1.25rem;
+type HeaderProps = {
+  mainColor?: string;
+};
+
+export const Header = styled.h3<HeaderProps>`
+  padding: 1rem;
+  color: #fff;
+  font-weight: 400;
   margin: 0;
-  color: #222222;
   text-align: center;
+  ${props => props.mainColor && `background-color: ${props.mainColor};`}
 `;
 
 export const IconWrapper = styled.div`
