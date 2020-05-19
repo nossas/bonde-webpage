@@ -6,6 +6,7 @@ import {
   asyncDonationConvert,
   FinishMessageCustom,
   FinishDonationMessage,
+  DonationAnalytics,
   DonationTellAFriend
 } from 'bonde-webpages';
 import { connect } from 'react-redux';
@@ -28,6 +29,7 @@ export default connect(mapStateToProps, mapDispatchToProps)((props: any) => (
     {...props}
     pagarmeKey={publicRuntimeConfig.pagarmeKey || 'setup env var'}
     donationComponent={DonationPlugin}
+    analyticsEvents={DonationAnalytics}
     overrides={{
       FinishCustomMessage: { component: FinishMessageCustom },
       FinishDefaultMessage: {
