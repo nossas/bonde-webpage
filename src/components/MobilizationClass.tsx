@@ -65,81 +65,82 @@ class Mobilization extends React.Component<
       ws.filter((w: any) => w.block_id === b.id),
   };
 
-  constructor(props: MobilizationProps) {
-    super(props);
-    this.state = { blocks: getVisibleBlocks(props.blocks, props.editable) };
-  }
+  // constructor(props: MobilizationProps) {
+  //   super(props);
+  //   this.state = { blocks: getVisibleBlocks(props.blocks, props.editable) };
+  // }
 
-  UNSAFE_componentWillReceiveProps(nextProps: MobilizationProps) {
-    if (this.props.blocks !== nextProps.blocks) {
-      this.setState({
-        blocks: getVisibleBlocks(nextProps.blocks, nextProps.editable),
-      });
-    }
-  }
+  // UNSAFE_componentWillReceiveProps(nextProps: MobilizationProps) {
+  //   if (this.props.blocks !== nextProps.blocks) {
+  //     this.setState({
+  //       blocks: getVisibleBlocks(nextProps.blocks, nextProps.editable),
+  //     });
+  //   }
+  // }
 
-  componentDidMount() {
-    if (typeof window !== 'undefined') {
-      let blocksTotalHeight: number = 0;
+  // componentDidMount() {
+  //   if (typeof window !== 'undefined') {
+  //     let blocksTotalHeight: number = 0;
 
-      // get the offsetTop of each block and put it on state
-      const blocksWithOffsetTop: any[] = this.state.blocks.map(
-        (block: any, index: number) => {
-          const { offsetTop, offsetHeight }: any = document.querySelector(
-            `#${this.props.linkTo(block)}`
-          );
+  //     // get the offsetTop of each block and put it on state
+  //     const blocksWithOffsetTop: any[] = this.state.blocks.map(
+  //       (block: any, index: number) => {
+  //         const { offsetTop, offsetHeight }: any = document.querySelector(
+  //           `#${this.props.linkTo(block)}`
+  //         );
 
-          const scrollTopReached = index === 0;
+  //         const scrollTopReached = index === 0;
 
-          blocksTotalHeight += offsetHeight;
+  //         blocksTotalHeight += offsetHeight;
 
-          return { ...block, offsetTop, scrollTopReached };
-        }
-      );
-      // update all blocks
-      this.setState({ blocks: blocksWithOffsetTop });
+  //         return { ...block, offsetTop, scrollTopReached };
+  //       }
+  //     );
+  //     // update all blocks
+  //     this.setState({ blocks: blocksWithOffsetTop });
 
-      // watch the scroll event
-      window.document
-        .querySelector('#blocks-list')
-        ?.addEventListener('scroll', ({ target }: any) => {
-          // check if the current scroll position is greater or equals
-          // than one of the blocks offsetTop
-          this.state.blocks.forEach((block: any) => {
-            const scrollPassed = target.scrollTop + 120 >= block.offsetTop;
-            if (scrollPassed && !block.scrollTopReached) {
-              this.updateBlock(block, { scrollTopReached: true });
-            }
-          });
+  //     // watch the scroll event
+  //     window.document
+  //       .querySelector('#blocks-list')
+  //       ?.addEventListener('scroll', ({ target }: any) => {
+  //         // check if the current scroll position is greater or equals
+  //         // than one of the blocks offsetTop
+  //         this.state.blocks.forEach((block: any) => {
+  //           const scrollPassed = target.scrollTop + 120 >= block.offsetTop;
+  //           if (scrollPassed && !block.scrollTopReached) {
+  //             this.updateBlock(block, { scrollTopReached: true });
+  //           }
+  //         });
 
-          // small fix if the last block is small than viewport
-          // if the scroll position is greater or equals than
-          // sum of all blocks height, sinalyze that the last block was reached
-          const viewportBottom = target.scrollTop + target.offsetHeight;
-          const isBottom = viewportBottom >= blocksTotalHeight;
-          const lastBlock = this.state.blocks.slice(-1)[0];
+  //         // small fix if the last block is small than viewport
+  //         // if the scroll position is greater or equals than
+  //         // sum of all blocks height, sinalyze that the last block was reached
+  //         const viewportBottom = target.scrollTop + target.offsetHeight;
+  //         const isBottom = viewportBottom >= blocksTotalHeight;
+  //         const lastBlock = this.state.blocks.slice(-1)[0];
 
-          if (isBottom && !lastBlock.scrollTopReached) {
-            this.updateBlock(lastBlock, { scrollTopReached: true });
-          }
-        });
-    }
-  }
+  //         if (isBottom && !lastBlock.scrollTopReached) {
+  //           this.updateBlock(lastBlock, { scrollTopReached: true });
+  //         }
+  //       });
+  //   }
+  // }
 
-  updateBlock(block: any, newProps: any) {
-    const { blocks } = this.state;
-    const index = blocks.findIndex(
-      currentBlock => currentBlock.id === block.id
-    );
+  // updateBlock(block: any, newProps: any) {
+  //   const { blocks } = this.state;
+  //   const index = blocks.findIndex(
+  //     currentBlock => currentBlock.id === block.id
+  //   );
 
-    this.setState({
-      blocks: [
-        ...blocks.slice(0, index),
-        { ...blocks[index], ...newProps },
-        ...this.state.blocks.slice(index + 1),
-      ],
-    });
-  }
+  //   this.setState({
+  //     blocks: [
+  //       ...blocks.slice(0, index),
+  //       { ...blocks[index], ...newProps },
+  //       ...this.state.blocks.slice(index + 1),
+  //     ],
+  //   });
+  //   console.log('updateBlock', { block, blocks });
+  // }
 
   render() {
     // Props used on editable mode
@@ -160,7 +161,9 @@ class Mobilization extends React.Component<
       widgetComponent,
       extraWidgetProps,
     } = this.props;
-    const { blocks } = this.state;
+
+    // TODO: remove this and get of fetch
+    const blocks = getVisibleBlocks(this.props.blocks, editable);
 
     return (
       <div

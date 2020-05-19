@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { Count, Form, Targets } from '../components';
 import { Header } from '../styles';
 import EmailFields from './EmailFields';
@@ -47,21 +47,47 @@ type Props = {
   };
   analyticsEvents: {
     pressureIsFilled: () => void;
+    pressureSavedData: () => void;
   };
   asyncFillWidget: (params: {
     payload: Record<string, any>;
     widget: Record<string, any>;
-  }) => Promise<{ widget: any }>;
+  }) => Promise<any>;
+};
+
+const initialState = {
+  loading: false,
+  data: undefined,
+  errors: [],
+};
+
+const reducer = (state: any, action: any) => {
+  switch (action.type) {
+    case 'fetching':
+      return { ...state, loading: true, data: undefined, errors: [] };
+    case 'success':
+      return { ...state, loading: false, data: action.payload, errors: [] };
+    case 'failed':
+      return {
+        ...state,
+        loading: false,
+        errors: action.payload,
+        data: undefined,
+      };
+    default:
+      throw new Error('action.type not found');
+  }
 };
 
 const EmailPressure = ({
   widget,
   asyncFillWidget,
   mobilization,
-  block,
   analyticsEvents,
   overrides,
 }: Props) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const {
     main_color: mainColor,
     call_to_action: callToAction,
@@ -74,57 +100,62 @@ const EmailPressure = ({
     targets,
   } = widget.settings;
 
-  const {
-    FinishCustomMessage: { component: FinishCustomMessage, props: customProps },
-    FinishDefaultMessage: {
-      component: FinishDefaultMessage,
-      props: defaultProps,
-    },
-  } = overrides;
-
   const targetList = getTargetList(targets) || [];
-  const [errors, setError] = useState<Array<string>>([]);
-  const [status, setStatus] = useState<string>('idle');
-  const [filledPressureWidgets, setFilledPressureWidgets] = useState<
-    Array<any>
-  >([]);
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = (data: any): Promise<any> | any => {
+    console.log('handleSubmit');
     if (targetList.length < 1) {
-      return setError([
-        'Ops, você precisa selecionar pelo menos um alvo para poder pressionar',
-      ]);
-    }
-    setStatus('pending');
-    const payload = {
-      activist: {
-        firstname: data.name,
-        lastname: data.lastname,
-        email: data.email,
-        city: data.city || null,
-      },
-      mail: {
-        cc: targetList.map((target: string) => getEmailTarget(target)),
-        subject: data.subject,
-        body: data.body,
-      },
-    };
-    try {
-      await asyncFillWidget({ payload, widget });
-      setStatus('fulfilled');
-      setFilledPressureWidgets([...filledPressureWidgets, widget.id]);
-    } catch (e) {
-      setStatus('rejected');
-      setError(['Houve um erro ao fazer a pressão']);
+      dispatch({
+        type: 'failed',
+        payload: [
+          'Ops, você precisa selecionar pelo menos um alvo para poder pressionar',
+        ],
+      });
+    } else {
+      console.log('fetching');
+      dispatch({ type: 'fetching' });
+      const payload = {
+        activist: {
+          firstname: data.name,
+          lastname: data.lastname,
+          email: data.email,
+          city: data.city || null,
+        },
+        mail: {
+          cc: targetList.map((target: string) => getEmailTarget(target)),
+          subject: data.subject,
+          body: data.body,
+        },
+      };
+      return asyncFillWidget({ payload, widget })
+        .then((data: any) => {
+          console.log('success', { data });
+          analyticsEvents && analyticsEvents.pressureSavedData();
+          return dispatch({ type: 'success', payload: data });
+        })
+        .catch((e: any) => {
+          console.log('catch', { e });
+          return dispatch({
+            type: 'failed',
+            payload: ['Houve um erro ao fazer a pressão'],
+          });
+        });
     }
   };
 
-  const finishPressure =
-    filledPressureWidgets.includes(widget.id) &&
-    FinishCustomMessage &&
-    FinishDefaultMessage;
+  if (state.data) {
+    const {
+      FinishCustomMessage: {
+        component: FinishCustomMessage,
+        props: customProps,
+      },
+      FinishDefaultMessage: {
+        component: FinishDefaultMessage,
+        props: defaultProps,
+      },
+    } = overrides;
 
-  if (finishPressure)
+    console.log('Render ThankYou');
     return finishMessageType === 'custom' ? (
       <FinishCustomMessage
         mobilization={mobilization}
@@ -138,34 +169,31 @@ const EmailPressure = ({
         {...defaultProps}
       />
     );
+  }
 
   return (
     <div id={`widget-${widget.id}`}>
       <div onKeyDown={e => e.stopPropagation()} />
       <Header backgroundColor={mainColor}>{callToAction || titleText}</Header>
       <Targets targets={targetList} pressureType={'email'} />
-      <>
-        <Form
-          widget={widget}
-          onSubmit={handleSubmit}
-          saving={status === 'pending'}
-          BeforeStandardFields={() =>
-            EmailFields.before(targetList, analyticsEvents.pressureIsFilled())
-          }
-          AfterStandardFields={() =>
-            EmailFields.after(disableEditField === 's')
-          }
-          errors={errors}
+      <Form
+        widget={widget}
+        onSubmit={handleSubmit}
+        saving={state.loading}
+        BeforeStandardFields={() =>
+          EmailFields.before(targetList, analyticsEvents.pressureIsFilled())
+        }
+        AfterStandardFields={() => EmailFields.after(disableEditField === 's')}
+        errors={state.errors}
+      />
+      {countText && (
+        <Count
+          value={widget.count || 0}
+          color={mainColor}
+          text={countText}
+          startCounting={typeof window !== 'undefined'}
         />
-        {countText && (
-          <Count
-            value={widget.count || 0}
-            color={mainColor}
-            text={countText}
-            startCounting={block.scrollTopReached}
-          />
-        )}
-      </>
+      )}
     </div>
   );
 };
