@@ -57,7 +57,7 @@ const DonationForm: React.FC<Props> = ({
         onClick={onClickDonate}
         disabled={loading}
       >
-        {buttonText}
+        {loading ? 'Enviando...' : buttonText}
       </button>
     </div>
   </DonationFormStyles>

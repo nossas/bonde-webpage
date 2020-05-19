@@ -120,30 +120,30 @@ const DonationPlugin: React.FC<Props> = ({
     }
   };
 
-  const renderStrategy = () => {
-    const defaultProps = {
-      headerFont,
-      handleClickDonate,
-      mainColor: mainColor || extraProps.mainColor,
-    };
+  const defaultProps = {
+    headerFont,
+    handleClickDonate,
+    mainColor: mainColor || extraProps.mainColor,
+  };
 
-    // Workflow Renders
-    if (donationCustomerData) return <ReattemptDonation {...defaultProps} />;
+  // Workflow Renders
+  if (donationCustomerData) return <ReattemptDonation {...defaultProps} />;
 
-    if (donation) {
-      return (
-        <ThankYou
-          donation={donation}
-          widget={widget}
-          mobilization={mobilization}
-          overrides={overrides}
-          selectedValue={selectedValue}
-          handleConvertDonation={asyncDonationConvert}
-        />
-      );
-    }
-
+  if (donation) {
     return (
+      <ThankYou
+        donation={donation}
+        widget={widget}
+        mobilization={mobilization}
+        overrides={overrides}
+        selectedValue={selectedValue}
+        handleConvertDonation={asyncDonationConvert}
+      />
+    );
+  }
+
+  return (
+    <DonationStyles mainColor={mainColor || extraProps.mainColor}>
       <DonationForm
         {...defaultProps}
         client={client}
@@ -157,12 +157,6 @@ const DonationPlugin: React.FC<Props> = ({
         titleText={callToAction || titleText || extraProps.title}
         buttonText={buttonText || extraProps.buttonText}
       />
-    );
-  };
-
-  return (
-    <DonationStyles mainColor={mainColor || extraProps.mainColor}>
-      {renderStrategy()}
     </DonationStyles>
   );
 };

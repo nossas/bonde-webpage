@@ -50,3 +50,4 @@ export { default as asyncDonationCreate } from './plugins/Donation/asyncDonation
 export { default as asyncDonationConvert } from './plugins/Donation/asyncDonationConvert';
 export { default as DonationTellAFriend } from './plugins/Donation/TellAFriend';
 export { default as FinishDonationMessage } from './plugins/Donation/FinishDonationMessage';
+export { default as DonationAnalytics } from './plugins/Donation/Analytics';
