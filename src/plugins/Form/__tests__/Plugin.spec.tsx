@@ -42,7 +42,6 @@ test('Form renders according with placed logics', () => {
       analyticsEvents={{ formIsFilled: jest.fn() }}
       mobilization={{}}
       widget={widget}
-      block={{ scrollTopReached: true }}
     />
   );
 
@@ -76,7 +75,6 @@ test('Form successful flow works as expected', async () => {
       analyticsEvents={{ formIsFilled: jest.fn() }}
       mobilization={{ twitter_share_text: 'test', id: 0 }}
       widget={widget}
-      block={{ scrollTopReached: true }}
       overrides={{
         FinishCustomMessage: {
           component: () => <div>test</div>,
@@ -144,7 +142,6 @@ describe('Form error flow works as expected', () => {
             count_text: undefined,
           },
         }}
-        block={{ scrollTopReached: true }}
       />
     );
 
@@ -163,7 +160,6 @@ describe('Form error flow works as expected', () => {
         analyticsEvents={{ formIsFilled: jest.fn() }}
         mobilization={{}}
         widget={widget}
-        block={{ scrollTopReached: true }}
       />
     );
 
@@ -198,7 +194,6 @@ describe('Form error flow works as expected', () => {
         analyticsEvents={{ formIsFilled: jest.fn() }}
         mobilization={{ twitter_share_text: 'test', id: 0 }}
         widget={widget}
-        block={{ scrollTopReached: true }}
       />
     );
 

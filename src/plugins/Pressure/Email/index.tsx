@@ -32,9 +32,7 @@ type Props = {
       show_city?: string;
     };
   };
-  block: {
-    scrollTopReached: boolean;
-  };
+  block: any;
   overrides: {
     FinishCustomMessage: {
       component?: any;
@@ -103,7 +101,6 @@ const EmailPressure = ({
   const targetList = getTargetList(targets) || [];
 
   const handleSubmit = (data: any): Promise<any> | any => {
-    console.log('handleSubmit');
     if (targetList.length < 1) {
       dispatch({
         type: 'failed',
@@ -112,7 +109,6 @@ const EmailPressure = ({
         ],
       });
     } else {
-      console.log('fetching');
       dispatch({ type: 'fetching' });
       const payload = {
         activist: {
@@ -129,12 +125,10 @@ const EmailPressure = ({
       };
       return asyncFillWidget({ payload, widget })
         .then((data: any) => {
-          console.log('success', { data });
           analyticsEvents && analyticsEvents.pressureSavedData();
           return dispatch({ type: 'success', payload: data });
         })
-        .catch((e: any) => {
-          console.log('catch', { e });
+        .catch((_e: any) => {
           return dispatch({
             type: 'failed',
             payload: ['Houve um erro ao fazer a pressão'],
@@ -155,7 +149,6 @@ const EmailPressure = ({
       },
     } = overrides;
 
-    console.log('Render ThankYou');
     return finishMessageType === 'custom' ? (
       <FinishCustomMessage
         mobilization={mobilization}
