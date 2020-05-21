@@ -188,6 +188,7 @@ const EmailPressure = ({
       />
       {countText && (
         <Count
+          shadow
           value={widget.count || 0}
           color={mainColor}
           text={countText}

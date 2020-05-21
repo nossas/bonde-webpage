@@ -2,14 +2,45 @@ import React from 'react';
 import CountUp from 'react-countup';
 import styled from 'styled-components';
 
-const Wrapper = styled.div<{ fontFamily?: string }>`
+type WrapperProps = {
+  fontFamily?: string;
+  shadow?: boolean;
+};
+
+const Wrapper = styled.div<WrapperProps>`
   font-family: ${props => props.fontFamily || 'inherit'};
-  box-shadow: rgb(227, 224, 227) 0px 15px 18px -10px inset;
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 0 0 3px 3px;
-  display: grid;
-  justify-items: center;
+
+  ${props =>
+    props.shadow &&
+    `
+    box-shadow: rgb(227, 224, 227) 0px 15px 18px -10px inset;
+    background-color: #fff;
+    display: grid;
+    justify-items: center;
+    padding: 2rem;
+    border-radius: 0 0 3px 3px;
+  `}
+
+  ${props =>
+    !props.shadow &&
+    `
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    justify-content: center;
+
+    ${Title} {
+      font-size: 1.25rem;
+      margin: 0 5px;
+      color: #fff!important;
+      font-weight: normal;
+    }
+    ${Subtitle} {
+      font-weight: normal;
+      color: #fff!important;
+    }
+  `}
+
   & > div {
     transition: left 0.5s ease;
   }
@@ -37,11 +68,19 @@ type Props = {
   text: string;
   startCounting: boolean;
   fontFamily?: string;
+  shadow?: boolean;
 };
 
-const Count = ({ value, color, text, startCounting, fontFamily }: Props) => {
+const Count = ({
+  value,
+  color,
+  text,
+  startCounting,
+  fontFamily,
+  shadow,
+}: Props) => {
   return (
-    <Wrapper fontFamily={fontFamily}>
+    <Wrapper fontFamily={fontFamily} shadow={shadow}>
       <Title color={color}>
         <CountUp
           start={0}
@@ -57,6 +96,7 @@ const Count = ({ value, color, text, startCounting, fontFamily }: Props) => {
 Count.defaultProps = {
   value: 0,
   startCounting: false,
+  shadow: false,
 };
 
 export default Count;

@@ -38,9 +38,6 @@ type Props = {
     };
   };
   asyncFormEntryCreate: any;
-  block: {
-    scrollTopReached: any;
-  };
 };
 
 const WrapForm = styled.div<{ backgroundColor: string }>`
@@ -126,7 +123,7 @@ const renderErrors = (errors: Array<any>) => {
 };
 
 const FormPlugin = (props: Props) => {
-  const { asyncFormEntryCreate, mobilization, widget, block } = props;
+  const { asyncFormEntryCreate, mobilization, widget } = props;
   const [status, setStatus] = useState<string>('idle');
   const [errors, setErrors] = useState<Array<string>>([]);
   const [values, setValues] = useState<Record<string, string>>({});
@@ -201,7 +198,7 @@ const FormPlugin = (props: Props) => {
       )}
       {widget.settings && widget.settings.count_text && (
         <Count
-          startCounting={block.scrollTopReached}
+          startCounting={typeof window !== 'undefined'}
           value={count}
           text={widget.settings.count_text || 'formulários preenchidos'}
           fontFamily={mobilization.body_font}
