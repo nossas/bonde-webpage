@@ -11,23 +11,18 @@ export const Wrap = styled.div`
   }
 `;
 
-type HeaderProps = {
-  mainColor?: string;
-};
-
-export const Header = styled.h3<HeaderProps>`
-  padding: 1rem;
-  color: #fff;
-  font-weight: 400;
-  margin: 0;
+export const Header = styled.h3`
+  color: #000 !important;
+  font-weight: bold;
   text-align: center;
-  ${props => props.mainColor && `background-color: ${props.mainColor};`}
+  font-size: 1.25rem;
 `;
 
 export const IconWrapper = styled.div`
   padding: 1rem 0;
   color: #222222;
   text-align: center;
+  margin: 0 auto;
 `;
 
 export const WrapButtons = styled.div`
