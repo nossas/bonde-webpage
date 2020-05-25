@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import DonationForm from './DonationFormCreate';
 import ReattemptDonation from './ReattemptDonation';
 import ThankYou from './ThankYou';

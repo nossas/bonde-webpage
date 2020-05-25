@@ -1,6 +1,6 @@
 import React from 'react';
 import CountUp from 'react-countup';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 type WrapperProps = {
   fontFamily?: string;
@@ -28,17 +28,6 @@ const Wrapper = styled.div<WrapperProps>`
     flex-direction: row;
     padding: 1rem;
     justify-content: center;
-
-    ${Title} {
-      font-size: 1.25rem;
-      margin: 0 5px;
-      color: #fff!important;
-      font-weight: normal;
-    }
-    ${Subtitle} {
-      font-weight: normal;
-      color: #fff!important;
-    }
   `}
 
   & > div {
@@ -46,20 +35,36 @@ const Wrapper = styled.div<WrapperProps>`
   }
 `;
 
-const Title = styled.h1<{ color: string }>`
+const Title = styled.h1<{ color: string; shadow?: boolean }>`
   color: ${props => props.color}!important;
   font-weight: 300;
   font-size: 2.15rem;
   margin: 15px 0;
   font-family: inherit;
+
+  ${props =>
+    !props.shadow &&
+    `
+    font-size: 1.25rem;
+    margin: 0 5px;
+    color: #fff!important;
+    font-weight: normal;
+  `}
 `;
 
-const Subtitle = styled.h3`
+const Subtitle = styled.h3<{ shadow?: boolean }>`
   color: #111 !important;
   font-weight: 700;
   font-size: 1.25rem;
   margin: 0;
   text-align: center;
+
+  ${props =>
+    !props.shadow &&
+    `
+    font-weight: normal;
+    color: #fff!important;
+  `}
 `;
 
 type Props = {
@@ -81,14 +86,14 @@ const Count = ({
 }: Props) => {
   return (
     <Wrapper fontFamily={fontFamily} shadow={shadow}>
-      <Title color={color}>
+      <Title color={color} shadow={shadow}>
         <CountUp
           start={0}
           end={!isNaN(value) && startCounting ? Number(value) : 0}
           duration={5}
         />
       </Title>
-      <Subtitle>{text}</Subtitle>
+      <Subtitle shadow={shadow}>{text}</Subtitle>
     </Wrapper>
   );
 };

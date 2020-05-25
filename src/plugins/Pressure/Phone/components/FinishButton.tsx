@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button as Btn } from 'bonde-components';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const Button = styled(Btn)`
   && {

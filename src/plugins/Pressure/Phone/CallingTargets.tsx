@@ -8,7 +8,7 @@ import {
   HowItWorks,
   FinishButton,
 } from './components';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const UnordedList = styled.ul`
   font-family: inherit;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // import { intlShape } from 'react-intl'
 import { Button, Input, Raise, ShareButtons } from './components';
 import { getFieldName, validate, fields, addValueToFields } from './utils';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Count } from '../../components';
 
 type Props = {

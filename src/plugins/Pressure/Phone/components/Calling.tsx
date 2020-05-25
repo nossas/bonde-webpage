@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const RealtimeCallDuration = () => {
   const [duration, setDuration] = useState(0);
