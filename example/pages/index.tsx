@@ -53,7 +53,8 @@ class Page extends React.Component<PageProps> {
     await fetchData();
     // Mobiization with all widgets configured.
     // await fetchData({ slug: 'teste-de-widgets' });
-    // await fetchData({ slug: '159-mr-apoie' });
+    // await fetchData({ slug: 'elevacaonajbnao' });
+    // await fetchData({ slug: 'nova-home-meu-rio' });
   }
 
   componentDidMount() {
@@ -75,7 +76,7 @@ class Page extends React.Component<PageProps> {
   }
 
   render() {
-    if (!this.props.mobilization) return <Error404 />
+    if (!this.props.mobilization) return <Error404 />;
 
     const {
       name,
