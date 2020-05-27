@@ -5,7 +5,6 @@ type Props = {
   success: boolean;
   buttonText: string;
   loading: boolean;
-  bodyFont: string;
 };
 
 const StyledButton = styled.button`
@@ -30,8 +29,8 @@ const WrapButton = styled.div`
   margin: 1.5rem 0 1rem 0;
 `;
 
-const Button = ({ success, buttonText, loading, bodyFont }: Props) => (
-  <WrapButton style={{ fontFamily: bodyFont }}>
+const Button = ({ success, buttonText, loading }: Props) => (
+  <WrapButton>
     <StyledButton type="submit" disabled={loading}>
       {loading ? 'Enviando...' : buttonText}
     </StyledButton>
@@ -43,8 +42,7 @@ const Button = ({ success, buttonText, loading, bodyFont }: Props) => (
 
 Button.defaultProps = {
   success: false,
-  loading: false,
-  bodyFont: '',
+  loading: false
 };
 
 export default Button;

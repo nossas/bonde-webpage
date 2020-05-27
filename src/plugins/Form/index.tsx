@@ -59,24 +59,20 @@ const WrapInputs = styled.div`
   grid-row-gap: 1rem;
 `;
 
-const renderCallToAction = (
-  { settings }: any,
-  { header_font: headerFont }: any
-) => {
+const renderCallToAction = ({ settings }: any) => {
   const callToAction = (settings.call_to_action
     ? settings.call_to_action
     : 'Clique para configurar seu formulário...'
   ).replace('\n', '<br/><br/>');
 
-  return <Header style={{ fontFamily: headerFont }}>{callToAction}</Header>;
+  return <Header>{callToAction}</Header>;
 };
 
 const renderFields = (
   {
     analyticsEvents,
     widget: { settings },
-    mobilization,
-  }: Pick<Props, 'analyticsEvents' | 'widget' | 'mobilization'>,
+  }: Pick<Props, 'analyticsEvents' | 'widget'>,
   handleChange: any
 ) => {
   return (
@@ -91,7 +87,6 @@ const renderFields = (
               Number(index) === 0 ? analyticsEvents.formIsFilled() : () => {}
             }
             field={field}
-            bodyFont={mobilization.body_font || 'inherit'}
           />
         );
       })}
@@ -100,7 +95,7 @@ const renderFields = (
 };
 
 const renderButton = (
-  { widget, mobilization }: Pick<Props, 'widget' | 'mobilization'>,
+  { widget }: Pick<Props, 'widget'>,
   success: boolean,
   loading: boolean
 ) => (
@@ -108,7 +103,6 @@ const renderButton = (
     buttonText={(widget.settings && widget.settings.button_text) || 'Enviar'}
     loading={loading}
     success={success}
-    bodyFont={mobilization && mobilization.body_font}
   />
 );
 
@@ -167,7 +161,7 @@ const FormPlugin = (props: Props) => {
       [e.target.name]: e.target.value,
     });
 
-  const renderForm = ({ widget, mobilization }: any, errors: Array<any>) => {
+  const renderForm = ({ widget }: any, errors: Array<any>) => {
     const bgcolor =
       widget.settings && widget.settings.main_color
         ? widget.settings.main_color
@@ -176,7 +170,7 @@ const FormPlugin = (props: Props) => {
     return (
       <WrapForm backgroundColor={bgcolor}>
         <form onSubmit={submit}>
-          {renderCallToAction(widget, mobilization)}
+          {renderCallToAction(widget)}
           {renderFields(props, handleChange)}
           {errors.length > 0 && renderErrors(errors)}
           {widget.settings.fields &&

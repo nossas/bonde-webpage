@@ -45,15 +45,9 @@ type Props = {
     label: string;
     required: string;
   };
-  bodyFont: string;
 };
 
-export const renderFieldKind = ({
-  field,
-  name,
-  onChange,
-  onBlur,
-}: Omit<Props, 'bodyFont'>) => {
+export const renderFieldKind = ({ field, name, onChange, onBlur }: Props) => {
   if (field.kind === 'dropdown') {
     return (
       <Select
@@ -96,9 +90,9 @@ const Wrapper = styled.div`
   font-family: inherit;
 `;
 
-const Input = ({ field, bodyFont, name, ...props }: Props) => {
+const Input = ({ field, name, ...props }: Props) => {
   return (
-    <Wrapper style={{ fontFamily: bodyFont }}>
+    <Wrapper>
       <Label>
         {field.label}
         {field.required === 'true' ? '*' : null}
@@ -106,10 +100,6 @@ const Input = ({ field, bodyFont, name, ...props }: Props) => {
       {renderFieldKind({ ...props, name, field })}
     </Wrapper>
   );
-};
-
-Input.defaultProps = {
-  bodyFont: '',
 };
 
 export default Input;
