@@ -204,6 +204,12 @@ const layoutStyles = css`
     .lg-col-6 {
       width: 50%;
     }
+    .lg-col-8 {
+      width: 66.66667%;
+    }
+    .lg-col-4 {
+      width: 33.33333%;
+    }
   }
 `;
 
