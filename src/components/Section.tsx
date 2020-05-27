@@ -1,6 +1,12 @@
 import React from 'react';
-import { any, array, bool, object, string } from 'prop-types';
+import styled from '@emotion/styled';
 import WidgetArea from './WidgetArea';
+
+const Block = styled.div`
+  padding: 5em 0;
+  display: flex;
+  flex-direction: row;
+`;
 
 const getBackgroundStyle = (block: any) => {
   if (block.bg_image)
@@ -27,7 +33,7 @@ const getBackgroundStyle = (block: any) => {
  * such as navigating between blocks, and events such as
  * mouseEnter and mouseOut.
  */
-const Section = (props: any) => {
+const Section = (props: SectionProps) => {
   const {
     anchor,
     block,
@@ -50,7 +56,7 @@ const Section = (props: any) => {
         style={{ ...getBackgroundStyle(block) }}
       >
         <div className="col-10 mx-auto">
-          <div className="clearfix widgets" style={{ padding: '5em 0' }}>
+          <Block>
             {widgets &&
               widgets.map((widget: any) => (
                 <WidgetArea
@@ -61,7 +67,7 @@ const Section = (props: any) => {
                   extraWidgetProps={extraWidgetProps}
                 />
               ))}
-          </div>
+          </Block>
         </div>
       </div>
     );
@@ -78,25 +84,25 @@ const Section = (props: any) => {
   return <RenderBlock />;
 };
 
-Section.propTypes = {
+type SectionProps = {
   /* Define anchor to navigate between blocks, this value must
    * be unique per block. */
-  anchor: string.isRequired,
+  anchor: string;
   /* This component renders wrapped to the block, in it you can
    * customize the rendering of your block, get block and editable
    * as property. */
-  wrapper: any,
+  wrapper?: any;
   /* Data structure of block, passed to blockWrapper component */
-  block: object.isRequired,
+  block: any;
   /* True if mobilization is editable mode */
-  editable: bool.isRequired,
+  editable: boolean;
   /* Array of widgets related on Section */
-  widgets: array,
+  widgets: any[];
   /* Component responsible to render a widget logic,
    * receive { widget } props */
-  widgetComponent: any.isRequired,
+  widgetComponent: any;
   // TODO: documentation
-  extraWidgetProps: object,
+  extraWidgetProps: any;
 };
 
 export default Section;
