@@ -262,14 +262,14 @@ export default {
       .filter((value: any) => value.startsWith('font-size'))
       .last();
     if (fontSize) {
+      const value: string = fontSize
+        .replace('font-size:', '')
+        .replace('px', '')
+        .replace(';', '')
+        .trim();
       output = {
         ...output,
-        fontSize: Number(
-          fontSize
-            .replace('font-size:', '')
-            .replace(';', '')
-            .trim()
-        ),
+        fontSize: Number(value),
       };
     }
     const fontFamily = style
