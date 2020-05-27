@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-const MeuRioStyles = styled.div`
+const ThemeStyles = styled.div`
+// MEU RIO
 .meurio-scheme {
   .widget {
     color: #444;
@@ -53,6 +54,40 @@ const MeuRioStyles = styled.div`
   }
 }
 
+// MINHA PORTA ALEGRE
+.minhaportoalegre-scheme {
+  
+  .widget {
+    color: #444;
+    
+    .button {
+      color: white;
+    }
+  }
+  
+  .bg-1 {
+    background-color: #F68B1F;
+  }
+  .bg-2 {
+    background-color: #F15622;
+  }
+  .bg-3 {
+    background-color: #1A9CAC;
+  }
+  .bg-1,
+  .bg-2,
+  .bg-3,
+  .bg-4,
+  .bg-5,
+  .bg-6,
+  .bg-7,
+  .bg-8 {
+    .widget {
+      color: white;
+      h1, h2, h3, h4, h5, h6 { color: white }
+    }
+  }
+}
 `
 
-export default MeuRioStyles;
+export default ThemeStyles;
