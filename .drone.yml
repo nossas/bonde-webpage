@@ -35,7 +35,7 @@ pipeline:
     when:
       status: success
       event: push
-      branch: [feature/migrate-tsdx]
+      branch: [hotfix/*, release/*, feature/*, support/*]
 
   build-public-ts:
     image: node:12-alpine
@@ -57,7 +57,7 @@ pipeline:
       - ${DRONE_BRANCH/\//-}
     when:
       status: success
-      event: [push]
+      branch: [hotfix/*, release/*, feature/*, support/*]
   
   production-publish-public-ts:
     image: plugins/docker
@@ -84,7 +84,7 @@ pipeline:
     secrets: [ rancher_access_key, rancher_secret_key ]
     when:
       status: success
-      event: [push]
+      branch: [hotfix/*, release/*, feature/*, support/*]
 
   production-deploy-public-ts:
     image: peloton/drone-rancher
