@@ -22,8 +22,6 @@ type Props = {
 };
 
 const DraftEditor = ({ mobilization, settings, ...props }: Props) => {
-  const { body_font: bodyFont } = mobilization;
-
   const theme =
     mobilization && mobilization.color_scheme
       ? mobilization.color_scheme.replace('-scheme', '')
@@ -32,10 +30,7 @@ const DraftEditor = ({ mobilization, settings, ...props }: Props) => {
   let value = checkToParse(settings.content);
 
   return (
-    <Wrapper
-      className="widgets--content-plugin widget editor-new"
-      style={{ fontFamily: bodyFont }}
-    >
+    <Wrapper className="widgets--content-plugin widget editor-new">
       <Editor {...props} readOnly value={value} theme={theme} />
     </Wrapper>
   );

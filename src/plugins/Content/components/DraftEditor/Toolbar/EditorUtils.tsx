@@ -243,21 +243,25 @@ export default {
   },
 
   customColor: (style: any) => {
-    const output = { color: '' };
+    let output = {};
     const color = style
       .filter((value: any) => value.startsWith('color'))
       .last();
     if (color) {
-      output.color = color
-        .replace('color:', '')
-        .replace(';', '')
-        .trim();
+      output = {
+        ...output,
+        color: color
+          .replace('color:', '')
+          .replace(';', '')
+          .trim()
+      };
     }
+
     return output;
   },
 
   customSizeAndFamily: (style: any) => {
-    let output = { fontSize: 0, fontFamily: '' };
+    let output = {};
     const fontSize = style
       .filter((value: any) => value.startsWith('font-size'))
       .last();
@@ -284,6 +288,7 @@ export default {
           .trim(),
       };
     }
+
     return output;
   },
 
