@@ -7,10 +7,12 @@ type Props = {
   editorState: Record<any, any>;
   setEditorState: (param: any) => void;
   focusEditor: () => void;
-  initialValue: {
-    fontSize: number;
-    fontFamily: string;
-  };
+  initialValue:
+    | {
+        fontSize: number;
+        fontFamily: string;
+      }
+    | any;
 };
 
 const FontControls = ({

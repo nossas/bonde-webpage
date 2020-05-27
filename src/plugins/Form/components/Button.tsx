@@ -42,7 +42,7 @@ const Button = ({ success, buttonText, loading }: Props) => (
 
 Button.defaultProps = {
   success: false,
-  loading: false
+  loading: false,
 };
 
 export default Button;

@@ -253,7 +253,7 @@ export default {
         color: color
           .replace('color:', '')
           .replace(';', '')
-          .trim()
+          .trim(),
       };
     }
 
