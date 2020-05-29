@@ -4,8 +4,15 @@ import WidgetArea from './WidgetArea';
 
 const Block = styled.div`
   padding: 5em 0;
-  display: flex;
-  flex-direction: row;
+
+  &:after,
+  &:before {
+    content: ' ';
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
 `;
 
 const getBackgroundStyle = (block: any) => {

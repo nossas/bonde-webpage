@@ -171,22 +171,6 @@ const layoutStyles = css`
     }
   }
 
-  // @media (min-width: 40em) {
-  //   .sm-hide {
-  //     display: none;
-  //   }
-  // }
-  // @media (min-width: 63.9em) {
-  //   .md-hide {
-  //     display: none;
-  //   }
-  // }
-  // @media (min-width: 64em) {
-  //   .lg-hide {
-  //     display: none;
-  //   }
-  // }
-
   @media (min-width: 40em) {
     .sm-col-12 {
       width: 100%;
@@ -209,6 +193,9 @@ const layoutStyles = css`
     }
     .lg-col-4 {
       width: 33.33333%;
+    }
+    .lg-col-3 {
+      width: 25%;
     }
   }
 `;
