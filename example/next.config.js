@@ -29,8 +29,8 @@ module.exports = withCSS(withSass({
     domainApiRest: process.env.REACT_APP_DOMAIN_API_REST,
     domainApiGraphql: process.env.REACT_APP_DOMAIN_API_GRAPHQL,
     domainApiGraphqlWs: process.env.REACT_APP_DOMAIN_API_GRAPHQL_WS,
-    domainPublic: process.env.REACT_APP_DOMAIN_PUBLIC
-    // pagarmeKey: process.env.REACT_APP_PAGARME_KEY,
+    domainPublic: process.env.REACT_APP_DOMAIN_PUBLIC,
+    pagarmeKey: process.env.REACT_APP_PAGARME_KEY
     // hasuraSecret: process.env.REACT_APP_HASURA_SECRET
   }
 })
