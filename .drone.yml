@@ -19,23 +19,23 @@ pipeline:
       status: success
       branch: [hotfix/*, release/*, feature/*, support/*, develop]
             
-  publish-package-npm:
-    image: plugins/npm
-    secrets: [npm_auth_token, npm_username, npm_email, npm_password]
-    settings:
-      username:
-        from_secret: npm_username
-      token:
-        from_secret: npm_auth_token
-      email:
-        from_secret: npm_email
-      password:
-        from_secret: npm_password
-    group: publish
-    when:
-      status: success
-      event: push
-      branch: [hotfix/*, release/*, feature/*, support/*]
+  # publish-package-npm:
+  #   image: plugins/npm
+  #   secrets: [npm_auth_token, npm_username, npm_email, npm_password]
+  #   settings:
+  #     username:
+  #       from_secret: npm_username
+  #     token:
+  #       from_secret: npm_auth_token
+  #     email:
+  #       from_secret: npm_email
+  #     password:
+  #       from_secret: npm_password
+  #   group: publish
+  #   when:
+  #     status: success
+  #     event: push
+  #     branch: [hotfix/*, release/*, feature/*, support/*]
 
   build-public-ts:
     image: node:12-alpine

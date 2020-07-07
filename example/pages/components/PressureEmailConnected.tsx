@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import {
   EmailPressurePlugin,
-  asyncFillWidget,
+  // asyncFillWidget,
   selectors as MobSelectors,
   PressureAnalytics,
   FinishMessageCustom,
@@ -9,7 +9,13 @@ import {
 } from 'bonde-webpages';
 import Utils from '../../Utils';
 
-const mapDispatchToProps = { asyncFillWidget };
+const mapDispatchToProps = () => {
+  return {
+    asyncFillWidget: (payload: any) => {
+      console.log('payload', payload);
+    }
+  };
+};
 
 const mapStateToProps = (state: any) =>
   MobSelectors(state).getMobilizationLink();
