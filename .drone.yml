@@ -45,6 +45,16 @@ pipeline:
       - yarn build
     when:
       event: [push, tag]
+  
+  unit-tests:
+    image: node:12-alpine
+    environment:
+      - SKIP_PREFLIGHT_CHECK=true
+    commands:
+      - cd example
+      - yarn run coverage
+    when:
+      event: [push, tag]
 
   staging-publish-public-ts:
     image: plugins/docker

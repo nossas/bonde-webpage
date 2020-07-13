@@ -8,45 +8,7 @@ import {
   PressureTellAFriend
 } from 'bonde-webpages';
 import Utils from '../../Utils';
-
-const pressure = async ({ payload, widget }: any): Promise<any> => {
-  const { activist } = payload;
-  try {
-    let input: any = {
-      first_name: activist.firstname,
-      last_name: activist.lastname,
-      name: `${activist.firstname} ${activist.lastname}`,
-      email: activist.email
-    };
-    if (activist.city) {
-    input.city = activist.city;
-  };
-  
-  const query = JSON.stringify({
-    query: `mutation Pressure ($activist: ActivistInput!, $widget_id: Int!) {
-      create_email_pressure(
-        widget_id: $widget_id,
-        activist: $activist
-        ) {
-          data
-        }
-      }`,
-      variables: { activist: input, widget_id: widget.id }
-    });
-    console.log('responseJSON', query);
-    const response = await fetch('https://api-graphql.staging.bonde.org/v1/graphql', {
-      headers: { 'content-type': 'application/json' },
-      method: 'POST',
-      body: query,
-    });
-    
-    const responseJson = await response.json();
-    console.log('responseJSON', responseJson);
-    return responseJson.data;
-  } catch (err) {
-    console.log('pressure err', err);
-  }
-};
+import { pressure } from '../../activists';
 
 const mapDispatchToProps = () => ({ asyncFillWidget: pressure });
 
