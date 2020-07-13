@@ -1,26 +1,32 @@
-type Activist = {
+import graphql, { Response } from './request-graphql';
+
+export type Activist = {
   firstname: string;
   lastname: string;
   email: string;
   city?: string;
 };
 
-type Payload = {
+export type Payload = {
   activist: Activist;
 };
 
-type Widget = {
+export type Widget = {
   id: number;
 };
 
-interface Args {
+export interface Args {
   payload: Payload;
   widget: Widget;
 };
 
-interface Response {
-  data: any;
-};
+export const pressureQuery: string = `
+mutation Pressure($activist: ActivistInput!, $widget_id: Int!) {
+  create_email_pressure(widget_id: $widget_id, activist: $activist) {
+    data
+  }
+}
+`;
 
 const pressure = async ({ payload, widget }: Args): Promise<any> => {
   const { activist } = payload;
@@ -36,24 +42,13 @@ const pressure = async ({ payload, widget }: Args): Promise<any> => {
     };
 
     const query = JSON.stringify({
-      query: `mutation Pressure ($activist: ActivistInput!, $widget_id: Int!) {
-      create_email_pressure(
-        widget_id: $widget_id,
-        activist: $activist
-        ) {
-          data
-        }
-      }`,
+      query: pressureQuery,
       variables: { activist: input, widget_id: widget.id }
     });
-    const response = await fetch('https://api-graphql.staging.bonde.org/v1/graphql', {
-      headers: { 'content-type': 'application/json' },
-      method: 'POST',
-      body: query,
-    });
-
-    const responseJson: Response = await response.json();
-    return responseJson.data;
+    
+    const response: Response = await graphql(query);
+    
+    return response.data;
   } catch (err) {
     // TODO: Show popup window error
     console.log('pressure err', err);
