@@ -5,14 +5,15 @@ import { connect } from 'react-redux';
 
 import {
   FormPlugin,
-  asyncFormEntryCreate,
+  // asyncFormEntryCreate,
   FormAnalytics,
   FormTellAFriend,
   FinishMessageCustom,
 } from 'bonde-webpages';
 import Utils from '../../Utils';
+import { formEntry } from '../../activists';
 
-const mapDispatchToProps = { asyncFormEntryCreate };
+const mapDispatchToProps = { asyncFormEntryCreate: formEntry };
 
 export default connect(
   undefined,
