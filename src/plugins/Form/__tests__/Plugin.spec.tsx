@@ -38,7 +38,7 @@ const widget = {
 test('Form renders according with placed logics', () => {
   const component = render(
     <FormPlugin
-      asyncFormEntryCreate={() => jest.fn()}
+      asyncFormEntryCreate={jest.fn()}
       analyticsEvents={{ formIsFilled: jest.fn() }}
       mobilization={{}}
       widget={widget}
@@ -131,7 +131,7 @@ describe('Form error flow works as expected', () => {
   it('should omit those components', () => {
     const { container, queryByText } = render(
       <FormPlugin
-        asyncFormEntryCreate={() => jest.fn()}
+        asyncFormEntryCreate={jest.fn()}
         analyticsEvents={{ formIsFilled: jest.fn() }}
         mobilization={{}}
         widget={{
@@ -156,7 +156,7 @@ describe('Form error flow works as expected', () => {
   it('should trigger a validation error', () => {
     const { getByLabelText, getByText, getAllByText } = render(
       <FormPlugin
-        asyncFormEntryCreate={() => jest.fn()}
+        asyncFormEntryCreate={jest.fn()}
         analyticsEvents={{ formIsFilled: jest.fn() }}
         mobilization={{}}
         widget={widget}

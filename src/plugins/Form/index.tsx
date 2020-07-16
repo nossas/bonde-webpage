@@ -37,7 +37,7 @@ type Props = {
       props: any;
     };
   };
-  asyncFormEntryCreate: any;
+  asyncFormEntryCreate: (params: any) => Promise<any>;
 };
 
 const WrapForm = styled.div<{ backgroundColor: string }>`
@@ -141,18 +141,19 @@ const FormPlugin = (props: Props) => {
       fields: JSON.stringify(fieldsWithValue),
     };
 
-    asyncFormEntryCreate({ mobilizationId: mobilization.id, formEntry })
-      .then(() => {
-        setStatus('fulfilled');
-        setCount(count + 1);
-        setValues({});
-        return Promise.resolve();
-      })
-      .catch(() => {
-        // console.log(e);
-        setStatus('rejected');
-        setErrors(['Houve um erro ao enviar o formulário. Tente novamente']);
+    try {
+      await asyncFormEntryCreate({
+        mobilizationId: mobilization.id,
+        formEntry,
       });
+      setStatus('fulfilled');
+      setCount(count + 1);
+      setValues({});
+    } catch (e) {
+      console.error(e);
+      setStatus('rejected');
+      setErrors(['Houve um erro ao enviar o formulário. Tente novamente']);
+    }
   };
 
   const handleChange = (e: any) =>
