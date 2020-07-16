@@ -136,15 +136,10 @@ const FormPlugin = (props: Props) => {
     }
     setStatus('pending');
 
-    const formEntry = {
-      widget_id: widget.id,
-      fields: JSON.stringify(fieldsWithValue),
-    };
-
     try {
       await asyncFormEntryCreate({
-        mobilizationId: mobilization.id,
-        formEntry,
+        widget_id: widget.id,
+        fields: JSON.stringify(fieldsWithValue),
       });
       setStatus('fulfilled');
       setCount(count + 1);

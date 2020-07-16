@@ -1,3 +1,4 @@
+import { FormAnalytics } from 'bonde-webpages';
 import graphql, { Response } from './request-graphql';
 
 type FormEntryField = {
@@ -7,11 +8,6 @@ type FormEntryField = {
   placeholder: string
   required: boolean
   value: string
-};
-
-type FormEntry = {
-  fields: string;
-  widget_id: number;
 };
 
 type FieldPattern = {
@@ -24,8 +20,8 @@ type Input = {
 };
 
 type Args = {
-  mobilizationId: number;
-  formEntry: FormEntry
+  fields: string;
+  widget_id: number;
 };
 
 export const formEntryQuery: string = `
@@ -36,7 +32,7 @@ mutation FormEntry($activist: ActivistInput!, $widget_id: Int!, $input: FormEntr
 }
 `;
 
-export default async ({ formEntry: { fields: fieldsJSON, widget_id } }: Args): Promise<any> => {
+export default async ({ fields: fieldsJSON, widget_id }: Args): Promise<any> => {
   try {
     const activist: any = {};
     const input: Input = {
@@ -61,14 +57,15 @@ export default async ({ formEntry: { fields: fieldsJSON, widget_id } }: Args): P
     });
     // Concat activist fullname
     activist['name'] = `${activist.first_name.trim()} ${(activist.last_name || '').trim()}`.trim();
-    
-    console.log('variables', { variables: { activist, input, widget_id } });
   
     const query = JSON.stringify({
       query: formEntryQuery,
       variables: { activist, input, widget_id }
     });
     const response: Response = await graphql(query);
+
+    FormAnalytics.formSavedData();
+
     return response.data;
   } catch (err) {
     // TODO: Show popup window error

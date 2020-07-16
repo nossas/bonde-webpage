@@ -112,13 +112,10 @@ test('Form successful flow works as expected', async () => {
   expect(submitting).toBeInTheDocument();
 
   const submitValues = {
-    formEntry: {
-      widget_id: widget.id,
-      fields: JSON.stringify(
-        addValueToFields(widget.settings.fields, mockedValues)
-      ),
-    },
-    mobilizationId: 0,
+    widget_id: widget.id,
+    fields: JSON.stringify(
+      addValueToFields(widget.settings.fields, mockedValues)
+    ),
   };
 
   expect(handleSubmit).toBeCalledWith(submitValues);
