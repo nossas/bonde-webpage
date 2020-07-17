@@ -21,7 +21,6 @@ describe('activists module pressure tests', () => {
     }
   };
 
-  
   afterEach(() => {
     jest.clearAllMocks();
   });

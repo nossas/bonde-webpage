@@ -1,5 +1,6 @@
 import { FormAnalytics } from 'bonde-webpages';
 import graphql, { Response } from './request-graphql';
+import { Activist } from './pressure';
 
 type FormEntryField = {
   uid: string
@@ -19,7 +20,7 @@ type Input = {
   fields: FormEntryField[];
 };
 
-type Args = {
+export type Args = {
   fields: string;
   widget_id: number;
 };
@@ -32,42 +33,47 @@ mutation FormEntry($activist: ActivistInput!, $widget_id: Int!, $input: FormEntr
 }
 `;
 
-export default async ({ fields: fieldsJSON, widget_id }: Args): Promise<any> => {
-  try {
-    const activist: any = {};
-    const input: Input = {
-      fields: JSON.parse(fieldsJSON).map((field: any) => ({
-        ...field,
-        required: field.required === 'true' ? true : false
-      }))
+export const fill_activist = (fields: FormEntryField[]): Activist => {
+  const activist: any = {};
+  // Create activist input with label regex
+  const fieldsPattners: FieldPattern[] = [
+    { name: 'first_name', re: new RegExp(/^(nombre|first[\-\s]?name|nome|name)/, 'g') },
+    { name: 'last_name', re: new RegExp(/^(sobre[\s\-]?nome|surname|last[\s\-]?name|apellido)/, "g") },
+    { name: 'email', re: new RegExp(/^(e\-?mail|correo electronico)/, "g") },
+    { name: 'phone', re: new RegExp(/^(celular|mobile|portable)/, "g") },
+    { name: 'city', re: new RegExp(/^(cidade|city|ciudad)/) }
+  ];
+  fieldsPattners.forEach(({ name, re }: FieldPattern) => {
+    const field = fields.filter(field => re.test(field.label.toLowerCase()))[0];
+    if (!!field) {
+      activist[name] = field.value;
     };
-    // Create activist input with label regex
-    const fieldsPattners: FieldPattern[] = [
-      { name: 'first_name', re: new RegExp(/^(nombre|first[\-\s]?name|nome|name)/, 'g') },
-      { name: 'last_name', re: new RegExp(/^(sobre[\s\-]?nome|surname|last[\s\-]?name|apellido)/, "g") },
-      { name: 'email', re: new RegExp(/^(e\-?mail|correo electronico)/, "g") },
-      { name: 'phone', re: new RegExp(/^(celular|mobile|portable)/, "g") },
-      { name: 'city', re: new RegExp(/^(cidade|city|ciudad)/) }
-    ];
-    fieldsPattners.forEach(({ name, re }: FieldPattern) => {
-      const field = input.fields.filter(field => re.test(field.label.toLowerCase()))[0];
-      if (!!field) {
-        activist[name] = field.value;
-      };
-    });
-    // Concat activist fullname
-    activist['name'] = `${activist.first_name.trim()} ${(activist.last_name || '').trim()}`.trim();
-  
-    const query = JSON.stringify({
-      query: formEntryQuery,
-      variables: { activist, input, widget_id }
-    });
-    const response: Response = await graphql(query);
+  });
+  // Concat activist fullname
+  activist['name'] = `${activist.first_name.trim()} ${(activist.last_name || '').trim()}`.trim();
 
-    FormAnalytics.formSavedData();
+  return activist;
+};
 
-    return response.data;
-  } catch (err) {
-    throw new Error(`CreateFormEntryError: ${err}`);
+export default async ({ fields: fieldsJSON, widget_id }: Args): Promise<any> => {
+  const input: Input = {
+    fields: JSON.parse(fieldsJSON).map((field: any) => ({
+      ...field,
+      required: field.required === 'true' ? true : false
+    }))
   };
+
+  if (input.fields.length < 1) throw new Error('fields is empty');
+
+  const activist = fill_activist(input.fields);
+
+  const query = JSON.stringify({
+    query: formEntryQuery,
+    variables: { activist, input, widget_id }
+  });
+  const response: Response = await graphql(query);
+
+  FormAnalytics.formSavedData();
+
+  return response.data;
 };
