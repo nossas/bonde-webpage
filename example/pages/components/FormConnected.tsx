@@ -13,7 +13,7 @@ import {
 import Utils from '../../Utils';
 import { formEntry } from '../../activists';
 
-const mapDispatchToProps = { asyncFormEntryCreate: formEntry };
+const mapDispatchToProps = () => ({ asyncFormEntryCreate: formEntry });
 
 export default connect(
   undefined,

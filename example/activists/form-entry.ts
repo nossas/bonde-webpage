@@ -68,7 +68,6 @@ export default async ({ fields: fieldsJSON, widget_id }: Args): Promise<any> => 
 
     return response.data;
   } catch (err) {
-    // TODO: Show popup window error
-    console.log('form_entry err', err);
-  }
+    throw new Error(`CreateFormEntryError: ${err}`);
+  };
 };
