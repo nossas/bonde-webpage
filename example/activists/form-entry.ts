@@ -37,7 +37,7 @@ export const fill_activist = (fields: FormEntryField[]): Activist => {
   const activist: any = {};
   // Create activist input with label regex
   const fieldsPattners: FieldPattern[] = [
-    { name: 'first_name', re: new RegExp(/^(nombre|first[\-\s]?name|nome|name)/, 'g') },
+    { name: 'first_name', re: new RegExp(/^(nombre|first[\-\s]?name|nome|name|primeiro[\-\s]?nome)/, "g") },
     { name: 'last_name', re: new RegExp(/^(sobre[\s\-]?nome|surname|last[\s\-]?name|apellido)/, "g") },
     { name: 'email', re: new RegExp(/^(e\-?mail|correo electronico)/, "g") },
     { name: 'phone', re: new RegExp(/^(celular|mobile|portable)/, "g") },
@@ -49,6 +49,8 @@ export const fill_activist = (fields: FormEntryField[]): Activist => {
       activist[name] = field.value;
     };
   });
+  console.log('fields', { fields });
+  console.log('activist', { activist });
   // Concat activist fullname
   activist['name'] = `${activist.first_name.trim()} ${(activist.last_name || '').trim()}`.trim();
 
