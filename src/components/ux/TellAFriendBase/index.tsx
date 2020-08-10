@@ -20,6 +20,7 @@ type Props = {
   href: string;
   imageUrl: string;
   imageWidth?: string;
+  render?: any;
 };
 
 const TellAFriend = ({
@@ -29,6 +30,7 @@ const TellAFriend = ({
   imageUrl,
   imageWidth,
   widget: { settings },
+  render,
 }: Props) => {
   const { whatsapp_text = '' } = settings;
   return (
@@ -37,6 +39,7 @@ const TellAFriend = ({
       <IconWrapper>
         <img src={imageUrl} style={{ width: imageWidth || 100 }} alt="" />
       </IconWrapper>
+      {render && render()}
       <p>Agora, compartilhe com seus amigos!</p>
       <WrapButtons>
         <FacebookShareButton href={href} />
