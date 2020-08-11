@@ -1,5 +1,5 @@
 import React from 'react';
-import TellAFriend from './TellAFriend';
+import Boleto from './Boleto';
 
 type Props = {
   selectedValue: number;
@@ -8,34 +8,6 @@ type Props = {
   widget: any;
   overrides: any;
   handleConvertDonation: any;
-};
-
-const Boleto = ({ donation, ...props }: any) => {
-  const { boleto_barcode, boleto_url } = donation.gateway_data || {};
-
-  return (
-    <TellAFriend
-      {...props}
-      render={() => (
-        <div
-          style={{ display: 'flex', flexDirection: 'column', margin: '20px' }}
-        >
-          <code
-            style={{
-              background: '#f3f1f1',
-              padding: '10px 20px',
-              fontSize: '18px',
-            }}
-          >
-            {boleto_barcode}
-          </code>
-          <a href={boleto_url} title="Clique aqui para abrir o boleto">
-            Clique aqui para abrir o boleto
-          </a>
-        </div>
-      )}
-    />
-  );
 };
 
 const ThankYou = ({
@@ -62,14 +34,14 @@ const ThankYou = ({
   } = overrides;
 
   // Renderizar o componente de Boleto
-  // if (donation.payment_method === 'boleto' && donation.gateway_data)
-  return (
-    <Boleto
-      donation={donation}
-      widget={widget}
-      mobilization={ownProps.mobilization}
-    />
-  );
+  if (donation.payment_method === 'boleto' && donation.gateway_data)
+    return (
+      <Boleto
+        donation={donation}
+        widget={widget}
+        mobilization={ownProps.mobilization}
+      />
+    );
 
   if (messageType === 'custom')
     return <FinishCustomMessage {...ownProps} {...customProps} />;

@@ -14,7 +14,6 @@ import { client } from '../../graphql-app';
 import getConfig from 'next/config';
 import Utils from '../../Utils';
 
-
 const { publicRuntimeConfig } = getConfig();
 
 const mapStateToProps = () => ({ client });
