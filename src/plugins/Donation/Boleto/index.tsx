@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import copy from 'clipboard-copy';
-import TellAFriend from '../TellAFriend';
+import TellAFriendBase from '../../../components/ux/TellAFriendBase';
 import IconCopy from './IconCopy';
 import IconEye from './IconEye';
 
@@ -52,8 +52,9 @@ const Boleto = ({ donation, ...props }: any) => {
   };
 
   return (
-    <TellAFriend
+    <TellAFriendBase
       {...props}
+      message="Eba! Boleto gerado:"
       render={() => (
         <Container>
           <Code>{boleto_barcode}</Code>

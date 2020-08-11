@@ -18,7 +18,7 @@ type Props = {
   };
   message: string;
   href: string;
-  imageUrl: string;
+  imageUrl?: string;
   imageWidth?: string;
   render?: any;
 };
@@ -36,11 +36,13 @@ const TellAFriend = ({
   return (
     <Wrap>
       <Header>{message}</Header>
-      <IconWrapper>
-        <img src={imageUrl} style={{ width: imageWidth || 100 }} alt="" />
-      </IconWrapper>
+      {imageUrl && (
+        <IconWrapper>
+          <img src={imageUrl} style={{ width: imageWidth || 100 }} alt="" />
+        </IconWrapper>
+      )}
       {render && render()}
-      <p>Agora, compartilhe com seus amigos!</p>
+      <p>Compartilhe a campanha com a sua galera para aumentar o impacto</p>
       <WrapButtons>
         <FacebookShareButton href={href} />
         <TwitterShareButton href={href} text={twitterShareText} />
