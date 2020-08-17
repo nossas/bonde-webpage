@@ -44,4 +44,9 @@ export const Wrapper = styled.div`
   & .editor--content.editable table > tbody > tr > td {
     border-right: 1px solid black;
   }
+
+  & .editor--content iframe {
+    max-width: 100%;
+    max-height: 100%;
+  }
 `;
