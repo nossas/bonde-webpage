@@ -8,7 +8,8 @@ if (process.env.NODE_ENV !== 'test') {
 };
 
 export interface Response {
-  data: any;
+  data?: any;
+  errors?: any;
 };
 
 export default async (query: string): Promise<Response> => {
