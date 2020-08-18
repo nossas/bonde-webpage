@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import LGPD from '../../../components/ux/LGPD';
 
 type DonationFormStylesProps = {
   mainColor: string;
@@ -59,6 +60,7 @@ const DonationForm: React.FC<Props> = ({
       >
         {loading ? 'Enviando...' : buttonText}
       </button>
+      <LGPD />
     </div>
   </DonationFormStyles>
 );

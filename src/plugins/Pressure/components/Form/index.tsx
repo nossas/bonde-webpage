@@ -13,6 +13,7 @@ import {
   WrapRaise,
 } from './styles';
 import { Raise } from '../../../../components';
+import LGPD from '../../../../components/ux/LGPD';
 
 type Props = {
   onSubmit: any;
@@ -110,6 +111,7 @@ const PressureForm = ({
               <Button type="submit" disabled={submitting}>
                 {submitting || saving ? 'Enviando...' : buttonText}
               </Button>
+              <LGPD />
             </ButtonWrapper>
           </Wrapper>
         );

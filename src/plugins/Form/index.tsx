@@ -4,6 +4,7 @@ import { Button, Input, Raise, ShareButtons } from './components';
 import { getFieldName, validate, fields, addValueToFields } from './utils';
 import styled from '@emotion/styled';
 import { Count } from '../../components';
+import LGPD from '../../components/ux/LGPD';
 
 type Props = {
   mobilization:
@@ -99,11 +100,14 @@ const renderButton = (
   success: boolean,
   loading: boolean
 ) => (
-  <Button
-    buttonText={(widget.settings && widget.settings.button_text) || 'Enviar'}
-    loading={loading}
-    success={success}
-  />
+  <>
+    <Button
+      buttonText={(widget.settings && widget.settings.button_text) || 'Enviar'}
+      loading={loading}
+      success={success}
+    />
+    <LGPD />
+  </>
 );
 
 const renderErrors = (errors: Array<any>) => {
