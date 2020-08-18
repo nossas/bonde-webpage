@@ -47,15 +47,7 @@ type FormProps = {
 };
 
 const PressureForm = ({
-  widget: {
-    settings: {
-      show_city: showCity,
-      main_color: buttonColor,
-      button_text: buttonText,
-      pressure_subject: subject = '',
-      pressure_body: body = '',
-    },
-  },
+  widget,
   BeforeStandardFields,
   AfterStandardFields,
   onSubmit,
@@ -63,6 +55,16 @@ const PressureForm = ({
   errors,
 }: Props) => {
   const { required } = Validators;
+  const {
+    settings: {
+      show_city: showCity,
+      main_color: buttonColor,
+      button_text: buttonText,
+      pressure_subject: subject = '',
+      pressure_body: body = '',
+    },
+  } = widget;
+
   return (
     <ConnectedForm onSubmit={onSubmit} initialValues={{ subject, body }}>
       {({ submitting }: FormProps) => {
@@ -111,7 +113,7 @@ const PressureForm = ({
               <Button type="submit" disabled={submitting}>
                 {submitting || saving ? 'Enviando...' : buttonText}
               </Button>
-              <LGPD />
+              <LGPD widget={widget} />
             </ButtonWrapper>
           </Wrapper>
         );

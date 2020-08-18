@@ -50,6 +50,7 @@ export default ({
   return (
     <>
       <DonationForm
+        widget={widget}
         headerFont={headerFont}
         mainColor={mainColor}
         title={titleText}

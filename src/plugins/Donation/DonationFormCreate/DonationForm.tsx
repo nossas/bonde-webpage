@@ -31,6 +31,7 @@ const DonationFormStyles = styled.div<DonationFormStylesProps>`
 `;
 
 type Props = {
+  widget: any;
   title: string;
   headerFont: string;
   mainColor: string;
@@ -41,6 +42,7 @@ type Props = {
 
 const DonationForm: React.FC<Props> = ({
   children,
+  widget,
   title,
   headerFont,
   mainColor,
@@ -60,7 +62,7 @@ const DonationForm: React.FC<Props> = ({
       >
         {loading ? 'Enviando...' : buttonText}
       </button>
-      <LGPD />
+      <LGPD widget={widget} />
     </div>
   </DonationFormStyles>
 );

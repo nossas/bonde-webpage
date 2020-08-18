@@ -317,8 +317,8 @@ describe('Plugin unsuccessful behavior paths', () => {
   });
 
   it('should not display city field if show_city is false', () => {
-    const { queryByText } = render(<EmailPlugin {...props} />);
-    const city = queryByText(/cidade/i);
+    const { container } = render(<EmailPlugin {...props} />);
+    const city = container.querySelector('input[name="city"]');
     expect(city).toBeFalsy();
   });
 
