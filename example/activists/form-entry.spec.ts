@@ -186,7 +186,7 @@ describe('activists module form entry tests', () => {
     const name = {
       uid: "field-1552312920353-15",
       kind: "text",
-      label: "FirstName",
+      label: 'name',
       placeholder: "Insira seu e-mail",
       required: true,
       value: "Fabricio"
@@ -194,7 +194,7 @@ describe('activists module form entry tests', () => {
     const email = {
       uid: "field-1552312920353-15",
       kind: "email",
-      label: "Email",
+      label: "email",
       placeholder: "Insira seu e-mail",
       required: true,
       value: "fabricio@copola.org"
@@ -212,7 +212,13 @@ describe('activists module form entry tests', () => {
       email: email.value
     });
 
-    expect(fill_activist([{ ...email, label: 'correo electronico' }, name])).toEqual({
+    expect(fill_activist([{ ...email, label: 'Correo Electronico' }, name])).toEqual({
+      first_name: name.value,
+      name: name.value,
+      email: email.value
+    });
+
+    expect(fill_activist([{ ...email, label: 'Correo Electrónico' }, name])).toEqual({
       first_name: name.value,
       name: name.value,
       email: email.value

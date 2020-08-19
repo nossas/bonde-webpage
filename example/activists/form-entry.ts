@@ -39,7 +39,7 @@ export const fill_activist = (fields: FormEntryField[]): Activist => {
   const fieldsPattners: FieldPattern[] = [
     { name: 'first_name', re: new RegExp(/^(nombre|first[\-\s]?name|nome|name|primeiro[\-\s]?nome)/, "g") },
     { name: 'last_name', re: new RegExp(/^(sobre[\s\-]?nome|surname|last[\s\-]?name|apellido)/, "g") },
-    { name: 'email', re: new RegExp(/^(e\-?mail|correo electronico)/, "g") },
+    { name: 'email', re: new RegExp(/^(e\-?mail|correo electr(o|ó)nico)/, "g") },
     { name: 'phone', re: new RegExp(/^(celular|mobile|portable)/, "g") },
     { name: 'city', re: new RegExp(/^(cidade|city|ciudad)/) }
   ];
@@ -49,8 +49,8 @@ export const fill_activist = (fields: FormEntryField[]): Activist => {
       activist[name] = field.value;
     };
   });
-  console.log('fields', { fields });
-  console.log('activist', { activist });
+  // console.log('fields', { fields });
+  // console.log('activist', { activist });
   // Concat activist fullname
   activist['name'] = `${activist.first_name.trim()} ${(activist.last_name || '').trim()}`.trim();
 
@@ -73,9 +73,12 @@ export default async ({ fields: fieldsJSON, widget_id }: Args): Promise<any> => 
     query: formEntryQuery,
     variables: { activist, input, widget_id }
   });
-  const response: Response = await graphql(query);
-
-  FormAnalytics.formSavedData();
-
-  return response.data;
+  const { data, errors }: Response = await graphql(query);
+  
+  if (data) {
+    FormAnalytics.formSavedData();
+    return Promise.resolve(data);
+  }
+  
+  return Promise.reject(errors);
 };
