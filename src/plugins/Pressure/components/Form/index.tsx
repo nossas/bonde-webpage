@@ -113,7 +113,7 @@ const PressureForm = ({
               <Button type="submit" disabled={submitting}>
                 {submitting || saving ? 'Enviando...' : buttonText}
               </Button>
-              <LGPD widget={widget} />
+              <LGPD color="#545454" />
             </ButtonWrapper>
           </Wrapper>
         );

@@ -106,7 +106,7 @@ const renderButton = (
       loading={loading}
       success={success}
     />
-    <LGPD widget={widget} />
+    <LGPD color="#fff" />
   </>
 );
 

@@ -2,22 +2,21 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 type Props = {
-  bgColor?: string;
+  color?: string;
 };
 
 const Text = styled.span<Props>`
   display: block;
-  background: ${props => props.bgColor || '#0000006b'};
-  color: #fff;
-  font-size: 16px;
+  background: none;
+  color: ${props => props.color || '#fff'};
+  font-size: 14px;
   text-align: left;
-  padding: 15px 15px;
   margin: 1.5rem 0 1rem 0;
 `;
 
-export default ({ widget }: any) => {
+export default ({ color }: any) => {
   return (
-    <Text bgColor={widget.settings.main_color}>
+    <Text color={color}>
       {`Ao clicar nesse botão, eu concordo em ter meus dados compartilhados com esta organização
         para que possam entregar minha assinatura. Aceito receber atualizações de campanha, pesquisas,
         petições e oportunidades de doação, conforme descrito na política de privacidade. Eu entendo

@@ -3,12 +3,22 @@ import { BondeIcon } from '../icons';
 // TODO: Remover dependencia dos componentes de tradução
 // import { FormattedMessage } from 'react-intl';
 
+const linkStyles = {
+  color: '#000',
+  lineHeight: '85px',
+  textDecoration: "none"
+}
+
+const divisorStyles = {
+  padding: '0 15px'
+}
+
 const Footer = () => (
   <div id="footer" className="col-10 mx-auto">
-    <div className="col col-8">
+    <div className="col col-10">
       <a
         href="http://www.bonde.org/?utm_source=footer-logo"
-        style={{ color: '#000', textDecoration: 'none', lineHeight: '85px' }}
+        style={linkStyles}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -16,18 +26,18 @@ const Footer = () => (
           Feito pra causar. Feito com <strong>BONDE</strong>.
         </span>
       </a>
-    </div>
-    <div className="col col-3" style={{ textAlign: 'right' }}>
+      <span style={divisorStyles}>|</span>
       <a
         href="/static/termos-de-uso-e-politica-de-privacidade.pdf"
-        style={{ color: '#000', lineHeight: '85px' }}
+        title="Politica de Privacidade"
+        style={linkStyles}
         target="_blank"
         rel="noopener noreferrer"
       >
         Politica de Privacidade
-      </a>
+        </a>
     </div>
-    <div className="col col-1">
+    <div className="col col-2">
       <a
         href="http://www.bonde.org/?utm_source=footer-slogan"
         className="right my2"
