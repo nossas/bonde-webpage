@@ -142,8 +142,17 @@ const layoutStyles = css`
   .col-10 {
     width: 83.33333%;
   }
+  .col-8 {
+    width: 66.66667%;
+  }
   .col-2 {
     width: 16.66667%;
+  }
+  .col-3 {
+    width: 25%;
+  }
+  .col-1 {
+    width: 8.33333%;
   }
   .col {
     box-sizing: border-box;

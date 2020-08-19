@@ -2,8 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 type Props = {
-  bgColor?: string
-}
+  bgColor?: string;
+};
 
 const Text = styled.span<Props>`
   display: block;
@@ -24,4 +24,4 @@ export default ({ widget }: any) => {
         que tenho o direito de cancelar o recebimento desses e-mails a qualquer momento.`}
     </Text>
   );
-}
+};
