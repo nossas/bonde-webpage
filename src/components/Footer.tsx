@@ -2,40 +2,39 @@ import React from 'react';
 import { BondeIcon } from '../icons';
 // TODO: Remover dependencia dos componentes de tradução
 // import { FormattedMessage } from 'react-intl';
+import styled from '@emotion/styled';
 
-const linkStyles = {
-  color: '#000',
-  lineHeight: '85px',
-  textDecoration: "none"
-}
+const Link = styled.a`
+  color: #000;
+  line-height: 85px;
+  text-decoration: none;
+`;
 
-const divisorStyles = {
-  padding: '0 15px'
-}
+const Divisor = styled.span`
+  padding: 0 15px;
+`;
 
 const Footer = () => (
   <div id="footer" className="col-10 mx-auto">
     <div className="col col-10">
-      <a
+      <Link
         href="http://www.bonde.org/?utm_source=footer-logo"
-        style={linkStyles}
         target="_blank"
         rel="noopener noreferrer"
       >
         <span>
           Feito pra causar. Feito com <strong>BONDE</strong>.
         </span>
-      </a>
-      <span style={divisorStyles}>|</span>
-      <a
+      </Link>
+      <Divisor>|</Divisor>
+      <Link
         href="/static/termos-de-uso-e-politica-de-privacidade.pdf"
-        title="Politica de Privacidade"
-        style={linkStyles}
+        title="Política de Privacidade"
         target="_blank"
         rel="noopener noreferrer"
       >
-        Politica de Privacidade
-        </a>
+        Política de Privacidade
+      </Link>
     </div>
     <div className="col col-2">
       <a

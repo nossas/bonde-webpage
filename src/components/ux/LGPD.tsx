@@ -12,15 +12,27 @@ const Text = styled.span<Props>`
   font-size: 14px;
   text-align: left;
   margin: 1.5rem 0 1rem 0;
+
+  a {
+    color: ${props => props.color || '#fff'};
+  }
 `;
 
 export default ({ color }: any) => {
   return (
     <Text color={color}>
-      {`Ao clicar nesse botão, eu concordo em ter meus dados compartilhados com esta organização
-        para que possam entregar minha assinatura. Aceito receber atualizações de campanha, pesquisas,
-        petições e oportunidades de doação, conforme descrito na política de privacidade. Eu entendo
-        que tenho o direito de cancelar o recebimento desses e-mails a qualquer momento.`}
+      {`Ao clicar nesse botão, eu aceito receber emails sobre atualizações de
+      campanha, pesquisas e oportunidades de ação, conforme descrito na `}
+      <a
+        href="/static/termos-de-uso-e-politica-de-privacidade.pdf"
+        title="Politica de Privacidade"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        política de privacidade
+      </a>
+      {`. Eu entendo que tenho o direito de cancelar o recebimento desses e-mails
+      a qualquer momento.`}
     </Text>
   );
 };
