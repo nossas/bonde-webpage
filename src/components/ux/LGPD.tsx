@@ -21,8 +21,8 @@ const Text = styled.span<Props>`
 export default ({ color }: any) => {
   return (
     <Text color={color}>
-      Ao clicar nesse botão, eu aceito receber emails sobre atualizações de
-      campanha, pesquisas e oportunidades de ação, conforme descrito na
+      {`Ao clicar nesse botão, eu aceito receber emails sobre atualizações de
+      campanha, pesquisas e oportunidades de ação, conforme descrito na `}
       <a
         href="/static/termos-de-uso-e-politica-de-privacidade.pdf"
         title="Politica de Privacidade"
@@ -31,8 +31,8 @@ export default ({ color }: any) => {
       >
         política de privacidade
       </a>
-      . Eu entendo que tenho o direito de cancelar o recebimento desses e-mails
-      a qualquer momento.
+      {`. Eu entendo que tenho o direito de cancelar o recebimento desses e-mails
+      a qualquer momento.`}
     </Text>
   );
 };
