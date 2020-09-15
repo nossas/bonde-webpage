@@ -98,7 +98,13 @@ const EmailPressure = ({
     targets,
   } = widget.settings;
 
-  const targetList = getTargetList(targets) || [];
+  let targetList: string[] = [];
+  let pureTargets: any[] = [];
+  try {
+    pureTargets = JSON.parse(targets);
+  } catch (err) {
+    targetList = getTargetList(targets) || [];
+  }
 
   const handleSubmit = (data: any): Promise<any> | any => {
     if (targetList.length < 1) {
@@ -168,14 +174,18 @@ const EmailPressure = ({
     <div id={`widget-${widget.id}`}>
       <div onKeyDown={e => e.stopPropagation()} />
       <Header backgroundColor={mainColor}>{callToAction || titleText}</Header>
-      <Targets targets={targetList} pressureType={'email'} />
       <Form
         widget={widget}
         onSubmit={handleSubmit}
         saving={state.loading}
-        BeforeStandardFields={() =>
-          EmailFields.before(targetList, analyticsEvents.pressureIsFilled())
-        }
+        BeforeStandardFields={() => {
+          return (
+            <>
+              <Targets targets={targetList} pureTargets={pureTargets} pressureType={'email'} />
+              {EmailFields.before(targetList, analyticsEvents.pressureIsFilled())}
+            </>
+          );
+        }}
         AfterStandardFields={() => EmailFields.after(disableEditField === 's')}
         errors={state.errors}
       />

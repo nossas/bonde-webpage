@@ -4,6 +4,7 @@ import {
   InputField,
   Validators,
   Button,
+  RoundSelectField,
 } from 'bonde-components';
 import {
   WrapFields,
@@ -62,8 +63,21 @@ const PressureForm = ({
       button_text: buttonText,
       pressure_subject: subject = '',
       pressure_body: body = '',
-    },
+      targets
+    }
   } = widget;
+
+  let options: any[] = [];
+  if (targets) {
+    try {
+      const groups = JSON.parse(targets);
+      if (groups) {
+        options = groups.map((g: any) => ({ label: g.label, value: g.value }))
+      }
+    } catch (e) {
+  
+    }
+  }
 
   return (
     <ConnectedForm onSubmit={onSubmit} initialValues={{ subject, body }}>
@@ -71,6 +85,16 @@ const PressureForm = ({
         return (
           <Wrapper>
             <WrapFields>
+              {options.length > 0 && (
+                <WrapInputs>
+                  <RoundSelectField
+                    options={options}
+                    label="Alvos"
+                    name="targets"
+                    placeholder="Selecione o grupo de alvos"
+                  />
+                </WrapInputs>
+              )}
               {BeforeStandardFields && <BeforeStandardFields />}
               <WrapInputs>
                 <InputField
