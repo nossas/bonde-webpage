@@ -21,7 +21,7 @@ const Targets = ({
   pressureType: string;
 }) => {
   let group = { targets: targets.join(';') };
-  const { input } = useField('targets');
+  const { input } = useField('targetsInput');
   if (pureTargets && pureTargets.length > 0) {
     // console.log('pureTargets', { pureTargets });
     const newGroup = pureTargets.filter(

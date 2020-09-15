@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 
 const Button = styled(Btn)`
   && {
-    background-color: ${props => props.backgroundColor};
     border-radius: 2px;
     width: 100%;
   }
@@ -16,14 +15,14 @@ const FinishButton = ({
   buttonColor,
   toggleFinishMessage,
 }: {
-  buttonColor: string;
   toggleFinishMessage: any;
+  buttonColor: any;
 }) => {
+  console.log('FinishButton', buttonColor);
   return (
     <Wrapper>
       <Button
         type="button"
-        backgroundColor={buttonColor}
         onClick={(e: any) => {
           e.preventDefault();
           return toggleFinishMessage(true);

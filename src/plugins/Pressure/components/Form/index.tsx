@@ -63,8 +63,8 @@ const PressureForm = ({
       button_text: buttonText,
       pressure_subject: subject = '',
       pressure_body: body = '',
-      targets
-    }
+      targets,
+    },
   } = widget;
 
   let options: any[] = [];
@@ -72,11 +72,9 @@ const PressureForm = ({
     try {
       const groups = JSON.parse(targets);
       if (groups) {
-        options = groups.map((g: any) => ({ label: g.label, value: g.value }))
+        options = groups.map((g: any) => ({ label: g.label, value: g.value }));
       }
-    } catch (e) {
-  
-    }
+    } catch (e) {}
   }
 
   return (
@@ -90,7 +88,7 @@ const PressureForm = ({
                   <RoundSelectField
                     options={options}
                     label="Alvos"
-                    name="targets"
+                    name="targetsInput"
                     placeholder="Selecione o grupo de alvos"
                   />
                 </WrapInputs>

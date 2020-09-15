@@ -106,8 +106,8 @@ const EmailPressure = ({
     targetList = getTargetList(targets) || [];
   }
 
-  const handleSubmit = (data: any): Promise<any> | any => {
-    if (targetList.length < 1) {
+  const handleSubmit = ({ targetsInput, ...data }: any): Promise<any> | any => {
+    if (targetList.length < 1 && !targetsInput) {
       dispatch({
         type: 'failed',
         payload: [
@@ -116,6 +116,7 @@ const EmailPressure = ({
       });
     } else {
       dispatch({ type: 'fetching' });
+      const mapList = (target: string) => getEmailTarget(target);
       const payload = {
         activist: {
           firstname: data.name,
@@ -124,11 +125,18 @@ const EmailPressure = ({
           city: data.city || null,
         },
         mail: {
-          cc: targetList.map((target: string) => getEmailTarget(target)),
+          cc:
+            targetList.length > 0
+              ? targetList.map(mapList)
+              : pureTargets
+                  .filter((pt: any) => pt.value === targetsInput.value)[0]
+                  .targets.split(';')
+                  .map(mapList),
           subject: data.subject,
           body: data.body,
         },
       };
+      // console.log('payload', { payload });
       return asyncFillWidget({ payload, widget })
         .then((data: any) => {
           analyticsEvents && analyticsEvents.pressureSavedData();
@@ -181,8 +189,15 @@ const EmailPressure = ({
         BeforeStandardFields={() => {
           return (
             <>
-              <Targets targets={targetList} pureTargets={pureTargets} pressureType={'email'} />
-              {EmailFields.before(targetList, analyticsEvents.pressureIsFilled())}
+              <Targets
+                targets={targetList}
+                pureTargets={pureTargets}
+                pressureType={'email'}
+              />
+              {EmailFields.before(
+                targetList,
+                analyticsEvents.pressureIsFilled()
+              )}
             </>
           );
         }}
