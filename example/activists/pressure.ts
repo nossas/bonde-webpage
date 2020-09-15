@@ -30,6 +30,7 @@ mutation Pressure($activist: ActivistInput!, $widget_id: Int!) {
 
 const pressure = async ({ payload, widget }: Args): Promise<any> => {
   const { activist } = payload;
+  console.log('payload', { payload });
   try {
     console.info('pressure', { payload, widget });
     let input: any = {
