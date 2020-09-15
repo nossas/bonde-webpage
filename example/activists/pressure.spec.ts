@@ -15,6 +15,7 @@ describe('activists module pressure tests', () => {
         lastname: "Noname",
         email: "test@noname.org"
       },
+      targets_id: 'rj'
     },
     widget: {
       id: 345
@@ -40,6 +41,7 @@ describe('activists module pressure tests', () => {
               name: `${firstname} ${lastname}`,
               email
             },
+            input: { targets_id: args.payload.targets_id },
             widget_id: args.widget.id
           } 
         });
@@ -54,7 +56,7 @@ describe('activists module pressure tests', () => {
     
     return pressure({
       widget: args.widget,
-      payload: { activist: { ...args.payload.activist, city }}
+      payload: { ...args.payload, activist: { ...args.payload.activist, city }}
     }).then(() => {
       const { email, firstname, lastname } = args.payload.activist;
       const expected: string = JSON.stringify({
@@ -67,6 +69,7 @@ describe('activists module pressure tests', () => {
             email,
             city: city
           },
+          input: { targets_id: args.payload.targets_id },
           widget_id: args.widget.id
         }
       });

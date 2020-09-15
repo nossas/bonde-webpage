@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { Count, Form, Targets } from '../components';
 import { Header } from '../styles';
 import EmailFields from './EmailFields';
-import { getTargetList, getEmailTarget } from '../utils';
+import { getTargetList } from '../utils';
 
 /* TODO: Change static content by props
  * - title
@@ -116,7 +116,7 @@ const EmailPressure = ({
       });
     } else {
       dispatch({ type: 'fetching' });
-      const mapList = (target: string) => getEmailTarget(target);
+      // const mapList = (target: string) => getEmailTarget(target);
       const payload = {
         activist: {
           firstname: data.name,
@@ -124,19 +124,13 @@ const EmailPressure = ({
           email: data.email,
           city: data.city || null,
         },
+        targets_id: targetsInput ? targetsInput.value : null,
         mail: {
-          cc:
-            targetList.length > 0
-              ? targetList.map(mapList)
-              : pureTargets
-                  .filter((pt: any) => pt.value === targetsInput.value)[0]
-                  .targets.split(';')
-                  .map(mapList),
           subject: data.subject,
           body: data.body,
         },
       };
-      // console.log('payload', { payload });
+
       return asyncFillWidget({ payload, widget })
         .then((data: any) => {
           analyticsEvents && analyticsEvents.pressureSavedData();

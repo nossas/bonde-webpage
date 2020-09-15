@@ -9,6 +9,7 @@ export type Activist = {
 
 export type Payload = {
   activist: Activist;
+  targets_id?: string;
 };
 
 export type Widget = {
@@ -21,18 +22,16 @@ export interface Args {
 };
 
 export const pressureQuery: string = `
-mutation Pressure($activist: ActivistInput!, $widget_id: Int!) {
-  create_email_pressure(widget_id: $widget_id, activist: $activist) {
+mutation Pressure($activist: ActivistInput!, $widget_id: Int!, $input: EmailPressureInput) {
+  create_email_pressure(widget_id: $widget_id, activist: $activist, input: $input) {
     data
   }
 }
 `;
 
 const pressure = async ({ payload, widget }: Args): Promise<any> => {
-  const { activist } = payload;
-  console.log('payload', { payload });
+  const { activist, targets_id } = payload;
   try {
-    console.info('pressure', { payload, widget });
     let input: any = {
       first_name: activist.firstname,
       last_name: activist.lastname,
@@ -45,7 +44,7 @@ const pressure = async ({ payload, widget }: Args): Promise<any> => {
 
     const query = JSON.stringify({
       query: pressureQuery,
-      variables: { activist: input, widget_id: widget.id }
+      variables: { activist: input, input: { targets_id }, widget_id: widget.id }
     });
     
     const response: Response = await graphql(query);

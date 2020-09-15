@@ -2,7 +2,7 @@ import React from 'react';
 import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import EmailPlugin from '../Email';
-import { getTargetList, getEmailTarget } from '../utils';
+import { getTargetList } from '../utils';
 
 afterEach(() => {
   cleanup();
@@ -195,8 +195,9 @@ describe('Plugin successful behavior paths', () => {
         email: mockedValues.email,
         city: mockedValues.city || null,
       },
+      targets_id: null,
       mail: {
-        cc: targetsList.map((target: string) => getEmailTarget(target)),
+        // cc: targetsList.map((target: string) => getEmailTarget(target)),
         subject: mockedValues.subject,
         body: mockedValues.body,
       },
