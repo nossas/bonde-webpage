@@ -198,6 +198,7 @@ describe('Plugin successful behavior paths', () => {
       targets_id: null,
       mail: {
         // cc: targetsList.map((target: string) => getEmailTarget(target)),
+        disableEditField: widget.settings.disable_edit_field,
         subject: mockedValues.subject,
         body: mockedValues.body,
       },

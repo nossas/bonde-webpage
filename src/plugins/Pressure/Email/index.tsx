@@ -126,6 +126,7 @@ const EmailPressure = ({
         },
         targets_id: targetsInput ? targetsInput.value : null,
         mail: {
+          disableEditField,
           subject: data.subject,
           body: data.body,
         },

@@ -15,7 +15,12 @@ describe('activists module pressure tests', () => {
         lastname: "Noname",
         email: "test@noname.org"
       },
-      targets_id: 'rj'
+      targets_id: 'rj',
+      mail: {
+        disableEditField: 's',
+        subject: 'Subject',
+        body: 'Body'
+      }
     },
     widget: {
       id: 345
@@ -41,8 +46,8 @@ describe('activists module pressure tests', () => {
               name: `${firstname} ${lastname}`,
               email
             },
+            widget_id: args.widget.id,
             input: { targets_id: args.payload.targets_id },
-            widget_id: args.widget.id
           } 
         });
 
@@ -69,8 +74,8 @@ describe('activists module pressure tests', () => {
             email,
             city: city
           },
+          widget_id: args.widget.id,
           input: { targets_id: args.payload.targets_id },
-          widget_id: args.widget.id
         }
       });
 

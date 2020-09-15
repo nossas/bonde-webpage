@@ -10,6 +10,7 @@ export type Activist = {
 export type Payload = {
   activist: Activist;
   targets_id?: string;
+  mail: any
 };
 
 export type Widget = {
@@ -30,7 +31,7 @@ mutation Pressure($activist: ActivistInput!, $widget_id: Int!, $input: EmailPres
 `;
 
 const pressure = async ({ payload, widget }: Args): Promise<any> => {
-  const { activist, targets_id } = payload;
+  const { activist, targets_id, mail } = payload;
   try {
     let input: any = {
       first_name: activist.firstname,
@@ -42,9 +43,19 @@ const pressure = async ({ payload, widget }: Args): Promise<any> => {
       input.city = activist.city;
     };
 
+    const pressureInput: any = { targets_id };
+    if (mail.disableEditField !== 's') {
+      pressureInput.email_subject = mail.subject;
+      pressureInput.email_body = mail.body
+    }
+
     const query = JSON.stringify({
       query: pressureQuery,
-      variables: { activist: input, input: { targets_id }, widget_id: widget.id }
+      variables: {
+        activist: input,
+        widget_id: widget.id,
+        input: pressureInput
+      }
     });
     
     const response: Response = await graphql(query);
