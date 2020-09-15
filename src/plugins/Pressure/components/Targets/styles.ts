@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 
 export const Wrapper = styled.div`
   background-color: #eeeeee;
-  padding: 0.5rem 1rem;
+  padding: 0 26px 15px;
   font-family: inherit;
 `;
 
 export const Label = styled.div`
   color: #4c4c4c;
   font-size: 0.8em;
-  margin: 5px 0 12px 0;
+  margin: 0 0 12px 0;
   font-weight: 700;
 `;
 

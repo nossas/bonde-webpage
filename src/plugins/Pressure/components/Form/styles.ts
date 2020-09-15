@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 
-export const WrapInputs = styled.div<{ disabled?: boolean }>`
+export const WrapInputs = styled.div<{
+  disabled?: boolean;
+  inverted?: boolean;
+}>`
   padding: 1rem 2rem 0.5rem;
   border-bottom: 1px solid #eee;
   & > div {
@@ -17,6 +20,32 @@ export const WrapInputs = styled.div<{ disabled?: boolean }>`
           color: rgb(84, 84, 84);
           cursor: default;
           background-color: rgb(235, 235, 228);
+        }
+      }
+    `}
+
+  ${props =>
+    props.inverted &&
+    `
+      background-color: #eeeeee;
+      padding: 15px 26px;
+      border: none;
+
+      && {
+        label {
+          color: #565656  !important;
+          margin-bottom: 10px !important;
+        }
+        .Select__control {
+          border: none;
+
+          .Select__single-value {
+            color: #565656;
+          }
+
+          .fill path {
+            fill: #565656;
+          }
         }
       }
     `}

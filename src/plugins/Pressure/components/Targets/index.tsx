@@ -37,7 +37,7 @@ const Targets = ({
   const isPressurePhone = pressureType === pressureUtils.PRESSURE_TYPE_PHONE;
   const targetsCount = newTargets.length;
 
-  return (
+  return targetsCount > 0 ? (
     <Wrapper>
       <Label>
         Quem você vai pressionar? ({targetsCount}{' '}
@@ -45,22 +45,21 @@ const Targets = ({
       </Label>
       <Container>
         <ListWrapper>
-          {newTargets.length > 0 &&
-            newTargets.map((obj, index) => {
-              const target = parseTarget(obj);
-              return !target ? null : (
-                <Item key={`target-item-${index}`}>
-                  <p>
-                    <Span>{target.name}</Span>
-                    {!isPressurePhone && <Span>{target.value}</Span>}
-                  </p>
-                </Item>
-              );
-            })}
+          {newTargets.map((obj, index) => {
+            const target = parseTarget(obj);
+            return !target ? null : (
+              <Item key={`target-item-${index}`}>
+                <p>
+                  <Span>{target.name}</Span>
+                  {!isPressurePhone && <Span>{target.value}</Span>}
+                </p>
+              </Item>
+            );
+          })}
         </ListWrapper>
       </Container>
     </Wrapper>
-  );
+  ) : null;
 };
 
 Targets.defaultProps = {

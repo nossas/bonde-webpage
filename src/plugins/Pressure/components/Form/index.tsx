@@ -84,12 +84,12 @@ const PressureForm = ({
           <Wrapper>
             <WrapFields>
               {options.length > 0 && (
-                <WrapInputs>
+                <WrapInputs inverted>
                   <RoundSelectField
                     options={options}
-                    label="Alvos"
+                    label="Selecione os alvos"
                     name="targetsInput"
-                    placeholder="Selecione o grupo de alvos"
+                    placeholder="Selecione"
                   />
                 </WrapInputs>
               )}
