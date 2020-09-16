@@ -33,6 +33,7 @@ describe('Pressure Form', function() {
   const props = {
     onSubmit: () => 'onSubmit',
     widget,
+    pureTargets: [],
     saving: false,
     BeforeStandardFields: () => EmailFields.before(targetList, onBlur),
     AfterStandardFields: () => EmailFields.after(true),

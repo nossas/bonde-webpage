@@ -15,9 +15,11 @@ import {
 } from './styles';
 import { Raise } from '../../../../components';
 import LGPD from '../../../../components/ux/LGPD';
+import { GroupTarget } from '../Targets';
 
 type Props = {
   onSubmit: any;
+  pureTargets: GroupTarget[];
   widget: {
     id: number;
     count?: number;
@@ -49,6 +51,7 @@ type FormProps = {
 
 const PressureForm = ({
   widget,
+  pureTargets,
   BeforeStandardFields,
   AfterStandardFields,
   onSubmit,
@@ -63,19 +66,13 @@ const PressureForm = ({
       button_text: buttonText,
       pressure_subject: subject = '',
       pressure_body: body = '',
-      targets,
     },
   } = widget;
 
-  let options: any[] = [];
-  if (targets) {
-    try {
-      const groups = JSON.parse(targets);
-      if (groups) {
-        options = groups.map((g: any) => ({ label: g.label, value: g.value }));
-      }
-    } catch (e) {}
-  }
+  let options: any[] = pureTargets.map((groupTarget: GroupTarget) => ({
+    label: groupTarget.label,
+    value: groupTarget.identify,
+  }));
 
   return (
     <ConnectedForm onSubmit={onSubmit} initialValues={{ subject, body }}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useField } from 'bonde-components';
-import { pressureUtils, getTargetList } from '../../utils';
+import { pressureUtils } from '../../utils';
 import { Wrapper, Label, Container, ListWrapper, Item, Span } from './styles';
 
 const parseTarget = (target: string) => {
@@ -11,29 +11,35 @@ const parseTarget = (target: string) => {
     : null;
 };
 
+export type GroupTarget = {
+  identify: string;
+  label: string;
+  targets: string[];
+};
+
 const Targets = ({
   targets,
   pureTargets,
   pressureType,
 }: {
   targets: string[];
-  pureTargets?: any[];
+  pureTargets?: GroupTarget[];
   pressureType: string;
 }) => {
-  let group = { targets: targets.join(';') };
+  let groupTarget: Pick<GroupTarget, 'targets'> = { targets };
   const { input } = useField('targetsInput');
   if (pureTargets && pureTargets.length > 0) {
     // console.log('pureTargets', { pureTargets });
-    const newGroup = pureTargets.filter(
-      (t: any) => t.value === input.value.value
+    const newGroup: GroupTarget = pureTargets.filter(
+      (t: GroupTarget) => t.identify === input.value.value
     )[0];
     if (newGroup) {
-      group = newGroup;
+      groupTarget = newGroup;
     }
   }
 
   // console.log('Targets', { input });
-  const newTargets = getTargetList(group.targets);
+  const newTargets = groupTarget.targets;
   const isPressurePhone = pressureType === pressureUtils.PRESSURE_TYPE_PHONE;
   const targetsCount = newTargets.length;
 
@@ -45,7 +51,7 @@ const Targets = ({
       </Label>
       <Container>
         <ListWrapper>
-          {newTargets.map((obj, index) => {
+          {newTargets.map((obj: string, index) => {
             const target = parseTarget(obj);
             return !target ? null : (
               <Item key={`target-item-${index}`}>

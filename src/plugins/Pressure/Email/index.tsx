@@ -3,6 +3,7 @@ import { Count, Form, Targets } from '../components';
 import { Header } from '../styles';
 import EmailFields from './EmailFields';
 import { getTargetList } from '../utils';
+import FetchTargets from '../FetchTargets';
 
 /* TODO: Change static content by props
  * - title
@@ -33,6 +34,9 @@ type Props = {
     };
   };
   block: any;
+  // ApolloClient instance
+  client?: any;
+  pressureTargets?: any[];
   overrides: {
     FinishCustomMessage: {
       component?: any;
@@ -77,7 +81,10 @@ const reducer = (state: any, action: any) => {
   }
 };
 
-const EmailPressure = ({
+export const EmailPressure = ({
+  // ApolloClient instance
+  // client,
+  pressureTargets,
   widget,
   asyncFillWidget,
   mobilization,
@@ -99,10 +106,11 @@ const EmailPressure = ({
   } = widget.settings;
 
   let targetList: string[] = [];
-  let pureTargets: any[] = [];
-  try {
-    pureTargets = JSON.parse(targets);
-  } catch (err) {
+  let pureTargets: any[] = pressureTargets || [];
+  // if (pressureTargets && pressureTargets.length > 0) {
+  //   pureTargets
+  // }
+  if (!!targets) {
     targetList = getTargetList(targets) || [];
   }
 
@@ -179,6 +187,7 @@ const EmailPressure = ({
       <Header backgroundColor={mainColor}>{callToAction || titleText}</Header>
       <Form
         widget={widget}
+        pureTargets={pureTargets}
         onSubmit={handleSubmit}
         saving={state.loading}
         BeforeStandardFields={() => {
@@ -223,4 +232,9 @@ const EmailPressure = ({
 //   },
 // };
 
-export default EmailPressure;
+// Wrapper All Plugin to get targets group
+export default ({ client, ...props }: any) => (
+  <FetchTargets client={client} widgetId={props.widget.id}>
+    {({ data }: any) => <EmailPressure pressureTargets={data} {...props} />}
+  </FetchTargets>
+);

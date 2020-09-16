@@ -244,6 +244,7 @@ const PhonePressure = ({
           <Form
             widget={widget}
             onSubmit={handleSubmit}
+            pureTargets={[]}
             saving={!!showFinishMessage}
             BeforeStandardFields={() =>
               PhoneFields(targetList, analyticsEvents.pressureIsFilled())

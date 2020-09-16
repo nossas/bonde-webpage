@@ -9,11 +9,14 @@ import {
 } from 'bonde-webpages';
 import Utils from '../../Utils';
 import { pressure } from '../../activists';
+import { client } from '../../graphql-app';
 
 const mapDispatchToProps = () => ({ asyncFillWidget: pressure });
 
-const mapStateToProps = (state: any) =>
-  MobSelectors(state).getMobilizationLink();
+const mapStateToProps = (state: any) => ({
+  ...MobSelectors(state).getMobilizationLink(),
+  client
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   (props: any) => (

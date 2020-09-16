@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import EmailPlugin from '../Email';
+import { EmailPressure as EmailPlugin } from '../Email';
 import { getTargetList } from '../utils';
 
 afterEach(() => {
@@ -68,6 +68,7 @@ const targetsList = getTargetList(widget.settings.targets);
 describe('Plugin needs to render', () => {
   const props = {
     widget,
+    pressureTargets: [],
     editable: false,
     overrides,
     analyticsEvents,
