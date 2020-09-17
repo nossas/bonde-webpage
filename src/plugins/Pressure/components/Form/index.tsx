@@ -47,6 +47,7 @@ type Props = {
 
 type FormProps = {
   submitting: boolean;
+  form: any;
 };
 
 const PressureForm = ({
@@ -75,8 +76,16 @@ const PressureForm = ({
   }));
 
   return (
-    <ConnectedForm onSubmit={onSubmit} initialValues={{ subject, body }}>
-      {({ submitting }: FormProps) => {
+    <ConnectedForm
+      onSubmit={onSubmit}
+      initialValues={{ subject, body }}
+      mutators={{
+        setValue: ([field, value], state, { changeValue }) => {
+          changeValue(state, field, () => value);
+        },
+      }}
+    >
+      {({ submitting, form }: FormProps) => {
         return (
           <Wrapper>
             <WrapFields>
@@ -87,6 +96,19 @@ const PressureForm = ({
                     label="Selecione os alvos"
                     name="targetsInput"
                     placeholder="Selecione"
+                    onChange={e => {
+                      const group = pureTargets.filter(
+                        (gt: GroupTarget) => gt.identify === e.value
+                      )[0];
+                      const { setValue } = form.mutators;
+
+                      if (!!group && group.email_subject)
+                        setValue('subject', group.email_subject);
+                      else setValue('subject', subject);
+                      if (!!group && group.email_body)
+                        setValue('body', group.email_subject);
+                      else setValue('body', body);
+                    }}
                   />
                 </WrapInputs>
               )}

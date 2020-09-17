@@ -8,6 +8,8 @@ const query = gql`
       identify
       label
       targets
+      email_subject
+      email_body
     }
   }
 `;

@@ -28,27 +28,33 @@ const before = (targetList: Array<any>, onBlur: any) => (
   />
 );
 
-const after = (disableSubjectAndBody: boolean) => (
-  <Fields
-    fields={[
-      {
-        name: 'subject',
-        label: 'Assunto',
-        type: 'text',
-        disabled: disableSubjectAndBody,
-        placeholder: 'Insira seu e-mail',
-        validate: required('Preenchimento obrigatório'),
-      },
-      {
-        name: 'body',
-        label: 'Corpo do e-mail',
-        type: 'textarea',
-        disabled: disableSubjectAndBody,
-        placeholder: 'Insira seu e-mail',
-        validate: required('Preenchimento obrigatório'),
-      },
-    ]}
-  />
-);
+type AfterProps = {
+  disableSubjectAndBody: boolean
+}
+
+const after = ({ disableSubjectAndBody }: AfterProps) => {
+  return (
+    <Fields
+      fields={[
+        {
+          name: 'subject',
+          label: 'Assunto',
+          type: 'text',
+          disabled: disableSubjectAndBody,
+          placeholder: 'Insira seu e-mail',
+          validate: required('Preenchimento obrigatório'),
+        },
+        {
+          name: 'body',
+          label: 'Corpo do e-mail',
+          type: 'textarea',
+          disabled: disableSubjectAndBody,
+          placeholder: 'Insira seu e-mail',
+          validate: required('Preenchimento obrigatório'),
+        },
+      ]}
+    />
+  );
+}
 
 export default { before, after };

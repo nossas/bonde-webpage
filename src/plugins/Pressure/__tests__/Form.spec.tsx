@@ -36,7 +36,9 @@ describe('Pressure Form', function() {
     pureTargets: [],
     saving: false,
     BeforeStandardFields: () => EmailFields.before(targetList, onBlur),
-    AfterStandardFields: () => EmailFields.after(true),
+    AfterStandardFields: () => (
+      <EmailFields.after disableSubjectAndBody={true} />
+    ),
     errors: [],
   };
 

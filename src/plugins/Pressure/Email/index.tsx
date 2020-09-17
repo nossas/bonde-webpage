@@ -4,6 +4,7 @@ import { Header } from '../styles';
 import EmailFields from './EmailFields';
 import { getTargetList } from '../utils';
 import FetchTargets from '../FetchTargets';
+import { GroupTarget } from '../components/Targets';
 
 /* TODO: Change static content by props
  * - title
@@ -36,7 +37,7 @@ type Props = {
   block: any;
   // ApolloClient instance
   client?: any;
-  pressureTargets?: any[];
+  pressureTargets?: GroupTarget[];
   overrides: {
     FinishCustomMessage: {
       component?: any;
@@ -106,7 +107,7 @@ export const EmailPressure = ({
   } = widget.settings;
 
   let targetList: string[] = [];
-  let pureTargets: any[] = pressureTargets || [];
+  let pureTargets: GroupTarget[] = pressureTargets || [];
   // if (pressureTargets && pressureTargets.length > 0) {
   //   pureTargets
   // }
@@ -208,7 +209,9 @@ export const EmailPressure = ({
             </>
           );
         }}
-        AfterStandardFields={() => EmailFields.after(disableEditField === 's')}
+        AfterStandardFields={() => (
+          <EmailFields.after disableSubjectAndBody={disableEditField === 's'} />
+        )}
         errors={state.errors}
       />
       {countText && (
