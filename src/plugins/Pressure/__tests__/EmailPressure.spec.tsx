@@ -137,7 +137,7 @@ describe('Plugin successful behavior paths', () => {
   };
   const handleSubmit = jest
     .fn()
-    .mockResolvedValue({ type: 'UPDATE_WIDGET_SUCCESS' });
+    .mockResolvedValue({ create_email_pressure: { id: 2134 } });
   const props = {
     widget,
     editable: false,

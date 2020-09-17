@@ -142,10 +142,13 @@ export const EmailPressure = ({
 
       return asyncFillWidget({ payload, widget })
         .then((data: any) => {
+          if (!data.create_email_pressure) throw new Error('pressure_failed');
+
           analyticsEvents && analyticsEvents.pressureSavedData();
           return dispatch({ type: 'success', payload: data });
         })
         .catch((_e: any) => {
+          // console.log('e', e);
           return dispatch({
             type: 'failed',
             payload: ['Houve um erro ao fazer a pressão'],
