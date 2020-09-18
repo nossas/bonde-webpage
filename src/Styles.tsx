@@ -12,6 +12,9 @@ const layoutStyles = css`
   .absolute {
     position: absolute;
   }
+  .relative {
+    position: relative;
+  }
   .border {
     border: solid 1px;
   }

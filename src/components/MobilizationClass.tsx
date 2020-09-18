@@ -148,9 +148,9 @@ class Mobilization extends React.Component<
     // TODO: Rever funcionamento da customização de layouts
     const { editable, colorScheme, headerFont, bodyFont } = this.props;
     const themeClassName = `${colorScheme} ${headerFont}-header ${bodyFont}-body`;
-    const layoutClassName = editable ? 'flex-auto relative' : 'absolute';
+    const layoutClassName = editable ? 'flex-auto relative' : 'relative';
     const layoutStyle = !editable
-      ? { top: 0, bottom: 0, left: 0, right: 0 }
+      ? { top: 0, bottom: 0, left: 0, right: 0, flexGrow: 1 }
       : undefined;
 
     // Props to render blocos
@@ -187,8 +187,8 @@ class Mobilization extends React.Component<
               extraWidgetProps={extraWidgetProps}
             />
           ))}
-          <Footer />
         </div>
+        <Footer />
       </div>
     );
   }
