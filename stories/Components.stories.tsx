@@ -1,5 +1,5 @@
 import React from 'react';
-import { Targets, Count } from '../src';
+import { Targets, Count, Footer } from '../src';
 import PressureProps from './mocks/plugin/pressure';
 
 export const TargetList = () => {
@@ -14,6 +14,15 @@ export const CountContainer = () => {
       text={'pressões'}
       startCounting={true}
     />
+  );
+};
+
+export const FooterContainer = () => {
+  return (
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
+      <div>CONTENT</div>
+      <Footer />
+    </div>
   );
 };
 
