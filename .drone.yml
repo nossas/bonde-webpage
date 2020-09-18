@@ -33,9 +33,7 @@ pipeline:
         from_secret: npm_password
     group: publish
     when:
-      status: success
-      event: push
-      branch: [hotfix/*, release/*, feature/*, support/*]
+      event: [push, tag]
 
   build-public-ts:
     image: node:12-alpine
