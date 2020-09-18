@@ -4,7 +4,10 @@ import gql from 'graphql-tag';
 
 const query = gql`
   query Targets($widgetId: Int!) {
-    pressure_targets(where: { widget_id: { _eq: $widgetId } }) {
+    pressure_targets(
+      where: { widget_id: { _eq: $widgetId } }
+      order_by: { label: asc }
+    ) {
       identify
       label
       targets

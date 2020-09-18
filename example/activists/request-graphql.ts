@@ -4,7 +4,7 @@ let endpoint: string;
 
 if (process.env.NODE_ENV !== 'test') {
   const { publicRuntimeConfig } = getConfig();
-  endpoint = publicRuntimeConfig.domainApiActivists || 'https://api-graphql.bonde.devel/v1/graphql';
+  endpoint = publicRuntimeConfig.domainApiGraphql || "https://api-graphql.staging.bonde.org/v1/graphql"
 };
 
 export interface Response {
