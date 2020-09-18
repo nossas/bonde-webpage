@@ -106,7 +106,7 @@ const PressureForm = ({
                         setValue('subject', group.email_subject);
                       else setValue('subject', subject);
                       if (!!group && group.email_body)
-                        setValue('body', group.email_subject);
+                        setValue('body', group.email_body);
                       else setValue('body', body);
                     }}
                   />

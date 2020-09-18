@@ -29,8 +29,8 @@ const before = (targetList: Array<any>, onBlur: any) => (
 );
 
 type AfterProps = {
-  disableSubjectAndBody: boolean
-}
+  disableSubjectAndBody: boolean;
+};
 
 const after = ({ disableSubjectAndBody }: AfterProps) => {
   return (
@@ -55,6 +55,6 @@ const after = ({ disableSubjectAndBody }: AfterProps) => {
       ]}
     />
   );
-}
+};
 
 export default { before, after };
