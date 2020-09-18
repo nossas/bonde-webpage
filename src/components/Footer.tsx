@@ -77,7 +77,7 @@ const Footer = () => (
         </Link>
         <Divisor>|</Divisor>
         <Link
-          href="/static/termos-de-uso-e-politica-de-privacidade.pdf"
+          href="/static/politica-de-privacidade.pdf"
           title="Política de Privacidade"
           target="_blank"
           rel="noopener noreferrer"
