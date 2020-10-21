@@ -1,8 +1,9 @@
 import React from 'react';
 import { Wrap } from './styles';
+import { isMobile } from 'react-device-detect';
 
 const WhatsAppShareButton = ({ whatsappText }: { whatsappText: string }) => {
-  const baseUrl = 'https://web.whatsapp.com/';
+  const baseUrl = isMobile ? 'whatsapp://' : 'https://web.whatsapp.com/';
 
   return (
     <Wrap>
