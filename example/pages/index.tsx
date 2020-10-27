@@ -86,9 +86,11 @@ class Page extends React.Component<PageProps> {
       facebook_share_description: facebookShareDescription,
       facebook_share_image: facebookShareImage,
       custom_domain: customDomain,
+      slug
     } = this.props.mobilization;
 
-    const url = `${this.props.protocol}://${customDomain}`;
+    const domain = customDomain || `${slug}.${publicRuntimeConfig.domainPublic || 'staging.bonde.org'}`;
+    const url = `${this.props.protocol}://${domain}`;
 
     return (
       <div className="container">
