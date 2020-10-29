@@ -26,7 +26,7 @@ export default connect(
         ...props.widget,
         settings: {
           ...props.widget.settings,
-          fields: JSON.parse(props.widget.settings.fields)
+          fields: props.widget.settings.fields ? JSON.parse(props.widget.settings.fields) : []
         }
       }}
       analyticsEvents={FormAnalytics}
