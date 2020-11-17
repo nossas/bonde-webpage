@@ -37,9 +37,10 @@ const ThankYou = ({
   if (donation.payment_method === 'boleto' && donation.gateway_data)
     return (
       <Boleto
+        {...ownProps}
+        overrides={overrides}
         donation={donation}
         widget={widget}
-        mobilization={ownProps.mobilization}
       />
     );
 
