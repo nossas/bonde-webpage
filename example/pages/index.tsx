@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Head from 'next/head';
 // import Error from 'next/error';
-import ReactGA from 'react-ga';
+// import ReactGA from 'react-ga';
+// import TagManager from 'react-gtm-module';
 import { connect } from 'react-redux';
 import {
   asyncFilterMobilization,
@@ -57,23 +58,37 @@ class Page extends React.Component<PageProps> {
     // await fetchData({ slug: 'nova-home-meu-rio' });
   }
 
-  componentDidMount() {
-    const isTestEnvironment =
-      process.env.NODE_ENV === undefined || process.env.NODE_ENV === 'test';
-    const { mobilization } = this.props;
+  // componentDidMount() {
+  //   const isTestEnvironment =
+  //     process.env.NODE_ENV === undefined || process.env.NODE_ENV === 'test';
+  //   const { mobilization } = this.props;
 
-    if (!isTestEnvironment && !!mobilization) {
-      ReactGA.initialize('UA-26278513-30');
-      ReactGA.pageview('/' + mobilization.slug);
-      if (mobilization.google_analytics_code) {
-        ReactGA.initialize(mobilization.google_analytics_code, {
-          gaOptions: { name: 'MobilizationTracker' },
-        });
-        ReactGA.ga('MobilizationTracker.send', 'pageview', '/');
-        ReactGA.ga('require', 'GTM-W4T6JCX');
-      }
-    }
-  }
+  //   if (!isTestEnvironment && !!mobilization) {
+  //     const tagManagerArgs = {
+  //       gtmId: 'GTM-W4T6JCX'
+  //     };
+
+  //     TagManager.initialize(tagManagerArgs)
+      
+  //     const args = {
+  //       dataLayer: {
+  //         event: 'sign_up'
+  //       },
+  //       dataLayerName: 'PageDataLayer'
+  //     }
+
+  //     TagManager.dataLayer(args);
+  //     // ReactGA.initialize('UA-26278513-30');
+  //     // ReactGA.pageview('/' + mobilization.slug);
+  //     // if (mobilization.google_analytics_code) {
+  //     //   ReactGA.initialize(mobilization.google_analytics_code, {
+  //     //     gaOptions: { name: 'MobilizationTracker' },
+  //     //   });
+  //     //   ReactGA.ga('MobilizationTracker.send', 'pageview', '/');
+  //     //   ReactGA.ga('require', 'GTM-W4T6JCX');
+  //     // }
+  //   }
+  // }
 
   render() {
     if (!this.props.mobilization) return <Error404 />;
@@ -86,7 +101,8 @@ class Page extends React.Component<PageProps> {
       facebook_share_description: facebookShareDescription,
       facebook_share_image: facebookShareImage,
       custom_domain: customDomain,
-      slug
+      google_analytics_code: googleAnalyticsCode,
+      slug,
     } = this.props.mobilization;
 
     const domain = customDomain || `${slug}.${publicRuntimeConfig.domainPublic || 'staging.bonde.org'}`;
@@ -135,6 +151,18 @@ class Page extends React.Component<PageProps> {
             type="text/javascript"
             src="https://assets.pagar.me/checkout/checkout.js"
           />
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${{googleAnalyticsCode}}`}></script>
+          <script dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${googleAnalyticsCode}', {
+                page_location: '${url}',
+                page_title: '${name}'
+              });
+            `
+          }} />
         </Head>
         <MeuRioStyles>
           <Styles>

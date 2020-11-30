@@ -24,7 +24,6 @@ export { default as DraftPlugin } from './plugins/Draft';
 
 /* FormPlugin */
 export { default as FormPlugin } from './plugins/Form';
-export { default as FormAnalytics } from './plugins/Form/Analytics';
 export { default as FinishMessageCustom } from './components/ux/FinishMessageCustom';
 export { default as FormTellAFriend } from './plugins/Form/TellAFriend';
 export { default as asyncFormEntryCreate } from './redux-mob/action-creators/FormEntryCreate';
@@ -40,7 +39,6 @@ export { default as Targets } from './plugins/Pressure/components/Targets';
 export { default as Count } from './components/Count';
 export { default as PhonePressurePlugin } from './plugins/Pressure/Phone';
 export { default as EmailPressurePlugin } from './plugins/Pressure/Email';
-export { default as PressureAnalytics } from './plugins/Pressure/Analytics';
 export { default as PressureTellAFriend } from './plugins/Pressure/components/TellAFriend';
 
 /* DonationPlugin */
@@ -50,4 +48,8 @@ export { default as asyncDonationCreate } from './plugins/Donation/asyncDonation
 export { default as asyncDonationConvert } from './plugins/Donation/asyncDonationConvert';
 export { default as DonationTellAFriend } from './plugins/Donation/TellAFriend';
 export { default as FinishDonationMessage } from './plugins/Donation/FinishDonationMessage';
+
+/* Analytics */
 export { default as DonationAnalytics } from './plugins/Donation/Analytics';
+export { default as FormAnalytics } from './plugins/Form/Analytics';
+export { default as PressureAnalytics } from './plugins/Pressure/Analytics';
