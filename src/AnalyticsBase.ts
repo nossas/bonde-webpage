@@ -18,6 +18,7 @@ export default ({ action, category, label, value }: Event) => {
   ) {
     console.log('event', { action, category, label, value });
     (window as any).gtag('event', action, {
+      debug_mode: true,
       event_category: category,
       event_label: label,
       value: value,

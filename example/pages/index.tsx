@@ -158,6 +158,7 @@ class Page extends React.Component<PageProps> {
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', '${googleAnalyticsCode}', {
+                debug_mode: true,
                 page_location: '${url}',
                 page_title: '${name}'
               });
