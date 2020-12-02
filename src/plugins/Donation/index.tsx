@@ -59,6 +59,10 @@ type Props = {
       donation_value5?: number;
     };
   };
+  analyticsEvents: {
+    donationSetValue: () => void;
+    donationFinishRequest: () => void;
+  };
   overrides: any;
 };
 
@@ -71,6 +75,7 @@ const DonationPlugin: React.FC<Props> = ({
   widget,
   mobilization,
   overrides,
+  analyticsEvents,
 }) => {
   const { headerFont } = mobilization;
   const {
@@ -110,6 +115,7 @@ const DonationPlugin: React.FC<Props> = ({
         },
         customerData: donationCustomerData,
       }).then((res: any) => {
+        analyticsEvents.donationFinishRequest();
         setDonation(res.donation);
         setLoading(false);
       });
@@ -118,6 +124,11 @@ const DonationPlugin: React.FC<Props> = ({
       //   setLoading(false);
       // });
     }
+  };
+
+  const onSelectValue = (value: any) => {
+    analyticsEvents.donationSetValue();
+    setSelectedValue(value);
   };
 
   const defaultProps = {
@@ -151,7 +162,7 @@ const DonationPlugin: React.FC<Props> = ({
         loading={loading}
         recurringLabel={recurringLabel}
         selectedValue={selectedValue}
-        setSelectedValue={setSelectedValue}
+        setSelectedValue={onSelectValue}
         selectedPaymentType={selectedPaymentType}
         setSelectedPaymentType={setSelectedPaymentType}
         titleText={callToAction || titleText || extraProps.title}

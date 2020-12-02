@@ -1,9 +1,3 @@
-// import ReactGA from 'react-ga';
-// import TagManager from 'react-gtm-module';
-
-// export default (event: { category: string; action: string; label?: string }) =>
-//   ReactGA.event(event);
-
 type Event = {
   category: string;
   action: string;
@@ -16,7 +10,7 @@ export default ({ action, category, label, value }: Event) => {
     typeof window !== 'undefined' &&
     typeof (window as any).gtag !== 'undefined'
   ) {
-    console.log('event', { action, category, label, value });
+    // console.log('event', { action, category, label, value });
     (window as any).gtag('event', action, {
       debug_mode: true,
       event_category: category,
