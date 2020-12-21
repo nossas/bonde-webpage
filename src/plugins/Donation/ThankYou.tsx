@@ -45,7 +45,9 @@ const ThankYou = ({
     );
 
   if (messageType === 'custom')
-    return <FinishCustomMessage {...ownProps} {...customProps} />;
+    return (
+      <FinishCustomMessage {...ownProps} {...customProps} widget={widget} />
+    );
 
   if (
     messageType === 'donation-recurrent' &&
