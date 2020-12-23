@@ -38,6 +38,7 @@ const ThankYou = ({
     return (
       <Boleto
         {...ownProps}
+        {...defaultProps}
         overrides={overrides}
         donation={donation}
         widget={widget}
