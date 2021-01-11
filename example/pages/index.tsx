@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import {
   asyncFilterMobilization,
   asyncFilterBlock,
-  asyncFilterWidget,
+  // asyncFilterWidget,
   Styles,
 } from 'bonde-webpages';
 import MeuRioStyles from './components/MeuRioStyles';
