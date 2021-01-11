@@ -14,12 +14,60 @@ import MeuRioStyles from './components/MeuRioStyles';
 import MobilizationConnected from './components/MobilizationConnected';
 import getConfig from 'next/config';
 import Error404 from './404';
+import gql from 'graphql-tag';
+import { client as GraphQLAPI } from '../graphql-app';
 
 const { publicRuntimeConfig } = getConfig();
 
 interface PageProps {
   mobilization: any;
   protocol: string;
+}
+
+type EqFilter = {
+  _eq: string
+}
+
+type WidgetFilter = {
+  slug?: EqFilter
+  custom_domain?: EqFilter
+}
+
+const asyncFilterWidgetGraphql = ({ slug, custom_domain }: any) => (dispatch: any) => {
+  dispatch({ type: 'FILTER_WIDGETS_REQUEST' });
+
+  let filter: WidgetFilter = {};
+  if (slug) filter.slug = { _eq: slug };  
+  if (custom_domain) filter.custom_domain = { _eq: custom_domain };
+
+  return GraphQLAPI.query({
+    query: gql`
+      query ($filter: mobilizations_bool_exp!) {
+        widgets(where: { block: { mobilization: $filter } }) {
+          id
+          kind
+          goal
+          settings
+          block_id
+          created_at
+          updated_at
+          sm_size
+          md_size
+          lg_size
+        }
+      }
+    `,
+    variables: { filter }
+  })
+  .then(({ data }: any) => {
+    dispatch({ type: 'FILTER_WIDGETS_SUCCESS', payload: data.widgets });
+    return Promise.resolve();
+  })
+  .catch((err: any) => {
+    dispatch({ type: 'FILTER_WIDGETS_FAILURE', payload: err });
+    console.log('failed', err);
+    return Promise.reject(err);
+  })
 }
 
 class Page extends React.Component<PageProps> {
@@ -48,7 +96,8 @@ class Page extends React.Component<PageProps> {
 
       await dispatch(asyncFilterMobilization(filter || where));
       await dispatch(asyncFilterBlock(filter || where));
-      await dispatch(asyncFilterWidget(filter || where));
+      await dispatch(asyncFilterWidgetGraphql(filter || where));
+      // await dispatch(asyncFilterWidget(filter || where));
     };
 
     await fetchData();

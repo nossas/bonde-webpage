@@ -28,10 +28,10 @@ module.exports = withCSS(withSass({
   publicRuntimeConfig: {
     domainApiRest: process.env.REACT_APP_DOMAIN_API_REST,
     domainApiGraphql: process.env.REACT_APP_DOMAIN_API_GRAPHQL,
+    apiGraphqlSecret: process.env.REACT_APP_API_GRAPHQL_SECRET,
     domainApiGraphqlWs: process.env.REACT_APP_DOMAIN_API_GRAPHQL_WS,
     domainPublic: process.env.REACT_APP_DOMAIN_PUBLIC,
     pagarmeKey: process.env.REACT_APP_PAGARME_KEY
-    // hasuraSecret: process.env.REACT_APP_HASURA_SECRET
   }
 })
 )
