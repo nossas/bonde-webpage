@@ -104,8 +104,11 @@ export const getEmailTarget = (target: string) => {
   return targetSplit[1].replace('>', '');
 };
 
-export const getTargetList = (targets: string = ''): Array<string> =>
-  targets.split(';').filter((target: string) => !!target.trim());
+export const getTargetList = (targets: any): Array<string> => {
+  if (typeof targets === 'object') return targets;
+
+  return targets.split(';').filter((target: string) => !!target.trim());
+};
 
 export const validateUtils = {
   isValidEmail,
