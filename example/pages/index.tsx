@@ -57,7 +57,8 @@ const asyncFilterWidgetGraphql = ({ slug, custom_domain }: any) => (dispatch: an
         }
       }
     `,
-    variables: { filter }
+    variables: { filter },
+    fetchPolicy: "no-cache"
   })
   .then(({ data }: any) => {
     dispatch({ type: 'FILTER_WIDGETS_SUCCESS', payload: data.widgets });
