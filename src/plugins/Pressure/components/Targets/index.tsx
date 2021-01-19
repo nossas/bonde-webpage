@@ -30,9 +30,8 @@ const Targets = ({
 }) => {
   let groupTarget: Pick<GroupTarget, 'targets'> = { targets };
   const { input } = useField('targetsInput');
-  console.log('pressureType', { pressureType });
+
   if (pureTargets && pureTargets.length > 0 && pressureType === 'group') {
-    console.log('pureTargets', { pureTargets });
     const newGroup: GroupTarget = pureTargets.filter(
       (t: GroupTarget) => t.identify === input.value.value
     )[0];

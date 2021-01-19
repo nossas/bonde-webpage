@@ -32,7 +32,7 @@ type Props = {
       finish_message_background?: string;
       count_text?: string;
       show_city?: string;
-      pressure_type?: string | 'unique' | 'group'
+      pressure_type?: string | 'unique' | 'group';
     };
   };
   block: any;
@@ -105,15 +105,13 @@ export const EmailPressure = ({
     finish_message_type: finishMessageType,
     disable_edit_field: disableEditField,
     targets,
-    pressure_type
+    pressure_type,
   } = widget.settings;
 
   let targetList: string[] = [];
   let pureTargets: GroupTarget[] = pressureTargets || [];
-  // if (pressureTargets && pressureTargets.length > 0) {
-  //   pureTargets
-  // }
-  if (!!targets && pressure_type === 'unique') {
+
+  if (!!targets && pressure_type !== 'group') {
     targetList = getTargetList(targets) || [];
   }
 
@@ -127,7 +125,7 @@ export const EmailPressure = ({
       });
     } else {
       dispatch({ type: 'fetching' });
-      // const mapList = (target: string) => getEmailTarget(target);
+
       const payload = {
         activist: {
           firstname: data.name,
@@ -228,17 +226,6 @@ export const EmailPressure = ({
     </div>
   );
 };
-
-// EmailPressure.defaultProps = {
-//   widget: {
-//     settings: {
-//       main_color: '#f23392',
-//       title_text: 'Pressione quem pode tomar essa decisão',
-//       button_text: 'Enviar',
-//       disable_edit_field: 'n',
-//     },
-//   },
-// };
 
 // Wrapper All Plugin to get targets group
 export default ({ client, ...props }: any) => (
