@@ -41,6 +41,7 @@ type Props = {
       targets: string;
       count_text?: string;
       show_city?: string;
+      pressure_type: string | 'unique' | 'group';
     };
   };
   block: {

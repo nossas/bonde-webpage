@@ -32,6 +32,7 @@ type Props = {
       finish_message_background?: string;
       count_text?: string;
       show_city?: string;
+      pressure_type?: string | 'unique' | 'group'
     };
   };
   block: any;
@@ -104,6 +105,7 @@ export const EmailPressure = ({
     finish_message_type: finishMessageType,
     disable_edit_field: disableEditField,
     targets,
+    pressure_type
   } = widget.settings;
 
   let targetList: string[] = [];
@@ -111,7 +113,7 @@ export const EmailPressure = ({
   // if (pressureTargets && pressureTargets.length > 0) {
   //   pureTargets
   // }
-  if (!!targets) {
+  if (!!targets && pressure_type === 'unique') {
     targetList = getTargetList(targets) || [];
   }
 
@@ -200,7 +202,7 @@ export const EmailPressure = ({
               <Targets
                 targets={targetList}
                 pureTargets={pureTargets}
-                pressureType={'email'}
+                pressureType={pressure_type || 'email'}
               />
               {EmailFields.before(
                 targetList,

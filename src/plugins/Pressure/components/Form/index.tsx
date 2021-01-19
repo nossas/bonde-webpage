@@ -37,6 +37,8 @@ type Props = {
       finish_message_background?: string;
       targets?: string;
       count_text?: string;
+      pressure_type?: string | 'unique' | 'group';
+      select_label?: string;
     };
   };
   BeforeStandardFields: any;
@@ -67,6 +69,8 @@ const PressureForm = ({
       button_text: buttonText,
       pressure_subject: subject = '',
       pressure_body: body = '',
+      pressure_type,
+      select_label,
     },
   } = widget;
 
@@ -89,11 +93,11 @@ const PressureForm = ({
         return (
           <Wrapper>
             <WrapFields>
-              {options.length > 0 && (
+              {pressure_type === 'group' && options.length > 0 && (
                 <WrapInputs inverted>
                   <RoundSelectField
                     options={options}
-                    label="Selecione os alvos"
+                    label={select_label || 'Selecione os alvos'}
                     name="targetsInput"
                     placeholder="Selecione"
                     onChange={e => {

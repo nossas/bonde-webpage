@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const Wrapper = styled.div`
   background-color: #eeeeee;
-  padding: 0 26px 15px;
+  padding: 15px 26px;
   font-family: inherit;
 `;
 

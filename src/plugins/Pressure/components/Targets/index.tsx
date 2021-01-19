@@ -26,12 +26,13 @@ const Targets = ({
 }: {
   targets: string[];
   pureTargets?: GroupTarget[];
-  pressureType: string;
+  pressureType: string | 'unique' | 'group';
 }) => {
   let groupTarget: Pick<GroupTarget, 'targets'> = { targets };
   const { input } = useField('targetsInput');
-  if (pureTargets && pureTargets.length > 0) {
-    // console.log('pureTargets', { pureTargets });
+  console.log('pressureType', { pressureType });
+  if (pureTargets && pureTargets.length > 0 && pressureType === 'group') {
+    console.log('pureTargets', { pureTargets });
     const newGroup: GroupTarget = pureTargets.filter(
       (t: GroupTarget) => t.identify === input.value.value
     )[0];
