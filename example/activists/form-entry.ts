@@ -34,7 +34,7 @@ mutation FormEntry($activist: ActivistInput!, $widget_id: Int!, $input: FormEntr
 `;
 
 export const fill_activist = (fields: FormEntryField[]): Activist => {
-  console.log('fields', { fields });
+  // console.log('fields', { fields });
   const activist: any = {};
   // Create activist input with label regex
   const fieldsPattners: FieldPattern[] = [
@@ -51,7 +51,7 @@ export const fill_activist = (fields: FormEntryField[]): Activist => {
     };
   });
   // console.log('fields', { fields });
-  console.log('activist', { activist });
+  // console.log('activist', { activist });
   // Concat activist fullname
   activist['name'] = `${activist.first_name.trim()} ${(activist.last_name || '').trim()}`.trim();
 

@@ -33,6 +33,26 @@ type WidgetFilter = {
   custom_domain?: EqFilter
 }
 
+type Aggregate = {
+  aggregate: { count: number }
+}
+
+type WidgetGraphQL = {
+  id: number
+  kind: string
+  goal?: string
+  settings: any
+  block_id: number
+  created_at: string
+  updated_at: string
+  sm_size: string
+  md_size: string
+  lg_size: string
+  activist_pressures_aggregate: Aggregate
+  form_entries_aggregate: Aggregate
+  donations_aggregate: Aggregate
+}
+
 const asyncFilterWidgetGraphql = ({ slug, custom_domain }: any) => (dispatch: any) => {
   dispatch({ type: 'FILTER_WIDGETS_REQUEST' });
 
@@ -54,14 +74,40 @@ const asyncFilterWidgetGraphql = ({ slug, custom_domain }: any) => (dispatch: an
           sm_size
           md_size
           lg_size
+
+          activist_pressures_aggregate {
+            aggregate {
+              count
+            }
+          }
+          
+          form_entries_aggregate {
+            aggregate {
+              count
+            }
+          }
+
+          donations_aggregate {
+            aggregate {
+              count
+            }
+          }
         }
       }
     `,
     variables: { filter },
     fetchPolicy: "no-cache"
   })
-  .then(({ data }: any) => {
-    dispatch({ type: 'FILTER_WIDGETS_SUCCESS', payload: data.widgets });
+  .then(({ data }: { data: { widgets: WidgetGraphQL[] } }) => {
+    dispatch({
+      type: 'FILTER_WIDGETS_SUCCESS',
+      payload: data.widgets.map((w: WidgetGraphQL) => ({
+        ...w,
+        form_entries_count: w.form_entries_aggregate.aggregate.count,
+        donations_count: w.donations_aggregate.aggregate.count,
+        count: w.activist_pressures_aggregate.aggregate.count
+      }))
+    });
     return Promise.resolve();
   })
   .catch((err: any) => {
