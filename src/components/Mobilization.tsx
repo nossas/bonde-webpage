@@ -64,14 +64,12 @@ const getVisibleBlocks = (blocks: any, editable: any) =>
   !editable ? blocks.filter((b: any) => !b.hidden) : blocks;
 
 const Mobilization: React.FC<MobilizationProps> = props => {
-  console.log('Mobilization render');
   const { linkTo, editable } = props;
   const visibleBlocks = getVisibleBlocks(props.blocks, props.editable);
 
   const [blocks, setBlocks] = useState(visibleBlocks);
 
   useEffect(() => {
-    console.log('useEffect');
     let blocksTotalHeight: number = 0;
     const blocksWithOffsetTop: any[] = [];
     const element: any = document.querySelector('#blocks-list');

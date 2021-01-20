@@ -12,13 +12,12 @@ const Wrapper = styled.div`
   margin: 1rem 0;
 `;
 const FinishButton = ({
-  buttonColor,
   toggleFinishMessage,
 }: {
   toggleFinishMessage: any;
-  buttonColor: any;
+  buttonColor?: any;
 }) => {
-  console.log('FinishButton', buttonColor);
+  // console.log('FinishButton', buttonColor);
   return (
     <Wrapper>
       <Button

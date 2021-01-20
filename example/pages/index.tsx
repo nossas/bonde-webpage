@@ -63,7 +63,7 @@ const asyncFilterWidgetGraphql = ({ slug, custom_domain }: any) => (dispatch: an
   return GraphQLAPI.query({
     query: gql`
       query ($filter: mobilizations_bool_exp!) {
-        widgets(where: { block: { mobilization: $filter } }) {
+        widgets(where: { block: { mobilization: $filter } }, order_by: { id: asc }) {
           id
           kind
           goal
