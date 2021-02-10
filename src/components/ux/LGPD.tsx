@@ -21,16 +21,16 @@ const Text = styled.span<Props>`
 export default ({ color }: any) => {
   return (
     <Text color={color}>
-      {`Ao participar desta campanha, você concorda em ter seus dados compartilhados com os organizadores dessa campanha e aceita receber emails de atualização, conforme descrito na `}
+      {`Al hacer clic en este botón, aceptas recibir correos electrónicos con actualizaciones sobre las campañas de All Out, según se describe en su `}
       <a
-        href="/static/politica-de-privacidade.pdf"
-        title="Politica de Privacidade"
+        href="https://allout.org/es/politica-de-privacidad"
+        title="Política de Privacidad"
         target="_blank"
         rel="noopener noreferrer"
       >
-        política de privacidade
+        Política de Privacidad
       </a>
-      {` desse site. No entanto, você também tem o direito de cancelar o recebimento desses e-mails a qualquer momento.`}
+      {`. Tienes el derecho a cancelar tu suscripción a estos correos electrónicos en cualquier momento.`}
     </Text>
   );
 };
