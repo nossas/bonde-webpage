@@ -2707,10 +2707,10 @@ bonde-components@0.0.4-alpha.15:
     react-table "^7.5.0"
     styled-components "^5.0.1"
 
-bonde-webpages@0.3.4-alpha.12:
-  version "0.3.4-alpha.12"
-  resolved "https://registry.yarnpkg.com/bonde-webpages/-/bonde-webpages-0.3.4-alpha.12.tgz#d0efe95e28acd485b5d88e2f69ef9914c29ed70a"
-  integrity sha512-4SDoal8187LM9PNKMq6+LY8kajQPunx+BjRTymyOKpWxdCz8WwL2lPqj2hkYEP4n3Z7f/Rg/t9MRgocvwWK/YA==
+bonde-webpages@0.3.4-alpha.13:
+  version "0.3.4-alpha.13"
+  resolved "https://registry.yarnpkg.com/bonde-webpages/-/bonde-webpages-0.3.4-alpha.13.tgz#d45632b814a8d25b5c6677532df82cbca3686d0f"
+  integrity sha512-wFAnByHllbVGiiRjs3uPRr90F+f8s5NaKH6O8UjrqZU3g/uRuH1XRBPW5qnRe2TKa9IFuDMECbAh42+WpeJ3uA==
   dependencies:
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
