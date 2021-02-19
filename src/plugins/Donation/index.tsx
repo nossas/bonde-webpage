@@ -57,6 +57,7 @@ type Props = {
       donation_value3?: number;
       donation_value4?: number;
       donation_value5?: number;
+      default_donation_value?: string;
     };
   };
   analyticsEvents: {
@@ -86,6 +87,7 @@ const DonationPlugin: React.FC<Props> = ({
       button_text: buttonText,
       payment_type: paymentType,
       recurring_period: recurringPeriod,
+      default_donation_value: defaultDonationValue,
     },
   } = widget;
   // States
@@ -95,7 +97,9 @@ const DonationPlugin: React.FC<Props> = ({
       ? paymentType
       : extraProps.paymentType
   );
-  const [selectedValue, setSelectedValue] = useState(1);
+  const [selectedValue, setSelectedValue] = useState(
+    parseInt(defaultDonationValue || '1')
+  );
   const [loading, setLoading] = useState(false);
 
   const recurringLabel = ({ 30: 'mês', 180: 'semestre', 365: 'ano' } as Record<
