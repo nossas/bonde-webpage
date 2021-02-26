@@ -38,11 +38,11 @@ export const fill_activist = (fields: FormEntryField[]): Activist => {
   const activist: any = {};
   // Create activist input with label regex
   const fieldsPattners: FieldPattern[] = [
-    { name: 'first_name', re: new RegExp(/^(nombre|first[\-\s]?name|seu nome|nome|name|primeiro[\-\s]?nome)/, "g") },
-    { name: 'last_name', re: new RegExp(/^(sobre[\s\-]?nome|seu sobre[\s\-]?nome|surname|last[\s\-]?name|apellido)/, "g") },
-    { name: 'email', re: new RegExp(/^(e\-?mail|correo electr(o|ó)nico)|email/, "g") },
-    { name: 'phone', re: new RegExp(/^(celular|mobile|portable|whatsapp)/, "g") },
-    { name: 'city', re: new RegExp(/^(cidade|city|ciudad)/) }
+    { name: 'first_name', re: new RegExp(/(nombre|first[\-\s]?name|seu nome|nome|name|primeiro[\-\s]?nome)/, "g") },
+    { name: 'last_name', re: new RegExp(/(sobre[\s\-]?nome|seu sobre[\s\-]?nome|surname|last[\s\-]?name|apellido)/, "g") },
+    { name: 'email', re: new RegExp(/(e\-?mail|correo electr(o|ó)nico)|email/, "g") },
+    { name: 'phone', re: new RegExp(/(celular|mobile|portable|whatsapp)/, "g") },
+    { name: 'city', re: new RegExp(/(cidade|city|ciudad)/) }
   ];
   fieldsPattners.forEach(({ name, re }: FieldPattern) => {
     const field = fields.filter(field => re.test(field.label.toLowerCase()))[0];
@@ -75,11 +75,11 @@ export default async ({ fields: fieldsJSON, widget_id }: Args): Promise<any> => 
     variables: { activist, input, widget_id }
   });
   const { data, errors }: Response = await graphql(query);
-  
+
   if (data) {
     FormAnalytics.formSavedData();
     return Promise.resolve(data);
   }
-  
+
   return Promise.reject(errors);
 };

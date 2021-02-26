@@ -4,12 +4,14 @@ import Head from 'next/head';
 // import ReactGA from 'react-ga';
 // import TagManager from 'react-gtm-module';
 import { connect } from 'react-redux';
+import { init as initApm } from '@elastic/apm-rum';
 import {
   asyncFilterMobilization,
   asyncFilterBlock,
   // asyncFilterWidget,
   Styles,
 } from 'bonde-webpages';
+import * as pkgInfo from '../package.json';
 import MeuRioStyles from './components/MeuRioStyles';
 import MobilizationConnected from './components/MobilizationConnected';
 import getConfig from 'next/config';
@@ -57,7 +59,7 @@ const asyncFilterWidgetGraphql = ({ slug, custom_domain }: any) => (dispatch: an
   dispatch({ type: 'FILTER_WIDGETS_REQUEST' });
 
   let filter: WidgetFilter = {};
-  if (slug) filter.slug = { _eq: slug };  
+  if (slug) filter.slug = { _eq: slug };
   if (custom_domain) filter.custom_domain = { _eq: custom_domain };
 
   return GraphQLAPI.query({
@@ -80,7 +82,7 @@ const asyncFilterWidgetGraphql = ({ slug, custom_domain }: any) => (dispatch: an
               count
             }
           }
-          
+
           form_entries_aggregate {
             aggregate {
               count
@@ -165,7 +167,7 @@ class Page extends React.Component<PageProps> {
   //     };
 
   //     TagManager.initialize(tagManagerArgs)
-      
+
   //     const args = {
   //       dataLayer: {
   //         event: 'sign_up'
@@ -203,6 +205,17 @@ class Page extends React.Component<PageProps> {
 
     const domain = customDomain || `${slug}.${publicRuntimeConfig.domainPublic || 'staging.bonde.org'}`;
     const url = `${this.props.protocol}://${domain}`;
+
+    initApm({
+      // Set required service name (allowed characters: a-z, A-Z, 0-9, -, _, and space)
+      serviceName: `Bonde Webpage - ${domain}`,
+      // Set custom APM Server URL (default: http://localhost:8200)
+      serverUrl: 'https://421ca5e3d4c44a04a7f832f08aefbcda.apm.us-east-1.aws.cloud.es.io:443',
+      // Set the service version (required for source map feature)
+      serviceVersion: pkgInfo.version,
+      // Set the service environment
+      environment: 'production'
+    })
 
     return (
       <div className="container">
