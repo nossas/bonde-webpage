@@ -6,117 +6,27 @@ import Head from 'next/head';
 import { connect } from 'react-redux';
 import { init as initApm } from '@elastic/apm-rum';
 import {
-  asyncFilterMobilization,
+  // asyncFilterMobilization,
   asyncFilterBlock,
   // asyncFilterWidget,
   Styles,
 } from 'bonde-webpages';
+
 import * as pkgInfo from '../package.json';
+import asyncFilterBlockGraphql from '../graphql-app/filterBlocks';
+import asyncFilterMobilizationGraphql from '../graphql-app/filterMobilizations';
+import asyncFilterWidgetGraphql from '../graphql-app/filterWidgets';
+
 import MeuRioStyles from './components/MeuRioStyles';
 import MobilizationConnected from './components/MobilizationConnected';
 import getConfig from 'next/config';
 import Error404 from './404';
-import gql from 'graphql-tag';
-import { client as GraphQLAPI } from '../graphql-app';
 
 const { publicRuntimeConfig } = getConfig();
 
 interface PageProps {
   mobilization: any;
   protocol: string;
-}
-
-type EqFilter = {
-  _eq: string
-}
-
-type WidgetFilter = {
-  slug?: EqFilter
-  custom_domain?: EqFilter
-}
-
-type Aggregate = {
-  aggregate: { count: number }
-}
-
-type WidgetGraphQL = {
-  id: number
-  kind: string
-  goal?: string
-  settings: any
-  block_id: number
-  created_at: string
-  updated_at: string
-  sm_size: string
-  md_size: string
-  lg_size: string
-  activist_pressures_aggregate: Aggregate
-  form_entries_aggregate: Aggregate
-  donations_aggregate: Aggregate
-}
-
-const asyncFilterWidgetGraphql = ({ slug, custom_domain }: any) => (dispatch: any) => {
-  dispatch({ type: 'FILTER_WIDGETS_REQUEST' });
-
-  let filter: WidgetFilter = {};
-  if (slug) filter.slug = { _eq: slug };
-  if (custom_domain) filter.custom_domain = { _eq: custom_domain };
-
-  return GraphQLAPI.query({
-    query: gql`
-      query ($filter: mobilizations_bool_exp!) {
-        widgets(where: { block: { mobilization: $filter } }, order_by: { id: asc }) {
-          id
-          kind
-          goal
-          settings
-          block_id
-          created_at
-          updated_at
-          sm_size
-          md_size
-          lg_size
-
-          activist_pressures_aggregate {
-            aggregate {
-              count
-            }
-          }
-
-          form_entries_aggregate {
-            aggregate {
-              count
-            }
-          }
-
-          donations_aggregate {
-            aggregate {
-              count
-            }
-          }
-        }
-      }
-    `,
-    variables: { filter },
-    fetchPolicy: "no-cache"
-  })
-  .then(({ data }: { data: { widgets: WidgetGraphQL[] } }) => {
-    dispatch({
-      type: 'FILTER_WIDGETS_SUCCESS',
-      payload: data.widgets.map((w: WidgetGraphQL) => ({
-        ...w,
-        form_entries_count: w.form_entries_aggregate.aggregate.count,
-        donations_count: w.donations_aggregate.aggregate.count,
-        count: w.activist_pressures_aggregate.aggregate.count
-      }))
-    });
-    return Promise.resolve();
-  })
-  .catch((err: any) => {
-    dispatch({ type: 'FILTER_WIDGETS_FAILURE', payload: err });
-    console.log('failed', err);
-    return Promise.reject(err);
-  })
 }
 
 class Page extends React.Component<PageProps> {
@@ -143,13 +53,15 @@ class Page extends React.Component<PageProps> {
         ? { slug: regex[1].replace(/^www\./, '') }
         : { custom_domain: host };
 
-      await dispatch(asyncFilterMobilization(filter || where));
-      await dispatch(asyncFilterBlock(filter || where));
+      await dispatch(asyncFilterMobilizationGraphql(filter || where));
+      // await dispatch(asyncFilterMobilization(filter || where));
+      await dispatch(asyncFilterBlockGraphql(filter || where));
+      // await dispatch(asyncFilterBlock(filter || where));
       await dispatch(asyncFilterWidgetGraphql(filter || where));
       // await dispatch(asyncFilterWidget(filter || where));
     };
 
-    await fetchData();
+    await fetchData({ slug: '285-contra-a-licenca-pra-matar' });
     // Mobiization with all widgets configured.
     // await fetchData({ slug: 'teste-de-widgets' });
     // await fetchData({ slug: 'elevacaonajbnao' });
