@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { init as initApm } from '@elastic/apm-rum';
 import {
   // asyncFilterMobilization,
-  asyncFilterBlock,
+  // asyncFilterBlock,
   // asyncFilterWidget,
   Styles,
 } from 'bonde-webpages';
@@ -61,9 +61,9 @@ class Page extends React.Component<PageProps> {
       // await dispatch(asyncFilterWidget(filter || where));
     };
 
-    // await fetchData({ slug: '285-contra-a-licenca-pra-matar' });
+    await fetchData();
     // Mobiization with all widgets configured.
-    await fetchData({ slug: 'teste-de-widgets' });
+    // await fetchData({ slug: 'teste-de-widgets' });
     // await fetchData({ slug: 'elevacaonajbnao' });
     // await fetchData({ slug: 'nova-home-meu-rio' });
   }

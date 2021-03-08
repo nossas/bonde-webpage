@@ -1,6 +1,6 @@
 {
   "name": "bonde-public",
-  "version": "0.3.4-alpha.14",
+  "version": "0.3.4-alpha.15",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,7 +13,7 @@
     "@apollo/client": "^3.3.6",
     "@elastic/apm-rum": "^5.6.3",
     "axios": "^0.19.2",
-    "bonde-webpages": "0.3.4-alpha.14",
+    "bonde-webpages": "0.3.4-alpha.15",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "elliptic": "6.5.3",
