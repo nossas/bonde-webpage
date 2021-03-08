@@ -174,7 +174,7 @@ class Mobilization extends React.Component<
         <div
           id="blocks-list"
           className="flex-auto"
-          style={{ overflowY: 'scroll' }}
+          style={{ overflowY: 'hidden' }}
         >
           {blocks.map((b: any, i: any) => (
             <Section
@@ -188,7 +188,7 @@ class Mobilization extends React.Component<
             />
           ))}
         </div>
-        <Footer />
+        <Footer mobilization={extraWidgetProps.mobilization} />
       </div>
     );
   }

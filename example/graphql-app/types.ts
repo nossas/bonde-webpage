@@ -27,6 +27,14 @@ export type WidgetGraphQL = {
   donations_aggregate: Aggregate
 }
 
+export type CommunityGraphQL = {
+  image: string
+  signature?: {
+    name: string
+    url: string
+  }
+}
+
 export type MobilizationGraphQL = {
   id: number
   name: string
@@ -43,6 +51,7 @@ export type MobilizationGraphQL = {
   custom_domain?: string
   twitter_share_text?: string
   community_id: number
+  community: CommunityGraphQL
   favicon?: string
   status?: string
 }

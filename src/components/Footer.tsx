@@ -19,84 +19,91 @@ const Link = styled.a`
   }
 `;
 
-const StyledFooter = styled.footer`
-  width: 100%;
+const FooterStyled = styled.footer`
   display: flex;
-  justify-content: center;
-`;
-
-const MadeWithBonde = styled.div`
   align-items: center;
-  display: grid;
-  grid-template-rows: auto auto;
-  @media (min-width: 768px) {
+  justify-content: space-between;
+  background-color: #fff;
+
+  padding: 0 100px;
+
+  .flexable {
     display: flex;
-    grid-column-gap: 20px;
+    align-items: center;
+
+    a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+  }
+
+  .signature {
+    font-size: 16px;
+    color: #000;
+    margin-left: 15px;
   }
 `;
 
-const WrapIcon = styled.div`
-  justify-self: center;
-  align-self: start;
-  @media (min-width: 768px) {
-    align-self: center;
-    justify-self: end;
-  }
+const Image = styled.img`
+  width: 56px;
+  height: 56px;
 `;
 
-const WrapFooter = styled.div`
-  width: 83.3333%;
-  display: grid;
-  grid-template-columns: 70% 30%;
-  grid-column-gap: 20px;
-  align-items: center;
-`;
+interface FooterProps {
+  mobilization: {
+    community: {
+      image: string;
+      signature: {
+        name: string;
+        url: string;
+      };
+    };
+  };
+}
 
-const Divisor = styled.span`
-  display: none;
-  @media (min-width: 768px) {
-    display: initial;
-    justify-self: center;
-  }
-`;
-
-const Footer = () => (
-  <StyledFooter>
-    <WrapFooter>
-      <MadeWithBonde>
-        <Link
-          href="http://www.bonde.org/?utm_source=footer-logo"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="made-with"
-        >
-          <p>Feito pra causar.</p>
-          <p>
-            Feito com <span>BONDE</span>.
-          </p>
-        </Link>
-        <Divisor>|</Divisor>
-        <Link
-          href="/static/politica-de-privacidade.pdf"
-          title="Política de Privacidade"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Política de Privacidade
-        </Link>
-      </MadeWithBonde>
-      <WrapIcon>
+const Footer: React.FC<FooterProps> = ({ mobilization }) => (
+  <FooterStyled>
+    {!!mobilization.community.signature ? (
+      <div className="flexable">
         <a
-          href="http://www.bonde.org/?utm_source=footer-slogan"
-          className="right my2"
+          href={mobilization.community.signature.url}
+          title={`Assinatura da comunidade ${mobilization.community.signature.name}`}
           target="_blank"
-          rel="noopener noreferrer"
         >
-          <BondeIcon />
+          <Image
+            src={mobilization.community.image}
+            alt={mobilization.community.signature.name}
+          />
+          <span className="signature">
+            Criado por {mobilization.community.signature.name}
+          </span>
         </a>
-      </WrapIcon>
-    </WrapFooter>
-  </StyledFooter>
+      </div>
+    ) : (
+      <div />
+    )}
+    <div className="flexable">
+      <Link
+        href="/static/politica-de-privacidade.pdf"
+        title="Política de Privacidade"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ marginRight: '30px' }}
+      >
+        Política de Privacidade
+      </Link>
+      <a
+        href="http://www.bonde.org/?utm_source=footer-slogan"
+        className="right"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Feito pra causar. Feito com BONDE."
+      >
+        <BondeIcon />
+      </a>
+    </div>
+  </FooterStyled>
 );
 
 export default Footer;

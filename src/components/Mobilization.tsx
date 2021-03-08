@@ -150,7 +150,7 @@ const Mobilization: React.FC<MobilizationProps> = props => {
       <div
         id="blocks-list"
         className="flex-auto"
-        style={{ overflowY: 'scroll' }}
+        style={{ overflowY: 'hidden' }}
       >
         {blocks.map((b: any, i: any) => (
           <Section
@@ -163,7 +163,7 @@ const Mobilization: React.FC<MobilizationProps> = props => {
             extraWidgetProps={extraWidgetProps}
           />
         ))}
-        <Footer />
+        <Footer mobilization={extraWidgetProps.mobilization} />
       </div>
     </div>
   );

@@ -61,9 +61,9 @@ class Page extends React.Component<PageProps> {
       // await dispatch(asyncFilterWidget(filter || where));
     };
 
-    await fetchData({ slug: '285-contra-a-licenca-pra-matar' });
+    // await fetchData({ slug: '285-contra-a-licenca-pra-matar' });
     // Mobiization with all widgets configured.
-    // await fetchData({ slug: 'teste-de-widgets' });
+    await fetchData({ slug: 'teste-de-widgets' });
     // await fetchData({ slug: 'elevacaonajbnao' });
     // await fetchData({ slug: 'nova-home-meu-rio' });
   }
