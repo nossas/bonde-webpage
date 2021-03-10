@@ -1,5 +1,5 @@
 import React from 'react';
-import { BondeIcon } from '../icons';
+import BondeFooterIcon from './BondeFooterIcon';
 // TODO: Remover dependencia dos componentes de tradução
 // import { FormattedMessage } from 'react-intl';
 import styled from '@emotion/styled';
@@ -11,12 +11,32 @@ const Link = styled.a`
 
 const Stack = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
+  &:first-child {
+    justify-content: flex-start;
+    margin-bottom: 25px;
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+
+    &:first-child {
+      .signature {
+        margin-left: 20px;
+      }
+    }
+  }
 
   @media (min-width: 768px) {
     display: grid;
     grid-column-gap: 20px;
     grid-template-columns: auto auto;
+
+    &:first-child {
+      margin: 0;
+    }
   }
 `
 
@@ -36,7 +56,6 @@ const FooterStyled = styled.footer`
   .signature {
     font-size: 16px;
     color: #000;
-    margin-left: 15px;
   }
 `;
 
@@ -78,8 +97,8 @@ const Footer: React.FC<FooterProps> = ({ mobilization }) => {
             <span className="signature">Criado por {signatureName}</span>
           </Link>
         ) : (
-          <span className="signature">Criado por {signatureName}</span>
-        )}
+            <span className="signature">Criado por {signatureName}</span>
+          )}
       </Stack>
       <Stack>
         <Link
@@ -96,7 +115,7 @@ const Footer: React.FC<FooterProps> = ({ mobilization }) => {
           rel="noopener noreferrer"
           target="_blank"
         >
-          <BondeIcon />
+          <BondeFooterIcon />
         </Link>
       </Stack>
     </FooterStyled>

@@ -19,6 +19,7 @@ import PressureEmailPlugin from './PressureEmailConnected';
 // import PressurePhonePlugin from './PressurePhonelConnected';
 import DonationPlugin from './DonationConnected';
 import Utils from '../../Utils';
+import Footer from './Footer';
 
 // import graphqlClient from './apolloClient'
 // PRESSURE PLUGIN and external dependencies
@@ -120,6 +121,7 @@ const MobilizationConnected = ({
         blocks={blocks}
         widgets={widgets}
         widgetComponent={PluggableWidget}
+        footerComponent={Footer}
         colorScheme={colorScheme}
         headerFont={headerFont}
         bodyFont={bodyFont}

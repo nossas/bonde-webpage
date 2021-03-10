@@ -1,6 +1,6 @@
 import React from 'react';
 import Section from './Section';
-import Footer from './Footer';
+import Footer, { FooterProps } from './Footer';
 import Navigation from './navigation';
 
 interface MobilizationProps {
@@ -36,6 +36,8 @@ interface MobilizationProps {
    * as param.
    * Default function use the attrs widget.block_id to relationship. */
   blockWidgetsRef?: Function;
+  /* Custom component Footer */
+  footerComponent: React.FC<FooterProps>;
 }
 
 type MobilizationState = {
@@ -61,6 +63,7 @@ class Mobilization extends React.Component<
     blocks: [],
     widgets: [],
     extraWidgetProps: {},
+    footerComponent: Footer,
     blockWidgetsRef: (b: any, ws: any) =>
       ws.filter((w: any) => w.block_id === b.id),
   };
@@ -159,6 +162,7 @@ class Mobilization extends React.Component<
       blockWidgetsRef,
       widgets,
       widgetComponent,
+      footerComponent: FooterComponent,
       extraWidgetProps,
     } = this.props;
 
@@ -188,7 +192,7 @@ class Mobilization extends React.Component<
             />
           ))}
         </div>
-        <Footer mobilization={extraWidgetProps.mobilization} />
+        <FooterComponent mobilization={extraWidgetProps.mobilization} />
       </div>
     );
   }
