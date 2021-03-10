@@ -31,6 +31,7 @@ const asyncFilterMobilizationsGraphql = ({ slug, custom_domain }: any) => (dispa
           community_id
           community {
             image
+            name
             signature
           }
           favicon
