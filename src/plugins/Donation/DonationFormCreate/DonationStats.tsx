@@ -125,8 +125,15 @@ const DonationStats: React.FC<Props> = ({
 }) => {
   const stats = JSON.parse(data || '{}');
 
-  return stats.goal ? (
-    <DonationStatsStyles mainColor={mainColor}>
+  if (stats.goal && parseInt(stats.goal) === 1) {
+    return (<DonationStatsStyles mainColor={mainColor}>
+      <Currency mainColor={mainColor}>
+        <span>{`R$ ${currencyInt(stats.pledged)}`}</span>
+        <span>{currencyLabel}</span>
+      </Currency>
+    </DonationStatsStyles>);
+  } else if (stats.goal) {
+    return (<DonationStatsStyles mainColor={mainColor}>
       <Currency mainColor={mainColor}>
         <span>{`R$ ${currencyInt(stats.pledged)}`}</span>
         <span>{currencyLabel}</span>
@@ -147,8 +154,10 @@ const DonationStats: React.FC<Props> = ({
           <GoalDateRemaining daysLabel={daysLabel} dateLimit={goalDateLimit} />
         )}
       </div>
-    </DonationStatsStyles>
-  ) : null;
+    </DonationStatsStyles>);
+  }
+
+  return null;
 };
 
 DonationStats.defaultProps = {
