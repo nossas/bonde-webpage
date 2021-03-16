@@ -16,7 +16,7 @@
     "bonde-webpages": "0.3.4-alpha.17",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
-    "elliptic": "6.5.3",
+    "elliptic": "6.5.4",
     "graphql": "^15.0.0",
     "next": "^9.4.1-canary.5",
     "next-redux-wrapper": "^6.0.0-rc.7",
