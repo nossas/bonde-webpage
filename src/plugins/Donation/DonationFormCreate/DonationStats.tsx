@@ -90,12 +90,9 @@ type Props = {
   goalDateLimit?: string;
 };
 
-const currencyInt = (value: number): string =>
-  value
-    .toFixed(2)
-    .replace(/\d(?=(\d{3})+\.)/g, '$&,')
-    .replace(/\.(\d)+/, '')
-    .replace(',', '.');
+const currencyInt = (value: number): string => {
+  return new Intl.NumberFormat('pt-BR').format(value);
+};
 
 type GoalDateRemainingProps = {
   dateLimit: string;
