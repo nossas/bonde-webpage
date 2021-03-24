@@ -20,7 +20,7 @@ const DonationTellAFriend = ({
       preview={preview}
       mobilization={mobilization}
       widget={widget}
-      message="Oba, doação registrada! Sua doação é via boleto? Verifique seu email."
+      message='Obrigada pelo apoio <3 Se selecionou a opção "boleto", dá uma olhada no seu e-mail que o link deve chegar por lá :)'
     />
   );
 };
