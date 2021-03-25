@@ -1,5 +1,5 @@
 {
-  "version": "0.3.4-alpha.17",
+  "version": "0.3.4-alpha.18",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -28,11 +28,6 @@
       "tsdx lint --fix",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "prettier": {
     "printWidth": 80,
