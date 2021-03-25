@@ -12,27 +12,32 @@ The recommended workflow in development is with use `yarn link` to easily debug 
 
 Run build in terminal:
 
-```
+```bash
+# run this command in location / 
 yarn
-```
-
-For run development enrivonment, create a link to `bonde-webpages` and `react` for use on `example/` app. (More about yarn link)[https://dev.to/mfco/unsolving-the-mysteries-of-yarn-npm-link-for-libraries-development-1bo0]
 
 ```
+
+For run development enrivonment, create a link to `bonde-webpages` and `react` for use on `example/` app. (More about yarn link)[[https://dev.to/mfco/unsolving-the-mysteries-of-yarn-npm-link-for-libraries-development-1bo0](https://dev.to/mfco/unsolving-the-mysteries-of-yarn-npm-link-for-libraries-development-1bo0)]
+
+```bash
 yarn link # create link to bonde-webpages
 cd node_modules/react && yarn link # create link to react
 cd ../react-dom && yarn link # create link to react-dom
+
 ```
 
 ### Example
 
 Then run the example inside another:
 
-```
+```bash
+# run this command in location / 
 cd example
 yarn
 yarn link bonde-webpages react react-dom
 yarn build # or `yarn run dev` to start dev server
+
 ```
 
 ### Storybook
@@ -41,6 +46,7 @@ Run inside another terminal:
 
 ```
 yarn storybook
+
 ```
 
 This loads the stories from `./stories`.
@@ -55,7 +61,7 @@ Jest tests are set up to run with `npm test` or `yarn test`. This runs the test 
 
 ### Rollup
 
-TSDX uses [Rollup v1.x](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+TSDX uses [Rollup v1.x](https://rollupjs.org/) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](https://www.notion.so/1ee932353f2f4c54a7c428760a8b136e#optimizations) for details.
 
 ### TypeScript
 
@@ -65,17 +71,17 @@ TSDX uses [Rollup v1.x](https://rollupjs.org) as a bundler and generates multipl
 
 ### Travis
 
-_to be completed_
+*to be completed*
 
 ### Circle
 
-_to be completed_
+*to be completed*
 
 ## Optimizations
 
 Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
 
-```js
+```
 // ./types/index.d.ts
 declare var __DEV__: boolean;
 
@@ -83,6 +89,7 @@ declare var __DEV__: boolean;
 if (__DEV__) {
   console.log('foo');
 }
+
 ```
 
 You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
@@ -97,10 +104,11 @@ The appropriate paths are configured in `package.json` and `dist/index.js` accor
 
 Run build to deploy on production:
 
-```bash
+```
 cd example # if not already in the example folder
 yarn build # builds to dist
 yarn start # deploy the dist folder
+
 ```
 
 <!-- ## Named Exports
@@ -115,4 +123,4 @@ For vanilla CSS, you can include it at the root directory and add it to the `fil
 
 <!-- ## Publishing to NPM
 
-We recommend using https://github.com/sindresorhus/np. -->
+We recommend using [https://github.com/sindresorhus/np](https://github.com/sindresorhus/np). -->
