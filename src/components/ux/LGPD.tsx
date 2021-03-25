@@ -30,7 +30,7 @@ export default ({ color }: any) => {
       >
         política de privacidade
       </a>
-      {` . Você pode cancelar o recebimento desses e-mails a qualquer momento.`}
+      {`. Você pode cancelar o recebimento desses e-mails a qualquer momento.`}
     </Text>
   );
 };
