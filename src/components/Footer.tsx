@@ -61,6 +61,10 @@ export interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ mobilization }) => {
   const signatureName: string =
     mobilization.community?.signature?.name || mobilization.community.name;
+    
+  const signatureBonde = 
+    <Link href="http://bonde.org" target="_blank"><b>BONDE</b></Link>
+  
 
   return (
     <FooterStyled>
@@ -75,10 +79,10 @@ const Footer: React.FC<FooterProps> = ({ mobilization }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="signature">Criado por {signatureName}</span>
+            <span className="signature">Feito por {signatureName} usando o {signatureBonde}</span>
           </Link>
         ) : (
-          <span className="signature">Criado por {signatureName}</span>
+          <span className="signature">Feito por {signatureName} usando o {signatureBonde}</span>
         )}
       </Stack>
       <Stack>
