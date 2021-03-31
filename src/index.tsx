@@ -1,8 +1,6 @@
 /* Mobilization render layout */
 export { default as Styles } from './Styles';
-export { default as Mobilization } from './components/Mobilization';
 export { default as MobilizationClass } from './components/MobilizationClass';
-export { default as Footer } from './components/Footer';
 export { default as Section } from './components/Section';
 export { default as Navigation } from './components/navigation';
 export { default as WidgetArea } from './components/WidgetArea';
@@ -18,7 +16,6 @@ export {
 } from './redux-mob/action-creators';
 export { default as reducer } from './redux-mob/reducers';
 export { default as selectors } from './redux-mob/Selectors';
-
 export { default as ContentPlugin } from './plugins/Content';
 export { default as DraftPlugin } from './plugins/Draft';
 
