@@ -24,6 +24,7 @@ const Stack = styled.div`
 
     &:first-child {
       .signature {
+        display: inline-block;
         margin-left: 20px;
       }
     }
