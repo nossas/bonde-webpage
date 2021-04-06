@@ -54,7 +54,7 @@ const Boleto = ({ donation, ...props }: any) => {
   return (
     <TellAFriendBase
       {...props}
-      message="Eba! Boleto gerado:"
+      message="Obrigada <3 Seu boleto já foi gerado:"
       render={() => (
         <Container>
           <Code>{boleto_barcode}</Code>

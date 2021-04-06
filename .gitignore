@@ -4,4 +4,4 @@ node_modules
 .cache
 dist
 .env
-example/.env
+bonde-public/.env

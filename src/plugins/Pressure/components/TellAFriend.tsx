@@ -27,7 +27,7 @@ const PressureTellAFriend = ({
     preview={preview}
     mobilization={mobilization}
     widget={widget}
-    message="Pressão enviada"
+    message="E-mail(s) enviado(s)!"
     {...props}
   />
 );

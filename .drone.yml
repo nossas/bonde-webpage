@@ -38,7 +38,7 @@ pipeline:
   build-public-ts:
     image: node:12-alpine
     commands:
-      - cd example
+      - cd bonde-public
       - yarn
       - yarn build
     when:
@@ -49,7 +49,7 @@ pipeline:
     environment:
       - SKIP_PREFLIGHT_CHECK=true
     commands:
-      - cd example
+      - cd bonde-public
       - yarn run coverage
     when:
       event: [push, tag]
@@ -58,8 +58,8 @@ pipeline:
     image: plugins/docker
     repo: nossas/bonde-public-ts
     secrets: [ docker_username, docker_password ]
-    dockerfile: example/Dockerfile
-    context: example/
+    dockerfile: bonde-public/Dockerfile
+    context: bonde-public/
     group: publish
     tags:
       - ${DRONE_BRANCH/\//-}
@@ -71,8 +71,8 @@ pipeline:
     image: plugins/docker
     repo: nossas/bonde-public-ts
     secrets: [ docker_username, docker_password ]
-    dockerfile: example/Dockerfile
-    context: example/
+    dockerfile: bonde-public/Dockerfile
+    context: bonde-public/
     group: publish
     tags:
       - ${DRONE_TAG##v}

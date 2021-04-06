@@ -20,7 +20,7 @@ const FormTellAFriend = ({ mobilization, widget, ...props }: Props) => (
   <TellAFriendBase
     mobilization={mobilization}
     widget={widget}
-    message="Formulário submetido com sucesso!"
+    message="Formulário salvo!"
     {...props}
   />
 );

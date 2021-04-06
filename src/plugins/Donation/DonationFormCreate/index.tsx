@@ -63,7 +63,7 @@ export default ({
             selected={selectedPaymentType}
             onSelect={setSelectedPaymentType}
             uniqueLabel="Doação única"
-            recurringLabel={`Apoiar todo ${recurringLabel}`}
+            recurringLabel={`Doar todo ${recurringLabel}`}
           />
         )}
         {donationValue1 && (

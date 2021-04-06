@@ -1,9 +1,21 @@
 import React from 'react';
 import Section from './Section';
-import Footer, { FooterProps } from './Footer';
 import Navigation from './navigation';
 
-interface MobilizationProps {
+export interface FooterProps {
+  mobilization: {
+    community: {
+      name: string;
+      image: string;
+      signature?: {
+        name?: string;
+        url?: string;
+      };
+    };
+  };
+}
+
+export interface MobilizationProps {
   /* Define when the mobilization is in edit mode. */
   editable?: boolean;
   colorScheme?: string;
@@ -63,7 +75,6 @@ class Mobilization extends React.Component<
     blocks: [],
     widgets: [],
     extraWidgetProps: {},
-    footerComponent: Footer,
     blockWidgetsRef: (b: any, ws: any) =>
       ws.filter((w: any) => w.block_id === b.id),
   };

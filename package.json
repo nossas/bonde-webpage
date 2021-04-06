@@ -1,5 +1,8 @@
 {
-  "version": "0.3.5-alpha.2",
+  "name": "bonde-webpages",
+  "author": "Viviane",
+  "module": "dist/bonde-webpages.esm.js",
+  "version": "0.3.5",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -29,11 +32,6 @@
       "git add"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
@@ -45,12 +43,10 @@
       "<rootDir>/src/setupTests.ts"
     ],
     "testPathIgnorePatterns": [
-      "<rootDir>/example/"
+      "<rootDir>/bonde-public/"
     ]
   },
-  "name": "bonde-webpages",
-  "author": "Viviane",
-  "module": "dist/bonde-webpages.esm.js",
+
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@storybook/addon-actions": "^5.3.18",

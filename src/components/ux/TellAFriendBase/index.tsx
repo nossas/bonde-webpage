@@ -42,7 +42,7 @@ const TellAFriend = ({
         </IconWrapper>
       )}
       {render && render()}
-      <p>Compartilhe a campanha com a sua galera para aumentar o impacto</p>
+      <p>Compartilhe a campanha com mais pessoas para aumentar o impacto.</p>
       <WrapButtons>
         <FacebookShareButton href={href} />
         <TwitterShareButton href={href} text={twitterShareText} />

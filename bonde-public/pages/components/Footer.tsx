@@ -24,6 +24,7 @@ const Stack = styled.div`
 
     &:first-child {
       .signature {
+        display: inline-block;
         margin-left: 20px;
       }
     }
@@ -81,6 +82,9 @@ const Footer: React.FC<FooterProps> = ({ mobilization }) => {
   const signatureName: string =
     mobilization.community?.signature?.name || mobilization.community.name;
 
+  const signatureBonde = 
+    <Link href="http://bonde.org" target="_blank"><b>BONDE</b></Link>;
+
   return (
     <FooterStyled>
       <Stack>
@@ -94,10 +98,10 @@ const Footer: React.FC<FooterProps> = ({ mobilization }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="signature">Criado por {signatureName}</span>
+            <span className="signature">Criado por {signatureName} usando o {signatureBonde}.</span>
           </Link>
         ) : (
-            <span className="signature">Criado por {signatureName}</span>
+            <span className="signature">Criado por {signatureName} usando o {signatureBonde}.</span>
           )}
       </Stack>
       <Stack>
