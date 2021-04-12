@@ -29,6 +29,7 @@ const asyncFilterMobilizationsGraphql = ({ slug, custom_domain }: any) => (dispa
           custom_domain
           twitter_share_text
           community_id
+          language
           community {
             image
             name

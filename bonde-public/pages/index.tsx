@@ -10,6 +10,7 @@ import {
   // asyncFilterBlock,
   // asyncFilterWidget,
   Styles,
+  LanguageProvider
 } from 'bonde-webpages';
 
 import * as pkgInfo from '../package.json';
@@ -113,6 +114,7 @@ class Page extends React.Component<PageProps> {
       custom_domain: customDomain,
       google_analytics_code: googleAnalyticsCode,
       slug,
+      language
     } = this.props.mobilization;
 
     const domain = customDomain || `${slug}.${publicRuntimeConfig.domainPublic || 'staging.bonde.org'}`;
@@ -188,7 +190,9 @@ class Page extends React.Component<PageProps> {
         </Head>
         <MeuRioStyles>
           <Styles>
-            <MobilizationConnected />
+            <LanguageProvider locale={language}>
+              <MobilizationConnected />
+            </LanguageProvider>
           </Styles>
         </MeuRioStyles>
       </div>

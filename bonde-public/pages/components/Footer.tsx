@@ -3,6 +3,7 @@ import BondeFooterIcon from './BondeFooterIcon';
 // TODO: Remover dependencia dos componentes de tradução
 // import { FormattedMessage } from 'react-intl';
 import styled from '@emotion/styled';
+import { Language } from 'bonde-webpages';
 
 const Link = styled.a`
   color: #000;
@@ -78,6 +79,16 @@ export interface FooterProps {
   };
 }
 
+const Signature = ({ name, bonde }) => (
+  <Language>
+    {(locale) => locale === 'ptbr' ? (
+      <span className="signature">Criado por {name} usando o {bonde}.</span>
+    ) : locale === 'es' ? (
+      <span className="signature">Creado por {name} usando {bonde}.</span>
+    ) : null}
+  </Language>
+);
+
 const Footer: React.FC<FooterProps> = ({ mobilization }) => {
   const signatureName: string =
     mobilization.community?.signature?.name || mobilization.community.name;
@@ -98,10 +109,10 @@ const Footer: React.FC<FooterProps> = ({ mobilization }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="signature">Criado por {signatureName} usando o {signatureBonde}.</span>
+            <Signature name={signatureName} bonde={signatureBonde} />
           </Link>
         ) : (
-            <span className="signature">Criado por {signatureName} usando o {signatureBonde}.</span>
+            <Signature name={signatureName} bonde={signatureBonde} />
           )}
       </Stack>
       <Stack>
