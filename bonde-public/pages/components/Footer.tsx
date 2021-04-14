@@ -1,9 +1,8 @@
 import React from 'react';
 import BondeFooterIcon from './BondeFooterIcon';
 // TODO: Remover dependencia dos componentes de tradução
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import styled from '@emotion/styled';
-import { Language } from 'bonde-webpages';
 
 const Link = styled.a`
   color: #000;
@@ -79,45 +78,55 @@ export interface FooterProps {
   };
 }
 
-const Signature = ({ name, bonde }) => (
-  <Language>
-    {(locale) => locale === 'ptbr' ? (
-      <span className="signature">Criado por {name} usando o {bonde}.</span>
-    ) : locale === 'es' ? (
-      <span className="signature">Creado por {name} usando {bonde}.</span>
-    ) : null}
-  </Language>
-);
+// const Signature = ({ name, bonde }) => (
+//   <Language>
+//     {(locale) => locale === 'ptbr' ? (
+//       <span className="signature">Criado por {name} usando o {bonde}.</span>
+//     ) : locale === 'es' ? (
+//       <span className="signature">Creado por {name} usando {bonde}.</span>
+//     ) : null}
+//   </Language>
+// );
 
 const Footer: React.FC<FooterProps> = ({ mobilization }) => {
-  const trans = useTranslation();
-  console.log('translationReturns', { trans });
+  const { t } = useTranslation();
 
-  const signatureName: string =
+  const name: string =
     mobilization.community?.signature?.name || mobilization.community.name;
-
-  const signatureBonde = 
-    <Link href="http://bonde.org" target="_blank"><b>BONDE</b></Link>;
+  const bonde: any = <Link href="http://bonde.org" target="_blank"><b>BONDE</b></Link>
 
   return (
     <FooterStyled>
       <Stack>
         {mobilization.community.image && (
-          <Image src={mobilization.community.image} alt={signatureName} />
+          <Image src={mobilization.community.image} alt={name} />
         )}
-        {trans.t("Welcome to React")}
-        {/* {!!mobilization.community?.signature?.url ? (
-          <Link
-            href={mobilization.community?.signature?.url}
-            title={`Assinatura da comunidade ${signatureName}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Signature name={signatureName} bonde={signatureBonde} />
-          </Link>
+        {!!mobilization.community?.signature?.url ? (
+          <span>
+            {t('Signature Create')}
+            &nbsp;
+            <Link
+              href={mobilization.community?.signature?.url}
+              title={`Assinatura da comunidade ${name}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {name}
+            </Link>
+            &nbsp;
+            {t('Signature Use')}
+            &nbsp;
+            {bonde}
+          </span>
         ) : (
-            <Signature name={signatureName} bonde={signatureBonde} />
-          )} */}
+          <span>
+            {t('Signature Create')}
+            {` ${name} `}
+            {t('Signature Use')}
+            &nbsp;
+            {bonde}
+          </span>
+        )}
       </Stack>
       <Stack>
         <Link

@@ -13,6 +13,7 @@ import {
 } from 'bonde-webpages';
 import i18n from "i18next";
 import { initReactI18next, withSSR } from "react-i18next";
+import initialI18nStore from '../initialI18nStore';
 
 import * as pkgInfo from '../package.json';
 import asyncFilterBlockGraphql from '../graphql-app/filterBlocks';
@@ -29,18 +30,7 @@ const { publicRuntimeConfig } = getConfig();
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
-    resources: {
-      es: {
-        translation: {
-          "Welcome to React": "Bien viendo a React e react-i18next"
-        }
-      },
-      'pt-br': {
-        translation: {
-          "Welcome to React": "Bem vindo ao React e react-i18next"
-        }
-      }
-    },
+    resources: initialI18nStore,
     lng: "pt-br",
     fallbackLng: "pt-br",
 
@@ -90,51 +80,14 @@ class Page extends React.Component<PageProps> {
         : { custom_domain: host };
 
       await dispatch(asyncFilterMobilizationGraphql(filter || where));
-      // await dispatch(asyncFilterMobilization(filter || where));
       await dispatch(asyncFilterBlockGraphql(filter || where));
-      // await dispatch(asyncFilterBlock(filter || where));
       await dispatch(asyncFilterWidgetGraphql(filter || where));
-      // await dispatch(asyncFilterWidget(filter || where));
     };
 
     // await fetchData();
     // Mobiization with all widgets configured.
     await fetchData({ slug: 'teste-de-widgets' });
-    // await fetchData({ slug: 'elevacaonajbnao' });
-    // await fetchData({ slug: 'nova-home-meu-rio' });
   }
-
-  // componentDidMount() {
-  //   const isTestEnvironment =
-  //     process.env.NODE_ENV === undefined || process.env.NODE_ENV === 'test';
-  //   const { mobilization } = this.props;
-
-  //   if (!isTestEnvironment && !!mobilization) {
-  //     const tagManagerArgs = {
-  //       gtmId: 'GTM-W4T6JCX'
-  //     };
-
-  //     TagManager.initialize(tagManagerArgs)
-
-  //     const args = {
-  //       dataLayer: {
-  //         event: 'sign_up'
-  //       },
-  //       dataLayerName: 'PageDataLayer'
-  //     }
-
-  //     TagManager.dataLayer(args);
-  //     // ReactGA.initialize('UA-26278513-30');
-  //     // ReactGA.pageview('/' + mobilization.slug);
-  //     // if (mobilization.google_analytics_code) {
-  //     //   ReactGA.initialize(mobilization.google_analytics_code, {
-  //     //     gaOptions: { name: 'MobilizationTracker' },
-  //     //   });
-  //     //   ReactGA.ga('MobilizationTracker.send', 'pageview', '/');
-  //     //   ReactGA.ga('require', 'GTM-W4T6JCX');
-  //     // }
-  //   }
-  // }
 
   render() {
     if (!this.props.mobilization) return <Error404 />;
@@ -225,18 +178,7 @@ class Page extends React.Component<PageProps> {
         </Head>
         <AppLanguage
           initialLanguage={language}
-          initialI18nStore={{
-            es: {
-              translation: {
-                "Welcome to React": "Bien viendo a React e react-i18next"
-              }
-            },
-            ['pt-br']: {
-              translation: {
-                "Welcome to React": "Bem vindo ao React e react-i18next"
-              }
-            }
-          }}
+          initialI18nStore={initialI18nStore}
         />
       </div>
     );
