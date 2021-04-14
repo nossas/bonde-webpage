@@ -1,8 +1,5 @@
 import * as React from 'react';
 import Head from 'next/head';
-// import Error from 'next/error';
-// import ReactGA from 'react-ga';
-// import TagManager from 'react-gtm-module';
 import { connect } from 'react-redux';
 import { init as initApm } from '@elastic/apm-rum';
 import {

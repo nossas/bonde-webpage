@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { Translate } from '../MobilizationClass';
 
 type Props = {
   color?: string;
@@ -20,17 +21,23 @@ const Text = styled.span<Props>`
 
 export default ({ color }: any) => {
   return (
-    <Text color={color}>
-      {`Ao inserir seus dados, você concorda em ter seus dados compartilhados com os organizadores dessa página e aceita receber emails de atualização, conforme descrito na `}
-      <a
-        href="/static/politica-de-privacidade.pdf"
-        title="Politica de Privacidade"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        política de privacidade
-      </a>
-      {`. Você pode cancelar o recebimento desses e-mails a qualquer momento.`}
-    </Text>
+    <Translate>
+      {({ Trans }: any) => (
+        <Text color={color}>
+          <Trans i18nKey='Disclaimer'>
+            {`Ao inserir seus dados, você concorda em ter seus dados compartilhados com os organizadores dessa página e aceita receber emails de atualização, conforme descrito na `}
+            <a
+              href="/static/politica-de-privacidade.pdf"
+              title="Politica de Privacidade"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              política de privacidade
+            </a>
+            {`. Você pode cancelar o recebimento desses e-mails a qualquer momento.`}
+          </Trans>
+        </Text>
+      )}
+    </Translate>
   );
 };

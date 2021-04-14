@@ -4,8 +4,6 @@ import {
   // Plugins
   ContentPlugin,
   DraftPlugin,
-  // Mobilization
-  // Mobilization,
   MobilizationClass as Mobilization,
   PluggableWidget,
   FinishMessageCustom,
@@ -13,6 +11,7 @@ import {
   PressureAnalytics,
   PressureTellAFriend,
 } from 'bonde-webpages';
+import { useTranslation, Trans } from 'react-i18next';
 
 import FormPlugin from './FormConnected';
 import PressureEmailPlugin from './PressureEmailConnected';
@@ -20,13 +19,6 @@ import PressureEmailPlugin from './PressureEmailConnected';
 import DonationPlugin from './DonationConnected';
 import Utils from '../../Utils';
 import Footer from './Footer';
-
-// import graphqlClient from './apolloClient'
-// PRESSURE PLUGIN and external dependencies
-// import DonationPlugin from './plugin-donation.connected'
-// import { DonationAnalytics, DonationTellAFriend } from 'bonde-webpage/lib/plugins/donation'
-// TODO: Icons should be inside plugin reference.
-/*import { PressureEmailIcon, PressurePhoneIcon } from '@/pages/playground-mobs/icons'*/
 
 const mapStateToProps = (state: any, props: any) => {
   const query = MobilizationSelectors(state, props);
@@ -83,30 +75,15 @@ const plugins = [
   },
 ];
 
-// componentDidMount() {
-//   const isTest = false
-//   if (!isTest && this.props.mobilization) {
-//     const { mobilization } = this.props
-
-//     ReactGA.initialize('UA-26278513-30')
-//     ReactGA.pageview('/' + mobilization.slug)
-
-//     if (mobilization.google_analytics_code) {
-//       ReactGA.initialize(
-//         mobilization.google_analytics_code,
-//         { gaOptions: { name: 'MobilizationTracker' } }
-//       )
-//       ReactGA.ga('MobilizationTracker.send', 'pageview', '/')
-//     }
-//   }
-// }
-
 const MobilizationConnected = ({
   mobilization,
   blocks,
   widgets,
   blocksIsLoaded,
 }: any) => {
+  const { t, i18n } = useTranslation();
+
+  console.log('t, i18n', { t, i18n });
   if (mobilization && blocksIsLoaded) {
     // Properties received by HOC
     const {
@@ -129,6 +106,8 @@ const MobilizationConnected = ({
           mobilization: mobilization,
           editable: false,
           plugins,
+          t,
+          Trans
         }}
       />
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import BondeFooterIcon from './BondeFooterIcon';
 // TODO: Remover dependencia dos componentes de tradução
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
 
 const Link = styled.a`
@@ -78,16 +78,6 @@ export interface FooterProps {
   };
 }
 
-// const Signature = ({ name, bonde }) => (
-//   <Language>
-//     {(locale) => locale === 'ptbr' ? (
-//       <span className="signature">Criado por {name} usando o {bonde}.</span>
-//     ) : locale === 'es' ? (
-//       <span className="signature">Creado por {name} usando {bonde}.</span>
-//     ) : null}
-//   </Language>
-// );
-
 const Footer: React.FC<FooterProps> = ({ mobilization }) => {
   const { t } = useTranslation();
 
@@ -131,11 +121,11 @@ const Footer: React.FC<FooterProps> = ({ mobilization }) => {
       <Stack>
         <Link
           href="/static/politica-de-privacidade.pdf"
-          title="Política de Privacidade"
+          title={t('Political')}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Política de Privacidade
+          {t('Political')}
         </Link>
         <Link
           href="http://www.bonde.org/?utm_source=footer-slogan"
