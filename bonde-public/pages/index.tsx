@@ -9,9 +9,10 @@ import {
   // asyncFilterMobilization,
   // asyncFilterBlock,
   // asyncFilterWidget,
-  Styles,
-  LanguageProvider
+  Styles
 } from 'bonde-webpages';
+import i18n from "i18next";
+import { initReactI18next, withSSR } from "react-i18next";
 
 import * as pkgInfo from '../package.json';
 import asyncFilterBlockGraphql from '../graphql-app/filterBlocks';
@@ -25,10 +26,44 @@ import Error404 from './404';
 
 const { publicRuntimeConfig } = getConfig();
 
+i18n
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .init({
+    resources: {
+      es: {
+        translation: {
+          "Welcome to React": "Bien viendo a React e react-i18next"
+        }
+      },
+      'pt-br': {
+        translation: {
+          "Welcome to React": "Bem vindo ao React e react-i18next"
+        }
+      }
+    },
+    lng: "pt-br",
+    fallbackLng: "pt-br",
+
+    interpolation: {
+      escapeValue: false
+    }
+  });
+
+
 interface PageProps {
   mobilization: any;
   protocol: string;
 }
+
+const AppLanguage = withSSR()(() => {
+  return (
+    <MeuRioStyles>
+      <Styles>
+        <MobilizationConnected />
+      </Styles>
+    </MeuRioStyles>
+  );
+})
 
 class Page extends React.Component<PageProps> {
   static async getInitialProps({ store, res }: any = {}) {
@@ -62,9 +97,9 @@ class Page extends React.Component<PageProps> {
       // await dispatch(asyncFilterWidget(filter || where));
     };
 
-    await fetchData();
+    // await fetchData();
     // Mobiization with all widgets configured.
-    // await fetchData({ slug: 'teste-de-widgets' });
+    await fetchData({ slug: 'teste-de-widgets' });
     // await fetchData({ slug: 'elevacaonajbnao' });
     // await fetchData({ slug: 'nova-home-meu-rio' });
   }
@@ -188,13 +223,21 @@ class Page extends React.Component<PageProps> {
             `
           }} />
         </Head>
-        <MeuRioStyles>
-          <Styles>
-            <LanguageProvider locale={language}>
-              <MobilizationConnected />
-            </LanguageProvider>
-          </Styles>
-        </MeuRioStyles>
+        <AppLanguage
+          initialLanguage={language}
+          initialI18nStore={{
+            es: {
+              translation: {
+                "Welcome to React": "Bien viendo a React e react-i18next"
+              }
+            },
+            ['pt-br']: {
+              translation: {
+                "Welcome to React": "Bem vindo ao React e react-i18next"
+              }
+            }
+          }}
+        />
       </div>
     );
   }
@@ -220,5 +263,19 @@ const mapStateToProps = (state: any) => {
 
   return { isLoaded, ...composeProps, protocol, currentLocale };
 };
+
+// const App = (props: any) => {
+//   console.log('props', props);
+//   useSSR({
+//     es: {
+//       "Welcome to React": "Bien viendo a React e react-i18next"
+//     },
+//     ['pt-br']: {
+//       "Welcome to React": "Bem vindo ao React e react-i18next"
+//     }
+//   }, props.mobilization ? props.mobilization.language : 'pt-br');
+
+//   return <Page {...props} />
+// }
 
 export default connect(mapStateToProps)(Page);

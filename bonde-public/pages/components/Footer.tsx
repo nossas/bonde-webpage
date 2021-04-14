@@ -1,7 +1,7 @@
 import React from 'react';
 import BondeFooterIcon from './BondeFooterIcon';
 // TODO: Remover dependencia dos componentes de tradução
-// import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
 import { Language } from 'bonde-webpages';
 
@@ -90,6 +90,9 @@ const Signature = ({ name, bonde }) => (
 );
 
 const Footer: React.FC<FooterProps> = ({ mobilization }) => {
+  const trans = useTranslation();
+  console.log('translationReturns', { trans });
+
   const signatureName: string =
     mobilization.community?.signature?.name || mobilization.community.name;
 
@@ -102,7 +105,8 @@ const Footer: React.FC<FooterProps> = ({ mobilization }) => {
         {mobilization.community.image && (
           <Image src={mobilization.community.image} alt={signatureName} />
         )}
-        {!!mobilization.community?.signature?.url ? (
+        {trans.t("Welcome to React")}
+        {/* {!!mobilization.community?.signature?.url ? (
           <Link
             href={mobilization.community?.signature?.url}
             title={`Assinatura da comunidade ${signatureName}`}
@@ -113,7 +117,7 @@ const Footer: React.FC<FooterProps> = ({ mobilization }) => {
           </Link>
         ) : (
             <Signature name={signatureName} bonde={signatureBonde} />
-          )}
+          )} */}
       </Stack>
       <Stack>
         <Link
