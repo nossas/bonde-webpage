@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button, Input, Raise, ShareButtons } from './components';
 import { getFieldName, validate, fields, addValueToFields } from './utils';
 import styled from '@emotion/styled';
+import { Translate } from '../../components/MobilizationClass';
 import { Count } from '../../components';
 import LGPD from '../../components/ux/LGPD';
 
@@ -127,13 +128,13 @@ const FormPlugin = (props: Props) => {
   const [values, setValues] = useState<Record<string, string>>({});
   const [count, setCount] = useState<number>(widget.form_entries_count || 0);
 
-  const submit = async (e: any) => {
+  const handleSubmit = (t: any) => async (e: any) => {
     e.preventDefault();
     setErrors([]);
 
     const fieldsWithValue = addValueToFields(widget.settings.fields, values);
 
-    const errors = validate(fieldsWithValue);
+    const errors = validate(fieldsWithValue, { t });
 
     if (errors.length > 0) {
       return setErrors(errors);
@@ -151,7 +152,7 @@ const FormPlugin = (props: Props) => {
     } catch (e) {
       console.error(e);
       setStatus('rejected');
-      setErrors(['Houve um erro ao enviar o formulário. Tente novamente']);
+      setErrors([t('Network Failed')]);
     }
   };
 
@@ -168,16 +169,20 @@ const FormPlugin = (props: Props) => {
         : 'rgba(0,0,0,0.25)';
 
     return (
-      <WrapForm backgroundColor={bgcolor}>
-        <form onSubmit={submit}>
-          {renderCallToAction(widget)}
-          {renderFields(props, handleChange)}
-          {errors.length > 0 && renderErrors(errors)}
-          {widget.settings.fields &&
-            widget.settings.fields.length > 0 &&
-            renderButton(props, status === 'fulfilled', status === 'pending')}
-        </form>
-      </WrapForm>
+      <Translate>
+        {({ t }: any) => (
+          <WrapForm backgroundColor={bgcolor}>
+            <form onSubmit={handleSubmit(t)}>
+              {renderCallToAction(widget)}
+              {renderFields(props, handleChange)}
+              {errors.length > 0 && renderErrors(errors)}
+              {widget.settings.fields &&
+                widget.settings.fields.length > 0 &&
+                renderButton(props, status === 'fulfilled', status === 'pending')}
+            </form>
+          </WrapForm>
+        )}
+      </Translate>
     );
   };
 

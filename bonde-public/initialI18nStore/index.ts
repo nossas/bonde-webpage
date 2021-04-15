@@ -3,5 +3,5 @@ import ptBR from './locales/pt-br';
 
 export default {
   es: { translation: es },
-  ['pt-br']: { translation: ptBR }
+  ['pt-BR']: { translation: ptBR }
 }

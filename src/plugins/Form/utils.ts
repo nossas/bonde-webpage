@@ -5,16 +5,16 @@ export const isValidEmail = (email: any) => regexEmail.test(email);
 
 export const getFieldName = (uid: string) => `input-${uid}`;
 
-export const validate = (fieldsWithValue: any) => {
+export const validate = (fieldsWithValue: any, { t }: any) => {
   const errors = fieldsWithValue.map((field: any) => {
     if (field.required === 'true' && !field.value) {
-      return `${field.label} não pode ficar em branco`;
+      return t("Form Blank Validation", { field: field.label });
     } else if (
       field.value !== '' &&
       field.kind === 'email' &&
       !isValidEmail(field.value)
     ) {
-      return `${field.label} inválido`;
+      return t("Form Email 2 Validation", { field: field.label });
     }
     return false;
   });
