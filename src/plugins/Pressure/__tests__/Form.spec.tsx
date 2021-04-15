@@ -2,8 +2,15 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { render, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import { TranslateContext } from '../../../components/MobilizationClass';
 import Form from '../components/Form';
 import EmailFields from '../Email/EmailFields';
+
+const renderFormPlugin = (props: any) => render(
+  <TranslateContext.Provider value={{ t: (key: string) => key, Trans: () => <div /> }}>
+    <Form {...props} />
+  </TranslateContext.Provider>
+);
 
 describe('Pressure Form', function() {
   const widget = {
@@ -108,7 +115,7 @@ describe('Pressure Form', function() {
   });
 
   it('check if onBlur func is being called', async () => {
-    const { container } = render(<Form {...props} />);
+    const { container } = renderFormPlugin(props);
     const email = container.querySelector(
       'input[name="email"]'
     ) as HTMLInputElement;

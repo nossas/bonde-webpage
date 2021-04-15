@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import { TranslateContext } from '../../../components/MobilizationClass';
 import { EmailPressure as EmailPlugin } from '../Email';
 import { getTargetList } from '../utils';
 
@@ -65,6 +66,12 @@ const analyticsEvents = {
 
 const targetsList = getTargetList(widget.settings.targets);
 
+const renderEmailPlugin = (props: any) => render(
+  <TranslateContext.Provider value={{ t: (key: string) => key, Trans: () => <div /> }}>
+    <EmailPlugin {...props} />
+  </TranslateContext.Provider>
+);
+
 describe('Plugin needs to render', () => {
   const props = {
     widget,
@@ -78,7 +85,7 @@ describe('Plugin needs to render', () => {
   };
 
   it('should render Header with correct text content', () => {
-    const { getByText } = render(<EmailPlugin {...props} />);
+    const { getByText } = renderEmailPlugin(props);
     const header = getByText(/send an email/i);
     expect(header).toBeInTheDocument();
     expect(header).toHaveTextContent(
@@ -87,19 +94,19 @@ describe('Plugin needs to render', () => {
   });
 
   it('should render a list of targets according to the targetsList length', () => {
-    const { getAllByText } = render(<EmailPlugin {...props} />);
+    const { getAllByText } = renderEmailPlugin(props);
     const targets = getAllByText(/@/i);
     expect(targets).toHaveLength(targetsList.length);
   });
 
   it("should render an input with name 'email'", () => {
-    const { container } = render(<EmailPlugin {...props} />);
+    const { container } = renderEmailPlugin(props);
     const email = container.querySelector('input[name="email"]');
     expect(email).toBeInTheDocument();
   });
 
   it('should render certain inputs', () => {
-    const { container } = render(<EmailPlugin {...props} />);
+    const { container } = renderEmailPlugin(props);
     const name = container.querySelector('input[name="name"]');
     expect(name).toBeInTheDocument();
     const lastname = container.querySelector('input[name="lastname"]');
@@ -113,7 +120,7 @@ describe('Plugin needs to render', () => {
   });
 
   it("subject and body fields shouldn't be disabled", () => {
-    const { container } = render(<EmailPlugin {...props} />);
+    const { container } = renderEmailPlugin(props);
     const subject = container.querySelector('input[name="subject"]');
     const body = container.querySelector('textarea[name="body"]');
     expect(subject).not.toBeDisabled();
@@ -121,7 +128,7 @@ describe('Plugin needs to render', () => {
   });
 
   it('should render the count component if there is a count_text', () => {
-    const { getByText } = render(<EmailPlugin {...props} />);
+    const { getByText } = renderEmailPlugin(props);
     expect(getByText(/pressões/i)).toBeInTheDocument();
   });
 });
@@ -149,7 +156,7 @@ describe('Plugin successful behavior paths', () => {
   };
 
   it('should change input value accordingly', () => {
-    const { container } = render(<EmailPlugin {...props} />);
+    const { container } = renderEmailPlugin(props);
 
     const name = container.querySelector(
       'input[name="name"]'
@@ -186,9 +193,7 @@ describe('Plugin successful behavior paths', () => {
   });
 
   it('should submit form with expected values and have a successful submit', async () => {
-    const { container, getByText, queryByText } = render(
-      <EmailPlugin {...props} />
-    );
+    const { container, getByText, queryByText } = renderEmailPlugin(props);
     const payload = {
       activist: {
         firstname: mockedValues.name,
@@ -282,12 +287,12 @@ describe('Plugin unsuccessful behavior paths', () => {
   };
 
   it('should not render the count component if there isnt a count_text', () => {
-    const { queryByText } = render(<EmailPlugin {...props} />);
+    const { queryByText } = renderEmailPlugin(props);
     expect(queryByText(/pressões/i)).not.toBeInTheDocument();
   });
 
   it('should return an error if there are no set targets', async () => {
-    const { container, getByText } = render(<EmailPlugin {...props} />);
+    const { container, getByText } = renderEmailPlugin(props);
     const name = container.querySelector(
       'input[name="name"]'
     ) as HTMLInputElement;
@@ -320,13 +325,13 @@ describe('Plugin unsuccessful behavior paths', () => {
   });
 
   it('should not display city field if show_city is false', () => {
-    const { container } = render(<EmailPlugin {...props} />);
+    const { container } = renderEmailPlugin(props);
     const city = container.querySelector('input[name="city"]');
     expect(city).toBeFalsy();
   });
 
   test('subject and body input should be disabled', () => {
-    const { container } = render(<EmailPlugin {...props} />);
+    const { container } = renderEmailPlugin(props);
     const subject = container.querySelector(
       'input[name="subject"]'
     ) as HTMLInputElement;
@@ -338,18 +343,17 @@ describe('Plugin unsuccessful behavior paths', () => {
   });
 
   it('should display validation error messages', async () => {
-    const { container, getByText, getAllByText } = render(
-      <EmailPlugin
-        {...props}
-        widget={{
-          ...props.widget,
-          settings: {
-            ...props.widget.settings,
-            targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
-          },
-        }}
-      />
-    );
+    const { container, getByText, getAllByText } = renderEmailPlugin({
+      ...props,
+      widget: {
+      ...props.widget,
+        settings: {
+          ...props.widget.settings,
+          targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
+        }
+      }
+    });
+
     const email = container.querySelector(
       'input[name="email"]'
     ) as HTMLInputElement;
@@ -367,18 +371,16 @@ describe('Plugin unsuccessful behavior paths', () => {
   });
 
   it('should display error if email input is present in targets', async () => {
-    const { container, getByText } = render(
-      <EmailPlugin
-        {...props}
-        widget={{
-          ...props.widget,
-          settings: {
-            ...props.widget.settings,
-            targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
-          },
-        }}
-      />
-    );
+    const { container, getByText } = renderEmailPlugin({
+      ...props,
+      widget: {
+        ...props.widget,
+        settings: {
+          ...props.widget.settings,
+          targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
+        },
+      }
+    });
     const email = container.querySelector(
       'input[name="email"]'
     ) as HTMLInputElement;
@@ -396,18 +398,16 @@ describe('Plugin unsuccessful behavior paths', () => {
   });
 
   test('submit form should have an unsuccessful submit', async () => {
-    const { container, getByText, queryByText } = render(
-      <EmailPlugin
-        {...props}
-        widget={{
-          ...props.widget,
-          settings: {
-            ...props.widget.settings,
-            targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
-          },
-        }}
-      />
-    );
+    const { container, getByText, queryByText } = renderEmailPlugin({
+      ...props,
+      widget: {
+        ...props.widget,
+        settings: {
+          ...props.widget.settings,
+          targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
+        },
+      }
+    });
 
     const name = container.querySelector(
       'input[name="name"]'

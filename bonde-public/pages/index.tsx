@@ -81,9 +81,9 @@ class Page extends React.Component<PageProps> {
       await dispatch(asyncFilterWidgetGraphql(filter || where));
     };
 
-    // await fetchData();
+    await fetchData();
     // Mobiization with all widgets configured.
-    await fetchData({ slug: 'teste-de-widgets' });
+    // await fetchData({ slug: 'teste-de-widgets' });
   }
 
   render() {

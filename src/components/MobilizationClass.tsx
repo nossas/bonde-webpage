@@ -15,7 +15,7 @@ export interface FooterProps {
   };
 }
 
-const TranslateContext = createContext<{ t?: any, Trans?: any }>({});
+export const TranslateContext = createContext<{ t?: any, Trans?: any }>({});
 
 export interface MobilizationProps {
   /* Define when the mobilization is in edit mode. */
