@@ -100,9 +100,9 @@ const PressureForm = ({
                     <WrapInputs inverted>
                       <RoundSelectField
                         options={options}
-                        label={select_label || 'Selecione os alvos'}
+                        label={select_label || t('Pressure Targets Label')}
                         name="targetsInput"
-                        placeholder="Selecione"
+                        placeholder={t("Pressure Targets Placeholder")}
                         onChange={e => {
                           const group = pureTargets.filter(
                             (gt: GroupTarget) => gt.identify === e.value
@@ -122,26 +122,26 @@ const PressureForm = ({
                   {BeforeStandardFields && <BeforeStandardFields />}
                   <WrapInputs>
                     <InputField
-                      label="Nome"
+                      label={t("Pressure Name Label")}
                       name="name"
-                      placeholder="Insira seu nome"
+                      placeholder={t("Pressure Name Placeholder")}
                       validate={required(t("Pressure Blank Validation"))}
                     />
                   </WrapInputs>
                   <WrapInputs>
                     <InputField
-                      label="Sobrenome"
+                      label={t("Pressure Lastname Label")}
                       name="lastname"
-                      placeholder="Insira seu sobrenome"
+                      placeholder={t("Pressure Lastname Placeholder")}
                       validate={required(t("Pressure Blank Validation"))}
                     />
                   </WrapInputs>
                   {showCity && showCity === 'city-true' && (
                     <WrapInputs>
                       <InputField
-                        label="Cidade"
+                        label={t("Pressure City Label")}
                         name="city"
-                        placeholder="Insira sua cidade"
+                        placeholder={t("Pressure City Placeholder")}
                         validate={required(t("Pressure Blank Validation"))}
                       />
                     </WrapInputs>
@@ -159,7 +159,7 @@ const PressureForm = ({
                 )}
                 <ButtonWrapper color={buttonColor}>
                   <Button type="submit" disabled={submitting}>
-                    {submitting || saving ? 'Enviando...' : buttonText}
+                    {submitting || saving ? t("Pressure Saving") : buttonText}
                   </Button>
                   <LGPD color="#545454" />
                 </ButtonWrapper>

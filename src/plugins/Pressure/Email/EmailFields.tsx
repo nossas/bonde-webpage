@@ -13,16 +13,16 @@ const before = (targetList: Array<any>, onBlur: any) => (
         fields={[
           {
             name: 'email',
-            label: 'E-mail',
+            label: t("Pressure Email Label"),
             type: 'email',
-            placeholder: 'Insira seu e-mail',
+            placeholder: t("Pressure Email Placeholder"),
             disabled: false,
             onBlur,
             validate: composeValidators(
               required(t('Pressure Blank Validation')),
               isEmail(t("Pressure Email Validation")),
               validateUtils.checkEmailTargetsList(
-                'O email que você está tentando usar é de um dos alvos da mobilização.',
+                t("Pressure SameEmailTarget Validation"),
                 targetList
               )
             ),
@@ -45,18 +45,18 @@ const after = ({ disableSubjectAndBody }: AfterProps) => {
           fields={[
             {
               name: 'subject',
-              label: 'Assunto',
+              label: t("Pressure Subject Label"),
               type: 'text',
               disabled: disableSubjectAndBody,
-              placeholder: 'Insira seu e-mail',
+              placeholder: '',
               validate: required(t("Pressure Blank Validation")),
             },
             {
               name: 'body',
-              label: 'Corpo do e-mail',
+              label: t("Pressure Body Label"),
               type: 'textarea',
               disabled: disableSubjectAndBody,
-              placeholder: 'Insira seu e-mail',
+              placeholder: '',
               validate: required(t("Pressure Blank Validation")),
             },
           ]}

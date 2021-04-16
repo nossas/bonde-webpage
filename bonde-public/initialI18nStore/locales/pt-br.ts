@@ -12,5 +12,22 @@ export default {
   "Pressure Blank Validation": "Preenchimento obrigatório",
   "Form Email Validation": "Inclua um @ no endereço de email",
   "Pressure Email Validation": "Email inválido",
-  "Network Failed": "Houve um erro ao enviar o formulário. Tente novamente"
+  "Network Failed": "Houve um erro ao enviar o formulário. Tente novamente",
+
+  "Pressure Name Label": "Nome",
+  "Pressure Name Placeholder": "Insira seu nome",
+  "Pressure Lastname Label": "Sobrenome",
+  "Pressure Lastname Placeholder": "Insira seu sobrenome",
+  "Pressure City Label": "Cidade",
+  "Pressure City Placeholder": "Insira sua cidade",
+  "Pressure Email Label": "E-mail",
+  "Pressure Email Placeholder": "Insira seu e-mail",
+  "Pressure Subject Label": "Assunto",
+  "Pressure Body Label": "Corpo do e-mail",
+  "Pressure Saving": "Enviando...",
+  "Pressure Targets Label": "Selecione os alvos",
+  "Pressure Targets Placeholder": "Selecione",
+  "Pressure SameEmailTarget Validation": "O email que você está tentando usar é de um dos alvos da mobilização.",
+  "Pressure Network Failed": "Houve um erro ao fazer a pressão",
+  "Pressure TargetBlank Validation": "Ops, você precisa selecionar pelo menos um alvo para poder pressionar"
 }
