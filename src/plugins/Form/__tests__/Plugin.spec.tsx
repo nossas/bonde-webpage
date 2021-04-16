@@ -168,10 +168,8 @@ describe('Form error flow works as expected', () => {
     fireEvent.change(phone, { target: { value: '1198880195' } });
     fireEvent.click(submitButton);
 
-    const errors = getAllByText(/branco/i);
-    expect(errors[0]).toHaveTextContent(
-      'Seu melhor e-mail não pode ficar em branco'
-    );
+    const errors = getAllByText(/Form Blank Validation/i);
+    expect(errors[0]).toHaveTextContent('Form Blank Validation');
     expect(errors).toHaveLength(1);
   });
 
@@ -205,7 +203,7 @@ describe('Form error flow works as expected', () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      const error = getByText(/houve um erro ao enviar o formulário/i);
+      const error = getByText(/Network Failed/i);
       expect(error).toBeInTheDocument();
     });
   });

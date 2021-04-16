@@ -239,7 +239,7 @@ describe('Plugin successful behavior paths', () => {
     fireEvent.click(submitButton);
 
     expect(handleSubmit).toHaveBeenCalledTimes(1);
-    const submitting = getByText(/enviando/i);
+    const submitting = getByText(/Pressure Saving/i);
     expect(submitting).toBeInTheDocument();
 
     expect(handleSubmit).toBeCalledWith({ payload, widget });
@@ -247,7 +247,7 @@ describe('Plugin successful behavior paths', () => {
       expect(submitting).not.toBeInTheDocument();
     });
 
-    expect(queryByText(/Houve um erro ao fazer a pressão/i)).toBeFalsy();
+    expect(queryByText(/Pressure Network Failed/i)).toBeFalsy();
 
     await waitFor(() => {
       expect(getByText(/compartilhe!/i)).toBeInTheDocument();
@@ -317,10 +317,10 @@ describe('Plugin unsuccessful behavior paths', () => {
       expect(submitButton).toHaveTextContent('Send Email');
     });
 
-    const error = getByText(/selecionar pelo menos um alvo/i);
+    const error = getByText(/Pressure TargetBlank Validation/i);
     expect(error).toBeInTheDocument();
     expect(error).toHaveTextContent(
-      'Ops, você precisa selecionar pelo menos um alvo para poder pressionar'
+      'Pressure TargetBlank Validation'
     );
   });
 
@@ -364,10 +364,10 @@ describe('Plugin unsuccessful behavior paths', () => {
 
     expect(handleSubmit).not.toHaveBeenCalled();
 
-    const required = getAllByText(/preenchimento obrigatório/i);
+    const required = getAllByText(/Pressure Blank Validation/i);
     expect(required).toHaveLength(2);
-    const emailInvalid = getByText(/e-mail inválido/i);
-    expect(emailInvalid).toHaveTextContent('E-mail inválido');
+    const emailInvalid = getByText(/Pressure Email Validation/i);
+    expect(emailInvalid).toHaveTextContent('Pressure Email Validation');
   });
 
   it('should display error if email input is present in targets', async () => {
@@ -391,9 +391,9 @@ describe('Plugin unsuccessful behavior paths', () => {
 
     expect(handleSubmit).not.toHaveBeenCalled();
 
-    const list = getByText(/alvos da mobilização/i);
+    const list = getByText(/Pressure SameEmailTarget Validation/i);
     expect(list).toHaveTextContent(
-      'O email que você está tentando usar é de um dos alvos da mobilização.'
+      'Pressure SameEmailTarget Validation'
     );
   });
 
@@ -425,13 +425,13 @@ describe('Plugin unsuccessful behavior paths', () => {
     fireEvent.change(email, { target: { value: mockedValues.email } });
     fireEvent.click(submitButton);
 
-    expect(submitButton).toHaveTextContent('Enviando...');
+    expect(submitButton).toHaveTextContent('Pressure Saving');
     expect(handleSubmit).toHaveBeenCalledTimes(1);
 
     await waitFor(() => {
-      expect(submitButton).not.toHaveTextContent('Enviando...');
+      expect(submitButton).not.toHaveTextContent('Pressure Saving');
     });
 
-    expect(queryByText(/Houve um erro ao fazer a pressão/i)).toBeTruthy();
+    expect(queryByText(/Pressure Network Failed/i)).toBeTruthy();
   });
 });
