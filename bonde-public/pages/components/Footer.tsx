@@ -79,11 +79,15 @@ export interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ mobilization }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const name: string =
     mobilization.community?.signature?.name || mobilization.community.name;
-  const bonde: any = <Link href="http://bonde.org" target="_blank"><b>BONDE</b></Link>
+  const bonde: any = <Link href="http://bonde.org" target="_blank"><b>BONDE</b></Link>;
+
+  const politicalLink = i18n.language === 'es'
+    ? '/static/politica-de-privacidad.pdf'
+    : '/static/politica-de-privacidade.pdf';
 
   return (
     <FooterStyled>
@@ -120,7 +124,7 @@ const Footer: React.FC<FooterProps> = ({ mobilization }) => {
       </Stack>
       <Stack>
         <Link
-          href="/static/politica-de-privacidade.pdf"
+          href={politicalLink}
           title={t('Political')}
           target="_blank"
           rel="noopener noreferrer"

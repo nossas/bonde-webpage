@@ -29,5 +29,6 @@ export default {
   "Pressure Targets Placeholder": "Selecione",
   "Pressure SameEmailTarget Validation": "O email que você está tentando usar é de um dos alvos da mobilização.",
   "Pressure Network Failed": "Houve um erro ao fazer a pressão",
-  "Pressure TargetBlank Validation": "Ops, você precisa selecionar pelo menos um alvo para poder pressionar"
+  "Pressure TargetBlank Validation": "Ops, você precisa selecionar pelo menos um alvo para poder pressionar",
+  "Political Filename": "politica-de-privacidade"
 }

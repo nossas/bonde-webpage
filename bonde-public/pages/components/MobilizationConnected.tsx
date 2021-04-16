@@ -83,7 +83,6 @@ const MobilizationConnected = ({
 }: any) => {
   const { t, i18n } = useTranslation();
 
-  console.log('t, i18n', { t, i18n });
   if (mobilization && blocksIsLoaded) {
     // Properties received by HOC
     const {
