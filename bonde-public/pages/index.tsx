@@ -30,11 +30,16 @@ interface PageProps {
 }
 
 class Page extends React.Component<PageProps> {
-  static async getInitialProps({ store, res }: any = {}) {
+  static async getInitialProps({ store, res, req }: any = {}) {
     const { dispatch, getState } = store;
     const host = getState().sourceRequest.host;
     const protocol = getState().sourceRequest.protocol;
     const appDomain = publicRuntimeConfig.domainPublic || 'staging.bonde.org';
+    const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
+
+    if (userAgent.toLowerCase().indexOf("less") > 0) {
+      res.end();
+    }
 
     if (host) {
       if (res) {
