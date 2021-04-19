@@ -22,22 +22,28 @@ const Text = styled.span<Props>`
 export default ({ color }: any) => {
   return (
     <Translate>
-      {({ Trans }: any) => (
-        <Text color={color}>
-          <Trans i18nKey='Disclaimer'>
-            {`Ao inserir seus dados, você concorda em ter seus dados compartilhados com os organizadores dessa página e aceita receber emails de atualização, conforme descrito na `}
-            <a
-              href="/static/politica-de-privacidade.pdf"
-              title="Politica de Privacidade"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              política de privacidade
-            </a>
-            {`. Você pode cancelar o recebimento desses e-mails a qualquer momento.`}
-          </Trans>
-        </Text>
-      )}
+      {({ Trans, i18n }: any) => {
+        const politicalLink = i18n.language === 'es'
+          ? '/static/politica-de-privacidad.pdf'
+          : '/static/politica-de-privacidade.pdf';
+
+        return (
+          <Text color={color}>
+            <Trans i18nKey='Disclaimer'>
+              {`Ao inserir seus dados, você concorda em ter seus dados compartilhados com os organizadores dessa página e aceita receber emails de atualização, conforme descrito na `}
+              <a
+                href={politicalLink}
+                title="Politica de Privacidade"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                política de privacidade
+              </a>
+              {`. Você pode cancelar o recebimento desses e-mails a qualquer momento.`}
+            </Trans>
+          </Text>
+        );
+      }}
     </Translate>
   );
 };

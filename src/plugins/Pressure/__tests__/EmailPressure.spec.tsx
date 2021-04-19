@@ -67,7 +67,7 @@ const analyticsEvents = {
 const targetsList = getTargetList(widget.settings.targets);
 
 const renderEmailPlugin = (props: any) => render(
-  <TranslateContext.Provider value={{ t: (key: string) => key, Trans: () => <div /> }}>
+  <TranslateContext.Provider value={{ t: (key: string) => key, Trans: () => <div />, i18n: { language: 'pt-BR' } }}>
     <EmailPlugin {...props} />
   </TranslateContext.Provider>
 );

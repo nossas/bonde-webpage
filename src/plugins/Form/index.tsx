@@ -172,7 +172,7 @@ const FormPlugin = (props: Props) => {
       <Translate>
         {({ t }: any) => (
           <WrapForm backgroundColor={bgcolor}>
-            <form onSubmit={handleSubmit(t)}>
+            <form onSubmit={handleSubmit(t)} noValidate={true}>
               {renderCallToAction(widget)}
               {renderFields(props, handleChange)}
               {errors.length > 0 && renderErrors(errors)}

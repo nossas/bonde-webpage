@@ -6,7 +6,7 @@ import FormPlugin from '../index';
 import { addValueToFields } from '../utils';
 
 const renderFormPlugin = (props: any) => render(
-  <TranslateContext.Provider value={{ t: (key: string) => key, Trans: () => <div /> }}>
+  <TranslateContext.Provider value={{ t: (key: string) => key, Trans: () => <div />, i18n: { language: 'pt-BR' } }}>
     <FormPlugin {...props} />
   </TranslateContext.Provider>
 )

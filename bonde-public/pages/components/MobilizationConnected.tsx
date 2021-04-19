@@ -81,7 +81,7 @@ const MobilizationConnected = ({
   widgets,
   blocksIsLoaded,
 }: any) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   if (mobilization && blocksIsLoaded) {
     // Properties received by HOC
@@ -106,6 +106,7 @@ const MobilizationConnected = ({
           editable: false,
           plugins,
           t,
+          i18n,
           Trans
         }}
       />

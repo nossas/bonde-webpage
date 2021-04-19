@@ -15,7 +15,7 @@ export interface FooterProps {
   };
 }
 
-export const TranslateContext = createContext<{ t?: any, Trans?: any }>({});
+export const TranslateContext = createContext<{ t?: any, Trans?: any, i18n?: any }>({});
 
 export interface MobilizationProps {
   /* Define when the mobilization is in edit mode. */
@@ -102,6 +102,7 @@ class Mobilization extends React.Component<
       extraWidgetProps: {
         t,
         Trans,
+        i18n,
         ...extraWidgetProps
       },
     } = this.props;
@@ -110,7 +111,7 @@ class Mobilization extends React.Component<
     const blocks = getVisibleBlocks(this.props.blocks, editable);
 
     return (
-      <TranslateContext.Provider value={{ t, Trans }}>
+      <TranslateContext.Provider value={{ t, Trans, i18n }}>
         <div
           className={`flex flex-column ${themeClassName} ${layoutClassName}`}
           style={layoutStyle}

@@ -14,7 +14,7 @@ export const validate = (fieldsWithValue: any, { t }: any) => {
       field.kind === 'email' &&
       !isValidEmail(field.value)
     ) {
-      return t("Form Email 2 Validation", { field: field.label });
+      return t("Form Email Validation", { field: field.label });
     }
     return false;
   });

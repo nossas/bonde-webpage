@@ -7,7 +7,7 @@ import Form from '../components/Form';
 import EmailFields from '../Email/EmailFields';
 
 const renderFormPlugin = (props: any) => render(
-  <TranslateContext.Provider value={{ t: (key: string) => key, Trans: () => <div /> }}>
+  <TranslateContext.Provider value={{ t: (key: string) => key, Trans: () => <div />, i18n: { language: 'pt-BR' } }}>
     <Form {...props} />
   </TranslateContext.Provider>
 );

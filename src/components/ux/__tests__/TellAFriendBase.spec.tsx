@@ -5,7 +5,13 @@ import { TranslateContext } from '../../MobilizationClass';
 import TellAFriendBase from '../TellAFriendBase';
 
 const renderTellAFriend = (props: any) => render(
-  <TranslateContext.Provider value={{ t: (key: string) => key, Trans: () => <div /> }}>
+  <TranslateContext.Provider
+    value={{
+      t: (key: string, args: any) => `${key} ${args ? args.app : null}`,
+      Trans: () => <div />,
+      i18n: { language: 'pt-BR' }
+    }}
+  >
     <TellAFriendBase {...props} />
   </TranslateContext.Provider>
 );
