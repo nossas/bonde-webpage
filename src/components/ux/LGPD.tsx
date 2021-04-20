@@ -22,8 +22,8 @@ const Text = styled.span<Props>`
 export default ({ color }: any) => {
   return (
     <Translate>
-      {({ Trans, i18n }: any) => {
-        const politicalLink = i18n.language === 'es'
+      {({ t, Trans, mobilization }) => {
+        const politicalLink = mobilization?.language === 'es'
           ? '/static/politica-de-privacidad.pdf'
           : '/static/politica-de-privacidade.pdf';
 
@@ -33,7 +33,7 @@ export default ({ color }: any) => {
               {`Ao inserir seus dados, você concorda em ter seus dados compartilhados com os organizadores dessa página e aceita receber emails de atualização, conforme descrito na `}
               <a
                 href={politicalLink}
-                title="Politica de Privacidade"
+                title={t("Political")}
                 target="_blank"
                 rel="noopener noreferrer"
               >

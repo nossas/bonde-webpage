@@ -67,6 +67,7 @@ const Image = styled.img`
 
 export interface FooterProps {
   mobilization: {
+    language?: 'pt-BR' | 'es';
     community: {
       name: string;
       image: string;
@@ -79,13 +80,13 @@ export interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ mobilization }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const name: string =
     mobilization.community?.signature?.name || mobilization.community.name;
   const bonde: any = <Link href="http://bonde.org" target="_blank"><b>BONDE</b></Link>;
 
-  const politicalLink = i18n.language === 'es'
+  const politicalLink = mobilization.language === 'es'
     ? '/static/politica-de-privacidad.pdf'
     : '/static/politica-de-privacidade.pdf';
 
