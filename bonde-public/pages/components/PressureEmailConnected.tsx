@@ -8,10 +8,17 @@ import {
   PressureTellAFriend
 } from 'bonde-webpages';
 import Utils from '../../Utils';
-import { pressure } from '../../activists';
+import fetch from 'node-fetch';
+// import { pressure } from '../../activists';
 import { client } from '../../graphql-app';
 
-const mapDispatchToProps = () => ({ asyncFillWidget: pressure });
+const mapDispatchToProps = () => ({
+  asyncFillWidget: async (args: any) => (await fetch('/api/actions/pressure', {
+    method: 'post',
+    body: JSON.stringify(args),
+    headers: { 'Content-Type': 'application/json' }
+  })).json()
+});
 
 const mapStateToProps = (state: any) => ({
   ...MobSelectors(state).getMobilizationLink(),
