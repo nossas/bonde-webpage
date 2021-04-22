@@ -1,0 +1,16 @@
+import gql from 'graphql-tag';
+import { client } from '../../../graphql-app';
+
+const query = gql`
+  query fetchDonationGoalStats($widgetId: Int!) {
+    stats: getWidgetDonationStats(widgetId: $widgetId)
+  }
+`;
+
+export default async (req: any, res: any) => {
+  if (req.method === 'POST') {
+    const { data } = await client.query({ query, variables: { widgetId: req.body.widget_id } });
+    return res.status(200).json({ data });
+  }
+  return res.status(400);
+}

@@ -10,20 +10,26 @@ import {
   DonationTellAFriend
 } from 'bonde-webpages';
 import { connect } from 'react-redux';
-import { client } from '../../graphql-app';
+// import { client } from '../../graphql-app';
 import getConfig from 'next/config';
 import Utils from '../../Utils';
+import fetch from 'node-fetch';
 
 const { publicRuntimeConfig } = getConfig();
 
-const mapStateToProps = () => ({ client });
+// const mapStateToProps = () => ({ client });
 
-const mapDispatchToProps = {
+const mapDispatchToProps = () => ({
   createTransaction: asyncDonationCreate,
-  asyncDonationConvert
-};
+  asyncDonationConvert,
+  asyncFetchDonationsStats: async (args: any) => (await fetch('/api/data/donations', {
+    method: 'post',
+    body: JSON.stringify(args),
+    headers: { 'Content-Type': 'application/json' }
+  })).json()
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)((props: any) => (
+export default connect(null, mapDispatchToProps)((props: any) => (
   <PagarMeCheckout
     {...props}
     pagarmeKey={publicRuntimeConfig.pagarmeKey || 'setup env var'}

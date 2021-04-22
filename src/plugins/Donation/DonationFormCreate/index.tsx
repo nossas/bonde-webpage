@@ -5,7 +5,7 @@ import DonationButton from './DonationButton';
 import FetchDonationStats from './FetchDonationStats';
 
 type Props = {
-  client?: any;
+  asyncFetchDonationsStats?: any;
   widget: any;
   headerFont: string;
   mainColor: string;
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export default ({
-  client,
+  asyncFetchDonationsStats,
   widget,
   headerFont,
   mainColor,
@@ -117,9 +117,9 @@ export default ({
           />
         )}
       </DonationForm>
-      {client && goalDateLimit && (
+      {asyncFetchDonationsStats && goalDateLimit && (
         <FetchDonationStats
-          client={client}
+          asyncFetchDonationsStats={asyncFetchDonationsStats}
           widgetId={widget.id}
           mainColor={mainColor}
           goalDateLimit={goalDateLimit}
