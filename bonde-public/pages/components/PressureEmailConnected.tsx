@@ -10,10 +10,17 @@ import {
 import Utils from '../../Utils';
 import fetch from 'node-fetch';
 // import { pressure } from '../../activists';
-import { client } from '../../graphql-app';
+// import graphql from '../../activists/request-graphql';
+// import { client } from '../../graphql-app';
 
 const mapDispatchToProps = () => ({
   asyncFillWidget: async (args: any) => (await fetch('/api/actions/pressure', {
+    method: 'post',
+    body: JSON.stringify(args),
+    headers: { 'Content-Type': 'application/json' }
+  })).json(),
+
+  asyncFetchTargets: async (args: any) => (await fetch('/api/data/targets', {
     method: 'post',
     body: JSON.stringify(args),
     headers: { 'Content-Type': 'application/json' }
@@ -21,8 +28,7 @@ const mapDispatchToProps = () => ({
 });
 
 const mapStateToProps = (state: any) => ({
-  ...MobSelectors(state).getMobilizationLink(),
-  client
+  ...MobSelectors(state).getMobilizationLink()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
