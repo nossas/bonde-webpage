@@ -11,9 +11,15 @@ import {
   FinishMessageCustom,
 } from 'bonde-webpages';
 import Utils from '../../Utils';
-import { formEntry } from '../../activists';
+import fetch from 'node-fetch';
 
-const mapDispatchToProps = () => ({ asyncFormEntryCreate: formEntry });
+const mapDispatchToProps = () => ({
+  asyncFormEntryCreate: async (args: any) => (await fetch('/api/actions/form', {
+    method: 'post',
+    body: JSON.stringify(args),
+    headers: { 'Content-Type': 'application/json' }
+  })).json()
+});
 
 export default connect(
   undefined,
