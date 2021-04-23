@@ -2,7 +2,7 @@
   "name": "bonde-webpages",
   "author": "Viviane",
   "module": "dist/bonde-webpages.esm.js",
-  "version": "0.3.6-alpha.5",
+  "version": "0.3.6",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
