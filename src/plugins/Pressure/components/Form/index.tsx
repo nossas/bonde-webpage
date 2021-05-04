@@ -15,6 +15,7 @@ import {
 } from './styles';
 import { Raise } from '../../../../components';
 import LGPD from '../../../../components/ux/LGPD';
+import { Translate } from '../../../../components/MobilizationClass';
 import { GroupTarget } from '../Targets';
 
 type Props = {
@@ -91,76 +92,80 @@ const PressureForm = ({
     >
       {({ submitting, form }: FormProps) => {
         return (
-          <Wrapper>
-            <WrapFields>
-              {pressure_type === 'group' && options.length > 0 && (
-                <WrapInputs inverted>
-                  <RoundSelectField
-                    options={options}
-                    label={select_label || 'Selecione os alvos'}
-                    name="targetsInput"
-                    placeholder="Selecione"
-                    onChange={e => {
-                      const group = pureTargets.filter(
-                        (gt: GroupTarget) => gt.identify === e.value
-                      )[0];
-                      const { setValue } = form.mutators;
+          <Translate>
+            {({ t }: any) => (
+              <Wrapper>
+                <WrapFields>
+                  {pressure_type === 'group' && options.length > 0 && (
+                    <WrapInputs inverted>
+                      <RoundSelectField
+                        options={options}
+                        label={select_label || t('Pressure Targets Label')}
+                        name="targetsInput"
+                        placeholder={t("Pressure Targets Placeholder")}
+                        onChange={e => {
+                          const group = pureTargets.filter(
+                            (gt: GroupTarget) => gt.identify === e.value
+                          )[0];
+                          const { setValue } = form.mutators;
 
-                      if (!!group && group.email_subject)
-                        setValue('subject', group.email_subject);
-                      else setValue('subject', subject);
-                      if (!!group && group.email_body)
-                        setValue('body', group.email_body);
-                      else setValue('body', body);
-                    }}
-                  />
-                </WrapInputs>
-              )}
-              {BeforeStandardFields && <BeforeStandardFields />}
-              <WrapInputs>
-                <InputField
-                  label="Nome"
-                  name="name"
-                  placeholder="Insira seu nome"
-                  validate={required('Preenchimento obrigatório')}
-                />
-              </WrapInputs>
-              <WrapInputs>
-                <InputField
-                  label="Sobrenome"
-                  name="lastname"
-                  placeholder="Insira seu sobrenome"
-                  validate={required('Preenchimento obrigatório')}
-                />
-              </WrapInputs>
-              {showCity && showCity === 'city-true' && (
-                <WrapInputs>
-                  <InputField
-                    label="Cidade"
-                    name="city"
-                    placeholder="Insira sua cidade"
-                    validate={required('Preenchimento obrigatório')}
-                  />
-                </WrapInputs>
-              )}
-              {AfterStandardFields && <AfterStandardFields />}
-            </WrapFields>
-            {errors.length >= 1 && (
-              <>
-                {errors.map((error: string, i: number) => (
-                  <WrapRaise key={`error-${i}`}>
-                    <Raise message={error} />
-                  </WrapRaise>
-                ))}
-              </>
+                          if (!!group && group.email_subject)
+                            setValue('subject', group.email_subject);
+                          else setValue('subject', subject);
+                          if (!!group && group.email_body)
+                            setValue('body', group.email_body);
+                          else setValue('body', body);
+                        }}
+                      />
+                    </WrapInputs>
+                  )}
+                  {BeforeStandardFields && <BeforeStandardFields />}
+                  <WrapInputs>
+                    <InputField
+                      label={t("Pressure Name Label")}
+                      name="name"
+                      placeholder={t("Pressure Name Placeholder")}
+                      validate={required(t("Pressure Blank Validation"))}
+                    />
+                  </WrapInputs>
+                  <WrapInputs>
+                    <InputField
+                      label={t("Pressure Lastname Label")}
+                      name="lastname"
+                      placeholder={t("Pressure Lastname Placeholder")}
+                      validate={required(t("Pressure Blank Validation"))}
+                    />
+                  </WrapInputs>
+                  {showCity && showCity === 'city-true' && (
+                    <WrapInputs>
+                      <InputField
+                        label={t("Pressure City Label")}
+                        name="city"
+                        placeholder={t("Pressure City Placeholder")}
+                        validate={required(t("Pressure Blank Validation"))}
+                      />
+                    </WrapInputs>
+                  )}
+                  {AfterStandardFields && <AfterStandardFields />}
+                </WrapFields>
+                {errors.length >= 1 && (
+                  <>
+                    {errors.map((error: string, i: number) => (
+                      <WrapRaise key={`error-${i}`}>
+                        <Raise message={error} />
+                      </WrapRaise>
+                    ))}
+                  </>
+                )}
+                <ButtonWrapper color={buttonColor}>
+                  <Button type="submit" disabled={submitting}>
+                    {submitting || saving ? t("Pressure Saving") : buttonText}
+                  </Button>
+                  <LGPD color="#545454" />
+                </ButtonWrapper>
+              </Wrapper>
             )}
-            <ButtonWrapper color={buttonColor}>
-              <Button type="submit" disabled={submitting}>
-                {submitting || saving ? 'Enviando...' : buttonText}
-              </Button>
-              <LGPD color="#545454" />
-            </ButtonWrapper>
-          </Wrapper>
+          </Translate>
         );
       }}
     </ConnectedForm>

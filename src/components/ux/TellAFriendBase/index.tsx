@@ -3,6 +3,7 @@ import FacebookShareButton from './ShareButtons/Facebook';
 import TwitterShareButton from './ShareButtons/Twitter';
 import WhatsAppShareButton from './ShareButtons/Whatsapp';
 import { Wrap, Header, IconWrapper, WrapButtons } from './styles';
+import { Translate } from '../../../components/MobilizationClass';
 
 type Props = {
   preview?: boolean;
@@ -34,21 +35,25 @@ const TellAFriend = ({
 }: Props) => {
   const { whatsapp_text = '' } = settings;
   return (
-    <Wrap>
-      <Header>{message}</Header>
-      {imageUrl && (
-        <IconWrapper>
-          <img src={imageUrl} style={{ width: imageWidth || 100 }} alt="" />
-        </IconWrapper>
+    <Translate>
+      {({ t }: any) => (
+        <Wrap>
+          <Header>{message}</Header>
+          {imageUrl && (
+            <IconWrapper>
+              <img src={imageUrl} style={{ width: imageWidth || 100 }} alt="" />
+            </IconWrapper>
+          )}
+          {render && render()}
+          <p>{t("Default Post Action")}</p>
+          <WrapButtons>
+            <FacebookShareButton href={href} />
+            <TwitterShareButton href={href} text={twitterShareText} />
+            <WhatsAppShareButton whatsappText={whatsapp_text || href} />
+          </WrapButtons>
+        </Wrap>
       )}
-      {render && render()}
-      <p>Compartilhe a campanha com mais pessoas para aumentar o impacto.</p>
-      <WrapButtons>
-        <FacebookShareButton href={href} />
-        <TwitterShareButton href={href} text={twitterShareText} />
-        <WhatsAppShareButton whatsappText={whatsapp_text || href} />
-      </WrapButtons>
-    </Wrap>
+    </Translate>
   );
 };
 

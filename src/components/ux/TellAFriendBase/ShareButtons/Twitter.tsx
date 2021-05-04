@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 // import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
+import { Translate } from  '../../../MobilizationClass';
 import { Wrap } from './styles';
 
 const TwitterShareButton = ({ href, text }: any) => {
@@ -19,11 +20,15 @@ const TwitterShareButton = ({ href, text }: any) => {
   };
 
   return (
-    <Wrap>
-      <button onClick={handleClick} style={{ backgroundColor: '#3DD1F4' }}>
-        Compartilhar no Twitter
-      </button>
-    </Wrap>
+    <Translate>
+    {({ t }) => (
+      <Wrap>
+        <button onClick={handleClick} style={{ backgroundColor: '#3DD1F4' }}>
+          {t('Share Social Midia', { app: 'Twitter' })}
+        </button>
+      </Wrap>
+    )}
+    </Translate>
   );
 };
 

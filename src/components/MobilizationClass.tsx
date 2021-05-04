@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import Section from './Section';
 import Navigation from './navigation';
 
@@ -14,6 +14,8 @@ export interface FooterProps {
     };
   };
 }
+
+export const TranslateContext = createContext<{ t?: any, Trans?: any, i18n?: any, mobilization?: { language: 'pt-BR' | 'es' } }>({});
 
 export interface MobilizationProps {
   /* Define when the mobilization is in edit mode. */
@@ -79,83 +81,6 @@ class Mobilization extends React.Component<
       ws.filter((w: any) => w.block_id === b.id),
   };
 
-  // constructor(props: MobilizationProps) {
-  //   super(props);
-  //   this.state = { blocks: getVisibleBlocks(props.blocks, props.editable) };
-  // }
-
-  // UNSAFE_componentWillReceiveProps(nextProps: MobilizationProps) {
-  //   if (this.props.blocks !== nextProps.blocks) {
-  //     this.setState({
-  //       blocks: getVisibleBlocks(nextProps.blocks, nextProps.editable),
-  //     });
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   if (typeof window !== 'undefined') {
-  //     let blocksTotalHeight: number = 0;
-
-  //     // get the offsetTop of each block and put it on state
-  //     const blocksWithOffsetTop: any[] = this.state.blocks.map(
-  //       (block: any, index: number) => {
-  //         const { offsetTop, offsetHeight }: any = document.querySelector(
-  //           `#${this.props.linkTo(block)}`
-  //         );
-
-  //         const scrollTopReached = index === 0;
-
-  //         blocksTotalHeight += offsetHeight;
-
-  //         return { ...block, offsetTop, scrollTopReached };
-  //       }
-  //     );
-  //     // update all blocks
-  //     this.setState({ blocks: blocksWithOffsetTop });
-
-  //     // watch the scroll event
-  //     window.document
-  //       .querySelector('#blocks-list')
-  //       ?.addEventListener('scroll', ({ target }: any) => {
-  //         // check if the current scroll position is greater or equals
-  //         // than one of the blocks offsetTop
-  //         this.state.blocks.forEach((block: any) => {
-  //           const scrollPassed = target.scrollTop + 120 >= block.offsetTop;
-  //           if (scrollPassed && !block.scrollTopReached) {
-  //             this.updateBlock(block, { scrollTopReached: true });
-  //           }
-  //         });
-
-  //         // small fix if the last block is small than viewport
-  //         // if the scroll position is greater or equals than
-  //         // sum of all blocks height, sinalyze that the last block was reached
-  //         const viewportBottom = target.scrollTop + target.offsetHeight;
-  //         const isBottom = viewportBottom >= blocksTotalHeight;
-  //         const lastBlock = this.state.blocks.slice(-1)[0];
-
-  //         if (isBottom && !lastBlock.scrollTopReached) {
-  //           this.updateBlock(lastBlock, { scrollTopReached: true });
-  //         }
-  //       });
-  //   }
-  // }
-
-  // updateBlock(block: any, newProps: any) {
-  //   const { blocks } = this.state;
-  //   const index = blocks.findIndex(
-  //     currentBlock => currentBlock.id === block.id
-  //   );
-
-  //   this.setState({
-  //     blocks: [
-  //       ...blocks.slice(0, index),
-  //       { ...blocks[index], ...newProps },
-  //       ...this.state.blocks.slice(index + 1),
-  //     ],
-  //   });
-  //   console.log('updateBlock', { block, blocks });
-  // }
-
   render() {
     // Props used on editable mode
     // Props to customize layout themes
@@ -174,39 +99,48 @@ class Mobilization extends React.Component<
       widgets,
       widgetComponent,
       footerComponent: FooterComponent,
-      extraWidgetProps,
+      extraWidgetProps: {
+        t,
+        Trans,
+        i18n,
+        ...extraWidgetProps
+      },
     } = this.props;
 
     // TODO: remove this and get of fetch
     const blocks = getVisibleBlocks(this.props.blocks, editable);
 
     return (
-      <div
-        className={`flex flex-column ${themeClassName} ${layoutClassName}`}
-        style={layoutStyle}
-      >
-        <Navigation blocks={blocks} editable={editable} linkTo={linkTo} />
+      <TranslateContext.Provider value={{ t, Trans, i18n, mobilization: extraWidgetProps.mobilization }}>
         <div
-          id="blocks-list"
-          className="flex-auto"
-          style={{ overflowY: 'hidden' }}
+          className={`flex flex-column ${themeClassName} ${layoutClassName}`}
+          style={layoutStyle}
         >
-          {blocks.map((b: any, i: any) => (
-            <Section
-              key={`section-${i}`}
-              anchor={linkTo(b)}
-              block={b}
-              editable={!!editable}
-              widgets={blockWidgetsRef ? blockWidgetsRef(b, widgets) : []}
-              widgetComponent={widgetComponent}
-              extraWidgetProps={extraWidgetProps}
-            />
-          ))}
+          <Navigation blocks={blocks} editable={editable} linkTo={linkTo} />
+          <div
+            id="blocks-list"
+            className="flex-auto"
+            style={{ overflowY: 'hidden' }}
+          >
+            {blocks.map((b: any, i: any) => (
+              <Section
+                key={`section-${i}`}
+                anchor={linkTo(b)}
+                block={b}
+                editable={!!editable}
+                widgets={blockWidgetsRef ? blockWidgetsRef(b, widgets) : []}
+                widgetComponent={widgetComponent}
+                extraWidgetProps={extraWidgetProps}
+              />
+            ))}
+          </div>
+          <FooterComponent mobilization={extraWidgetProps.mobilization} />
         </div>
-        <FooterComponent mobilization={extraWidgetProps.mobilization} />
-      </div>
+      </TranslateContext.Provider>
     );
   }
 }
+
+export const Translate = TranslateContext.Consumer;
 
 export default Mobilization;
