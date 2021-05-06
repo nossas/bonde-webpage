@@ -2,7 +2,6 @@
 import {
   DonationPlugin,
   PagarMeCheckout,
-  asyncDonationConvert,
   FinishMessageCustom,
   FinishDonationMessage,
   DonationAnalytics,
@@ -21,7 +20,11 @@ const mapDispatchToProps = () => ({
     body: JSON.stringify(args),
     headers: { 'Content-Type': 'application/json' }
   })).json(),
-  asyncDonationConvert,
+  asyncDonationConvert: async (args: any) => (await fetch('/api/actions/donation-convert', {
+    method: 'post',
+    body: JSON.stringify(args),
+    headers: { 'Content-Type': 'application/json' }
+  })).json(),
   asyncFetchDonationsStats: async (args: any) => (await fetch('/api/data/donations', {
     method: 'post',
     body: JSON.stringify(args),
