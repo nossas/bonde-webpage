@@ -37,7 +37,7 @@ type Props = {
     buttonText: string;
   };
   // ApolloClient instance
-  client: any;
+  asyncFetchDonationsStats: any;
   asyncDonationCreate?: any;
   asyncDonationConvert?: any;
   donationCustomerData?: any;
@@ -70,7 +70,7 @@ type Props = {
 const DonationPlugin: React.FC<Props> = ({
   asyncDonationCreate,
   asyncDonationConvert,
-  client,
+  asyncFetchDonationsStats,
   donationCustomerData,
   extraProps,
   widget,
@@ -161,7 +161,7 @@ const DonationPlugin: React.FC<Props> = ({
     <DonationStyles mainColor={mainColor || extraProps.mainColor}>
       <DonationForm
         {...defaultProps}
-        client={client}
+        asyncFetchDonationsStats={asyncFetchDonationsStats}
         widget={widget}
         loading={loading}
         recurringLabel={recurringLabel}

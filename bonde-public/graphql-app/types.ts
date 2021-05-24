@@ -54,6 +54,7 @@ export type MobilizationGraphQL = {
   community: CommunityGraphQL
   favicon?: string
   status?: string
+  language: 'ptbr' | 'es'
 }
 
 export type BlockGraphQL = {

@@ -2,30 +2,35 @@ import React from 'react';
 import Fields from '../components/Form/Fields';
 import { Validators } from 'bonde-components';
 import { validateUtils } from '../utils';
+import { Translate } from '../../../components/MobilizationClass';
 
 const { required, isEmail, composeValidators } = Validators;
 
 const before = (targetList: Array<any>, onBlur: any) => (
-  <Fields
-    fields={[
-      {
-        name: 'email',
-        label: 'E-mail',
-        type: 'email',
-        placeholder: 'Insira seu e-mail',
-        disabled: false,
-        onBlur,
-        validate: composeValidators(
-          required('Preenchimento obrigatório'),
-          isEmail('E-mail inválido'),
-          validateUtils.checkEmailTargetsList(
-            'O email que você está tentando usar é de um dos alvos da mobilização.',
-            targetList
-          )
-        ),
-      },
-    ]}
-  />
+  <Translate>
+    {({ t }: any) => (
+      <Fields
+        fields={[
+          {
+            name: 'email',
+            label: t("Pressure Email Label"),
+            type: 'email',
+            placeholder: t("Pressure Email Placeholder"),
+            disabled: false,
+            onBlur,
+            validate: composeValidators(
+              required(t('Pressure Blank Validation')),
+              isEmail(t("Pressure Email Validation")),
+              validateUtils.checkEmailTargetsList(
+                t("Pressure SameEmailTarget Validation"),
+                targetList
+              )
+            ),
+          },
+        ]}
+      />
+    )}
+  </Translate>
 );
 
 type AfterProps = {
@@ -34,26 +39,30 @@ type AfterProps = {
 
 const after = ({ disableSubjectAndBody }: AfterProps) => {
   return (
-    <Fields
-      fields={[
-        {
-          name: 'subject',
-          label: 'Assunto',
-          type: 'text',
-          disabled: disableSubjectAndBody,
-          placeholder: 'Insira seu e-mail',
-          validate: required('Preenchimento obrigatório'),
-        },
-        {
-          name: 'body',
-          label: 'Corpo do e-mail',
-          type: 'textarea',
-          disabled: disableSubjectAndBody,
-          placeholder: 'Insira seu e-mail',
-          validate: required('Preenchimento obrigatório'),
-        },
-      ]}
-    />
+    <Translate>
+      {({ t }: any) => (
+        <Fields
+          fields={[
+            {
+              name: 'subject',
+              label: t("Pressure Subject Label"),
+              type: 'text',
+              disabled: disableSubjectAndBody,
+              placeholder: '',
+              validate: required(t("Pressure Blank Validation")),
+            },
+            {
+              name: 'body',
+              label: t("Pressure Body Label"),
+              type: 'textarea',
+              disabled: disableSubjectAndBody,
+              placeholder: '',
+              validate: required(t("Pressure Blank Validation")),
+            },
+          ]}
+        />
+      )}
+    </Translate>
   );
 };
 

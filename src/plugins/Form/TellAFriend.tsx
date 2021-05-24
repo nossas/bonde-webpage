@@ -1,4 +1,5 @@
 import React from 'react';
+import { Translate } from '../../components/MobilizationClass';
 import TellAFriendBase from '../../components/ux/TellAFriendBase';
 
 type Props = {
@@ -17,12 +18,16 @@ type Props = {
 };
 
 const FormTellAFriend = ({ mobilization, widget, ...props }: Props) => (
-  <TellAFriendBase
-    mobilization={mobilization}
-    widget={widget}
-    message="Formulário salvo!"
-    {...props}
-  />
+  <Translate>
+    {({ t }: any) => (
+      <TellAFriendBase
+        mobilization={mobilization}
+        widget={widget}
+        message={t("Form Post Action")}
+        {...props}
+      />
+    )}
+  </Translate>
 );
 
 export default FormTellAFriend;

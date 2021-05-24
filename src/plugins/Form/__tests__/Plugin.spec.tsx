@@ -1,8 +1,15 @@
 import React from 'react';
 import { render, fireEvent, cleanup, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import { TranslateContext } from '../../../components/MobilizationClass';
 import FormPlugin from '../index';
 import { addValueToFields } from '../utils';
+
+const renderFormPlugin = (props: any) => render(
+  <TranslateContext.Provider value={{ t: (key: string) => key, Trans: () => <div />, i18n: { language: 'pt-BR' } }}>
+    <FormPlugin {...props} />
+  </TranslateContext.Provider>
+)
 
 afterEach(() => {
   cleanup();
@@ -10,6 +17,7 @@ afterEach(() => {
 });
 
 const count = 10;
+
 const widget = {
   settings: {
     fields: [
@@ -36,14 +44,12 @@ const widget = {
 };
 
 test('Form renders according with placed logics', () => {
-  const component = render(
-    <FormPlugin
-      asyncFormEntryCreate={jest.fn()}
-      analyticsEvents={{ formIsFilled: jest.fn() }}
-      mobilization={{}}
-      widget={widget}
-    />
-  );
+  const component = renderFormPlugin({
+    asyncFormEntryCreate: jest.fn(),
+    analyticsEvents: { formIsFilled: jest.fn() },
+    mobilization: {},
+    widget
+  });
 
   const { getByLabelText, getByText } = component;
 
@@ -69,28 +75,26 @@ test('Form successful flow works as expected', async () => {
     .fn()
     .mockResolvedValue({ type: 'WIDGET_FORM_ENTRY_CREATE_REQUEST' });
 
-  const { getByLabelText, getByText } = render(
-    <FormPlugin
-      asyncFormEntryCreate={handleSubmit}
-      analyticsEvents={{ formIsFilled: jest.fn() }}
-      mobilization={{ twitter_share_text: 'test', id: 0 }}
-      widget={widget}
-      overrides={{
-        FinishCustomMessage: {
-          component: () => <div>test</div>,
-          props: {},
+  const { getByLabelText, getByText } = renderFormPlugin({
+    asyncFormEntryCreate: handleSubmit,
+    analyticsEvents: { formIsFilled: jest.fn() },
+    mobilization: { twitter_share_text: 'test', id: 0 },
+    widget,
+    overrides: {
+      FinishCustomMessage: {
+        component: () => <div>test</div>,
+        props: {},
+      },
+      FinishDefaultMessage: {
+        component: () => <button>Compartilhe no facebook</button>,
+        props: {
+          href: 'www.test.com',
+          message: 'test test',
+          imageUrl: '',
         },
-        FinishDefaultMessage: {
-          component: () => <button>Compartilhe no facebook</button>,
-          props: {
-            href: 'www.test.com',
-            message: 'test test',
-            imageUrl: '',
-          },
-        },
-      }}
-    />
-  );
+      },
+    }
+  });
 
   const email = getByLabelText(
     /input-field-1582206463222-60/i
@@ -126,21 +130,19 @@ test('Form successful flow works as expected', async () => {
 
 describe('Form error flow works as expected', () => {
   it('should omit those components', () => {
-    const { container, queryByText } = render(
-      <FormPlugin
-        asyncFormEntryCreate={jest.fn()}
-        analyticsEvents={{ formIsFilled: jest.fn() }}
-        mobilization={{}}
-        widget={{
-          ...widget,
-          settings: {
-            ...widget.settings,
-            fields: [],
-            count_text: undefined,
-          },
-        }}
-      />
-    );
+    const { container, queryByText } = renderFormPlugin({
+      asyncFormEntryCreate: jest.fn(),
+      analyticsEvents: { formIsFilled: jest.fn() },
+      mobilization: {},
+      widget: {
+        ...widget,
+        settings: {
+          ...widget.settings,
+          fields: [],
+          count_text: undefined,
+        },
+      }
+    });
 
     // no count
     expect(container.getElementsByTagName('span')).toHaveLength(0);
@@ -151,14 +153,12 @@ describe('Form error flow works as expected', () => {
   });
 
   it('should trigger a validation error', () => {
-    const { getByLabelText, getByText, getAllByText } = render(
-      <FormPlugin
-        asyncFormEntryCreate={jest.fn()}
-        analyticsEvents={{ formIsFilled: jest.fn() }}
-        mobilization={{}}
-        widget={widget}
-      />
-    );
+    const { getByLabelText, getByText, getAllByText } = renderFormPlugin({
+      asyncFormEntryCreate: jest.fn(),
+      analyticsEvents: { formIsFilled: jest.fn() },
+      mobilization: {},
+      widget
+    });
 
     const phone = getByLabelText(
       /input-field-1582206476330-11/i
@@ -168,10 +168,8 @@ describe('Form error flow works as expected', () => {
     fireEvent.change(phone, { target: { value: '1198880195' } });
     fireEvent.click(submitButton);
 
-    const errors = getAllByText(/branco/i);
-    expect(errors[0]).toHaveTextContent(
-      'Seu melhor e-mail não pode ficar em branco'
-    );
+    const errors = getAllByText(/Form Blank Validation/i);
+    expect(errors[0]).toHaveTextContent('Form Blank Validation');
     expect(errors).toHaveLength(1);
   });
 
@@ -185,14 +183,12 @@ describe('Form error flow works as expected', () => {
 
     const handleSubmit = jest.fn().mockRejectedValue('form submit error');
 
-    const { getByLabelText, getByText } = render(
-      <FormPlugin
-        asyncFormEntryCreate={handleSubmit}
-        analyticsEvents={{ formIsFilled: jest.fn() }}
-        mobilization={{ twitter_share_text: 'test', id: 0 }}
-        widget={widget}
-      />
-    );
+    const { getByLabelText, getByText } = renderFormPlugin({
+      asyncFormEntryCreate: handleSubmit,
+      analyticsEvents: { formIsFilled: jest.fn() },
+      mobilization: { twitter_share_text: 'test', id: 0 },
+      widget
+    });
 
     const email = getByLabelText(
       /input-field-1582206463222-60/i
@@ -207,7 +203,7 @@ describe('Form error flow works as expected', () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      const error = getByText(/houve um erro ao enviar o formulário/i);
+      const error = getByText(/Network Failed/i);
       expect(error).toBeInTheDocument();
     });
   });

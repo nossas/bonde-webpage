@@ -2,6 +2,7 @@ import React from 'react';
 import { useField } from 'bonde-components';
 import { pressureUtils } from '../../utils';
 import { Wrapper, Label, Container, ListWrapper, Item, Span } from './styles';
+import { Translate } from '../../../../components/MobilizationClass';
 
 const parseTarget = (target: string) => {
   const targetSplit = target.split('<');
@@ -48,8 +49,9 @@ const Targets = ({
   return targetsCount > 0 ? (
     <Wrapper>
       <Label>
-        Quem você vai pressionar? ({targetsCount}{' '}
-        {targetsCount > 1 ? 'alvos' : 'alvo'})
+        <Translate>
+          {({ t }: any) => t("Pressure Target Label", { count: targetsCount })}
+        </Translate>
       </Label>
       <Container>
         <ListWrapper>

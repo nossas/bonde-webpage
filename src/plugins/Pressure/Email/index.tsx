@@ -5,6 +5,7 @@ import EmailFields from './EmailFields';
 import { getTargetList } from '../utils';
 import FetchTargets from '../FetchTargets';
 import { GroupTarget } from '../components/Targets';
+import { Translate } from '../../../components/MobilizationClass';
 
 /* TODO: Change static content by props
  * - title
@@ -115,12 +116,12 @@ export const EmailPressure = ({
     targetList = getTargetList(targets) || [];
   }
 
-  const handleSubmit = ({ targetsInput, ...data }: any): Promise<any> | any => {
+  const handleSubmit = (t: any) => ({ targetsInput, ...data }: any): Promise<any> | any => {
     if (targetList.length < 1 && !targetsInput) {
       dispatch({
         type: 'failed',
         payload: [
-          'Ops, você precisa selecionar pelo menos um alvo para poder pressionar',
+          t("Pressure TargetBlank Validation"),
         ],
       });
     } else {
@@ -152,7 +153,7 @@ export const EmailPressure = ({
           // console.log('e', e);
           return dispatch({
             type: 'failed',
-            payload: ['Houve um erro ao fazer a pressão'],
+            payload: [t("Pressure Network Failed")],
           });
         });
     }
@@ -186,50 +187,54 @@ export const EmailPressure = ({
   }
 
   return (
-    <div id={`widget-${widget.id}`}>
-      <div onKeyDown={e => e.stopPropagation()} />
-      <Header backgroundColor={mainColor}>{callToAction || titleText}</Header>
-      <Form
-        widget={widget}
-        pureTargets={pureTargets}
-        onSubmit={handleSubmit}
-        saving={state.loading}
-        BeforeStandardFields={() => {
-          return (
-            <>
-              <Targets
-                targets={targetList}
-                pureTargets={pureTargets}
-                pressureType={pressure_type || 'email'}
-              />
-              {EmailFields.before(
-                targetList,
-                analyticsEvents.pressureIsFilled()
-              )}
-            </>
-          );
-        }}
-        AfterStandardFields={() => (
-          <EmailFields.after disableSubjectAndBody={disableEditField === 's'} />
-        )}
-        errors={state.errors}
-      />
-      {countText && (
-        <Count
-          shadow
-          value={widget.count || 0}
-          color={mainColor}
-          text={countText}
-          startCounting={typeof window !== 'undefined'}
-        />
+    <Translate>
+      {({ t }: any) => (
+        <div id={`widget-${widget.id}`}>
+          <div onKeyDown={e => e.stopPropagation()} />
+          <Header backgroundColor={mainColor}>{callToAction || titleText}</Header>
+          <Form
+            widget={widget}
+            pureTargets={pureTargets}
+            onSubmit={handleSubmit(t)}
+            saving={state.loading}
+            BeforeStandardFields={() => {
+              return (
+                <>
+                  <Targets
+                    targets={targetList}
+                    pureTargets={pureTargets}
+                    pressureType={pressure_type || 'email'}
+                  />
+                  {EmailFields.before(
+                    targetList,
+                    analyticsEvents.pressureIsFilled()
+                  )}
+                </>
+              );
+            }}
+            AfterStandardFields={() => (
+              <EmailFields.after disableSubjectAndBody={disableEditField === 's'} />
+            )}
+            errors={state.errors}
+          />
+          {countText && (
+            <Count
+              shadow
+              value={widget.count || 0}
+              color={mainColor}
+              text={countText}
+              startCounting={typeof window !== 'undefined'}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </Translate>
   );
 };
 
 // Wrapper All Plugin to get targets group
-export default ({ client, ...props }: any) => (
-  <FetchTargets client={client} widgetId={props.widget.id}>
+export default ({ asyncFetchTargets, ...props }: any) => (
+  <FetchTargets asyncFetchTargets={asyncFetchTargets} widgetId={props.widget.id}>
     {({ data }: any) => <EmailPressure pressureTargets={data} {...props} />}
   </FetchTargets>
 );

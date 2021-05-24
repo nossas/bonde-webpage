@@ -1,5 +1,6 @@
 import React from 'react';
 // import { FormattedMessage } from 'react-intl'
+import { Translate } from '../../../components/MobilizationClass';
 import TellAFriendBase from '../../../components/ux/TellAFriendBase';
 
 type Props = {
@@ -23,13 +24,17 @@ const PressureTellAFriend = ({
   widget,
   ...props
 }: Props) => (
-  <TellAFriendBase
-    preview={preview}
-    mobilization={mobilization}
-    widget={widget}
-    message="E-mail(s) enviado(s)!"
-    {...props}
-  />
+  <Translate>
+    {({ t }: any) => (
+      <TellAFriendBase
+        preview={preview}
+        mobilization={mobilization}
+        widget={widget}
+        message={t("Pressure Post Action")}
+        {...props}
+      />
+    )}
+  </Translate>
 );
 
 export default PressureTellAFriend;

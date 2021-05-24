@@ -1,7 +1,7 @@
 import React from 'react';
 import BondeFooterIcon from './BondeFooterIcon';
 // TODO: Remover dependencia dos componentes de tradução
-// import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
 
 const Link = styled.a`
@@ -67,6 +67,7 @@ const Image = styled.img`
 
 export interface FooterProps {
   mobilization: {
+    language?: 'pt-BR' | 'es';
     community: {
       name: string;
       image: string;
@@ -79,39 +80,57 @@ export interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ mobilization }) => {
-  const signatureName: string =
-    mobilization.community?.signature?.name || mobilization.community.name;
+  const { t } = useTranslation();
 
-  const signatureBonde = 
-    <Link href="http://bonde.org" target="_blank"><b>BONDE</b></Link>;
+  const name: string =
+    mobilization.community?.signature?.name || mobilization.community.name;
+  const bonde: any = <Link href="http://bonde.org" target="_blank"><b>BONDE</b></Link>;
+
+  const politicalLink = mobilization.language === 'es'
+    ? '/static/politica-de-privacidad.pdf'
+    : '/static/politica-de-privacidade.pdf';
 
   return (
     <FooterStyled>
       <Stack>
         {mobilization.community.image && (
-          <Image src={mobilization.community.image} alt={signatureName} />
+          <Image src={mobilization.community.image} alt={name} />
         )}
         {!!mobilization.community?.signature?.url ? (
-          <Link
-            href={mobilization.community?.signature?.url}
-            title={`Assinatura da comunidade ${signatureName}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="signature">Criado por {signatureName} usando o {signatureBonde}.</span>
-          </Link>
+          <span>
+            {t('Signature Create')}
+            &nbsp;
+            <Link
+              href={mobilization.community?.signature?.url}
+              title={`Assinatura da comunidade ${name}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {name}
+            </Link>
+            &nbsp;
+            {t('Signature Use')}
+            &nbsp;
+            {bonde}
+          </span>
         ) : (
-            <span className="signature">Criado por {signatureName} usando o {signatureBonde}.</span>
-          )}
+          <span>
+            {t('Signature Create')}
+            {` ${name} `}
+            {t('Signature Use')}
+            &nbsp;
+            {bonde}
+          </span>
+        )}
       </Stack>
       <Stack>
         <Link
-          href="/static/politica-de-privacidade.pdf"
-          title="Política de Privacidade"
+          href={politicalLink}
+          title={t('Political')}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Política de Privacidade
+          {t('Political')}
         </Link>
         <Link
           href="http://www.bonde.org/?utm_source=footer-slogan"
