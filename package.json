@@ -1,4 +1,4 @@
-{ 
+{
   "name": "bonde-webpages",
   "author": "Viviane",
   "module": "dist/bonde-webpages.esm.js",
@@ -46,7 +46,7 @@
       "<rootDir>/bonde-public/"
     ]
   },
- 
+
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@storybook/addon-actions": "^5.3.18",
