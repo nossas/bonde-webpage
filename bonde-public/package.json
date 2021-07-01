@@ -20,6 +20,7 @@
     "graphql": "^15.0.0",
     "i18next": "^20.2.1",
     "i18next-icu": "^2.0.3",
+    "jsonwebtoken": "^8.5.1",
     "next": "^9.4.1-canary.5",
     "next-i18next": "8.0.0",
     "next-redux-wrapper": "^6.0.0-rc.7",
