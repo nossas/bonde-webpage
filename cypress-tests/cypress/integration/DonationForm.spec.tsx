@@ -1,4 +1,4 @@
-describe('Make Pressure', () => {
+describe('Make Donation', () => {
     beforeEach(() => {
         cy.visit('/')
     });
