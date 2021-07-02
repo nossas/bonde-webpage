@@ -1,14 +1,12 @@
 {
-  "include": ["src", "types", "cypress", ".eslintrc.js"],
+  "include": ["src", "types"],
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
-    "lib": ["dom", "esnext", "es5"],
-    "types": ["cypress"],
+    "lib": ["dom", "esnext"],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./src",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
