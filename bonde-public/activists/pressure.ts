@@ -1,4 +1,5 @@
 import graphql, { Response } from './request-graphql';
+import jwt from "jsonwebtoken";
 
 export type Activist = {
   firstname: string;
@@ -32,6 +33,7 @@ mutation Pressure($activist: ActivistInput!, $widget_id: Int!, $input: EmailPres
 
 const pressure = async ({ payload, widget }: Args): Promise<any> => {
   const { activist, targets_id, mail } = payload;
+
   try {
     let input: any = {
       first_name: activist.firstname,
@@ -43,27 +45,35 @@ const pressure = async ({ payload, widget }: Args): Promise<any> => {
       input.city = activist.city;
     };
 
-    const pressureInput: any = { targets_id };
+    const pressureInput: any = {
+      targets_id,
+      token: jwt.sign({}, process.env.ACTION_SECRET_KEY)
+    };
+
     if (mail.disableEditField !== 's') {
       pressureInput.email_subject = mail.subject;
       pressureInput.email_body = mail.body
     }
 
-    const query = JSON.stringify({
-      query: pressureQuery,
-      variables: {
-        activist: input,
-        widget_id: widget.id,
-        input: pressureInput
-      }
-    });
+    const variables = {
+      activist: input,
+      widget_id: widget.id,
+      input: pressureInput
+    }
+
+    const query = JSON.stringify({ query: pressureQuery, variables });
     
-    const response: Response = await graphql(query);
+    const { data, errors }: Response = await graphql(query);
+
+    if (!!errors) {
+      console.log("data, errors", { data, errors });
+      throw new Error("request_graphql_error");
+    }
     
-    return response.data;
+    return data;
   } catch (err) {
     // TODO: Show popup window error
-    console.log('pressure err', err);
+    console.log('err', err);
   }
 };
 

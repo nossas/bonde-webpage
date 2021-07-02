@@ -2,26 +2,29 @@
 import {
   DonationPlugin,
   PagarMeCheckout,
-  asyncDonationCreate,
-  asyncDonationConvert,
   FinishMessageCustom,
   FinishDonationMessage,
   DonationAnalytics,
   DonationTellAFriend
 } from 'bonde-webpages';
 import { connect } from 'react-redux';
-// import { client } from '../../graphql-app';
 import getConfig from 'next/config';
 import Utils from '../../Utils';
 import fetch from 'node-fetch';
 
 const { publicRuntimeConfig } = getConfig();
 
-// const mapStateToProps = () => ({ client });
-
 const mapDispatchToProps = () => ({
-  createTransaction: asyncDonationCreate,
-  asyncDonationConvert,
+  createTransaction: async (args: any) => (await fetch('/api/actions/donation', {
+    method: 'post',
+    body: JSON.stringify(args),
+    headers: { 'Content-Type': 'application/json' }
+  })).json(),
+  asyncDonationConvert: async (args: any) => (await fetch('/api/actions/donation-convert', {
+    method: 'post',
+    body: JSON.stringify(args),
+    headers: { 'Content-Type': 'application/json' }
+  })).json(),
   asyncFetchDonationsStats: async (args: any) => (await fetch('/api/data/donations', {
     method: 'post',
     body: JSON.stringify(args),
