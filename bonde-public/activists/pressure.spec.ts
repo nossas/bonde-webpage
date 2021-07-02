@@ -104,7 +104,7 @@ describe('activists module pressure tests', () => {
 
     return pressure(args).then(() => {
       expect(global.console.log).toBeCalledTimes(1);
-      expect(global.console.log).toBeCalledWith('pressure err', error);
+      expect(global.console.log).toBeCalledWith('err', error);
     });
   });
 });
