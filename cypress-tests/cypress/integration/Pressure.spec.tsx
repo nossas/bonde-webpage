@@ -1,6 +1,6 @@
 describe('Make Pressure', () => {
     beforeEach(() => {
-        cy.visit('http://www.teste-de-widgets.staging.bonde.org/')
+        cy.visit('/')
     });
     it('Fill pressure form', () => {
         cy.get('[name ="name"]')
