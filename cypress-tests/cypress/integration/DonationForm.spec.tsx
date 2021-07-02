@@ -2,12 +2,14 @@ describe('Make Donation', () => {
     beforeEach(() => {
         cy.visit('/')
     });
-    it('Fill donation form', () => {
+    it('Fill donation form',async () => {
         cy.get('.css-1aupfcx')
             .should('be.visible');
-        cy.get('.btn-submit')
+       cy.get('.btn-submit')
             .should('be.visible')
-            .click();
+            .click()
+        //TODO - fazer a confirmação do checkout para o PagarMe       
         cy.get('[id="pagarme-checkout-container"]')
-        //TODO - fazer a confirmação do checkout para o PagarMe
+            .should('exist');   
+    });
 });

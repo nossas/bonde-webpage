@@ -5,7 +5,8 @@ describe('Incubation Form', () => {
     it('fill form', () => {
         cy.get('[name ="input-field-1552312909841-49"]')
             .should('be.visible').type('Nome');
-        cy.get('[name ="input-field-1552312920353-15"]').should('be.visible')
+        cy.get('[name ="input-field-1552312920353-15"]')
+            .should('be.visible')
             .type('email@exemplo.com');
         cy.get('[name ="input-field-1552312933368-45"]')
             .should('be.visible').select("Norte");   
