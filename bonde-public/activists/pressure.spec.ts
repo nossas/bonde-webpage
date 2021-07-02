@@ -1,4 +1,5 @@
 import { mocked } from 'ts-jest/utils';
+import jwt from "jsonwebtoken";
 import graphql from './request-graphql';
 import pressure, { pressureQuery, Args } from './pressure';
 
@@ -6,6 +7,8 @@ jest.mock('./request-graphql');
 const mockedGraphql = mocked(graphql);
 
 jest.spyOn(global.console, 'log');
+
+const jwtSpy = jest.spyOn(jwt, 'sign');
 
 describe('activists module pressure tests', () => {
   const args: Args = {
@@ -26,13 +29,24 @@ describe('activists module pressure tests', () => {
       id: 345
     }
   };
+  const OLD_ENV = process.env;
+  const SECRET_KEY = "token-de-teste";
+  const token = jwt.sign({}, SECRET_KEY);
 
-  afterEach(() => {
+  beforeEach(() => {
+    jest.resetModules(); // Most important - it clears the cache
+    process.env = { ...OLD_ENV }; // Make a copy
+    process.env.ACTION_SECRET_KEY = SECRET_KEY;
+  });
+
+  afterAll(() => {
+    process.env = OLD_ENV; // Restore old environment
     jest.clearAllMocks();
   });
 
   it('should make a query to called graphql api with input args', () => {
     mockedGraphql.mockResolvedValue({ data: { activist_pressure_id: 8576 } });
+    jwtSpy.mockReturnValue(token);
 
     return pressure(args)
       .then(() => {
@@ -47,7 +61,7 @@ describe('activists module pressure tests', () => {
               email
             },
             widget_id: args.widget.id,
-            input: { targets_id: args.payload.targets_id },
+            input: { targets_id: args.payload.targets_id, token },
           } 
         });
 
@@ -57,6 +71,7 @@ describe('activists module pressure tests', () => {
 
   it('should input city if preset in activist', () => {
     mockedGraphql.mockResolvedValue({ data: { activist_pressure_id: 8576 } });
+    jwtSpy.mockReturnValue(token);
     const city = 'Belo Horizonte';
     
     return pressure({
@@ -75,7 +90,7 @@ describe('activists module pressure tests', () => {
             city: city
           },
           widget_id: args.widget.id,
-          input: { targets_id: args.payload.targets_id },
+          input: { targets_id: args.payload.targets_id, token },
         }
       });
 

@@ -1,4 +1,5 @@
 import graphql, { Response } from './request-graphql';
+import jwt from "jsonwebtoken";
 
 export type Activist = {
   firstname: string;
@@ -43,7 +44,10 @@ const pressure = async ({ payload, widget }: Args): Promise<any> => {
       input.city = activist.city;
     };
 
-    const pressureInput: any = { targets_id };
+    const pressureInput: any = {
+      targets_id,
+      token: jwt.sign({}, process.env.ACTION_SECRET_KEY)
+    };
     if (mail.disableEditField !== 's') {
       pressureInput.email_subject = mail.subject;
       pressureInput.email_body = mail.body
