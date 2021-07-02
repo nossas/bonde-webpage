@@ -1,9 +1,10 @@
 {
-  "include": ["src", "types"],
+  "include": ["src", "types", "cypress", ".eslintrc.js"],
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
-    "lib": ["dom", "esnext"],
+    "lib": ["dom", "esnext", "es5"],
+    "types": ["cypress"],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
