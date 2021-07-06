@@ -20,9 +20,18 @@ yarn
 
 yarn cypress:open 
 
+
 - Para somente rodar os testes: 
 
 yarn cypress:run
+
+
+- Para abrir o teste das Widgets (staging) dentro do Dashboard do Cypress:
+
+npx cypress run --record --key 545375c9-34b5-45fc-880a-f3b16de95579
+
+https://dashboard.cypress.io/
+
 
 
 
