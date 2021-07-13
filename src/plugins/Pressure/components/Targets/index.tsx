@@ -87,7 +87,7 @@ const TargetsPhone = (props: any) => {
           {props.targets.map((target: string, index: number) => (
             <Item key={`target-phone-${index}`}>
               <p>
-                <Span>{target}</Span>
+                <Span>{target.split("<")[0]}</Span>
               </p>
             </Item>
           ))}
