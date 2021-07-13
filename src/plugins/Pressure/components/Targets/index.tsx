@@ -80,7 +80,7 @@ const TargetsPhone = (props: any) => {
   return (
     <Wrapper>
       <Label>
-        <Translate>{({ t }: any) => t("Pressure Target Label", { count: 0 })}</Translate>
+        <Translate>{({ t }: any) => t("Pressure Target Label", { count: props.targets.length })}</Translate>
       </Label>
       <Container>
         <ListWrapper>
