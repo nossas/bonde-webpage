@@ -23,7 +23,7 @@ export type GroupTarget = {
 const Targets = ({
   targets,
   pureTargets,
-  pressureType,
+  pressureType
 }: {
   targets: string[];
   pureTargets?: GroupTarget[];
