@@ -76,4 +76,28 @@ Targets.defaultProps = {
   targets: [],
 };
 
-export default Targets;
+const TargetsPhone = (props: any) => {
+  return (
+    <Wrapper>
+      <Label>
+        <Translate>{({ t }: any) => t("Pressure Target Label", { count: 0 })}</Translate>
+      </Label>
+      <Container>
+        <ListWrapper>
+          {props.targets.map((target: string, index: number) => (
+            <Item key={`target-phone-${index}`}>
+              <p>
+                <Span>{target}</Span>
+              </p>
+            </Item>
+          ))}
+        </ListWrapper>
+      </Container>
+    </Wrapper>
+  );
+}
+
+export default (props: any) => props.pressureType === pressureUtils.PRESSURE_TYPE_PHONE
+  ? <TargetsPhone {...props} />
+  : <Targets {...props} />
+;

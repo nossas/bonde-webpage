@@ -15,7 +15,7 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import FormPlugin from './FormConnected';
 import PressureEmailPlugin from './PressureEmailConnected';
-// import PressurePhonePlugin from './PressurePhonelConnected';
+import PressurePhonePlugin from './PressurePhoneConnected';
 import DonationPlugin from './DonationConnected';
 import Utils from '../../Utils';
 import Footer from './Footer';
@@ -65,9 +65,22 @@ const plugins = [
   },
   {
     kind: 'pressure-phone',
-    component: () =>
-      // <PressurePlugin {...props} PluginComponent={PhonePressurePlugin} />
-      null,
+    component: (props: any) => (
+      <PressurePhonePlugin
+        {...props}
+        analyticsEvents={PressureAnalytics}
+        overrides={{
+          FinishCustomMessage: { component: FinishMessageCustom },
+          FinishDefaultMessage: {
+            component: PressureTellAFriend,
+            props: {
+              imageUrl: Utils.imageUrl,
+              href: Utils.getSharedPath(props.mobilization),
+            },
+          },
+        }}
+      />
+    ),
   },
   {
     kind: 'content',

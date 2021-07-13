@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { Count, Form, Targets } from '../components';
+import {
+  Count,
+  Form,
+  Targets
+} from '../components';
 import PhoneFields from './PhoneFields';
 import CallingTargets from './CallingTargets';
 
@@ -60,6 +64,12 @@ type Props = {
   analyticsEvents: {
     pressureIsFilled: () => void;
   };
+  twilio: {
+    call: any;
+    observableQuery?: any;
+    phonePressureCount: number;
+    callTransition?: any;
+  }
 };
 
 // const countTwilioCallsByWidget = (variables: any) => {
@@ -86,46 +96,13 @@ const PhonePressure = ({
   mobilization,
   block,
   overrides,
+  twilio
 }: Props) => {
   const [targetsError, setTargetsError] = useState<Array<string>>([]);
   const [showFinishMessage, toggleFinishMessage] = useState(false);
   const [callManagement, setCalls] = useState<Array<any>>([]);
-  const [
-    callTransition,
-    // setTransition
-  ] = useState<any>(undefined);
-  const [
-    phonePressureCount,
-    // addPhonePressureCount
-  ] = useState(0);
 
-  const twilioCall = (variables: any, watchQuery: boolean = false) => {
-    //   addPhonePressureCount(phonePressureCount + 1);
-    // return graphqlClient
-    //   .mutate({
-    //     mutation: graphqlMutations.addTwilioCall,
-    //     variables,
-    //   })
-    //   .then(() => {
-    //     if (watchQuery && !observableQuery) {
-    //       const observableQuery = graphqlClient.watchQuery({
-    //         pollInterval: 2000,
-    //         query: graphqlQueries.watchTwilioCallTransitions,
-    //         variables: { widgetId: variables.widgetId, from: variables.from },
-    //       });
-    //       observableQuery.subscribe({
-    //         next: ({
-    //           data: { watchTwilioCallTransitions: callTransition },
-    //         }: any) => {
-    //           setTransition(callTransition);
-    //         },
-    //       });
-    //       setObservableQuery(observableQuery);
-    //     }
-    //   });
-    console.log({ variables, watchQuery });
-    // setTransition({ variables, watchQuery });
-  };
+  const { call, phonePressureCount, callTransition } = twilio;
 
   const {
     main_color: mainColor,
@@ -146,6 +123,7 @@ const PhonePressure = ({
     },
   } = overrides;
 
+  // console.log("phone", { targets });
   const targetList = getTargetList(targets) || [];
 
   useEffect(() => {
@@ -199,11 +177,12 @@ const PhonePressure = ({
 
     setTargetsError([]);
 
-    return twilioCall(
+    return call(
       {
         widgetId: widget.id,
         communityId: mobilization.community_id,
         from: data.phone,
+        // get phone
         to: getEmailTarget(arrayUtils.shuffle(targetList)[0]),
       },
       true
@@ -235,7 +214,7 @@ const PhonePressure = ({
       <Targets targets={targetList} pressureType="phone" />
       {callTransition ? (
         <CallingTargets
-          addTwilioCallMutation={twilioCall}
+          addTwilioCallMutation={call}
           buttonColor={mainColor}
           toggleFinishMessage={toggleFinishMessage}
           callManagement={callManagement}
