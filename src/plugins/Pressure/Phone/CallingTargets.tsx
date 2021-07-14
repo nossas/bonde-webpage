@@ -42,6 +42,12 @@ const CallingTargets = ({
   toggleFinishMessage,
   callManagement,
 }: AfterProps) => {
+  console.log("addTwilioCallMutation, buttonColor, toggleFinishMessage, callManagement", {
+    addTwilioCallMutation,
+    buttonColor,
+    toggleFinishMessage,
+    callManagement
+  });
   return (
     <PhoneCalls>
       <UnordedList>

@@ -100,7 +100,7 @@ const PhonePressure = ({
 }: Props) => {
   const [targetsError, setTargetsError] = useState<Array<string>>([]);
   const [showFinishMessage, toggleFinishMessage] = useState(false);
-  const [callManagement, setCalls] = useState<Array<any>>([]);
+  const [callManagement, setCalls] = useState<any[]>([]);
 
   const { call, phonePressureCount, callTransition } = twilio;
 
@@ -123,7 +123,6 @@ const PhonePressure = ({
     },
   } = overrides;
 
-  // console.log("phone", { targets });
   const targetList = getTargetList(targets) || [];
 
   useEffect(() => {
@@ -163,7 +162,7 @@ const PhonePressure = ({
       setCalls(value);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [callTransition]);
 
   const handleSubmit = (data: any) => {
     if (targetList.length < 1) {
@@ -207,6 +206,7 @@ const PhonePressure = ({
       />
     );
 
+  console.log("callTransition", { callTransition });
   return (
     <div id={`widget-${widget.id}`}>
       {/* <div onKeyDown={e => e.stopPropagation()} /> */}
