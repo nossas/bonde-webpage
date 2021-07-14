@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   PhonePressurePlugin,
@@ -70,10 +70,16 @@ export const countTwilioCallsByWidget = gql`
   }
 `;
 
-const TwilioCall = ({ children }) => {
+const TwilioCall = ({ children, totalCount }) => {
   const [phonePressureCount, setPhonePressureCount] = useState(0);
   const [callTransition, setCallTransition] = useState<any>(null);
   const [observableQuery, setObservableQuery] = useState<any>(null);
+
+  useEffect(() => {
+    if (totalCount > phonePressureCount) {
+      setPhonePressureCount(totalCount);
+    }
+  }, [totalCount]);
 
   const call = (variables: any, watchQuery: boolean = false) => {
     setPhonePressureCount(phonePressureCount + 1);
@@ -113,13 +119,24 @@ const mapStateToProps = (state: any) =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)((props: any) => (
-  <TwilioCall>
-    {(twilio: any) => (
-      <PhonePressurePlugin
-        {...props}
-        twilio={twilio}
-      />
-    )}
-  </TwilioCall>
-));
+)((props: any) => {
+  const [totalCount, setTotalCount] = useState(0);
+  
+  useEffect(() => {
+    client.query({ query: countTwilioCallsByWidget, variables: { widgetId: props.widget.id } })
+      .then(({ data }) => {
+        setTotalCount(data.allTwilioCalls.totalCount)
+      });
+  }, []);
+
+  return (
+    <TwilioCall totalCount={totalCount}>
+      {(twilio: any) => (
+        <PhonePressurePlugin
+          {...props}
+          twilio={twilio}
+        />
+      )}
+    </TwilioCall>
+  );
+});

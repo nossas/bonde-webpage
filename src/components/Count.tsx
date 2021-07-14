@@ -89,7 +89,7 @@ const Count = ({
       <Title color={color} shadow={shadow}>
         <CountUp
           start={0}
-          end={!isNaN(value) && startCounting ? Number(value) : 0}
+          end={!isNaN(value) && startCounting ? Number(value) : value}
           duration={5}
         />
       </Title>
