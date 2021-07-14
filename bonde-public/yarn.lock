@@ -2730,10 +2730,10 @@ bonde-components@0.0.4-alpha.15:
     react-table "^7.5.0"
     styled-components "^5.0.1"
 
-bonde-webpages@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/bonde-webpages/-/bonde-webpages-0.4.1.tgz#1c23d39a20bee9f5a0435a6c95033d587c4f838b"
-  integrity sha512-InaxKHDwuZC9XQ3OynWt0ZHFrhMKgl99U5+Ea72yjLInT4inteQ/OB+FrUKwyF5n1dBHI27jBvBUvSIGOpxRZw==
+bonde-webpages@0.4.1-alpha.2:
+  version "0.4.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/bonde-webpages/-/bonde-webpages-0.4.1-alpha.2.tgz#33d18b8e0cb0581cf4fd9773815bc83bc8a7f386"
+  integrity sha512-qM3vxmuASWSxjWzLP2okX364bTPZXW3kr5KrM30Qbro55Id2oMnb3B7coRH3pyAf4QdOCCP4xpETtgbiCByN1g==
   dependencies:
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
@@ -4946,9 +4946,9 @@ hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.1.0, hoist-non-react-
     react-is "^16.7.0"
 
 hosted-git-info@^2.1.4:
-  version "2.8.8"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.8.tgz#7539bd4bc1e0e0a895815a2e0262420b12858488"
-  integrity sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
+  version "2.8.9"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
+  integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
 
 hsl-regex@^1.0.0:
   version "1.0.0"
