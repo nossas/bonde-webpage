@@ -20,6 +20,7 @@ export default {
   "Pressure Lastname Placeholder": "Insira seu sobrenome",
   "Pressure City Label": "Cidade",
   "Pressure City Placeholder": "Insira sua cidade",
+  "Pressure State Label": "Estado",
   "Pressure Email Label": "E-mail",
   "Pressure Email Placeholder": "Insira seu e-mail",
   "Pressure Subject Label": "Assunto",

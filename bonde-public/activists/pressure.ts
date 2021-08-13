@@ -21,21 +21,21 @@ export type Widget = {
 export interface Args {
   payload: Payload;
   widget: Widget;
-};
-
-export const pressureQuery: string = `
-mutation Pressure($activist: ActivistInput!, $widget_id: Int!, $input: EmailPressureInput) {
-  create_email_pressure(widget_id: $widget_id, activist: $activist, input: $input) {
-    data
-  }
 }
+
+export const pressureQuery = `
+  mutation Pressure($activist: ActivistInput!, $widget_id: Int!, $input: EmailPressureInput) {
+    create_email_pressure(widget_id: $widget_id, activist: $activist, input: $input) {
+      data
+    }
+  }
 `;
 
 const pressure = async ({ payload, widget }: Args): Promise<any> => {
   const { activist, targets_id, mail } = payload;
 
   try {
-    let input: any = {
+    const input: any = {
       first_name: activist.firstname,
       last_name: activist.lastname,
       name: `${activist.firstname} ${activist.lastname}`,
@@ -43,7 +43,7 @@ const pressure = async ({ payload, widget }: Args): Promise<any> => {
     };
     if (activist.city) {
       input.city = activist.city;
-    };
+    }
 
     const pressureInput: any = {
       targets_id,

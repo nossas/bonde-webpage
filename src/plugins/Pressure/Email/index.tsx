@@ -33,6 +33,7 @@ type Props = {
       finish_message_background?: string;
       count_text?: string;
       show_city?: string;
+      show_state?: string;
       pressure_type?: string | 'unique' | 'group';
     };
   };
@@ -85,15 +86,13 @@ const reducer = (state: any, action: any) => {
 };
 
 export const EmailPressure = ({
-  // ApolloClient instance
-  // client,
   pressureTargets,
   widget,
   asyncFillWidget,
   mobilization,
   analyticsEvents,
   overrides,
-}: Props) => {
+}: Props): any => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {
@@ -110,7 +109,7 @@ export const EmailPressure = ({
   } = widget.settings;
 
   let targetList: string[] = [];
-  let pureTargets: GroupTarget[] = pressureTargets || [];
+  const pureTargets: GroupTarget[] = pressureTargets || [];
 
   if (!!targets && pressure_type !== 'group') {
     targetList = getTargetList(targets) || [];
@@ -133,6 +132,7 @@ export const EmailPressure = ({
           lastname: data.lastname,
           email: data.email,
           city: data.city || null,
+          state: data.state || null
         },
         targets_id: targetsInput ? targetsInput.value : null,
         mail: {

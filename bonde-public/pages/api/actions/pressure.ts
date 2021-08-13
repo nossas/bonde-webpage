@@ -5,6 +5,7 @@ export type Activist = {
   lastname: string;
   email: string;
   city?: string;
+  state?: string;
 };
 
 export type Mail = {

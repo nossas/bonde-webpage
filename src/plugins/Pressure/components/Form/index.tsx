@@ -5,6 +5,7 @@ import {
   Validators,
   Button,
   RoundSelectField,
+  SelectField
 } from 'bonde-components';
 import {
   WrapFields,
@@ -40,6 +41,7 @@ type Props = {
       count_text?: string;
       pressure_type?: string | 'unique' | 'group';
       select_label?: string;
+      show_state?: string;
     };
   };
   BeforeStandardFields: any;
@@ -61,11 +63,12 @@ const PressureForm = ({
   onSubmit,
   saving,
   errors,
-}: Props) => {
+}: Props): React.ReactElement => {
   const { required } = Validators;
   const {
     settings: {
       show_city: showCity,
+      show_state: showState,
       main_color: buttonColor,
       button_text: buttonText,
       pressure_subject: subject = '',
@@ -75,7 +78,7 @@ const PressureForm = ({
     },
   } = widget;
 
-  let options: any[] = pureTargets.map((groupTarget: GroupTarget) => ({
+  const options: any[] = pureTargets.map((groupTarget: GroupTarget) => ({
     label: groupTarget.label,
     value: groupTarget.identify,
   }));
@@ -85,15 +88,15 @@ const PressureForm = ({
       onSubmit={onSubmit}
       initialValues={{ subject, body }}
       mutators={{
-        setValue: ([field, value], state, { changeValue }) => {
+        setValue: ([field, value]: any[], state: any, { changeValue }: any): void => {
           changeValue(state, field, () => value);
         },
       }}
     >
-      {({ submitting, form }: FormProps) => {
+      {({ submitting, form }: FormProps): React.ReactElement => {
         return (
           <Translate>
-            {({ t }: any) => (
+            {({ t }: any): React.ReactElement => (
               <Wrapper>
                 <WrapFields>
                   {pressure_type === 'group' && options.length > 0 && (
@@ -103,7 +106,7 @@ const PressureForm = ({
                         label={select_label || t('Pressure Targets Label')}
                         name="targetsInput"
                         placeholder={t("Pressure Targets Placeholder")}
-                        onChange={e => {
+                        onChange={(e: any): void => {
                           const group = pureTargets.filter(
                             (gt: GroupTarget) => gt.identify === e.value
                           )[0];
@@ -144,6 +147,44 @@ const PressureForm = ({
                         placeholder={t("Pressure City Placeholder")}
                         validate={required(t("Pressure Blank Validation"))}
                       />
+                    </WrapInputs>
+                  )}
+                  {showState && showState === "s" && (
+                    <WrapInputs>
+                      <SelectField
+                        label={t("Pressure State Label")}
+                        name="state"
+                        validate={required(t("Pressure Blank Validation"))}
+                      >
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                        <option value="EX">Estrangeiro</option>
+                      </SelectField>
                     </WrapInputs>
                   )}
                   {AfterStandardFields && <AfterStandardFields />}

@@ -33,6 +33,7 @@ const widget = {
     pressure_body: 'Corpo da mensagem',
     pressure_subject: 'Assunto',
     show_city: 'city-true',
+    show_state: 's',
     title_text: 'Send an email to anyone who can make this decision',
     targets: 'Viviane <vivi@email.com>;Camila <camila@email.com>',
   },
@@ -138,6 +139,7 @@ describe('Plugin successful behavior paths', () => {
     name: 'Teste',
     lastname: 'Sobrenome Teste',
     city: 'São Paulo',
+    state: "SP",
     subject: 'Vou te pressionar!',
     body: 'Estou te pressionando :@',
     email: 'test@email.com',
@@ -170,6 +172,9 @@ describe('Plugin successful behavior paths', () => {
     const city = container.querySelector(
       'input[name="city"]'
     ) as HTMLInputElement;
+    const state = container.querySelector(
+      'select[name="state"]'
+    ) as HTMLInputElement;
     const subject = container.querySelector(
       'input[name="subject"]'
     ) as HTMLInputElement;
@@ -181,6 +186,7 @@ describe('Plugin successful behavior paths', () => {
     fireEvent.change(lastname, { target: { value: mockedValues.lastname } });
     fireEvent.change(email, { target: { value: mockedValues.email } });
     fireEvent.change(city, { target: { value: mockedValues.city } });
+    fireEvent.change(state, { target: { value: mockedValues.state } });
     fireEvent.change(subject, { target: { value: mockedValues.subject } });
     fireEvent.change(body, { target: { value: mockedValues.body } });
 
@@ -188,6 +194,7 @@ describe('Plugin successful behavior paths', () => {
     expect(lastname.value).toBe(mockedValues.lastname);
     expect(email.value).toBe(mockedValues.email);
     expect(city.value).toBe(mockedValues.city);
+    expect(state.value).toBe(mockedValues.state);
     expect(subject.value).toBe(mockedValues.subject);
     expect(body.value).toBe(mockedValues.body);
   });
@@ -200,6 +207,7 @@ describe('Plugin successful behavior paths', () => {
         lastname: mockedValues.lastname,
         email: mockedValues.email,
         city: mockedValues.city || null,
+        state: mockedValues.state || null
       },
       targets_id: null,
       mail: {
@@ -222,6 +230,9 @@ describe('Plugin successful behavior paths', () => {
     const city = container.querySelector(
       'input[name="city"]'
     ) as HTMLInputElement;
+    const state = container.querySelector(
+      'select[name="state"]'
+    ) as HTMLInputElement;
     const subject = container.querySelector(
       'input[name="subject"]'
     ) as HTMLInputElement;
@@ -236,6 +247,7 @@ describe('Plugin successful behavior paths', () => {
     fireEvent.change(city, { target: { value: mockedValues.city } });
     fireEvent.change(subject, { target: { value: mockedValues.subject } });
     fireEvent.change(body, { target: { value: mockedValues.body } });
+    fireEvent.change(state, { target: { value: mockedValues.state } });
     fireEvent.click(submitButton);
 
     expect(handleSubmit).toHaveBeenCalledTimes(1);
@@ -274,6 +286,7 @@ describe('Plugin unsuccessful behavior paths', () => {
         ...widget.settings,
         targets: '',
         show_city: 'city-false',
+        show_state: 'n',
         disable_edit_field: 's',
         count_text: undefined,
       },
