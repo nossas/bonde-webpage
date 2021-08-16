@@ -6,6 +6,7 @@ export type Activist = {
   lastname: string;
   email: string;
   city?: string;
+  state?: string;
 };
 
 export type Payload = {
@@ -43,6 +44,9 @@ const pressure = async ({ payload, widget }: Args): Promise<any> => {
     };
     if (activist.city) {
       input.city = activist.city;
+    }
+    if (activist.state) {
+      input.state = activist.state
     }
 
     const pressureInput: any = {
