@@ -139,9 +139,9 @@ const PhonePressure = ({
   const [targetsError, setTargetsError] = useState<Array<string>>([]);
   const [showFinishMessage, toggleFinishMessage] = useState(false);
   const [callManagement, setCalls] = useState<any[]>([]);
+  const [phone, setPhone] = useState(null);
 
   const { call, phonePressureCount, callTransition } = twilio;
-  console.log("phonePressureCount", { phonePressureCount });
   const {
     main_color: mainColor,
     call_to_action: callToAction,
@@ -200,6 +200,7 @@ const PhonePressure = ({
     // normalize phone number with + sign (e.g. +5511987654321)
     data.phone = /^\+/.test(data.phone) ? data.phone : `+${data.phone}`;
 
+    setPhone(data.phone);
     setTargetsError([]);
 
     return call(
@@ -232,6 +233,16 @@ const PhonePressure = ({
       />
     );
 
+  const addTwilioCallMutation = async (to: string) => {
+    const args = {
+      widgetId: widget.id,
+      communityId: mobilization.community_id,
+      from: phone,
+      to
+    }
+    return call(args)
+  }
+
   return (
     <PhoneFormStyled id={`widget-${widget.id}`}>
       {/* <div onKeyDown={e => e.stopPropagation()} /> */}
@@ -239,7 +250,7 @@ const PhonePressure = ({
       <Targets targets={targetList} pressureType="phone" />
       {callTransition ? (
         <CallingTargets
-          addTwilioCallMutation={call}
+          addTwilioCallMutation={addTwilioCallMutation}
           buttonColor={mainColor}
           toggleFinishMessage={toggleFinishMessage}
           callManagement={callManagement}
