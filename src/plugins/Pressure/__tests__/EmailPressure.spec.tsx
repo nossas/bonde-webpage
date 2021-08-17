@@ -75,15 +75,20 @@ const renderEmailPlugin = (props: any) => render(
 
 describe('Plugin needs to render', () => {
   const props = {
-    widget,
+    widget: {
+      ...widget,
+      settings: {
+        ...widget.settings,
+        optimization_enabled: false
+      }
+    },
     pressureTargets: [],
     editable: false,
     overrides,
     analyticsEvents,
     asyncFillWidget: async () => ({ widget: {} }),
     mobilization: {},
-    block,
-    optimization_enabled: false
+    block
   };
 
   it('should render Header with correct text content', () => {
@@ -127,6 +132,24 @@ describe('Plugin needs to render', () => {
     const body = container.querySelector('textarea[name="body"]');
     expect(subject).not.toBeDisabled();
     expect(body).not.toBeDisabled();
+  });
+
+  it("subject and body fields be disabled when optimization_enabled is truth", () => {
+    const { container } = renderEmailPlugin({
+      ...props,
+      widget: {
+        ...props.widget,
+        settings: {
+          ...props.widget.settings,
+          disable_edit_field: "n",
+          optimization_enabled: true
+        }
+      }
+    });
+    const subject = container.querySelector('input[name="subject"]');
+    const body = container.querySelector('textarea[name="body"]');
+    expect(subject).toBeDisabled();
+    expect(body).toBeDisabled();
   });
 
   it('should render the count component if there is a count_text', () => {
