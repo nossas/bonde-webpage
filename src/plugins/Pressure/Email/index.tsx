@@ -140,6 +140,7 @@ export const EmailPressure = ({
           subject: data.subject,
           body: data.body,
         },
+        form_data: data
       };
 
       return asyncFillWidget({ payload, widget })

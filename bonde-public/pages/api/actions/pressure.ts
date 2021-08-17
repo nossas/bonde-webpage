@@ -18,6 +18,7 @@ export type Payload = {
   activist: Activist;
   targets_id?: string;
   mail: Mail
+  form_data: any
 };
 
 export type Widget = {

@@ -13,6 +13,7 @@ export type Payload = {
   activist: Activist;
   targets_id?: string;
   mail: any
+  form_data?: any
 };
 
 export type Widget = {
@@ -33,7 +34,7 @@ export const pressureQuery = `
 `;
 
 const pressure = async ({ payload, widget }: Args): Promise<any> => {
-  const { activist, targets_id, mail } = payload;
+  const { activist, targets_id, mail, form_data } = payload;
 
   try {
     const input: any = {
@@ -51,6 +52,7 @@ const pressure = async ({ payload, widget }: Args): Promise<any> => {
 
     const pressureInput: any = {
       targets_id,
+      form_data,
       token: jwt.sign({}, process.env.ACTION_SECRET_KEY)
     };
 

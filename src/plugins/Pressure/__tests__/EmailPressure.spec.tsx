@@ -207,7 +207,7 @@ describe('Plugin successful behavior paths', () => {
         lastname: mockedValues.lastname,
         email: mockedValues.email,
         city: mockedValues.city || null,
-        state: mockedValues.state || null
+        state: mockedValues.state || null,
       },
       targets_id: null,
       mail: {
@@ -216,6 +216,15 @@ describe('Plugin successful behavior paths', () => {
         subject: mockedValues.subject,
         body: mockedValues.body,
       },
+      form_data: {
+        name: mockedValues.name,
+        lastname: mockedValues.lastname,
+        email: mockedValues.email,
+        city: mockedValues.city || null,
+        state: mockedValues.state || null,
+        subject: mockedValues.subject,
+        body: mockedValues.body
+      }
     };
 
     const name = container.querySelector(
