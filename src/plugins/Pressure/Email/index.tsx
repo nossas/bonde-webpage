@@ -35,6 +35,7 @@ type Props = {
       show_city?: string;
       show_state?: string;
       pressure_type?: string | 'unique' | 'group';
+      optimization_enabled?: boolean
     };
   };
   block: any;
@@ -102,6 +103,7 @@ export const EmailPressure = ({
     // Maybe `reply_email` is necessary...
     // reply_email,
     count_text: countText,
+    optimization_enabled: optimizationEnabled = true,
     finish_message_type: finishMessageType,
     disable_edit_field: disableEditField,
     targets,
@@ -214,7 +216,7 @@ export const EmailPressure = ({
               );
             }}
             AfterStandardFields={() => (
-              <EmailFields.after disableSubjectAndBody={disableEditField === 's'} />
+              <EmailFields.after disableSubjectAndBody={disableEditField === 's' || optimizationEnabled} />
             )}
             errors={state.errors}
           />

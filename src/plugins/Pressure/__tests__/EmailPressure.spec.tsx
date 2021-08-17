@@ -83,6 +83,7 @@ describe('Plugin needs to render', () => {
     asyncFillWidget: async () => ({ widget: {} }),
     mobilization: {},
     block,
+    optimization_enabled: false
   };
 
   it('should render Header with correct text content', () => {
