@@ -258,7 +258,7 @@ const CallingTargets = ({
                     listKey={componentKey}
                     name={name}
                     attempts={attempts}
-                    addTwilioCallMutation={addTwilioCallMutation}
+                    addTwilioCallMutation={() => addTwilioCallMutation(value)}
                   />
                 );
               return <CallFailed listKey={componentKey} name={name} />;
@@ -268,7 +268,7 @@ const CallingTargets = ({
             <CallNextTarget
               listKey={componentKey}
               name={name}
-              addTwilioCallMutation={addTwilioCallMutation}
+              addTwilioCallMutation={() => addTwilioCallMutation(value)}
             />
           );
         })}
