@@ -139,16 +139,6 @@ const PressureForm = ({
                       validate={required(t("Pressure Blank Validation"))}
                     />
                   </WrapInputs>
-                  {showCity && showCity === 'city-true' && (
-                    <WrapInputs>
-                      <InputField
-                        label={t("Pressure City Label")}
-                        name="city"
-                        placeholder={t("Pressure City Placeholder")}
-                        validate={required(t("Pressure Blank Validation"))}
-                      />
-                    </WrapInputs>
-                  )}
                   {showState && showState === "s" && (
                     <WrapInputs>
                       <SelectField
@@ -185,6 +175,16 @@ const PressureForm = ({
                         <option value="TO">Tocantins</option>
                         <option value="EX">Estrangeiro</option>
                       </SelectField>
+                    </WrapInputs>
+                  )}
+                  {showCity && showCity === 'city-true' && (
+                    <WrapInputs>
+                      <InputField
+                        label={t("Pressure City Label")}
+                        name="city"
+                        placeholder={t("Pressure City Placeholder")}
+                        validate={required(t("Pressure Blank Validation"))}
+                      />
                     </WrapInputs>
                   )}
                   {AfterStandardFields && <AfterStandardFields />}
