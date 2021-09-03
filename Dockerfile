@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:1
 LABEL maintainer="tech@nossas.org"
 
 WORKDIR /usr/share/nginx/html
