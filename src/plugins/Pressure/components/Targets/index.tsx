@@ -15,7 +15,7 @@ const parseTarget = (target: string) => {
 export type GroupTarget = {
   identify: string;
   label: string;
-  targets: string[];
+  targets?: string[];
   email_subject?: string;
   email_body?: string;
 };
@@ -41,8 +41,7 @@ const Targets = ({
     }
   }
 
-  // console.log('Targets', { input });
-  const newTargets = groupTarget.targets;
+  const newTargets = groupTarget.targets || [];
   const isPressurePhone = pressureType === pressureUtils.PRESSURE_TYPE_PHONE;
   const targetsCount = newTargets.length;
 
