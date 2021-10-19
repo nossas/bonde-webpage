@@ -2718,22 +2718,22 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
   integrity sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
 
-bonde-components@0.0.4-alpha.15:
-  version "0.0.4-alpha.15"
-  resolved "https://registry.yarnpkg.com/bonde-components/-/bonde-components-0.0.4-alpha.15.tgz#cf49bb73fbc04f370260bd1912c36dfa81126624"
-  integrity sha512-dEU4tCl0qzrErwniuLmhsumqXldjFAno58pnoToGOeze9JUaj4GpxqGe4fd/De/U8Mlkgjuggmje/5nb0lmNTA==
+bonde-components@0.0.4-alpha.34:
+  version "0.0.4-alpha.34"
+  resolved "https://registry.yarnpkg.com/bonde-components/-/bonde-components-0.0.4-alpha.34.tgz#06f97bcefb0e6de5689e508f4e1ea16f43f53c30"
+  integrity sha512-/x8NlzA59QYIgcCS9g25J7Yq3ztYz9uQmTJ1h2L4USmz6xfNWopy+5c/kQkUUt0u8qHK4UP15TdKlr2MQQcpSQ==
   dependencies:
     final-form "^4.18.7"
-    jsonwebtoken "^8.5.1"
     react-final-form "^6.3.5"
     react-select "^3.1.0"
     react-table "^7.5.0"
+    react-toastify "^6.0.9"
     styled-components "^5.0.1"
 
-bonde-webpages@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/bonde-webpages/-/bonde-webpages-0.4.1.tgz#1c23d39a20bee9f5a0435a6c95033d587c4f838b"
-  integrity sha512-InaxKHDwuZC9XQ3OynWt0ZHFrhMKgl99U5+Ea72yjLInT4inteQ/OB+FrUKwyF5n1dBHI27jBvBUvSIGOpxRZw==
+bonde-webpages@0.4.1-alpha.8:
+  version "0.4.1-alpha.8"
+  resolved "https://registry.yarnpkg.com/bonde-webpages/-/bonde-webpages-0.4.1-alpha.8.tgz#27bead647f3aa9fece998c21b3c7d3010d0a156e"
+  integrity sha512-+x6PA36Ap2lL4cvzeQNzm8METzBQHH+rc8FNQ4IVBNZ8lzVesceKkKkAG+NjDr62DWN/ykiQ9dCM5R4s2TSvSA==
   dependencies:
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
@@ -2751,7 +2751,7 @@ bonde-webpages@0.4.1:
     "@slate-editor/list-plugin" "5.1.0"
     "@slate-editor/strikethrough-plugin" "5.1.0"
     "@slate-editor/underline-plugin" "5.1.0"
-    bonde-components "0.0.4-alpha.15"
+    bonde-components "0.0.4-alpha.34"
     clipboard-copy "^3.1.0"
     draft-js "^0.11.5"
     emotion "^10.0.27"
@@ -3242,6 +3242,11 @@ clone-deep@^4.0.1:
     is-plain-object "^2.0.4"
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
+
+clsx@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 co@^4.6.0:
   version "4.6.0"
@@ -6336,9 +6341,9 @@ lodash.uniq@^4.5.0:
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
 lodash@^4.0.1, lodash@^4.1.1, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.2.1:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
   version "1.4.0"
@@ -8118,10 +8123,29 @@ react-table@^7.5.0:
   resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.6.2.tgz#b60932fa6d457c2bca0da49815cd6a8fe9451f77"
   integrity sha512-urwNZTieb+xg/+BITUIrqdH5jZfJlw7rKVAAq25iXpBPwbQojLCEKJuGycLbVwn8fzU+Ovly3y8HHNaLNrPCvQ==
 
+react-toastify@^6.0.9:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-6.2.0.tgz#f2d76747c70b9de91f71f253d9feae6b53dc836c"
+  integrity sha512-XpjFrcBhQ0/nBOL4syqgP/TywFnOyxmstYLWgSQWcj39qpp+WU4vPt3C/ayIDx7RFyxRWfzWTdR2qOcDGo7G0w==
+  dependencies:
+    clsx "^1.1.1"
+    prop-types "^15.7.2"
+    react-transition-group "^4.4.1"
+
 react-transition-group@^4.3.0:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.1.tgz#63868f9325a38ea5ee9535d828327f85773345c9"
   integrity sha512-Djqr7OQ2aPUiYurhPalTrVy9ddmFCCzwhqQmtN+J3+3DzLO209Fdr70QrN8Z3DsglWql6iY1lDWAfpFiBtuKGw==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    dom-helpers "^5.0.1"
+    loose-envify "^1.4.0"
+    prop-types "^15.6.2"
+
+react-transition-group@^4.4.1:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.2.tgz#8b59a56f09ced7b55cbd53c36768b922890d5470"
+  integrity sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg==
   dependencies:
     "@babel/runtime" "^7.5.5"
     dom-helpers "^5.0.1"
