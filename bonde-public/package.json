@@ -16,7 +16,7 @@
     "bonde-webpages": "0.4.3-alpha.1",
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
-    "elliptic": "6.5.3",
+    "elliptic": "6.5.4",
     "graphql": "^15.0.0",
     "i18next": "^20.2.1",
     "i18next-icu": "^2.0.3",
