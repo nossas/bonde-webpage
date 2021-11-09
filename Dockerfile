@@ -1,6 +1,4 @@
-FROM nginx
-LABEL maintainer="tech@nossas.org"
+FROM node:14-alpine
 
-WORKDIR /usr/share/nginx/html
-
-COPY ./storybook-static .
+WORKDIR /code
+COPY . .

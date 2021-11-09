@@ -2,64 +2,65 @@ workspace:
   base: /code
 
 pipeline:
-  build-package:
-    image: node:12-alpine
+  test:
+    image: node:14-alpine
     commands:
-      - yarn
+      - npm i
+      - npm run lint
+      - npm run test
     when:
       event: [push, tag]
       
-  tests:
-    image: node:12-alpine
+  build:
+    image: node:14-alpine
     commands:
-      - yarn run lint
-      - yarn run test
+      - npm run build-prod
     group: build
     when:
       status: success
       branch: [hotfix/*, release/*, feature/*, support/*, develop]
             
-  publish-package-npm:
-    image: plugins/npm
-    secrets: [npm_auth_token, npm_username, npm_email, npm_password]
-    settings:
-      username:
-        from_secret: npm_username
-      token:
-        from_secret: npm_auth_token
-      email:
-        from_secret: npm_email
-      password:
-        from_secret: npm_password
-    group: publish
-    when:
-      event: [push, tag]
+  # publish-package-npm:
+  #   image: plugins/npm
+  #   secrets: [npm_auth_token, npm_username, npm_email, npm_password]
+  #   settings:
+  #     username:
+  #       from_secret: npm_username
+  #     token:
+  #       from_secret: npm_auth_token
+  #     email:
+  #       from_secret: npm_email
+  #     password:
+  #       from_secret: npm_password
+  #   group: publish
+  #   when:
+  #     event: [push, tag]
 
-  build-public-ts:
-    image: node:12-alpine
-    commands:
-      - cd bonde-public
-      - yarn
-      - yarn build
-    when:
-      event: [push, tag]
+  # build-public-ts:
+  #   image: node:12-alpine
+  #   commands:
+  #     - cd bonde-public
+  #     - yarn
+  #     - yarn build
+  #   when:
+  #     event: [push, tag]
   
-  unit-tests:
-    image: node:12-alpine
-    environment:
-      - SKIP_PREFLIGHT_CHECK=true
-    commands:
-      - cd bonde-public
-      - yarn run coverage
-    when:
-      event: [push, tag]
+  # unit-tests:
+  #   image: node:12-alpine
+  #   environment:
+  #     - SKIP_PREFLIGHT_CHECK=true
+  #   commands:
+  #     - cd bonde-public
+  #     - yarn run coverage
+  #   when:
+  #     event: [push, tag]
 
   staging-publish-public-ts:
     image: plugins/docker
     repo: nossas/bonde-public-ts
     secrets: [ docker_username, docker_password ]
-    dockerfile: bonde-public/Dockerfile
-    context: bonde-public/
+    # dockerfile: bonde-public/Dockerfile
+    # context: bonde-public/
     group: publish
     tags:
       - ${DRONE_BRANCH/\//-}
@@ -71,8 +72,8 @@ pipeline:
     image: plugins/docker
     repo: nossas/bonde-public-ts
     secrets: [ docker_username, docker_password ]
-    dockerfile: bonde-public/Dockerfile
-    context: bonde-public/
+    # dockerfile: bonde-public/Dockerfile
+    # context: bonde-public/
     group: publish
     tags:
       - ${DRONE_TAG##v}

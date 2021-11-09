@@ -1,126 +1,156 @@
-# Bonde Webpages
+# Boilerplate and Starter for Next JS 12+, Tailwind CSS 2.0 and TypeScript [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40Ixartz)](https://twitter.com/ixartz)
 
-Using [tsdx](https://github.com/palmerhq/tsdx) to build package.
+<p align="center">
+  <a href="https://creativedesignsguru.com/demo/Nextjs-Boilerplate/"><img src="public/assets/images/nextjs-starter-banner.png?raw=true" alt="Next js starter banner"></a>
+</p>
 
-## Commands
+🚀 Boilerplate and Starter for Next.js, Tailwind CSS and TypeScript ⚡️ Made with developer experience first: Next.js, TypeScript, ESLint, Prettier, Husky, Lint-Staged, VSCode, Netlify, PostCSS, Tailwind CSS.
 
-TSDX scaffolds your new library inside `/src` and [NextJS](https://github.com/zeit/next.js/) sets up a playground for it inside `/example`.
+Clone this project and use it to create your own [Next.js](https://nextjs.org) project. You can check a [Next js templates demo](https://creativedesignsguru.com/demo/Nextjs-Boilerplate/).
 
-The recommended workflow in development is with use `yarn link` to easily debug on version not yet released.
+### Features
 
-### Build
+Developer experience first:
 
-Run build in terminal:
+- 🔥 [Next.js](https://nextjs.org) for Static Site Generator
+- 🎨 Integrate with [Tailwind CSS](https://tailwindcss.com) (w/ JIT mode)
+- 💅 PostCSS for processing Tailwind CSS and integrated to `styled-jsx`
+- 🎉 Type checking [TypeScript](https://www.typescriptlang.org)
+- ✅ Strict Mode for TypeScript and React 17
+- ✏️ Linter with [ESLint](https://eslint.org) (default NextJS, NextJS Core Web Vitals and Airbnb configuration)
+- 🛠 Code Formatter with [Prettier](https://prettier.io)
+- 🦊 Husky for Git Hooks
+- 🚫 Lint-staged for running linters on Git staged files
+- 🗂 VSCode configuration: Debug, Settings, Tasks and extension for PostCSS, ESLint, Prettier, TypeScript
+- 🤖 SEO metadata, JSON-LD and Open Graph tags with Next SEO
+- ⚙️ [Bundler Analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
+- 🖱️ One click deployment with Vercel or Netlify (or manual deployment to any hosting services)
+- 🌈 Include a FREE minimalist theme
+- 💯 Maximize lighthouse score
 
-```bash
-# run this command in location / 
-yarn
+Built-in feature from Next.js:
 
-```
+- ☕ Minify HTML & CSS
+- 💨 Live reload
+- ✅ Cache busting
 
-For run development enrivonment, create a link to `bonde-webpages` and `react` for use on `example/` app. (More about yarn link)[[https://dev.to/mfco/unsolving-the-mysteries-of-yarn-npm-link-for-libraries-development-1bo0](https://dev.to/mfco/unsolving-the-mysteries-of-yarn-npm-link-for-libraries-development-1bo0)]
+### Philosophy
 
-```bash
-yarn link # create link to bonde-webpages
-cd node_modules/react && yarn link # create link to react
-cd ../react-dom && yarn link # create link to react-dom
+- Minimal code
+- SEO-friendly
+- 🚀 Production-ready
 
-```
+### Nextless.js SaaS Boilerplate
 
-### Example
+Building your SaaS product faster with [Nextless JS SaaS Boilerplate](https://nextlessjs.com).
 
-Then run the example inside another:
+[![Nextless React SaaS Boilerplate](https://nextlessjs.com/assets/images/hero-image.png)](https://nextlessjs.com)
 
-```bash
-# run this command in location / 
-cd example
-yarn
-yarn link bonde-webpages react react-dom
-yarn build # or `yarn run dev` to start dev server
+### Premium Themes
 
-```
+| [Green Nextjs Landing Page Template](https://creativedesignsguru.com/landing-green-modern-nextjs-theme/) | [Purple Saas Nextjs Theme](https://creativedesignsguru.com/landing-purple-modern-react-theme/) |
+| --- | --- |
+| [![Green Nextjs Landing Page Template](https://creativedesignsguru.com/assets/images/themes/landing-green-modern-nextjs-theme-xs.png)](https://creativedesignsguru.com/landing-green-modern-nextjs-theme/) | [![Blue Landing Page Nextjs Theme](https://creativedesignsguru.com/assets/images/themes/landing-blue-modern-nextjs-theme-xs.png)](https://creativedesignsguru.com/landing-blue-modern-react-theme/) |
 
-### Storybook
+Find more [Nextjs Themes](https://creativedesignsguru.com/category/nextjs/).
 
-Run inside another terminal:
+### Requirements
 
-```
-yarn storybook
+- Node.js and npm
 
-```
+### Getting started
 
-This loads the stories from `./stories`.
-
-## Configuration
-
-Code quality is [set up for you](https://github.com/palmerhq/tsdx/pull/45/files) with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`. This runs the test watcher (Jest) in an interactive mode. By default, runs tests related to files changed since the last commit.
-
-### Rollup
-
-TSDX uses [Rollup v1.x](https://rollupjs.org/) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](https://www.notion.so/1ee932353f2f4c54a7c428760a8b136e#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### Travis
-
-*to be completed*
-
-### Circle
-
-*to be completed*
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
+Run the following command on your local environment:
 
 ```
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
-
+git clone --depth=1 https://github.com/ixartz/Next-js-Boilerplate.git my-project-name
+cd my-project-name
+npm install
 ```
 
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
-
-## Module Formats
-
-CJS, ESModules, and UMD module formats are supported.
-
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Deploying the Playground (bonde-public)
-
-Run build to deploy on production:
+Then, you can run locally in development mode with live reload:
 
 ```
-cd example # if not already in the example folder
-yarn build # builds to dist
-yarn start # deploy the dist folder
-
+npm run dev
 ```
 
-<!-- ## Named Exports
+Open http://localhost:3000 with your favorite browser to see your project.
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library. -->
+```
+.
+├── README.md                # README file
+├── next.config.js           # Next JS configuration
+├── public                   # Public folder
+│   └── assets
+│       └── images           # Image used by default template
+├── src
+│   ├── layout               # Atomic layout components
+│   ├── pages                # Next JS pages
+│   ├── styles               # PostCSS style folder with Tailwind
+│   ├── templates            # Default template
+│   └── utils                # Utility folder
+├── tailwind.config.js       # Tailwind CSS configuration
+└── tsconfig.json            # TypeScript configuration
+```
 
-<!-- ## Including Styles
+### Customization
 
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
+You can easily configure Next js Boilerplate. Please change the following file:
 
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader. -->
+- `public/apple-touch-icon.png`, `public/favicon.ico`, `public/favicon-16x16.png` and `public/favicon-32x32.png`: your website favicon, you can generate from https://favicon.io/favicon-converter/
+- `src/styles/main.css`: your CSS file using Tailwind CSS
+- `src/utils/AppConfig.ts`: configuration file
+- `src/templates/Main.tsx`: default theme
 
-<!-- ## Publishing to NPM
+### Deploy to production
 
-We recommend using [https://github.com/sindresorhus/np](https://github.com/sindresorhus/np). -->
+You can see the results locally in production mode with:
+
+```
+$ npm run build
+$ npm run start
+```
+
+The generated HTML and CSS files are minified (built-in feature from Next js). It will also removed unused CSS from [Tailwind CSS](https://tailwindcss.com).
+
+You can create an optimized production build with:
+
+```
+npm run build-prod
+```
+
+Now, your blog is ready to be deployed. All generated files are located at `out` folder, which you can deploy with any hosting service.
+
+### Deploy to Netlify
+
+Clone this repository on own GitHub account and deploy to Netlify:
+
+[![Netlify Deploy button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ixartz/Next-js-Boilerplate)
+
+### Deploy to Vercel
+
+Deploy this Next JS Boilerplate on Vercel in one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fixartz%2FNext-js-Boilerplate)
+
+### VSCode information (optional)
+
+If you are VSCode users, you can have a better integration with VSCode by installing the suggested extension in `.vscode/extension.json`. The starter code comes up with Settings for a seamless integration with VSCode. The Debug configuration is also provided for frontend and backend debugging experience.
+
+Pro tips: if you need a project wide type checking with TypeScript, you can run a build with <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>B</kbd> on Mac.
+
+### Contributions
+
+Everyone is welcome to contribute to this project. Feel free to open an issue if you have question or found a bug.
+
+### License
+
+Licensed under the MIT License, Copyright © 2020
+
+See [LICENSE](LICENSE) for more information.
+
+---
+
+Made with ♥ by [CreativeDesignsGuru](https://creativedesignsguru.com) [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/cloudposse.svg?style=social&label=Follow%20%40Ixartz)](https://twitter.com/ixartz)
+
+[![Sponsor Next JS Boilerplate](https://cdn.buymeacoffee.com/buttons/default-red.png)](https://www.buymeacoffee.com/ixartz)
