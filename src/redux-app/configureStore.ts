@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { MakeStore } from 'next-redux-wrapper';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createWrapper } from 'next-redux-wrapper';
+import { createStore, applyMiddleware, compose, Store } from 'redux';
 import promise from 'redux-promise';
 import thunk from 'redux-thunk';
 
@@ -17,25 +17,15 @@ const middlewares = [
   }),
 ];
 
-const configureStore: MakeStore = (initialState = {}, options?: any) => {
-  const request = {
-    host: '',
-    protocol: 'http',
-  };
+const makeStore = (context: any) => createStore(createReducer({
+  sourceRequest: sourceReqCreateReducer({
+    host: context.req?.headers.host || '',
+    protocol:  context.req?.headers['x-forwarded-proto'] || 'http'
+  })
+}),
+{},
+compose(
+  applyMiddleware(...middlewares)
+));
 
-  if (options && options.req && options.req.headers) {
-    const { headers } = options.req;
-    request.host = headers.host || request.host;
-    request.protocol = headers['x-forwarded-proto'] || request.protocol;
-  }
-
-  return createStore(
-    createReducer({
-      sourceRequest: sourceReqCreateReducer(request),
-    }),
-    initialState,
-    compose(applyMiddleware(...middlewares))
-  );
-};
-
-export default configureStore;
+export const wrapper = createWrapper<Store<any>>(makeStore, {debug: true});
