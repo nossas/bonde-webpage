@@ -91,13 +91,13 @@ export const parseTarget = (target: string) => {
   const targetSplit = target.split('<');
   const valid = targetSplit.length === 2;
   return valid
-    ? { name: targetSplit[0].trim(), value: targetSplit[1].replace('>', '') }
+    ? { name: targetSplit[0]?.trim(), value: targetSplit[1]?.replace('>', '') }
     : null;
 };
 
 export const getEmailTarget = (target: string) => {
   const targetSplit = target.split('<');
-  return targetSplit[1].replace('>', '');
+  return targetSplit[1]?.replace('>', '');
 };
 
 export const getTargetList = (targets: any): Array<string> => {

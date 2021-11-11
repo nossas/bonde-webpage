@@ -6,7 +6,7 @@ import {
   FinishDonationMessage,
   DonationAnalytics,
   DonationTellAFriend,
-} from 'bonde-webpages';
+} from '../../bonde-webpage';
 import getConfig from 'next/config';
 import fetch from 'node-fetch';
 import { connect } from 'react-redux';

@@ -7,7 +7,7 @@ const Wrapper = styled.li`
   background-color: #c20000;
 `;
 
-const Button = styled(Btn)`
+const Button = styled(Btn as any)`
   && {
     max-width: 120px;
     border-radius: 2px;

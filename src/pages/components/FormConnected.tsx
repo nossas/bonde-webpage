@@ -4,7 +4,7 @@ import {
   FormAnalytics,
   FormTellAFriend,
   FinishMessageCustom,
-} from 'bonde-webpages';
+} from '../../bonde-webpage';
 import fetch from 'node-fetch';
 import { connect } from 'react-redux';
 // import { injectIntl } from 'react-intl'

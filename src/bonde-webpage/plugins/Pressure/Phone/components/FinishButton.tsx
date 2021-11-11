@@ -3,7 +3,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Button as Btn } from 'bonde-components';
 
-const Button = styled(Btn)`
+const Button = styled(Btn as any)`
   && {
     border-radius: 2px;
     width: 100%;

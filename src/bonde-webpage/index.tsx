@@ -15,7 +15,6 @@ export {
 } from './redux-mob/action-creators';
 export { default as reducer } from './redux-mob/reducers';
 export { default as selectors } from './redux-mob/Selectors';
-
 export { default as ContentPlugin } from './plugins/Content';
 export { default as DraftPlugin } from './plugins/Draft';
 
@@ -34,7 +33,7 @@ export { default as CallingTargets } from './plugins/Pressure/Phone/CallingTarge
 export { default as PhoneFields } from './plugins/Pressure/Phone/PhoneFields';
 export { default as Targets } from './plugins/Pressure/components/Targets';
 export { default as Count } from './components/Count';
-export { default as PressurePlugin } from './plugins/Pressure/Email';
+export { default as EmailPressurePlugin } from './plugins/Pressure/Email';
 export { default as PhonePressurePlugin } from './plugins/Pressure/Phone';
 export { default as PressureAnalytics } from './plugins/Pressure/Analytics';
 export { default as PressureTellAFriend } from './plugins/Pressure/components/TellAFriend';
@@ -42,3 +41,9 @@ export { default as asyncPressureCreate } from './redux-mob/action-creators/Fill
 
 /* DonationPlugin */
 export { default as DonationPlugin } from './plugins/Donation';
+export { default as DonationTellAFriend } from './plugins/Donation/TellAFriend';
+export { default as PagarMeCheckout } from './plugins/Donation/PagarMeCheckout';
+export { default as FinishDonationMessage } from './plugins/Donation/FinishDonationMessage';
+export { default as DonationAnalytics } from './plugins/Donation/Analytics';
+
+export * from './components'

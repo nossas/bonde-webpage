@@ -5,11 +5,11 @@ import graphql from './request-graphql';
 jest.mock('./request-graphql');
 const mockedGraphql = mocked(graphql);
 
-jest.mock('bonde-webpages', () => ({
-  FormAnalytics: {
-    formSavedData: jest.fn()
-  }
-}));
+// jest.mock('bonde-webpage', () => ({
+//   FormAnalytics: {
+//     formSavedData: jest.fn()
+//   }
+// }));
 
 
 describe('activists module form entry tests', () => {

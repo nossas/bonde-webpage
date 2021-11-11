@@ -7,10 +7,10 @@ import { pressureUtils } from '../../utils';
 import { Wrapper, Label, Container, ListWrapper, Item, Span } from './styles';
 
 const parseTarget = (target: string) => {
-  const targetSplit = target.split('<');
+  const targetSplit = target.split('<') || [];
   const valid = targetSplit.length === 2;
   return valid
-    ? { name: targetSplit[0].trim(), value: targetSplit[1].replace('>', '') }
+    ? { name: targetSplit[0]?.trim(), value: targetSplit[1]?.replace('>', '') }
     : null;
 };
 
@@ -35,7 +35,7 @@ const Targets = ({
   const { input } = useField('targetsInput');
 
   if (pureTargets && pureTargets.length > 0 && pressureType === 'group') {
-    const newGroup: GroupTarget = pureTargets.filter(
+    const newGroup: GroupTarget | undefined = pureTargets.filter(
       (t: GroupTarget) => t.identify === input.value.value
     )[0];
     if (newGroup) {
@@ -102,9 +102,11 @@ const TargetsPhone = (props: any) => {
   );
 };
 
-export default (props: any) =>
+const TargetsPhoneFunc = (props: any) =>
   props.pressureType === pressureUtils.PRESSURE_TYPE_PHONE ? (
     <TargetsPhone {...props} />
   ) : (
     <Targets {...props} />
   );
+
+export default TargetsPhoneFunc
