@@ -11,5 +11,13 @@ module.exports = withBundleAnalyzer({
   // So, the source code is "basePath-ready".
   // You can remove `basePath` if you don't need it.
   reactStrictMode: true,
+  publicRuntimeConfig: {
+    domainApiRest: process.env.REACT_APP_DOMAIN_API_REST,
+    domainApiGraphql: process.env.REACT_APP_DOMAIN_API_GRAPHQL,
+    apiGraphqlSecret: process.env.REACT_APP_API_GRAPHQL_SECRET,
+    domainApiGraphqlWs: process.env.REACT_APP_DOMAIN_API_GRAPHQL_WS,
+    domainPublic: process.env.REACT_APP_DOMAIN_PUBLIC,
+    pagarmeKey: process.env.REACT_APP_PAGARME_KEY
+  }
 });
 

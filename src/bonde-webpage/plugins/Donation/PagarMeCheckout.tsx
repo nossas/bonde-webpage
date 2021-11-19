@@ -23,7 +23,7 @@ type Options = {
   customerData?: any;
 };
 
-const PagarMeCheckout = (props: Props) => {
+const PagarMeCheckout = (props: Props | any) => {
   const [customerData, setCustomerData] = useState();
   const { donationComponent: Donation } = props;
 

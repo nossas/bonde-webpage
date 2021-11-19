@@ -42,10 +42,14 @@ const mapDispatchToProps = () => ({
     ).json(),
 });
 
+interface MobProps {
+  mobilization: any
+}
+
 export default connect(
   null,
   mapDispatchToProps
-)((props: any) => (
+)((props: MobProps) => (
   <PagarMeCheckout
     {...props}
     pagarmeKey={publicRuntimeConfig.pagarmeKey || 'setup env var'}
