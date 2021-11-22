@@ -4,6 +4,7 @@ import asyncFilterBlocksGraphql from '../graphql-app/filterBlocks';
 import asyncFilterMobilizationsGraphql from '../graphql-app/filterMobilizations';
 import asyncFilterWidgetsGraphql from '../graphql-app/filterWidgets';
 import MeuRioStyles from './components/MeuRioStyles';
+import Styles from '../bonde-webpage/Styles';
 import { MobilizationConnected } from './components/MobilizationConnected';
 
 interface PageProperties {
@@ -97,6 +98,7 @@ function Page({ mobilization, blocks, widgets }: PageProperties) {
           }}
         />
       </Head>
+      <Styles />
       <MeuRioStyles>
         <MobilizationConnected
           mobilization={mobilization}
