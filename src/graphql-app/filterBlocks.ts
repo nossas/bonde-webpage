@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 import type { Filter, BlockGraphQL } from './types';
 import { client as GraphQLAPI } from '.';
 
-const asyncFilterBlocksGraphql = ({ slug, custom_domain }: any) => (dispatch: any) => {
-  dispatch({ type: 'FILTER_BLOCKS_REQUEST' });
+const asyncFilterBlocksGraphql = async ({ slug, custom_domain }: any) => {
+  // dispatch({ type: 'FILTER_BLOCKS_REQUEST' });
 
   let filter: Filter = {};
   if (slug) filter.slug = { _eq: slug };
@@ -27,18 +27,18 @@ const asyncFilterBlocksGraphql = ({ slug, custom_domain }: any) => (dispatch: an
     variables: { filter },
     fetchPolicy: "no-cache"
   })
-    .then(({ data }: { data: { blocks: BlockGraphQL[] } }) => {
-      dispatch({
-        type: 'FILTER_BLOCKS_SUCCESS',
-        payload: data.blocks
-      });
-      return Promise.resolve();
-    })
-    .catch((err: any) => {
-      dispatch({ type: 'FILTER_BLOCKS_FAILURE', payload: err });
-      console.log('failed', err);
-      return Promise.reject(err);
-    })
+  .then(({ data }: { data: { blocks: BlockGraphQL[] } }) => {
+    // dispatch({
+    //   type: 'FILTER_BLOCKS_SUCCESS',
+    //   payload: data.blocks
+    // });
+    return Promise.resolve({ blocks: data.blocks });
+  })
+  .catch((err: any) => {
+    // dispatch({ type: 'FILTER_BLOCKS_FAILURE', payload: err });
+    console.log('failed', err);
+    return Promise.reject(err);
+  })
 }
 
 export default asyncFilterBlocksGraphql;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Fields from '../components/Form/Fields';
-import { Validators } from 'bonde-components';
+import { Validators } from '../../../components/forms';
 import { validateUtils } from '../utils';
 
 const { required, composeValidators } = Validators;

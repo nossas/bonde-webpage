@@ -64,16 +64,15 @@ const Section = (props: SectionProps) => {
       >
         <div className="col-10 mx-auto">
           <Block>
-            {widgets &&
-              widgets.map((widget: any) => (
-                <WidgetArea
-                  key={`widget-${widget.id}`}
-                  block={block}
-                  widget={widget}
-                  widgetComponent={widgetComponent}
-                  extraWidgetProps={extraWidgetProps}
-                />
-              ))}
+            {widgets.map((widget: any) =>
+              <WidgetArea
+                key={`widget-${widget.id}`}
+                block={block}
+                widget={widget}
+                widgetComponent={widgetComponent}
+                extraWidgetProps={extraWidgetProps}
+              />
+            )}
           </Block>
         </div>
       </div>

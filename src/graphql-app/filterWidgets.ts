@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 import type { Filter, WidgetGraphQL } from './types';
 import { client as GraphQLAPI } from '.';
 
-const asyncFilterWidgetGraphql = ({ slug, custom_domain }: any) => (dispatch: any) => {
-  dispatch({ type: 'FILTER_WIDGETS_REQUEST' });
+const asyncFilterWidgetGraphql = async ({ slug, custom_domain }: any) => {
+  // dispatch({ type: 'FILTER_WIDGETS_REQUEST' });
 
   let filter: Filter = {};
   if (slug) filter.slug = { _eq: slug };
@@ -49,19 +49,24 @@ const asyncFilterWidgetGraphql = ({ slug, custom_domain }: any) => (dispatch: an
     fetchPolicy: "no-cache"
   })
   .then(({ data }: { data: { widgets: WidgetGraphQL[] } }) => {
-    dispatch({
-      type: 'FILTER_WIDGETS_SUCCESS',
-      payload: data.widgets.map((w: WidgetGraphQL) => ({
-        ...w,
-        form_entries_count: w.form_entries_aggregate.aggregate.count,
-        donations_count: w.donations_aggregate.aggregate.count,
-        count: w.activist_pressures_aggregate.aggregate.count
-      }))
-    });
-    return Promise.resolve();
+    // dispatch({
+    //   type: 'FILTER_WIDGETS_SUCCESS',
+    //   payload: data.widgets.map((w: WidgetGraphQL) => ({
+    //     ...w,
+    //     form_entries_count: w.form_entries_aggregate.aggregate.count,
+    //     donations_count: w.donations_aggregate.aggregate.count,
+    //     count: w.activist_pressures_aggregate.aggregate.count
+    //   }))
+    // });
+    return Promise.resolve({ widgets: data.widgets.map((w: WidgetGraphQL) => ({
+      ...w,
+      form_entries_count: w.form_entries_aggregate.aggregate.count,
+      donations_count: w.donations_aggregate.aggregate.count,
+      count: w.activist_pressures_aggregate.aggregate.count
+    }))})
   })
   .catch((err: any) => {
-    dispatch({ type: 'FILTER_WIDGETS_FAILURE', payload: err });
+    // dispatch({ type: 'FILTER_WIDGETS_FAILURE', payload: err });
     console.log('failed', err);
     return Promise.reject(err);
   })

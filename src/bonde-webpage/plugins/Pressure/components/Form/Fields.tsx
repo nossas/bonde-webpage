@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
-
-import { InputField, TextareaField } from 'bonde-components';
-
+import { InputField, TextareaField } from '../../../../components/forms';
 import { WrapInputs } from './styles';
 
 type Props = {
@@ -21,7 +19,7 @@ const Fields = ({ fields }: Props) => {
     <Fragment>
       {fields.map(
         (
-          { name, label, type, placeholder, disabled, onBlur, ...configs },
+          { name, label, type, placeholder, disabled, validate },
           i: number
         ) => {
           if (type !== 'textarea')
@@ -33,11 +31,12 @@ const Fields = ({ fields }: Props) => {
                   type={type}
                   placeholder={placeholder}
                   disabled={disabled}
-                  onBlur={onBlur}
-                  {...configs}
+                  validate={validate}
+                  // {...configs}
                 />
               </WrapInputs>
             );
+
           return (
             <WrapInputs key={`textarea-id-${i}`} disabled={disabled}>
               <TextareaField
@@ -45,7 +44,8 @@ const Fields = ({ fields }: Props) => {
                 name={name}
                 placeholder={placeholder}
                 disabled={disabled}
-                {...configs}
+                validate={validate}
+                // {...configs}
               />
             </WrapInputs>
           );

@@ -5,21 +5,21 @@ import { connect } from 'react-redux';
 
 import {
   // Plugins
-  ContentPlugin,
+  // ContentPlugin,
   DraftPlugin,
   MobilizationClass as Mobilization,
   PluggableWidget,
-  FinishMessageCustom,
+  // FinishMessageCustom,
   selectors as MobilizationSelectors,
-  PressureAnalytics,
-  PressureTellAFriend,
+  // PressureAnalytics,
+  // PressureTellAFriend,
 } from '../../bonde-webpage';
 import Utils from '../../Utils';
 import DonationPlugin from './DonationConnected';
 import Footer from './Footer';
 import FormPlugin from './FormConnected';
 import PressureEmailPlugin from './PressureEmailConnected';
-import PressurePhonePlugin from './PressurePhoneConnected';
+// import PressurePhonePlugin from './PressurePhoneConnected';
 
 const mapStateToProps = (state: any, props: any) => {
   const query = MobilizationSelectors(state, props);
@@ -31,70 +31,88 @@ const mapStateToProps = (state: any, props: any) => {
   };
 };
 
+const DummyWidget = ({ widget }) => (
+  <h2>{widget.kind} - {widget.id}</h2>
+)
+
 const plugins = [
   {
     kind: 'draft',
+    // component: DummyWidget,
     component: DraftPlugin,
     options: { noOverlay: true },
   },
   {
     kind: 'form',
+    // component: DummyWidget,
     component: FormPlugin,
   },
   {
     kind: 'donation',
+    // component: DummyWidget,
     component: DonationPlugin,
   },
   {
     kind: 'pressure',
-    component: (props: any) => (
-      <PressureEmailPlugin
-        {...props}
-        analyticsEvents={PressureAnalytics}
-        overrides={{
-          FinishCustomMessage: { component: FinishMessageCustom },
-          FinishDefaultMessage: {
-            component: PressureTellAFriend,
-            props: {
-              imageUrl: Utils.imageUrl,
-              href: Utils.getSharedPath(props.mobilization),
-            },
-          },
-        }}
-      />
-    ),
+    // component: DummyWidget,
+    component: PressureEmailPlugin,
+    // component: (props: any) => (
+    //   <PressureEmailPlugin
+    //     {...props}
+    //     analyticsEvents={PressureAnalytics}
+    //     overrides={{
+    //       FinishCustomMessage: { component: FinishMessageCustom },
+    //       FinishDefaultMessage: {
+    //         component: PressureTellAFriend,
+    //         props: {
+    //           imageUrl: Utils.imageUrl,
+    //           href: Utils.getSharedPath(props.mobilization),
+    //         },
+    //       },
+    //     }}
+    //   />
+    // ),
   },
   {
     kind: 'pressure-phone',
-    component: (props: any) => (
-      <PressurePhonePlugin
-        {...props}
-        analyticsEvents={PressureAnalytics}
-        overrides={{
-          FinishCustomMessage: { component: FinishMessageCustom },
-          FinishDefaultMessage: {
-            component: PressureTellAFriend,
-            props: {
-              imageUrl: Utils.imageUrl,
-              href: Utils.getSharedPath(props.mobilization),
-            },
-          },
-        }}
-      />
-    ),
+    component: DummyWidget,
+    // component: (props: any) => (
+    //   <PressurePhonePlugin
+    //     {...props}
+    //     analyticsEvents={PressureAnalytics}
+    //     overrides={{
+    //       FinishCustomMessage: { component: FinishMessageCustom },
+    //       FinishDefaultMessage: {
+    //         component: PressureTellAFriend,
+    //         props: {
+    //           imageUrl: Utils.imageUrl,
+    //           href: Utils.getSharedPath(props.mobilization),
+    //         },
+    //       },
+    //     }}
+    //   />
+    // ),
   },
   {
     kind: 'content',
-    component: ContentPlugin,
+    component: DummyWidget,
+    // component: ContentPlugin,
   },
 ];
 
-const MobilizationConnected = ({
+export interface MobilizationProperties {
+  mobilization: any;
+  blocks: any[];
+  widgets: any[];
+  blocksIsLoaded: boolean;
+}
+
+export const MobilizationConnected = ({
   mobilization,
   blocks,
   widgets,
   blocksIsLoaded,
-}: any) => {
+}: MobilizationProperties) => {
   const { t, i18n } = useTranslation();
 
   if (mobilization && blocksIsLoaded) {

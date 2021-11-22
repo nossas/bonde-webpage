@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { Button as Btn } from 'bonde-components';
+import { Button as Btn } from '../../../../components/forms';
 
 const Button = styled(Btn as any)`
   && {

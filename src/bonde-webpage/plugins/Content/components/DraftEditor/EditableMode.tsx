@@ -128,7 +128,7 @@ const RebooEditor = ({
         'insert-fragment' // before, insert-new-line
       );
 
-      console.log(editorStateWithLineBreak);
+      // console.log(editorStateWithLineBreak);
 
       // TODO: Type error
       // onChangeEditorState(

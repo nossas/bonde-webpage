@@ -1,9 +1,26 @@
-import React, { FC } from 'react';
-import { AppProps } from 'next/app';
-import {wrapper} from '../redux-app/configureStore';
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
-const WrappedApp: FC<AppProps> = ({Component, pageProps}) => (
-  <Component {...pageProps} />
-);
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+`
 
-export default wrapper.withRedux(WrappedApp);
+const theme = {
+  colors: {
+    primary: '#0070f3',
+  },
+}
+
+export default function App({ Component, pageProps }) {
+  return (
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </>
+  )
+}

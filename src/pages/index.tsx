@@ -1,64 +1,20 @@
-import * as React from 'react';
-
-import { init as initApm } from '@elastic/apm-rum';
-import i18n from 'i18next';
-import getConfig from 'next/config';
 import Head from 'next/head';
-import { initReactI18next, withSSR } from 'react-i18next';
-import { connect } from 'react-redux';
-
-import * as pkgInfo from '../../package.json';
-import {
-  // asyncFilterMobilization,
-  // asyncFilterBlock,
-  // asyncFilterWidget,
-  Styles,
-} from '../bonde-webpage';
-import asyncFilterBlockGraphql from '../graphql-app/filterBlocks';
-import asyncFilterMobilizationGraphql from '../graphql-app/filterMobilizations';
-import asyncFilterWidgetGraphql from '../graphql-app/filterWidgets';
-import initialI18nStore from '../initialI18nStore';
 import Error404 from './404';
+import asyncFilterBlocksGraphql from '../graphql-app/filterBlocks';
+import asyncFilterMobilizationsGraphql from '../graphql-app/filterMobilizations';
+import asyncFilterWidgetsGraphql from '../graphql-app/filterWidgets';
 import MeuRioStyles from './components/MeuRioStyles';
-import MobilizationConnected from './components/MobilizationConnected';
-import { wrapper } from '../redux-app/configureStore';
-import { NextPage } from 'next';
+import { MobilizationConnected } from './components/MobilizationConnected';
 
-const { publicRuntimeConfig } = getConfig();
-
-i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
-  .init({
-    debug: process.env.NODE_ENV === 'development',
-    resources: initialI18nStore,
-    lng: 'pt-BR',
-    fallbackLng: 'pt-BR',
-    interpolation: {
-      escapeValue: false,
-    },
-  });
-
-interface PageProps {
+interface PageProperties {
   mobilization: any;
-  protocol: string;
+  blocks: any[];
+  widgets: any[];
 }
 
-const AppLanguage = withSSR()(() => {
-  return (
-    <MeuRioStyles>
-      <Styles>
-        <MobilizationConnected />
-      </Styles>
-    </MeuRioStyles>
-  );
-});
-
-// class Page extends React.Component<PageProps> {
-// static async getInitialProps({ store, res, req }: any = {}) {
-
-const Page: NextPage<any> = (props: PageProps) => {
-
-  if (!props.mobilization) return <Error404 />;
+function Page({ mobilization, blocks, widgets }: PageProperties) {
+  console.log("PageProperties >>>", { mobilization, blocks, widgets })
+  if (!mobilization) return <Error404 />;
 
   const {
     name,
@@ -71,24 +27,10 @@ const Page: NextPage<any> = (props: PageProps) => {
     google_analytics_code: googleAnalyticsCode,
     slug,
     language,
-  } = props.mobilization;
+  } = mobilization;
 
-  const domain =
-    customDomain ||
-    `${slug}.${publicRuntimeConfig.domainPublic || 'staging.bonde.org'}`;
-  const url = `${props.protocol}://${domain}`;
-
-  initApm({
-    // Set required service name (allowed characters: a-z, A-Z, 0-9, -, _, and space)
-    serviceName: `Bonde Webpage - ${domain.replace(/\./g, '-')}`,
-    // Set custom APM Server URL (default: http://localhost:8200)
-    serverUrl:
-      'https://421ca5e3d4c44a04a7f832f08aefbcda.apm.us-east-1.aws.cloud.es.io:443',
-    // Set the service version (required for source map feature)
-    serviceVersion: pkgInfo.version,
-    // Set the service environment
-    environment: 'production',
-  });
+  const domain = customDomain || `${slug}.bonde.org`;
+  const url = `https://${domain}`;
 
   return (
     <div className="container">
@@ -155,89 +97,74 @@ const Page: NextPage<any> = (props: PageProps) => {
           }}
         />
       </Head>
-      <AppLanguage
+      <MeuRioStyles>
+        <MobilizationConnected
+          mobilization={mobilization}
+          blocks={blocks}
+          widgets={widgets}
+          blocksIsLoaded
+        />
+      </MeuRioStyles>
+      {/* <AppLanguage
         initialLanguage={language}
         initialI18nStore={initialI18nStore}
-      />
+      /> */}
     </div>
-  );
+  )
 }
 
-const mapStateToProps = (state: any) => {
-  const composeProps: any = {
-    mobilization: {},
-  };
-  const {
-    intl: { currentLocale },
-    mobilizations: {
-      list: { currentId, data, isLoaded },
-    },
-    sourceRequest: { protocol },
-  } = state;
+// This gets called on every request
+export async function getServerSideProps(context) {
+  // Fetch data from external API
+  // const res = await fetch(`https://.../data`)
+  // const { host } = getState().sourceRequest;
+  // const { protocol } = getState().sourceRequest;
+  // const appDomain = publicRuntimeConfig.domainPublic || 'staging.bonde.org';
+  // const appDomain = "localhost:3000"
+  // const userAgent = req ? req.headers['user-agent'] || '' : navigator.userAgent || '';
 
-  if (currentId) {
-    // eslint-disable-next-line prefer-destructuring
-    composeProps.mobilization = data.filter(
-      (...id: any[]) => id === currentId
-    )[0];
-  } else if (data.length === 1) {
-    // eslint-disable-next-line prefer-destructuring
-    composeProps.mobilization = data[0];
-  }
+  // Resolve ataque de bots
+  // if (userAgent.toLowerCase().indexOf('less') > 0) {
+  //   res?.end();
+  // }
 
-  return { isLoaded, ...composeProps, protocol, currentLocale };
-};
+  // if (host) {
+  //   if (res) {
+  //     if (!host.startsWith('www', 0)) {
+  //       res.writeHead(302, {
+  //         Location: `${protocol}://www.${host}`,
+  //       });
+  //       res.end();
+  //     }
+  //   }
+  // }
 
-Page.getInitialProps = wrapper.getInitialPageProps(store => async ({req, res}) => {
-  const { dispatch, getState } = store;
-  const { host } = getState().sourceRequest;
-  const { protocol } = getState().sourceRequest;
-  const appDomain = publicRuntimeConfig.domainPublic || 'staging.bonde.org';
-  const userAgent = req ? req.headers['user-agent'] || '' : navigator.userAgent || '';
+  // const fetchData = async (filter?: any) => {
+  //   // const regex = host.match(`(.+).${appDomain}`);
+  //   // const where = regex
+  //   //   ? { slug: regex[1].replace(/^www\./, '') }
+  //   //   : { custom_domain: host };
 
-  if (userAgent.toLowerCase().indexOf('less') > 0) {
-    res?.end();
-  }
+  //   await asyncFilterMobilizationGraphql(filter || where));
+  //   // await dispatch(asyncFilterBlockGraphql(filter || where));
+  //   // await dispatch(asyncFilterWidgetGraphql(filter || where));
+  // };
 
-  if (host) {
-    if (res) {
-      if (!host.startsWith('www', 0)) {
-        res.writeHead(302, {
-          Location: `${protocol}://www.${host}`,
-        });
-        res.end();
-      }
-    }
-  }
+  const { mobilizations } = await asyncFilterMobilizationsGraphql({ slug: 'teste-de-widgets' })
+  const { blocks } = await asyncFilterBlocksGraphql({ slug: 'teste-de-widgets' })
+  const { widgets } = await asyncFilterWidgetsGraphql({ slug: 'teste-de-widgets' })
 
-  const fetchData = async (filter?: any) => {
-    const regex = host.match(`(.+).${appDomain}`);
-    const where = regex
-      ? { slug: regex[1].replace(/^www\./, '') }
-      : { custom_domain: host };
-
-    await dispatch(asyncFilterMobilizationGraphql(filter || where));
-    await dispatch(asyncFilterBlockGraphql(filter || where));
-    await dispatch(asyncFilterWidgetGraphql(filter || where));
-  };
+  // console.log("mobilizations, blocks, widgets >>>", { mobilizations, blocks, widgets });
 
   // await fetchData();
   // Mobiization with all widgets configured.
-  await fetchData({ slug: 'teste-de-widgets' });
-});
+  // await fetchData({ slug: 'teste-de-widgets' });
 
-// const App = (props: any) => {
-//   console.log('props', props);
-//   useSSR({
-//     es: {
-//       "Welcome to React": "Bien viendo a React e react-i18next"
-//     },
-//     ['pt-br']: {
-//       "Welcome to React": "Bem vindo ao React e react-i18next"
-//     }
-//   }, props.mobilization ? props.mobilization.language : 'pt-br');
+  // const data = await res.json()
 
-//   return <Page {...props} />
-// }
+  // Pass data to the page via props
+  // return { props: { data } }
+  return { props: { mobilization: mobilizations[0], blocks, widgets } };
+}
 
-export default connect(mapStateToProps)(Page);
+export default Page;

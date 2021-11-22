@@ -25,30 +25,27 @@ type Props = {
   children: any;
 };
 
+interface State {
+  data: any[];
+  fetching: boolean;
+}
+
 const FetchTargets = ({ asyncFetchTargets, widgetId, children }: Props) => {
-  const [fetching, setFetching] = useState(true);
-  const [data, setData] = useState();
+  const [state, setState] = useState<State>({ data: [], fetching: true });
 
   useEffect(() => {
     asyncFetchTargets({ widget_id: widgetId })
       .then(({ data }: any) => {
-        setData(data.pressure_targets);
-        setFetching(false);
+        setState({ data: data?.pressure_targets, fetching: false });
       })
       .catch((err: any) => {
         console.error('FetchTargets: ', err);
       });
-    // client
-    //   .query({ query, variables: { widgetId } })
-    //   .then(({ data }: any) => {
-    //   })
-    //   .catch((err: any) => {
-    //     console.error('FetchTargets: ', err);
-    //   });
-  }, [asyncFetchTargets, widgetId]);
+  }, []);
 
-  if (fetching) return <div />;
-  return children({ data });
+  // TODO: Render Loading...
+  if (state.fetching) return <div />;
+  return children({ data: state.data });
 };
 
 export default FetchTargets;

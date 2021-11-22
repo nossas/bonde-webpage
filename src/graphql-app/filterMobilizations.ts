@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 import type { Filter, MobilizationGraphQL } from './types';
 import { client as GraphQLAPI } from '.';
 
-const asyncFilterMobilizationsGraphql = ({ slug, custom_domain }: any) => (dispatch: any) => {
-  dispatch({ type: 'FILTER_MOBILIZATIONS_REQUEST' });
+const asyncFilterMobilizationsGraphql = async ({ slug, custom_domain }: any) => {
+  // dispatch({ type: 'FILTER_MOBILIZATIONS_REQUEST' });
 
   let filter: Filter = {};
   if (slug) filter.slug = { _eq: slug };
@@ -44,14 +44,14 @@ const asyncFilterMobilizationsGraphql = ({ slug, custom_domain }: any) => (dispa
     fetchPolicy: "no-cache"
   })
     .then(({ data }: { data: { mobilizations: MobilizationGraphQL[] } }) => {
-      dispatch({
-        type: 'FILTER_MOBILIZATIONS_SUCCESS',
-        payload: data.mobilizations
-      });
-      return Promise.resolve();
+      // dispatch({
+      //   type: 'FILTER_MOBILIZATIONS_SUCCESS',
+      //   payload: data.mobilizations
+      // });
+      return Promise.resolve({ mobilizations: data.mobilizations });
     })
     .catch((err: any) => {
-      dispatch({ type: 'FILTER_MOBILIZATIONS_FAILURE', payload: err });
+      // dispatch({ type: 'FILTER_MOBILIZATIONS_FAILURE', payload: err });
       console.log('failed', err);
       return Promise.reject(err);
     })

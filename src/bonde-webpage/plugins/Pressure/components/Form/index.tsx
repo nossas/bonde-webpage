@@ -1,14 +1,12 @@
 import React from 'react';
 
 import {
-  ConnectedForm,
+  Button,
+  Form,
   InputField,
   Validators,
-  Button,
-  RoundSelectField,
-  SelectField,
-} from 'bonde-components';
-
+  SelectField
+} from "../../../../components/forms";
 import { Raise } from '../../../../components';
 import { Translate } from '../../../../components/MobilizationClass';
 import LGPD from '../../../../components/ux/LGPD';
@@ -46,15 +44,10 @@ type Props = {
       show_state?: string;
     };
   };
-  BeforeStandardFields: any;
+  BeforeStandardFields?: any;
   AfterStandardFields?: any;
   saving: boolean;
   errors: Array<string>;
-};
-
-type FormProps = {
-  submitting: boolean;
-  form: any;
 };
 
 const PressureForm = ({
@@ -86,7 +79,7 @@ const PressureForm = ({
   }));
 
   return (
-    <ConnectedForm
+    <Form
       onSubmit={onSubmit}
       initialValues={{ subject, body }}
       mutators={{
@@ -99,7 +92,7 @@ const PressureForm = ({
         },
       }}
     >
-      {({ submitting, form }: FormProps): React.ReactElement => {
+      {({ submitting, form }): React.ReactElement => {
         return (
           <Translate>
             {({ t }: any): React.ReactElement => (
@@ -107,16 +100,15 @@ const PressureForm = ({
                 <WrapFields>
                   {pressure_type === 'group' && options.length > 0 && (
                     <WrapInputs inverted>
-                      <RoundSelectField
-                        options={options}
+                      <SelectField
                         label={select_label || t('Pressure Targets Label')}
                         name="targetsInput"
                         placeholder={t('Pressure Targets Placeholder')}
                         onChange={(e: any): void => {
                           const group = pureTargets.filter(
-                            (gt: GroupTarget) => gt.identify === e.value
+                            (gt: GroupTarget) => gt.identify === e.target.value
                           )[0];
-                          const { setValue } = form.mutators;
+                          const { setValue }: any = form.mutators;
 
                           if (!!group && group.email_subject)
                             setValue('subject', group.email_subject);
@@ -125,7 +117,11 @@ const PressureForm = ({
                             setValue('body', group.email_body);
                           else setValue('body', body);
                         }}
-                      />
+                      >
+                        {options.map((group) => (
+                          <option value={group.value}>{group.label}</option>
+                        ))}
+                      </SelectField>
                     </WrapInputs>
                   )}
                   {BeforeStandardFields && <BeforeStandardFields />}
@@ -215,7 +211,7 @@ const PressureForm = ({
           </Translate>
         );
       }}
-    </ConnectedForm>
+    </Form>
   );
 };
 

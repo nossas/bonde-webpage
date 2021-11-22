@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { useField } from 'bonde-components';
+import { useField } from 'react-final-form';
 
 import { Translate } from '../../../../components/MobilizationClass';
 import { pressureUtils } from '../../utils';
@@ -36,7 +35,7 @@ const Targets = ({
 
   if (pureTargets && pureTargets.length > 0 && pressureType === 'group') {
     const newGroup: GroupTarget | undefined = pureTargets.filter(
-      (t: GroupTarget) => t.identify === input.value.value
+      (t: GroupTarget) => t.identify === input.value
     )[0];
     if (newGroup) {
       groupTarget = newGroup;
