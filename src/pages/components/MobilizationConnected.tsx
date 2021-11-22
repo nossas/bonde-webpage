@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import {
   // Plugins
-  // ContentPlugin,
+  ContentPlugin,
   DraftPlugin,
   MobilizationClass as Mobilization,
   PluggableWidget,
@@ -14,7 +14,7 @@ import {
   // PressureAnalytics,
   // PressureTellAFriend,
 } from '../../bonde-webpage';
-import Utils from '../../Utils';
+// import Utils from '../../Utils';
 import DonationPlugin from './DonationConnected';
 import Footer from './Footer';
 import FormPlugin from './FormConnected';
@@ -95,8 +95,8 @@ const plugins = [
   },
   {
     kind: 'content',
-    component: DummyWidget,
-    // component: ContentPlugin,
+    // component: DummyWidget,
+    component: ContentPlugin,
   },
 ];
 
