@@ -4,14 +4,14 @@ import {
   FormAnalytics,
   FormTellAFriend,
   FinishMessageCustom,
-} from '../../bonde-webpage';
+} from '../bonde-webpage';
 import fetch from 'node-fetch';
 // import { connect } from 'react-redux';
 // import { injectIntl } from 'react-intl'
 // import FormPlugin from '../../../src/plugins/Form'
 // import { asyncFormEntryCreate } from '../../../src/redux/action-creators'
 
-import Utils from '../../Utils';
+import Utils from '../Utils';
 
 // const mapDispatchToProps = () => ({
 //   asyncFormEntryCreate: async (args: any) =>
@@ -60,34 +60,3 @@ const FormConnected = (props: any) =>
 ;
 
 export default FormConnected;
-
-// export default connect(
-//   undefined,
-//   mapDispatchToProps
-// )((props: any) => {
-//   return (
-//     <FormPlugin
-//       {...props}
-//       widget={{
-//         ...props.widget,
-//         settings: {
-//           ...props.widget.settings,
-//           fields: props.widget.settings.fields
-//             ? JSON.parse(props.widget.settings.fields)
-//             : [],
-//         },
-//       }}
-//       analyticsEvents={FormAnalytics}
-//       overrides={{
-//         FinishCustomMessage: { component: FinishMessageCustom },
-//         FinishDefaultMessage: {
-//           component: FormTellAFriend,
-//           props: {
-//             imageUrl: Utils.imageUrl,
-//             href: Utils.getSharedPath(props.mobilization),
-//           },
-//         },
-//       }}
-//     />
-//   );
-// });

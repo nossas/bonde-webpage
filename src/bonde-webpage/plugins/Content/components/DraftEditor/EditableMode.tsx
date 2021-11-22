@@ -131,16 +131,16 @@ const RebooEditor = ({
       // console.log(editorStateWithLineBreak);
 
       // TODO: Type error
-      // onChangeEditorState(
-      //   EditorState.forceSelection(
-      //     editorStateWithLineBreak,
-      //     editorStateWithLineBreak.getSelection().merge({
-      //       anchorKey: contentBlock.getKey(),
-      //       anchorOffset: 0,
-      //       isBackward: false,
-      //     })
-      //   )
-      // );
+      onChangeEditorState(
+        EditorState.forceSelection(
+          editorStateWithLineBreak,
+          editorStateWithLineBreak.getSelection().merge({
+            anchorKey: contentBlock.getKey(),
+            anchorOffset: 0,
+            isBackward: false,
+          })
+        )
+      );
 
       return true;
     }

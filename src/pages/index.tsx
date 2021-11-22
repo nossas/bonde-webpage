@@ -3,9 +3,9 @@ import Error404 from './404';
 import asyncFilterBlocksGraphql from '../graphql-app/filterBlocks';
 import asyncFilterMobilizationsGraphql from '../graphql-app/filterMobilizations';
 import asyncFilterWidgetsGraphql from '../graphql-app/filterWidgets';
-import MeuRioStyles from './components/MeuRioStyles';
+import MeuRioStyles from '../components/MeuRioStyles';
 import Styles from '../bonde-webpage/Styles';
-import { MobilizationConnected } from './components/MobilizationConnected';
+import MobilizationConnected from '../components/MobilizationConnected';
 
 interface PageProperties {
   mobilization: any;
@@ -27,7 +27,7 @@ function Page({ mobilization, blocks, widgets }: PageProperties) {
     custom_domain: customDomain,
     google_analytics_code: googleAnalyticsCode,
     slug,
-    language,
+    // language,
   } = mobilization;
 
   const domain = customDomain || `${slug}.bonde.org`;
@@ -116,7 +116,7 @@ function Page({ mobilization, blocks, widgets }: PageProperties) {
 }
 
 // This gets called on every request
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   // Fetch data from external API
   // const res = await fetch(`https://.../data`)
   // const { host } = getState().sourceRequest;
@@ -151,10 +151,13 @@ export async function getServerSideProps(context) {
   //   // await dispatch(asyncFilterBlockGraphql(filter || where));
   //   // await dispatch(asyncFilterWidgetGraphql(filter || where));
   // };
+  const filter: any = {
+    slug: 'teste-de-widgets'
+  }
 
-  const { mobilizations } = await asyncFilterMobilizationsGraphql({ slug: 'teste-de-widgets' })
-  const { blocks } = await asyncFilterBlocksGraphql({ slug: 'teste-de-widgets' })
-  const { widgets } = await asyncFilterWidgetsGraphql({ slug: 'teste-de-widgets' })
+  const { mobilizations } = await asyncFilterMobilizationsGraphql(filter)
+  const { blocks } = await asyncFilterBlocksGraphql(filter)
+  const { widgets } = await asyncFilterWidgetsGraphql(filter)
 
   // console.log("mobilizations, blocks, widgets >>>", { mobilizations, blocks, widgets });
 

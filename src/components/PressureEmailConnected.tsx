@@ -4,8 +4,8 @@ import {
   PressureAnalytics,
   FinishMessageCustom,
   PressureTellAFriend,
-} from '../../bonde-webpage';
-import Utils from '../../Utils';
+} from '../bonde-webpage';
+import Utils from '../Utils';
 
 const PressureEmailConnected = (props: any) =>
   <EmailPressurePlugin

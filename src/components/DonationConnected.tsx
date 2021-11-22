@@ -6,12 +6,12 @@ import {
   FinishDonationMessage,
   DonationAnalytics,
   DonationTellAFriend,
-} from '../../bonde-webpage';
+} from '../bonde-webpage';
 import getConfig from 'next/config';
 import fetch from 'node-fetch';
 // import { connect } from 'react-redux';
 
-import Utils from '../../Utils';
+import Utils from '../Utils';
 
 const { publicRuntimeConfig } = getConfig();
 

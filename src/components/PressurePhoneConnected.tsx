@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
-
 import { gql } from '@apollo/client';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import {
   PhonePressurePlugin,
-  asyncFillWidget,
-  selectors as MobSelectors,
-} from '../../bonde-webpage';
-import { client } from '../../graphql-app';
+  // asyncFillWidget,
+  // selectors as MobSelectors,
+} from '../bonde-webpage';
+import { client } from '../graphql-app';
 
 export const addTwilioCall = gql`
   mutation addTwilioCall(
@@ -112,15 +111,12 @@ const TwilioCall = ({ children, totalCount }) => {
   });
 };
 
-const mapDispatchToProps = { asyncFillWidget };
+// const mapDispatchToProps = { asyncFillWidget };
 
-const mapStateToProps = (state: any) =>
-  MobSelectors(state).getMobilizationLink();
+// const mapStateToProps = (state: any) =>
+//   MobSelectors(state).getMobilizationLink();
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)((props: any) => {
+const PressurePhoneConnected = (props: any) => {
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
@@ -139,4 +135,6 @@ export default connect(
       {(twilio: any) => <PhonePressurePlugin {...props} twilio={twilio} />}
     </TwilioCall>
   );
-});
+};
+
+export default PressurePhoneConnected;

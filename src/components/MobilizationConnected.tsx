@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { useTranslation, Trans } from 'react-i18next';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import {
   // Plugins
@@ -10,30 +10,31 @@ import {
   MobilizationClass as Mobilization,
   PluggableWidget,
   // FinishMessageCustom,
-  selectors as MobilizationSelectors,
+  // selectors as MobilizationSelectors,
   // PressureAnalytics,
   // PressureTellAFriend,
-} from '../../bonde-webpage';
+} from '../bonde-webpage';
 // import Utils from '../../Utils';
 import DonationPlugin from './DonationConnected';
 import Footer from './Footer';
 import FormPlugin from './FormConnected';
 import PressureEmailPlugin from './PressureEmailConnected';
+import PressurePhonePlugin from './PressurePhoneConnected';
 // import PressurePhonePlugin from './PressurePhoneConnected';
 
-const mapStateToProps = (state: any, props: any) => {
-  const query = MobilizationSelectors(state, props);
-  return {
-    mobilization: query.getMobilization() || query.getMobilizations()[0],
-    blocks: query.getBlocks(),
-    blocksIsLoaded: query.blocksIsLoaded(),
-    widgets: query.getWidgets(),
-  };
-};
+// const mapStateToProps = (state: any, props: any) => {
+//   const query = MobilizationSelectors(state, props);
+//   return {
+//     mobilization: query.getMobilization() || query.getMobilizations()[0],
+//     blocks: query.getBlocks(),
+//     blocksIsLoaded: query.blocksIsLoaded(),
+//     widgets: query.getWidgets(),
+//   };
+// };
 
-const DummyWidget = ({ widget }) => (
-  <h2>{widget.kind} - {widget.id}</h2>
-)
+// const DummyWidget = ({ widget }) => (
+//   <h2>{widget.kind} - {widget.id}</h2>
+// )
 
 const plugins = [
   {
@@ -75,7 +76,8 @@ const plugins = [
   },
   {
     kind: 'pressure-phone',
-    component: DummyWidget,
+    // component: DummyWidget,
+    component: PressurePhonePlugin,
     // component: (props: any) => (
     //   <PressurePhonePlugin
     //     {...props}
@@ -107,7 +109,7 @@ export interface MobilizationProperties {
   blocksIsLoaded: boolean;
 }
 
-export const MobilizationConnected = ({
+const MobilizationConnected = ({
   mobilization,
   blocks,
   widgets,
@@ -147,4 +149,5 @@ export const MobilizationConnected = ({
   return <p>Carregando mobilização</p>;
 };
 
-export default connect(mapStateToProps)(MobilizationConnected);
+export default MobilizationConnected;
+// export default connect(mapStateToProps)(MobilizationConnected);
